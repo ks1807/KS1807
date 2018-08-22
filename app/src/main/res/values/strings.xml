@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">KS1807</string>
+    <string name="LandingCaption">Welcome to Music for Mental Health</string>
+    <string name="LoginCaption">Login to your account below</string>
+    <string name="SpotifyCaption">Have a Spotify Account? Login with the button below</string>
+    <string name="RegisterCaption">Don\'t have an account? Register below</string>
+    <string name="RegisterButtonCaption">Register</string>
+    <string name="SpotifyButtonCaption">Login with Spotify</string>
+    <string name="LoginButtonCaption">Login</string>
+    <string name="EditUserNameHintCaption">User Name</string>
+    <string name="EditPasswordHintCaption">Password</string>
+    <string name="LandingPageLogoDescription">Landing Page Logo</string>
+    <string name="RegisterPageCaption">Please register your details below</string>
+    <string name="FNameCaption">First Name</string>
+    <string name="BackButtonCaption">Back</string>
+    <string name="EditFirstNameHintCaption">First Name</string>
 </resources>

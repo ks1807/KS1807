@@ -21,14 +21,76 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/Text_LandingHeading"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:baselineAligned="false"
             android:gravity="center"
-            android:text="Welcome to Music for Mental Health"
+            android:text="@string/LandingCaption"
             android:textAlignment="center"
             android:textSize="18sp"
             android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/Img_LandingLogo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/LandingPageLogoDescription"
+            app:srcCompat="@android:drawable/sym_def_app_icon" />
+
+        <TextView
+            android:id="@+id/Text_LoginCaption"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/LoginCaption"
+            android:textAlignment="center" />
+
+        <EditText
+            android:id="@+id/EditText_UserName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/EditUserNameHintCaption"
+            android:inputType="textPersonName" />
+
+        <EditText
+            android:id="@+id/EditText_Password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/EditPasswordHintCaption"
+            android:inputType="textPassword" />
+
+        <Button
+            android:id="@+id/btn_Login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/LoginButtonCaption" />
+
+        <TextView
+            android:id="@+id/Text_LoginSpotifyCaption"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/SpotifyCaption"
+            android:textAlignment="center" />
+
+        <Button
+            android:id="@+id/btn_SpotifyLogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/SpotifyButtonCaption" />
+
+        <TextView
+            android:id="@+id/Text_RegisterCaption"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/RegisterCaption"
+            android:textAlignment="center" />
+
+        <Button
+            android:id="@+id/btn_Register"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/RegisterButtonCaption" />
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
