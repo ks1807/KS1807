@@ -13,5 +13,11 @@
     <string name="RegisterPageCaption">Please register your details below</string>
     <string name="FNameCaption">First Name</string>
     <string name="BackButtonCaption">Back</string>
-    <string name="EditFirstNameHintCaption">First Name</string>
+    <string name="LNameCaption">Last Name</string>
+    <string name="EmailCaption">Email</string>
+    <string name="Age_Caption">Age</string>
+    <string name="Gender_Caption">Gender</string>
+    <string name="MaleCaption">Male</string>
+    <string name="FemaleCaption">Female</string>
+    <string name="OtherCaption">Other</string>
 </resources>

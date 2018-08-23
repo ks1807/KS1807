@@ -17,8 +17,10 @@
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
         <TextView
             android:id="@+id/Text_RegisterCaption"
@@ -27,27 +29,116 @@
             android:text="@string/RegisterPageCaption"
             android:textAlignment="center"
             android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:layout_marginBottom="14dp"/>
 
         <TextView
             android:id="@+id/Text_FNameCaption"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/FNameCaption" />
+            android:text="@string/FNameCaption"
+            android:textAlignment="center"
+            android:textSize="18sp" />
 
         <EditText
-            android:id="@+id/editText2"
+            android:id="@+id/EditTest_Fname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="@string/EditFirstNameHintCaption"
+            android:hint="@string/FNameCaption"
             android:inputType="textPersonName" />
+
+        <TextView
+            android:id="@+id/Text_LNameCaption"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/LNameCaption"
+            android:textAlignment="center"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/EditText_LastName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/LNameCaption"
+            android:inputType="textPersonName" />
+
+        <TextView
+            android:id="@+id/Text_EmailCaption"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/EmailCaption"
+            android:textAlignment="center"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/EditText_Email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/EmailCaption"
+            android:inputType="textPersonName" />
+
+        <TextView
+            android:id="@+id/Text_Age"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/Age_Caption"
+            android:textAlignment="center"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/EditText_Age"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/Age_Caption"
+            android:inputType="number" />
+
+        <TextView
+            android:id="@+id/Text_GenderCaption"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/Gender_Caption"
+            android:textAlignment="center"
+            android:textSize="18sp" />
+
+            <RadioGroup
+                android:id="@+id/GenderSelect"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:checkedButton="@+id/RadioButton_Male"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/RadioButton_Male"
+                    android:layout_width="129dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/MaleCaption" />
+
+                <RadioButton
+                    android:id="@+id/RadioButton_Female"
+                    android:layout_width="129dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/FemaleCaption" />
+
+                <RadioButton
+                    android:id="@+id/RadioButton_Other"
+                    android:layout_width="129dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/OtherCaption" />
+            </RadioGroup>
 
         <Button
             android:id="@+id/btn_Back"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/BackButtonCaption" />
-
+            android:text="@string/BackButtonCaption"
+            android:onClick="button_Back"/>
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
