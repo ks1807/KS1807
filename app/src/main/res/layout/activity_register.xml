@@ -26,11 +26,11 @@
             android:id="@+id/Text_RegisterCaption"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="14dp"
             android:text="@string/RegisterPageCaption"
             android:textAlignment="center"
             android:textSize="18sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="14dp"/>
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/Text_FNameCaption"
@@ -38,7 +38,7 @@
             android:layout_height="wrap_content"
             android:text="@string/FNameCaption"
             android:textAlignment="center"
-            android:textSize="18sp" />
+            android:textSize="14sp" />
 
         <EditText
             android:id="@+id/EditTest_Fname"
@@ -46,7 +46,8 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="@string/FNameCaption"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/Text_LNameCaption"
@@ -54,7 +55,7 @@
             android:layout_height="wrap_content"
             android:text="@string/LNameCaption"
             android:textAlignment="center"
-            android:textSize="18sp" />
+            android:textSize="14sp" />
 
         <EditText
             android:id="@+id/EditText_LastName"
@@ -62,7 +63,8 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="@string/LNameCaption"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/Text_EmailCaption"
@@ -70,7 +72,7 @@
             android:layout_height="wrap_content"
             android:text="@string/EmailCaption"
             android:textAlignment="center"
-            android:textSize="18sp" />
+            android:textSize="14sp" />
 
         <EditText
             android:id="@+id/EditText_Email"
@@ -78,7 +80,8 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="@string/EmailCaption"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/Text_Age"
@@ -86,7 +89,7 @@
             android:layout_height="wrap_content"
             android:text="@string/Age_Caption"
             android:textAlignment="center"
-            android:textSize="18sp" />
+            android:textSize="14sp" />
 
         <EditText
             android:id="@+id/EditText_Age"
@@ -94,7 +97,8 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="@string/Age_Caption"
-            android:inputType="number" />
+            android:inputType="number"
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/Text_GenderCaption"
@@ -102,7 +106,7 @@
             android:layout_height="wrap_content"
             android:text="@string/Gender_Caption"
             android:textAlignment="center"
-            android:textSize="18sp" />
+            android:textSize="14sp" />
 
             <RadioGroup
                 android:id="@+id/GenderSelect"
@@ -133,6 +137,13 @@
                     android:layout_weight="1"
                     android:text="@string/OtherCaption" />
             </RadioGroup>
+
+        <Button
+            android:id="@+id/btn_Submit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="button_Submit"
+            android:text="@string/Submit_Caption" />
 
         <Button
             android:id="@+id/btn_Back"

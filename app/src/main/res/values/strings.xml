@@ -20,4 +20,21 @@
     <string name="MaleCaption">Male</string>
     <string name="FemaleCaption">Female</string>
     <string name="OtherCaption">Other</string>
+    <string name="Submit_Caption">Submit</string>
+    <string name="Logout_Caption">Logout</string>
+    <string name="WelcomeUserDefaultCaption">Welcome to Music for Mental Health</string>
+    <string name="MusicNotListenedCaption">You have not listened to any music yet</string>
+    <string name="MusicHistory_Caption">The last music track you listened to was:</string>
+    <string name="TrackName_Caption">Name</string>
+    <string name="TrackGenre_Caption">Genre</string>
+    <string name="TrackArtist_Caption">Artist</string>
+    <string name="TrackLength_Caption">Length</string>
+    <string name="MoodBefore_Caption">Your mood before listening</string>
+    <string name="MoodAfter_Caption">Your mood after listening</string>
+    <string name="ChangePassword_Caption">Change Password</string>
+    <string name="ChangeUserDetails_Caption">Change Details</string>
+    <string name="ChangePasswordPage_Caption">Please specify your old password and the new password</string>
+    <string name="OldPassword_Caption">Old Password</string>
+    <string name="NewPassword_Caption">New Password</string>
+    <string name="NewPasswordAgain_Caption">Enter your new password again</string>
 </resources>

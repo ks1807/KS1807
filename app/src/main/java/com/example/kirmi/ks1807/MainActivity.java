@@ -15,6 +15,14 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
     }
 
+    public void button_Login(View view)
+    {
+        //Add login validation code here and make sure this new intent is wrapped in it
+
+        Intent intent = new Intent(MainActivity.this, CurrentMusic.class);
+        startActivity(intent);
+    }
+
     public void button_Register(View view)
     {
         Intent intent = new Intent(MainActivity.this, Register.class);
