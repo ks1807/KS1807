@@ -20,11 +20,135 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <TextView
+            android:id="@+id/text_EditUserCaption"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="14dp"
+            android:text="@string/EditPageCaption"
+            android:textAlignment="center"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/text_EditFirstNameCaption"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/FNameCaption"
+            android:textAlignment="center"
+            android:textSize="14sp" />
+
+        <EditText
+            android:id="@+id/editText_EditFirstname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/FNameCaption"
+            android:inputType="textPersonName"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/text_EditLastNameCaption"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/LNameCaption"
+            android:textAlignment="center"
+            android:textSize="14sp" />
+
+        <EditText
+            android:id="@+id/editText_EditLastName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/LNameCaption"
+            android:inputType="textPersonName"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/text_EditEmailCaption"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/EmailCaption"
+            android:textAlignment="center"
+            android:textSize="14sp" />
+
+        <EditText
+            android:id="@+id/editText_EditEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/EmailCaption"
+            android:inputType="textPersonName"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/text_EditAge"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/Age_Caption"
+            android:textAlignment="center"
+            android:textSize="14sp" />
+
+        <EditText
+            android:id="@+id/editText_EditAge"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/Age_Caption"
+            android:inputType="number"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/text_EditGenderCaption"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/Gender_Caption"
+            android:textAlignment="center"
+            android:textSize="14sp" />
+
+        <RadioGroup
+            android:id="@+id/GenderSelect"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:checkedButton="@+id/RadioButton_EditMale"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/RadioButton_EditMale"
+                android:layout_width="129dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/MaleCaption" />
+
+            <RadioButton
+                android:id="@+id/RadioButton_EditFemale"
+                android:layout_width="129dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/FemaleCaption" />
+
+            <RadioButton
+                android:id="@+id/RadioButton_EditOther"
+                android:layout_width="129dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/OtherCaption" />
+        </RadioGroup>
+
+        <Button
+            android:id="@+id/btn_BackEditUser"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="button_Back"
+            android:text="@string/BackButtonCaption" />
+
         <Button
             android:id="@+id/btn_SubmitEdit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="button_Submit"
             android:text="@string/Submit_Caption" />
+
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

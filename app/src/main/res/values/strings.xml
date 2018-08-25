@@ -37,4 +37,5 @@
     <string name="OldPassword_Caption">Old Password</string>
     <string name="NewPassword_Caption">New Password</string>
     <string name="NewPasswordAgain_Caption">Enter your new password again</string>
+    <string name="EditPageCaption">Edit your current information below</string>
 </resources>

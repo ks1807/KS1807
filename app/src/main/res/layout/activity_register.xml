@@ -113,11 +113,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:checkedButton="@+id/RadioButton_Male"
+                android:checkedButton="@+id/RadioButton_EditMale"
                 android:orientation="horizontal">
 
                 <RadioButton
-                    android:id="@+id/RadioButton_Male"
+                    android:id="@+id/RadioButton_EditMale"
                     android:layout_width="129dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -146,10 +146,10 @@
             android:text="@string/Submit_Caption" />
 
         <Button
-            android:id="@+id/btn_Back"
+            android:id="@+id/btn_BackRegister"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/BackButtonCaption"
-            android:onClick="button_Back"/>
+            android:onClick="button_Back"
+            android:text="@string/BackButtonCaption" />
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

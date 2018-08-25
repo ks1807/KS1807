@@ -79,6 +79,7 @@
             android:id="@+id/btn_SpotifyLogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:onClick="button_LoginSpotify"
             android:text="@string/SpotifyButtonCaption" />
 
         <TextView

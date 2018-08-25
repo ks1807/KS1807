@@ -14,7 +14,7 @@ public class CurrentMusic extends AppCompatActivity
 {
     private final Context context = this;
     CommonFunctions Common = new CommonFunctions();
-    CurrentMusicCustomFunctions MusicFunctions = new CurrentMusicCustomFunctions();
+    DatabaseFunctions MusicFunctions = new DatabaseFunctions();
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -26,15 +26,15 @@ public class CurrentMusic extends AppCompatActivity
         Intent intent = getIntent();
         String UserID = intent.getStringExtra("UserID");
 
-        String[] UserDetails;
-        UserDetails = MusicFunctions.GetMusicHistory(UserID);
-        DisplayUserName(UserDetails);
+        String[] MusicDetails;
+        MusicDetails = MusicFunctions.GetMusicHistory(UserID);
+        DisplayUserName(MusicDetails);
 
         /*Check if the user has a prior history of listening to music through this app.
         If not then make the history fields invisible*/
-        if (UserDetails.length != 0)
+        if (MusicDetails.length != 0)
         {
-            DisplayMusicHistory(UserDetails);
+            DisplayMusicHistory(MusicDetails);
         }
         else
         {
@@ -84,32 +84,32 @@ public class CurrentMusic extends AppCompatActivity
         startActivity(intent);
     }
 
-    public void DisplayUserName(String[] UserDetails)
+    public void DisplayUserName(String[] MusicDetails)
     {
         TextView WelcomeUser = (TextView)findViewById(R.id.Text_WelcomeUser);
         WelcomeUser.setText(getResources().getString(R.string.WelcomeUserDefaultCaption)
-                + ": " + UserDetails[0] + " " + UserDetails[1] + "!");
+                + ": " + MusicDetails[0] + " " + MusicDetails[1] + "!");
     }
 
-    public void DisplayMusicHistory(String[] UserDetails)
+    public void DisplayMusicHistory(String[] MusicDetails)
     {
         TextView TrackName = (TextView)findViewById(R.id.Text_TrackNameDisplay);
-        TrackName.setText(UserDetails[2]);
+        TrackName.setText(MusicDetails[2]);
 
         TextView TrackGenre = (TextView)findViewById(R.id.Text_TrackGenreDisplay);
-        TrackGenre.setText(UserDetails[3]);
+        TrackGenre.setText(MusicDetails[3]);
 
         TextView TrackArtist = (TextView)findViewById(R.id.Text_TrackArtistDisplay);
-        TrackArtist.setText(UserDetails[4]);
+        TrackArtist.setText(MusicDetails[4]);
 
         TextView TrackLength = (TextView)findViewById(R.id.Text_TrackLengthDisplay);
-        TrackLength.setText(UserDetails[5]);
+        TrackLength.setText(MusicDetails[5]);
 
         TextView MoodBefore = (TextView)findViewById(R.id.Text_TrackMoodBeforeDisplay);
-        MoodBefore.setText(UserDetails[6]);
+        MoodBefore.setText(MusicDetails[6]);
 
         TextView MoodAfter = (TextView)findViewById(R.id.Text_TrackMoodAfterDisplay);
-        MoodAfter.setText(UserDetails[7]);
+        MoodAfter.setText(MusicDetails[7]);
     }
 
 }
