@@ -4,21 +4,26 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
-import java.util.ArrayList;
+import android.widget.ListView;
 import android.view.View;
 
 public class MusicPlaylists extends AppCompatActivity
 {
     private final Context context = this;
     DatabaseFunctions PlayListFunctions = new DatabaseFunctions();
-    private RecyclerView_Playlists ListAdapter;
+    private ListView_Playlists ListAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_music_playlists);
+
+        //Get the UserID for this login session.
+        Intent intent = getIntent();
+        String UserID = intent.getStringExtra("UserID");
+
+        DisplayPlaylists(UserID);
     }
 
     public void AddPlaylist(View view)
@@ -26,24 +31,17 @@ public class MusicPlaylists extends AppCompatActivity
 
     }
 
-    public void DeletePlaylist(View view)
-    {
-
-    }
-
-    void DisplayPlaylists(String[] MusicDetails)
+    void DisplayPlaylists(String UserID)
     {
         String[] PlayListIDArray;
         String[] PlayListNameArray;
 
-        PlayListIDArray = PlayListFunctions.GetPlaylistIDs("1");
-        PlayListNameArray = PlayListFunctions.GetPlaylistIDs("1");
+        PlayListIDArray = PlayListFunctions.GetPlaylistIDs(UserID);
+        PlayListNameArray = PlayListFunctions.GetPlaylistNames(UserID);
 
-        //NOT WORKING AT THE MOMENT
-
-        //RecyclerView_Playlists adapter = new RecyclerView_Playlists(this, PlayListNameArray, PlayListIDArray);
-        //RecyclerView Playlists = (RecyclerView) findViewById(R.id.View_Playlists);
-        //Playlists.setAdapter(adapter);
+        ListView_Playlists adapter = new ListView_Playlists(this, PlayListNameArray, PlayListIDArray);
+        ListView Playlists = (ListView) findViewById(R.id.View_Playlists);
+        Playlists.setAdapter(adapter);
     }
 
     public void Back(View view)
