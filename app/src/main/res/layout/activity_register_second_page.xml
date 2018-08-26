@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Register">
+    tools:context=".RegisterSecondPage">
 
     <LinearLayout
         android:id="@+id/linearLayout2"
@@ -23,127 +23,109 @@
         app:layout_constraintVertical_bias="0.0">
 
         <TextView
-            android:id="@+id/Text_Register"
+            android:id="@+id/text_EmailCaption2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="14dp"
-            android:text="@string/RegisterPageCaption"
-            android:textAlignment="center"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/Text_FirstName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/FNameCaption"
+            android:text="@string/EmailCaption"
             android:textAlignment="center"
             android:textSize="14sp" />
 
         <EditText
-            android:id="@+id/EditText_FirstName"
+            android:id="@+id/editText_Email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="@string/FNameCaption"
+            android:hint="@string/EmailCaption"
             android:inputType="textPersonName"
             android:textSize="14sp" />
 
         <TextView
-            android:id="@+id/Text_LastName"
+            android:id="@+id/Text_MusicApp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/LNameCaption"
+            android:text="@string/PreferredApp_Caption"
             android:textAlignment="center"
             android:textSize="14sp" />
 
         <EditText
-            android:id="@+id/EditText_LastName"
+            android:id="@+id/EditTest_MusicApp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="@string/LNameCaption"
+            android:hint="@string/PreferredApp_Caption"
             android:inputType="textPersonName"
             android:textSize="14sp" />
 
         <TextView
-            android:id="@+id/Text_UserNameCaption"
+            android:id="@+id/Text_GeneralMood"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/PreferredUserName_Caption"
+            android:text="@string/GeneralMoodQuestion_Caption"
             android:textAlignment="center"
             android:textSize="14sp" />
 
         <EditText
-            android:id="@+id/EditText_UserName"
+            android:id="@+id/EditText_GeneralMood"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="@string/Username_Caption"
+            android:hint="@string/MoodExamples_Caption"
             android:inputType="textPersonName"
             android:textSize="14sp" />
 
         <TextView
-            android:id="@+id/Text_Age"
+            android:id="@+id/text_MusicListenQuestion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/Age_Caption"
+            android:text="@string/MusicMoodQuestion_Caption"
             android:textAlignment="center"
             android:textSize="14sp" />
 
         <EditText
-            android:id="@+id/EditText_Age"
+            android:id="@+id/editText_Email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="@string/Age_Caption"
-            android:inputType="number"
+            android:hint="@string/MoodExamples_Caption"
+            android:inputType="textPersonName"
             android:textSize="14sp" />
 
         <TextView
-            android:id="@+id/Text_GenderCaption"
+            android:id="@+id/Text_MusicImproveQuestion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/Gender_Caption"
+            android:text="@string/MusicImproveQuestion_Caption"
             android:textAlignment="center"
             android:textSize="14sp" />
 
         <RadioGroup
-            android:id="@+id/GenderSelect"
+            android:id="@+id/RadioGroup_Mood"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:checkedButton="@+id/RadioButton_EditMale"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:checkedButton="@+id/RadioButton_MoodYes">
 
             <RadioButton
-                android:id="@+id/RadioButton_EditMale"
-                android:layout_width="129dp"
+                android:id="@+id/RadioButton_MoodYes"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/MaleCaption" />
+                android:text="@string/Yes_Caption" />
 
             <RadioButton
-                android:id="@+id/RadioButton_Female"
-                android:layout_width="129dp"
+                android:id="@+id/RadioButton_MoodNo"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/FemaleCaption" />
-
-            <RadioButton
-                android:id="@+id/RadioButton_Other"
-                android:layout_width="129dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/OtherCaption" />
+                android:text="@string/No_Caption" />
         </RadioGroup>
 
         <Button
             android:id="@+id/btn_Submit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="button_Next"
-            android:text="@string/Next_Caption" />
+            android:onClick="button_Submit"
+            android:text="@string/Submit_Caption" />
 
         <Button
             android:id="@+id/btn_BackRegister"

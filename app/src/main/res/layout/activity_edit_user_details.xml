@@ -24,14 +24,13 @@
             android:id="@+id/text_EditUserCaption"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="14dp"
             android:text="@string/EditPageCaption"
             android:textAlignment="center"
-            android:textSize="18sp"
+            android:textSize="14sp"
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/text_EditFirstNameCaption"
+            android:id="@+id/Text_EditFirstNameCaption"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/FNameCaption"
@@ -39,7 +38,7 @@
             android:textSize="14sp" />
 
         <EditText
-            android:id="@+id/editText_EditFirstname"
+            android:id="@+id/EditText_EditFirstname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -48,7 +47,7 @@
             android:textSize="14sp" />
 
         <TextView
-            android:id="@+id/text_EditLastNameCaption"
+            android:id="@+id/Text_EditLastNameCaption"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/LNameCaption"
@@ -56,7 +55,7 @@
             android:textSize="14sp" />
 
         <EditText
-            android:id="@+id/editText_EditLastName"
+            android:id="@+id/EditText_EditLastName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -65,7 +64,7 @@
             android:textSize="14sp" />
 
         <TextView
-            android:id="@+id/text_EditEmailCaption"
+            android:id="@+id/Text_EditEmailCaption"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/EmailCaption"
@@ -73,7 +72,7 @@
             android:textSize="14sp" />
 
         <EditText
-            android:id="@+id/editText_EditEmail"
+            android:id="@+id/EditText_EditEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -82,7 +81,7 @@
             android:textSize="14sp" />
 
         <TextView
-            android:id="@+id/text_EditAge"
+            android:id="@+id/Text_EditAge"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/Age_Caption"
@@ -90,7 +89,7 @@
             android:textSize="14sp" />
 
         <EditText
-            android:id="@+id/editText_EditAge"
+            android:id="@+id/EditText_EditAge"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -99,7 +98,24 @@
             android:textSize="14sp" />
 
         <TextView
-            android:id="@+id/text_EditGenderCaption"
+            android:id="@+id/Text_EditMusicApp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/PreferredApp_Caption"
+            android:textAlignment="center"
+            android:textSize="14sp" />
+
+        <EditText
+            android:id="@+id/EditText_EditMusicApp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/PreferredApp_Caption"
+            android:inputType="textPersonName"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/Text_EditGender"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/Gender_Caption"
@@ -140,6 +156,9 @@
             android:id="@+id/btn_BackEditUser"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:minHeight="10dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
             android:onClick="button_Back"
             android:text="@string/BackButtonCaption" />
 
@@ -147,6 +166,9 @@
             android:id="@+id/btn_SubmitEdit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:minHeight="10dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
             android:onClick="button_Submit"
             android:text="@string/Submit_Caption" />
 

@@ -31,14 +31,6 @@ public class EditUserDetails extends AppCompatActivity
         DisplayUserDetails(UserDetails);
     }
 
-    public void button_Submit(View view)
-    {
-        //Need to validate data here
-
-        Intent intent = new Intent(EditUserDetails.this, CurrentMusic.class);
-        startActivity(intent);
-    }
-
     //Confirm if the user wants to go back if the button is pressed.
     public void button_Back(View view)
     {
@@ -66,25 +58,37 @@ public class EditUserDetails extends AppCompatActivity
         alertDialog.show();
     }
 
+    public void button_Submit(View view)
+    {
+        if (ValidateForm())
+        {
+            Intent intent = new Intent(EditUserDetails.this, CurrentMusic.class);
+            startActivity(intent);
+        }
+    }
+
     public void DisplayUserDetails(String[] UserDetails)
     {
-        TextView FirstName = (TextView)findViewById(R.id.editText_EditFirstname);
+        TextView FirstName = (TextView)findViewById(R.id.EditText_EditFirstname);
         FirstName.setText(UserDetails[0]);
 
-        TextView LastName = (TextView)findViewById(R.id.editText_EditLastName);
+        TextView LastName = (TextView)findViewById(R.id.EditText_EditLastName);
         LastName.setText(UserDetails[1]);
 
-        TextView Email = (TextView)findViewById(R.id.editText_EditEmail);
+        TextView Email = (TextView)findViewById(R.id.EditText_EditEmail);
         Email.setText(UserDetails[2]);
 
-        TextView Age = (TextView)findViewById(R.id.editText_EditAge);
+        TextView Age = (TextView)findViewById(R.id.EditText_EditAge);
         Age.setText(UserDetails[3]);
+
+        TextView MusicApp = (TextView)findViewById(R.id.EditText_EditMusicApp);
+        MusicApp.setText(UserDetails[4]);
 
         RadioButton GenderFemale = (RadioButton)findViewById(R.id.RadioButton_EditFemale);
         RadioButton GenderMale = (RadioButton)findViewById(R.id.RadioButton_EditMale);
         RadioButton GenderOther = (RadioButton)findViewById(R.id.RadioButton_EditOther);
 
-        String Gender = UserDetails[4];
+        String Gender = UserDetails[5];
 
         if (Gender.equals("Male"))
         {
@@ -98,5 +102,14 @@ public class EditUserDetails extends AppCompatActivity
         {
             GenderOther.setChecked(true);
         }
+    }
+
+    boolean ValidateForm()
+    {
+        boolean ValidationSuccessful = true;
+
+        //INSERT VALIDATION LOGIC AND ALERTS HERE
+
+        return ValidationSuccessful;
     }
 }

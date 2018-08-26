@@ -84,6 +84,12 @@ public class CurrentMusic extends AppCompatActivity
         startActivity(intent);
     }
 
+    public void button_ViewPlaylists(View view)
+    {
+        Intent intent = new Intent(CurrentMusic.this, MusicPlaylists.class);
+        startActivity(intent);
+    }
+
     public void DisplayUserName(String[] MusicDetails)
     {
         TextView WelcomeUser = (TextView)findViewById(R.id.Text_WelcomeUser);

@@ -38,4 +38,22 @@
     <string name="NewPassword_Caption">New Password</string>
     <string name="NewPasswordAgain_Caption">Enter your new password again</string>
     <string name="EditPageCaption">Edit your current information below</string>
+    <string name="PreferredUserName_Caption">Preferred User Name</string>
+    <string name="Username_Caption">Username</string>
+    <string name="Next_Caption">Next</string>
+    <string name="PreferredApp_Caption">Preferred Music App</string>
+    <string name="GeneralMoodQuestion_Caption">What is your mood in general?</string>
+    <string name="MoodExamples_Caption">Happy, Sad, Frustrated, etc</string>
+    <string name="MusicMoodQuestion_Caption">How do you feel in general when you listen to music?</string>
+    <string name="MusicImproveQuestion_Caption">Do you think that listening to music will improve your mood?</string>
+    <string name="Yes_Caption">Yes</string>
+    <string name="No_Caption">No</string>
+    <string name="PlaylistPage_Caption">Welcome to your playlist</string>
+    <string name="PlayList_Caption">Playlists</string>
+    <string name="AddPlaylist_Caption">Add Playlist</string>
+    <string name="DeletePlaylist_Caption">Delete Playlist</string>
+    <string name="ViewPlaylists_Caption">View Playlists</string>
+    <string name="ThePlaylistWelcome_Caption">The following tracks belong to this playlist</string>
+    <string name="PlayListNName_Caption">Playlist Name</string>
+    <string name="AddToPlayList_Caption">Add Track to this Playlist</string>
 </resources>

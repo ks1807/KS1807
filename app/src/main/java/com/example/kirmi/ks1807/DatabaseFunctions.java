@@ -24,6 +24,38 @@ public class DatabaseFunctions
         return ReturnUserDetails;
     }
 
+    //Get list of Playlist IDs
+    public String[] GetPlaylistIDs(String UserID)
+    {
+        //REPLACE WITH A DB CALL and pass UserID into it.
+
+        ArrayList<String> PlaylistIDs = new ArrayList<String>();
+
+        PlaylistIDs.add("1");
+        PlaylistIDs.add("2");
+        PlaylistIDs.add("3");
+
+        String[] ReturnPlaylistIDs = PlaylistIDs.toArray(new String[PlaylistIDs.size()]);
+
+        return ReturnPlaylistIDs;
+    }
+
+    //Get list of Playlist Names
+    public String[] GetPlaylistNames(String UserID)
+    {
+        //REPLACE WITH A DB CALL and pass UserID into it.
+
+        ArrayList<String> PlaylistNames = new ArrayList<String>();
+
+        PlaylistNames.add("Classical Collection");
+        PlaylistNames.add("Rock and Roll");
+        PlaylistNames.add("Recommendations");
+
+        String[] ReturnPlaylistNames = PlaylistNames.toArray(new String[PlaylistNames.size()]);
+
+        return ReturnPlaylistNames;
+    }
+
     public String[] GetUserDetails(String UserID)
     {
         //REPLACE WITH A DB CALL and pass UserID into it.
@@ -34,6 +66,7 @@ public class DatabaseFunctions
         UserDetails.add("Obama");
         UserDetails.add("test@test.com.au");
         UserDetails.add("57");
+        UserDetails.add("Spotify");
         UserDetails.add("Other");
 
         String[] ReturnUserDetails = UserDetails.toArray(new String[UserDetails.size()]);

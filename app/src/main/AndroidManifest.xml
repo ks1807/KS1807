@@ -25,7 +25,10 @@
             android:name=".CurrentMusic"
             android:screenOrientation="portrait" />
         <activity android:name=".ChangePassword" />
-        <activity android:name=".EditUserDetails"></activity>
+        <activity android:name=".EditUserDetails" />
+        <activity android:name=".RegisterSecondPage" />
+        <activity android:name=".MusicPlaylists" />
+        <activity android:name=".ThePlayList"></activity>
     </application>
 
 </manifest>
