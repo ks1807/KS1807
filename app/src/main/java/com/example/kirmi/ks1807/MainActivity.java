@@ -4,10 +4,21 @@ import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
+
+import com.spotify.android.appremote.api.ConnectionParams;
+import com.spotify.android.appremote.api.Connector;
+import com.spotify.android.appremote.api.SpotifyAppRemote;
+import com.spotify.protocol.client.Subscription;
+import com.spotify.protocol.types.PlayerState;
+import com.spotify.protocol.types.Track;
 
 public class MainActivity extends AppCompatActivity
 {
+    private static final String CLIENT_ID = "9a7355bd24ff4544b4bdada73483aaa0";
+    private static final String REDIRECT_URI = "com.example.kirmi.ks1807://callback";
+    private SpotifyAppRemote mSpotifyAppRemote;
     final DatabaseFunctions UserFunctions = new DatabaseFunctions();
 
     @Override
@@ -42,6 +53,44 @@ public class MainActivity extends AppCompatActivity
         startActivity(intent);
     }
 
+
+    //---SPOTIFY TEST CODE---
+    //This needs to go into a service later on.
+    @Override
+    protected void onStart() {
+        super.onStart();
+        ConnectionParams connectionParams =
+            new ConnectionParams.Builder(CLIENT_ID)
+                .setRedirectUri(REDIRECT_URI)
+                .showAuthView(true)
+                .build();
+        SpotifyAppRemote.CONNECTOR.connect(this, connectionParams,
+                new Connector.ConnectionListener() {
+
+                    @Override
+                    public void onConnected(SpotifyAppRemote spotifyAppRemote) {
+                        mSpotifyAppRemote = spotifyAppRemote;
+                        Log.d("MainActivity", "Connected! Yay!");
+                        connected();
+                    }
+
+                    @Override
+                    public void onFailure(Throwable throwable) {
+                        Log.e("MainActivity", throwable.getMessage(), throwable);
+                    }
+                });
+    }
+
+    private void connected() {
+        mSpotifyAppRemote.getPlayerApi().play("spotify:user:spotify:playlist:37i9dQZF1DX7K31D69s4M1");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        SpotifyAppRemote.CONNECTOR.disconnect(mSpotifyAppRemote);
+    }
+    ///---SPOTIFY TEST CODE---
     //For Emoji Experiment - Not to be in the final application
     public void button_Experiment(View view)
     {
