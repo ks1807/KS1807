@@ -78,7 +78,11 @@ public class ListView_Playlists extends ArrayAdapter<String>
                 {
                     Intent intent = new Intent(v.getContext(), ThePlayList.class);
                     String ThePlayListID = FinalText_PlaylistID.getText().toString();
-                    intent.putExtra("UserID", ThePlayListID);
+
+                    //NEED TO GET THIS
+                    String UserID = "DUMMY";
+
+                    intent.putExtra("UserID", UserID);
                     intent.putExtra("PlayListID", ThePlayListID);
                     context.startActivity(intent);
                 }
@@ -91,7 +95,11 @@ public class ListView_Playlists extends ArrayAdapter<String>
                 {
                     Intent intent = new Intent(v.getContext(), ThePlayList.class);
                     String ThePlayListID = FinalText_PlaylistID.getText().toString();
-                    intent.putExtra("UserID", ThePlayListID);
+
+                    //NEED TO GET THIS
+                    String UserID = "DUMMY";
+
+                    intent.putExtra("UserID", UserID);
                     intent.putExtra("PlayListID", ThePlayListID);
                     context.startActivity(intent);
                 }

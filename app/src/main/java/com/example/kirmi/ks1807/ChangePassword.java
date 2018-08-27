@@ -17,14 +17,19 @@ public class ChangePassword extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_password);
+
+        //Get the UserID for this login session.
+        Intent intent = getIntent();
+        String UserID = intent.getStringExtra("UserID");
     }
 
     public void button_Submit(View view)
     {
-        //Need to validate data here
-
-        Intent intent = new Intent(ChangePassword.this, AccountDetails.class);
-        startActivity(intent);
+        if (ValidateForm())
+        {
+            Intent intent = new Intent(ChangePassword.this, AccountDetails.class);
+            startActivity(intent);
+        }
     }
 
     //Confirm if the user wants to go back if the button is pressed.
@@ -52,5 +57,14 @@ public class ChangePassword extends AppCompatActivity
                 });
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
+    }
+
+    private boolean ValidateForm()
+    {
+        boolean ValidationSuccessful = true;
+
+        //INSERT VALIDATION LOGIC AND ALERTS HERE
+
+        return ValidationSuccessful;
     }
 }

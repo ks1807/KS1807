@@ -4,6 +4,8 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.widget.Spinner;
+import android.widget.ArrayAdapter;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -11,12 +13,31 @@ import android.view.View;
 public class Settings extends AppCompatActivity
 {
     private final Context context = this;
+    CommonFunctions Common = new CommonFunctions();
+    DatabaseFunctions SettingFunctions = new DatabaseFunctions();
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+
+        //Get the UserID for this login session.
+        Intent intent = getIntent();
+        String UserID = intent.getStringExtra("UserID");
+
+        AddAlertFrequencies();
+    }
+
+    //Add options to the spinner
+    public void AddAlertFrequencies()
+    {
+        Spinner AlertFrequencyDropdown = findViewById(R.id.Spinner_AlertFrequency);
+        String[] Frequencies = GetTrackFrequencies();
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>
+                (this, android.R.layout.simple_spinner_item, Frequencies);
+        AlertFrequencyDropdown.setAdapter(adapter);
     }
 
     public void button_Back(View view)
@@ -54,7 +75,13 @@ public class Settings extends AppCompatActivity
         }
     }
 
-    boolean ValidateForm()
+    public String[] GetTrackFrequencies()
+    {
+        String[] TrackFrequencies = getResources().getStringArray(R.array.AlertFrequencies);
+        return TrackFrequencies;
+    }
+
+    private boolean ValidateForm()
     {
         boolean ValidationSuccessful = true;
 

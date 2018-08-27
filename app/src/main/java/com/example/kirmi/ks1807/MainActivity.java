@@ -8,6 +8,7 @@ import android.view.View;
 
 public class MainActivity extends AppCompatActivity
 {
+    DatabaseFunctions UserFunctions = new DatabaseFunctions();
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -20,8 +21,14 @@ public class MainActivity extends AppCompatActivity
     {
         //Add login validation code here and make sure this new intent is wrapped in it
 
-        Intent intent = new Intent(MainActivity.this, CurrentMusic.class);
-        startActivity(intent);
+        if(ValidateLogin())
+        {
+            String UserID = UserFunctions.GetUserID();
+
+            Intent intent = new Intent(MainActivity.this, CurrentMusic.class);
+            intent.putExtra("UserID", UserID);
+            startActivity(intent);
+        }
     }
 
     public void button_LoginSpotify(View view)
@@ -37,4 +44,12 @@ public class MainActivity extends AppCompatActivity
         startActivity(intent);
     }
 
+    private boolean ValidateLogin()
+    {
+        boolean ValidationSuccessful = true;
+
+        //INSERT VALIDATION LOGIC AND ALERTS HERE
+
+        return ValidationSuccessful;
+    }
 }

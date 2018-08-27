@@ -13,6 +13,10 @@ public class AccountDetails extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account_details);
+
+        //Get the UserID for this login session.
+        Intent intent = getIntent();
+        String UserID = intent.getStringExtra("UserID");
     }
 
     public void button_Back(View view)
