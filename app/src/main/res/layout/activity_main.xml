@@ -4,98 +4,138 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background"
     tools:context=".MainActivity">
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+    <TextView
+        android:id="@+id/Text_LandingHeading"
+        android:layout_width="344dp"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:orientation="vertical"
+        android:baselineAligned="false"
+        android:gravity="center"
+        android:text="@string/LandingCaption"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/Img_LandingLogo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/Img_LandingLogo"
+        android:layout_width="135dp"
+        android:layout_height="116dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:contentDescription="@string/LandingPageLogoDescription"
+        android:onClick="button_Experiment"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.137"
+        app:srcCompat="@android:drawable/sym_def_app_icon"
+        tools:ignore="MissingConstraints" />
 
-        <TextView
-            android:id="@+id/Text_LandingHeading"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:baselineAligned="false"
-            android:gravity="center"
-            android:text="@string/LandingCaption"
-            android:textAlignment="center"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+    <Button
+        android:id="@+id/btn_SpotifyLogin"
+        android:layout_width="310dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/login_spotify"
+        android:onClick="button_LoginSpotify"
+        app:layout_constraintBottom_toTopOf="@+id/EditText_UserName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Img_LandingLogo"
+        app:layout_constraintVertical_bias="0.177" />
 
-        <ImageView
-            android:id="@+id/Img_LandingLogo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:contentDescription="@string/LandingPageLogoDescription"
-            app:srcCompat="@android:drawable/sym_def_app_icon"
-            android:onClick="button_Experiment"/>
-        <!--Get rid of this last line when the experiment has been completed-->
+    <TextView
+        android:id="@+id/or1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/or1"
+        app:layout_constraintBottom_toTopOf="@+id/EditText_UserName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_SpotifyLogin" />
 
-        <TextView
-            android:id="@+id/Text_LoginCaption"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/LoginCaption"
-            android:textAlignment="center" />
+    <EditText
+        android:id="@+id/EditText_UserName"
+        android:layout_width="310dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/email"
+        android:ems="10"
+        android:hint="Email"
+        android:inputType="textPersonName"
+        android:paddingLeft="60dp"
+        android:textColor="#fff"
+        android:textColorHint="#fff"
+        app:layout_constraintBottom_toTopOf="@+id/EditText_Password"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
-        <EditText
-            android:id="@+id/EditText_UserName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="@string/EditUserNameHintCaption"
-            android:inputType="textPersonName" />
+    <EditText
+        android:id="@+id/EditText_Password"
+        android:layout_width="310dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/password"
+        android:ems="10"
+        android:hint="@string/EditPasswordHintCaption"
+        android:inputType="textPassword"
+        android:paddingLeft="60dp"
+        android:textColor="#fff"
+        android:textColorHint="#fff"
+        app:layout_constraintBottom_toTopOf="@+id/btn_Login"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
-        <EditText
-            android:id="@+id/EditText_Password"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="@string/EditPasswordHintCaption"
-            android:inputType="textPassword" />
+    <Button
+        android:id="@+id/btn_Login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="44dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/signin"
+        android:onClick="button_Login"
+        app:layout_constraintBottom_toTopOf="@+id/btn_Register"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 
-        <Button
-            android:id="@+id/btn_Login"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="button_Login"
-            android:text="@string/LoginButtonCaption" />
+    <TextView
+        android:id="@+id/or2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/or2"
+        app:layout_constraintBottom_toTopOf="@+id/btn_Register"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="parent" />
 
-        <TextView
-            android:id="@+id/Text_LoginSpotifyCaption"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/SpotifyCaption"
-            android:textAlignment="center" />
+    <Button
+        android:id="@+id/btn_Register"
+        android:layout_width="209dp"
+        android:layout_height="47dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/register"
+        android:onClick="button_Register"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="parent" />
 
-        <Button
-            android:id="@+id/btn_SpotifyLogin"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="button_LoginSpotify"
-            android:text="@string/SpotifyButtonCaption" />
-
-        <TextView
-            android:id="@+id/Text_RegisterCaption"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/RegisterCaption"
-            android:textAlignment="center" />
-
-        <Button
-            android:id="@+id/btn_Register"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/RegisterButtonCaption"
-            android:onClick="button_Register"/>
-    </LinearLayout>
 </android.support.constraint.ConstraintLayout>
