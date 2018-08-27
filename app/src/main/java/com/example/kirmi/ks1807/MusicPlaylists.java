@@ -11,7 +11,6 @@ public class MusicPlaylists extends AppCompatActivity
 {
     private final Context context = this;
     DatabaseFunctions PlayListFunctions = new DatabaseFunctions();
-    private ListView_Playlists ListAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)

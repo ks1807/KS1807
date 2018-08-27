@@ -43,7 +43,7 @@ public class EditUserDetails extends AppCompatActivity
                 {
                     public void onClick(DialogInterface dialog,int id)
                     {
-                        Intent intent = new Intent(EditUserDetails.this, CurrentMusic.class);
+                        Intent intent = new Intent(EditUserDetails.this, AccountDetails.class);
                         startActivity(intent);
                     }
                 })
@@ -62,7 +62,7 @@ public class EditUserDetails extends AppCompatActivity
     {
         if (ValidateForm())
         {
-            Intent intent = new Intent(EditUserDetails.this, CurrentMusic.class);
+            Intent intent = new Intent(EditUserDetails.this, AccountDetails.class);
             startActivity(intent);
         }
     }
@@ -85,7 +85,7 @@ public class EditUserDetails extends AppCompatActivity
         MusicApp.setText(UserDetails[4]);
 
         RadioButton GenderFemale = (RadioButton)findViewById(R.id.RadioButton_EditFemale);
-        RadioButton GenderMale = (RadioButton)findViewById(R.id.RadioButton_EditMale);
+        RadioButton GenderMale = (RadioButton)findViewById(R.id.RadioButton_EditEachTrack);
         RadioButton GenderOther = (RadioButton)findViewById(R.id.RadioButton_EditOther);
 
         String Gender = UserDetails[5];

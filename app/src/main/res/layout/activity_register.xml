@@ -113,11 +113,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:checkedButton="@+id/RadioButton_EditMale"
+            android:checkedButton="@+id/RadioButton_EditEachTrack"
             android:orientation="horizontal">
 
             <RadioButton
-                android:id="@+id/RadioButton_EditMale"
+                android:id="@+id/RadioButton_EditEachTrack"
                 android:layout_width="129dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

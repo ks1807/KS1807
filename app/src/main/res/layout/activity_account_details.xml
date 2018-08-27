@@ -4,12 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ChangePassword">
+    tools:context=".AccountDetails">
 
     <LinearLayout
-        android:id="@+id/Layout_Password"
+        android:id="@+id/linearLayout3"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="435dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
@@ -21,67 +21,50 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/Text_ChangePassword"
+            android:id="@+id/Text_AccountDetailsHeading"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/ChangePasswordPage_Caption"
+            android:text="@string/AccountDetailsHeading_Caption"
+            android:textAlignment="center"
+            android:textSize="14sp"
             android:textStyle="bold" />
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="24dp" />
-
-        <TextView
-            android:id="@+id/Text_OldPassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/OldPassword_Caption" />
-
-        <EditText
-            android:id="@+id/EditText_OldPassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPassword" />
-
-        <TextView
-            android:id="@+id/Text_NewPassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/NewPassword_Caption" />
-
-        <EditText
-            android:id="@+id/EditText_NewPassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPassword" />
-
-        <TextView
-            android:id="@+id/Text_NewPasswordRepeat"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/NewPasswordAgain_Caption" />
-
-        <EditText
-            android:id="@+id/EditTextNewPasswordAgain"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPassword" />
+            android:layout_height="18dp" />
 
         <Button
-            android:id="@+id/btn_SubmitPassword"
+            android:id="@+id/btn_ChangeSettings"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minHeight="10dp"
+            android:onClick="button_ChangeSettings"
             android:paddingBottom="10dp"
             android:paddingTop="10dp"
-            android:onClick="button_Submit"
-            android:text="@string/Submit_Caption" />
+            android:text="@string/ChangeSettings_Caption" />
 
         <Button
-            android:id="@+id/btn_BackPassword"
+            android:id="@+id/btn_ChangeUserDetails"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="10dp"
+            android:onClick="button_EditUserDetails"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:text="@string/ChangeUserDetails_Caption" />
+
+        <Button
+            android:id="@+id/btn_ChangePassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="10dp"
+            android:onClick="button_ChangePassword"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:text="@string/ChangePassword_Caption" />
+
+        <Button
+            android:id="@+id/btn_BackSettings"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minHeight="10dp"

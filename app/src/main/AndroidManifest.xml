@@ -28,7 +28,9 @@
         <activity android:name=".EditUserDetails" />
         <activity android:name=".RegisterSecondPage" />
         <activity android:name=".MusicPlaylists" />
-        <activity android:name=".ThePlayList"></activity>
+        <activity android:name=".ThePlayList" />
+        <activity android:name=".Settings" />
+        <activity android:name=".AccountDetails"></activity>
     </application>
 
 </manifest>

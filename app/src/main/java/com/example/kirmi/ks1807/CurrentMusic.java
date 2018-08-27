@@ -72,15 +72,9 @@ public class CurrentMusic extends AppCompatActivity
         alertDialog.show();
     }
 
-    public void button_ChangePassword(View view)
+    public void button_EditAccountDetails(View view)
     {
-        Intent intent = new Intent(CurrentMusic.this, ChangePassword.class);
-        startActivity(intent);
-    }
-
-    public void button_EditUserDetails(View view)
-    {
-        Intent intent = new Intent(CurrentMusic.this, EditUserDetails.class);
+        Intent intent = new Intent(CurrentMusic.this, AccountDetails.class);
         startActivity(intent);
     }
 

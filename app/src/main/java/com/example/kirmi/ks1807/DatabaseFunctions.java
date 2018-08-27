@@ -56,6 +56,38 @@ public class DatabaseFunctions
         return ReturnPlaylistNames;
     }
 
+    //Get list of Track IDs
+    public String[] GetTrackIDs(String UserID, String PlayListID)
+    {
+        //REPLACE WITH A DB CALL and pass UserID into it.
+
+        ArrayList<String> TrackIDs = new ArrayList<String>();
+
+        TrackIDs.add("1");
+        TrackIDs.add("2");
+        TrackIDs.add("3");
+
+        String[] ReturnTrackIDs = TrackIDs.toArray(new String[TrackIDs.size()]);
+
+        return ReturnTrackIDs;
+    }
+
+    //Get list of Track Names
+    public String[] GetTrackNames(String UserID, String PlayListID)
+    {
+        //REPLACE WITH A DB CALL and pass UserID into it.
+
+        ArrayList<String> TrackNames = new ArrayList<String>();
+
+        TrackNames.add("Harmonielehre");
+        TrackNames.add("Bouken Desho Desho");
+        TrackNames.add("Gangnam Style");
+
+        String[] ReturnTrackNames = TrackNames.toArray(new String[TrackNames.size()]);
+
+        return ReturnTrackNames;
+    }
+
     public String[] GetUserDetails(String UserID)
     {
         //REPLACE WITH A DB CALL and pass UserID into it.

@@ -2,8 +2,6 @@ package com.example.kirmi.ks1807;
 import android.content.*;
 import android.view.*;
 import android.app.AlertDialog;
-import java.util.ArrayList;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.*;
 
 public class ListView_Playlists extends ArrayAdapter<String>
@@ -47,7 +45,7 @@ public class ListView_Playlists extends ArrayAdapter<String>
                     AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
                     alertDialogBuilder.setTitle("Confirm deletion");
                     alertDialogBuilder
-                            .setMessage("Are you sure you wish to delete this music track?")
+                            .setMessage("Are you sure you wish to delete this playlist?")
                             .setCancelable(false)
                             .setPositiveButton("Yes",new DialogInterface.OnClickListener()
                             {
@@ -80,6 +78,7 @@ public class ListView_Playlists extends ArrayAdapter<String>
                 {
                     Intent intent = new Intent(v.getContext(), ThePlayList.class);
                     String ThePlayListID = FinalText_PlaylistID.getText().toString();
+                    intent.putExtra("UserID", ThePlayListID);
                     intent.putExtra("PlayListID", ThePlayListID);
                     context.startActivity(intent);
                 }
@@ -92,6 +91,7 @@ public class ListView_Playlists extends ArrayAdapter<String>
                 {
                     Intent intent = new Intent(v.getContext(), ThePlayList.class);
                     String ThePlayListID = FinalText_PlaylistID.getText().toString();
+                    intent.putExtra("UserID", ThePlayListID);
                     intent.putExtra("PlayListID", ThePlayListID);
                     context.startActivity(intent);
                 }

@@ -21,7 +21,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/text_EditUserCaption"
+            android:id="@+id/text_EditUser"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/EditPageCaption"
@@ -30,7 +30,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/Text_EditFirstNameCaption"
+            android:id="@+id/Text_EditFirstName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/FNameCaption"
@@ -47,7 +47,7 @@
             android:textSize="14sp" />
 
         <TextView
-            android:id="@+id/Text_EditLastNameCaption"
+            android:id="@+id/Text_EditLastName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/LNameCaption"
@@ -64,7 +64,7 @@
             android:textSize="14sp" />
 
         <TextView
-            android:id="@+id/Text_EditEmailCaption"
+            android:id="@+id/Text_EditEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/EmailCaption"
@@ -127,11 +127,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:checkedButton="@+id/RadioButton_EditMale"
+            android:checkedButton="@+id/RadioButton_EditEachTrack"
             android:orientation="horizontal">
 
             <RadioButton
-                android:id="@+id/RadioButton_EditMale"
+                android:id="@+id/RadioButton_EditEachTrack"
                 android:layout_width="129dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

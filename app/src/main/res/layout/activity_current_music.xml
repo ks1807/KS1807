@@ -136,24 +136,14 @@
             android:text="@string/ViewPlaylists_Caption" />
 
         <Button
-            android:id="@+id/btn_ChangeUserDetails"
+            android:id="@+id/btn_AccountDetails"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minHeight="10dp"
+            android:onClick="button_EditAccountDetails"
             android:paddingBottom="10dp"
             android:paddingTop="10dp"
-            android:onClick="button_EditUserDetails"
-            android:text="@string/ChangeUserDetails_Caption" />
-
-        <Button
-            android:id="@+id/btn_ChangePassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="10dp"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
-            android:onClick="button_ChangePassword"
-            android:text="@string/ChangePassword_Caption" />
+            android:text="@string/AccountDetails_Caption" />
 
         <Button
             android:id="@+id/btn_Logout"

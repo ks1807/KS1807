@@ -8,7 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
-public class ChangePassword extends AppCompatActivity
+public class Settings extends AppCompatActivity
 {
     private final Context context = this;
 
@@ -16,18 +16,9 @@ public class ChangePassword extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_change_password);
+        setContentView(R.layout.activity_settings);
     }
 
-    public void button_Submit(View view)
-    {
-        //Need to validate data here
-
-        Intent intent = new Intent(ChangePassword.this, AccountDetails.class);
-        startActivity(intent);
-    }
-
-    //Confirm if the user wants to go back if the button is pressed.
     public void button_Back(View view)
     {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
@@ -39,7 +30,7 @@ public class ChangePassword extends AppCompatActivity
                 {
                     public void onClick(DialogInterface dialog,int id)
                     {
-                        Intent intent = new Intent(ChangePassword.this, AccountDetails.class);
+                        Intent intent = new Intent(Settings.this, AccountDetails.class);
                         startActivity(intent);
                     }
                 })
@@ -52,5 +43,23 @@ public class ChangePassword extends AppCompatActivity
                 });
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
+    }
+
+    public void button_Submit(View view)
+    {
+        if (ValidateForm())
+        {
+            Intent intent = new Intent(Settings.this, AccountDetails.class);
+            startActivity(intent);
+        }
+    }
+
+    boolean ValidateForm()
+    {
+        boolean ValidationSuccessful = true;
+
+        //INSERT VALIDATION LOGIC AND ALERTS HERE
+
+        return ValidationSuccessful;
     }
 }

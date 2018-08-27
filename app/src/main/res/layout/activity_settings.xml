@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Settings">
+
+    <LinearLayout
+        android:id="@+id/Layout_EditSettings"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/text_EditSettings"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/Settings_Caption"
+            android:textAlignment="center"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="16dp" />
+
+        <TextView
+            android:id="@+id/Text_EditRecommendations"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/RecommendationsSetting_Caption"
+            android:textAlignment="center"
+            android:textSize="14sp" />
+
+        <ToggleButton
+            android:id="@+id/toggleButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ToggleButton"
+            android:textOff="@string/No_Caption"
+            android:textOn="@string/Yes_Caption" />
+
+        <TextView
+            android:id="@+id/Text_FrequencyOfMoodAlerts"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/MoodFrequencyAlertSettings_Caption"
+            android:textAlignment="center"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/Every_Caption" />
+
+        <RadioGroup
+            android:id="@+id/RadioGroup_FrequencySelect"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:checkedButton="@+id/RadioButton_EditEachTrack"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/RadioButton_EditEachTrack"
+                android:layout_width="129dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/AlertFrequencyEveryTrack_Caption" />
+
+            <RadioButton
+                android:id="@+id/RadioButton_EditFifteenMinutes"
+                android:layout_width="129dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/AlertFrequencyFifteenMinutes_Caption" />
+
+            <RadioButton
+                android:id="@+id/RadioButton_EditHour"
+                android:layout_width="129dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/AlertFrequencyHour_Caption" />
+        </RadioGroup>
+
+        <Button
+            android:id="@+id/btn_SubmitSettings"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="10dp"
+            android:onClick="button_Submit"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:text="@string/Submit_Caption" />
+
+        <Button
+            android:id="@+id/btn_BackSettings"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="10dp"
+            android:onClick="button_Back"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:text="@string/BackButtonCaption" />
+
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>

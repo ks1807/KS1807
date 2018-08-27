@@ -56,4 +56,14 @@
     <string name="ThePlaylistWelcome_Caption">The following tracks belong to this playlist</string>
     <string name="PlayListNName_Caption">Playlist Name</string>
     <string name="AddToPlayList_Caption">Add Track to this Playlist</string>
+    <string name="Settings_Caption">Settings</string>
+    <string name="RecommendationsSetting_Caption">Automatically Make Music Recommendations</string>
+    <string name="MoodFrequencyAlertSettings_Caption">How often do you want to receive alerts?</string>
+    <string name="AlertFrequencyEveryTrack_Caption">Per Track</string>
+    <string name="AlertFrequencyFifteenMinutes_Caption">15 Minutes</string>
+    <string name="Every_Caption">Every...</string>
+    <string name="AlertFrequencyHour_Caption">Hour</string>
+    <string name="AccountDetailsHeading_Caption">Which of your account details do you want to change?</string>
+    <string name="AccountDetails_Caption">Account Details</string>
+    <string name="ChangeSettings_Caption">Change Settings</string>
 </resources>

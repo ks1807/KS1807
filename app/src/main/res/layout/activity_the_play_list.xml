@@ -55,13 +55,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="16dp" />
 
-            <android.support.v7.widget.RecyclerView
+            <ListView
                 android:id="@+id/View_Tracks"
                 android:layout_width="match_parent"
-                android:layout_height="@android:dimen/thumbnail_width"
-                android:clickable="true"
-                android:focusable="true"
-                tools:listitem="@layout/tracks" />
+                android:layout_height="@android:dimen/thumbnail_width" />
         </LinearLayout>
 
         <Button
