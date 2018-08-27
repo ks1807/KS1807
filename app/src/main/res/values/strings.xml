@@ -66,4 +66,7 @@
     <string name="AccountDetailsHeading_Caption">Which of your account details do you want to change?</string>
     <string name="AccountDetails_Caption">Account Details</string>
     <string name="ChangeSettings_Caption">Change Settings</string>
+    <string name="Play_Caption">Play</string>
+    <string name="Pause_Caption">Pause</string>
+    <string name="Rewind_Caption">Rewind</string>
 </resources>

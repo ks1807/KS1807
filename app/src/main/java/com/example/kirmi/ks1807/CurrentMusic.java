@@ -112,4 +112,19 @@ public class CurrentMusic extends AppCompatActivity
         MoodAfter.setText(MusicDetails[7]);
     }
 
+    public void button_Play(View view)
+    {
+        //PLAY CODE HERE
+    }
+
+    public void button_Pause(View view)
+    {
+        //PAUSE CODE HERE
+    }
+
+    public void button_Rewind(View view)
+    {
+        //REWIND CODE HERE
+    }
+
 }
