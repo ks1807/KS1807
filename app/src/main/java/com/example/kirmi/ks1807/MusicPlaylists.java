@@ -11,6 +11,7 @@ public class MusicPlaylists extends AppCompatActivity
 {
     private final Context context = this;
     DatabaseFunctions PlayListFunctions = new DatabaseFunctions();
+    String UserID = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -20,7 +21,7 @@ public class MusicPlaylists extends AppCompatActivity
 
         //Get the UserID for this login session.
         Intent intent = getIntent();
-        String UserID = intent.getStringExtra("UserID");
+        UserID = intent.getStringExtra("UserID");
 
         DisplayPlaylists(UserID);
     }
@@ -46,6 +47,7 @@ public class MusicPlaylists extends AppCompatActivity
     public void Back(View view)
     {
         Intent intent = new Intent(MusicPlaylists.this, CurrentMusic.class);
+        intent.putExtra("UserID", UserID);
         startActivity(intent);
     }
 }

@@ -69,4 +69,5 @@
     <string name="Play_Caption">Play</string>
     <string name="Pause_Caption">Pause</string>
     <string name="Rewind_Caption">Rewind</string>
+    <string name="PasswordAgain_Caption">Enter your password again</string>
 </resources>

@@ -36,7 +36,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:contentDescription="@string/LandingPageLogoDescription"
-            app:srcCompat="@android:drawable/sym_def_app_icon" />
+            app:srcCompat="@android:drawable/sym_def_app_icon"
+            android:onClick="button_Experiment"/>
+        <!--Get rid of this last line when the experiment has been completed-->
 
         <TextView
             android:id="@+id/Text_LoginCaption"

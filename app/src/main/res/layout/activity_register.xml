@@ -7,7 +7,7 @@
     tools:context=".Register">
 
     <LinearLayout
-        android:id="@+id/linearLayout2"
+        android:id="@+id/Layout_RegisterPage"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginBottom="8dp"
@@ -109,7 +109,7 @@
             android:textSize="14sp" />
 
         <RadioGroup
-            android:id="@+id/GenderSelect"
+            android:id="@+id/RadioGroup_GenderSelect"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -142,6 +142,9 @@
             android:id="@+id/btn_Submit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:minHeight="10dp"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
             android:onClick="button_Next"
             android:text="@string/Next_Caption" />
 
@@ -149,6 +152,9 @@
             android:id="@+id/btn_BackRegister"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:minHeight="10dp"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
             android:onClick="button_Back"
             android:text="@string/BackButtonCaption" />
     </LinearLayout>

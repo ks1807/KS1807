@@ -25,7 +25,7 @@ public class ListView_Playlists extends ArrayAdapter<String>
             rowView.setFocusable(false);
 
             /*Hidden PlayList Field.*/
-            TextView TextView_PlayListID = (TextView) rowView.findViewById(R.id.Text_PlaylistID);
+            final TextView TextView_PlayListID = (TextView) rowView.findViewById(R.id.Text_PlaylistID);
             TextView_PlayListID.setText(PlayListID[position]);
 
             TextView TextView_PlayListName = (TextView) rowView.findViewById(R.id.Text_PlaylistName);
@@ -34,8 +34,6 @@ public class ListView_Playlists extends ArrayAdapter<String>
             //Handle buttons and add onClickListeners.
             Button EditButton = (Button)rowView.findViewById(R.id.btn_EditPlaylist);
             Button DeleteButton = (Button)rowView.findViewById(R.id.btn_DeletePlaylist);
-            TextView NameClick = (TextView)rowView.findViewById(R.id.Text_PlaylistName);
-            final TextView FinalText_PlaylistID = (TextView)rowView.findViewById(R.id.Text_PlaylistID);
 
             DeleteButton.setOnClickListener(new View.OnClickListener()
             {
@@ -77,7 +75,7 @@ public class ListView_Playlists extends ArrayAdapter<String>
                 public void onClick(View v)
                 {
                     Intent intent = new Intent(v.getContext(), ThePlayList.class);
-                    String ThePlayListID = FinalText_PlaylistID.getText().toString();
+                    String ThePlayListID = TextView_PlayListID.getText().toString();
 
                     //NEED TO GET THIS
                     String UserID = "DUMMY";
@@ -88,13 +86,13 @@ public class ListView_Playlists extends ArrayAdapter<String>
                 }
             });
 
-            NameClick.setOnClickListener(new View.OnClickListener()
+            TextView_PlayListName.setOnClickListener(new View.OnClickListener()
             {
                 @Override
                 public void onClick(View v)
                 {
                     Intent intent = new Intent(v.getContext(), ThePlayList.class);
-                    String ThePlayListID = FinalText_PlaylistID.getText().toString();
+                    String ThePlayListID = TextView_PlayListID.getText().toString();
 
                     //NEED TO GET THIS
                     String UserID = "DUMMY";

@@ -7,7 +7,7 @@
     tools:context=".MusicPlaylists">
 
     <LinearLayout
-        android:id="@+id/linearLayout3"
+        android:id="@+id/Layout_MusicPlaylist"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginBottom="8dp"

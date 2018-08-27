@@ -11,6 +11,7 @@ import android.view.View;
 public class ChangePassword extends AppCompatActivity
 {
     private final Context context = this;
+    String UserID = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -20,7 +21,7 @@ public class ChangePassword extends AppCompatActivity
 
         //Get the UserID for this login session.
         Intent intent = getIntent();
-        String UserID = intent.getStringExtra("UserID");
+        UserID = intent.getStringExtra("UserID");
     }
 
     public void button_Submit(View view)
@@ -28,6 +29,7 @@ public class ChangePassword extends AppCompatActivity
         if (ValidateForm())
         {
             Intent intent = new Intent(ChangePassword.this, AccountDetails.class);
+            intent.putExtra("UserID", UserID);
             startActivity(intent);
         }
     }
@@ -45,6 +47,7 @@ public class ChangePassword extends AppCompatActivity
                     public void onClick(DialogInterface dialog,int id)
                     {
                         Intent intent = new Intent(ChangePassword.this, AccountDetails.class);
+                        intent.putExtra("UserID", UserID);
                         startActivity(intent);
                     }
                 })

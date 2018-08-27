@@ -13,8 +13,9 @@ import android.widget.LinearLayout;
 public class CurrentMusic extends AppCompatActivity
 {
     private final Context context = this;
-    CommonFunctions Common = new CommonFunctions();
-    DatabaseFunctions MusicFunctions = new DatabaseFunctions();
+    final CommonFunctions Common = new CommonFunctions();
+    final DatabaseFunctions MusicFunctions = new DatabaseFunctions();
+    String UserID = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -24,7 +25,7 @@ public class CurrentMusic extends AppCompatActivity
 
         //Get the UserID for this login session.
         Intent intent = getIntent();
-        String UserID = intent.getStringExtra("UserID");
+        UserID = intent.getStringExtra("UserID");
 
         String[] MusicDetails;
         MusicDetails = MusicFunctions.GetMusicHistory(UserID);
@@ -75,12 +76,14 @@ public class CurrentMusic extends AppCompatActivity
     public void button_EditAccountDetails(View view)
     {
         Intent intent = new Intent(CurrentMusic.this, AccountDetails.class);
+        intent.putExtra("UserID", UserID);
         startActivity(intent);
     }
 
     public void button_ViewPlaylists(View view)
     {
         Intent intent = new Intent(CurrentMusic.this, MusicPlaylists.class);
+        intent.putExtra("UserID", UserID);
         startActivity(intent);
     }
 

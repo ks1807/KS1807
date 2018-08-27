@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ChangePassword">
+    tools:context=".RegisterThirdPage">
 
     <LinearLayout
-        android:id="@+id/Layout_Password"
+        android:id="@+id/Layout_ThirdRegisterPage"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginBottom="8dp"
@@ -17,64 +17,39 @@
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
         <TextView
-            android:id="@+id/Text_ChangePassword"
+            android:id="@+id/Text_SetPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/ChangePasswordPage_Caption"
-            android:textStyle="bold" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="24dp" />
-
-        <TextView
-            android:id="@+id/Text_OldPassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/OldPassword_Caption" />
+            android:text="@string/EditPasswordHintCaption" />
 
         <EditText
-            android:id="@+id/EditText_OldPassword"
+            android:id="@+id/EditText_FirstPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="@string/OldPassword_Caption"
             android:inputType="textPassword" />
 
         <TextView
-            android:id="@+id/Text_NewPassword"
+            android:id="@+id/Text_SetPasswordRepeat"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/NewPassword_Caption" />
+            android:text="@string/PasswordAgain_Caption" />
 
         <EditText
-            android:id="@+id/EditText_NewPassword"
+            android:id="@+id/EditText_SecondPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="@string/NewPassword_Caption"
-            android:inputType="textPassword" />
-
-        <TextView
-            android:id="@+id/Text_NewPasswordRepeat"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/NewPasswordAgain_Caption" />
-
-        <EditText
-            android:id="@+id/EditTextNewPasswordAgain"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="@string/NewPassword_Caption"
             android:inputType="textPassword" />
 
         <Button
-            android:id="@+id/btn_SubmitPassword"
+            android:id="@+id/btn_Submit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minHeight="10dp"
@@ -84,13 +59,13 @@
             android:text="@string/Submit_Caption" />
 
         <Button
-            android:id="@+id/btn_BackPassword"
+            android:id="@+id/btn_BackSecondRegister"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minHeight="10dp"
             android:paddingBottom="10dp"
             android:paddingTop="10dp"
-            android:text="@string/BackButtonCaption"
-            android:onClick="button_Back"/>
+            android:onClick="button_Back"
+            android:text="@string/BackButtonCaption" />
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

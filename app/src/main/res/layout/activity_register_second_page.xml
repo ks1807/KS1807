@@ -7,7 +7,7 @@
     tools:context=".RegisterSecondPage">
 
     <LinearLayout
-        android:id="@+id/linearLayout2"
+        android:id="@+id/Layout_SecondRegisterPage"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginBottom="8dp"
@@ -102,8 +102,8 @@
             android:id="@+id/RadioGroup_Mood"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:checkedButton="@+id/RadioButton_MoodYes">
+            android:checkedButton="@+id/RadioButton_MoodYes"
+            android:orientation="horizontal">
 
             <RadioButton
                 android:id="@+id/RadioButton_MoodYes"
@@ -124,13 +124,19 @@
             android:id="@+id/btn_Submit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="button_Submit"
-            android:text="@string/Submit_Caption" />
+            android:minHeight="10dp"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:onClick="button_Next"
+            android:text="@string/Next_Caption" />
 
         <Button
             android:id="@+id/btn_BackRegister"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:minHeight="10dp"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
             android:onClick="button_Back"
             android:text="@string/BackButtonCaption" />
     </LinearLayout>

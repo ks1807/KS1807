@@ -18,6 +18,10 @@ android {
     }
 }
 
+repositories {
+    maven { url "https://dl.bintray.com/hani-momanii/maven" }
+}
+
 dependencies
         {
             implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -27,4 +31,6 @@ dependencies
             androidTestImplementation 'com.android.support.test:runner:1.0.2'
             androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
             implementation 'com.android.support:design:26.1.0'
+            //Supernova Emoji
+            implementation 'hani.momanii.supernova_emoji_library:supernova-emoji-library:0.0.2'
         }

@@ -7,16 +7,23 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 public class RegisterSecondPage extends AppCompatActivity
 {
     private final Context context = this;
+    final CommonFunctions Common = new CommonFunctions();
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_second_page);
+
+        int unicode = 0x1F60A;
+        TextView FirstName = (TextView)findViewById(R.id.EditText_MusicListenQuestion);
+        FirstName.setText("Test " + Common.getEmojiByUnicode(unicode));
+
     }
 
     //Confirm if the user wants to go back if the button is pressed.
@@ -46,11 +53,11 @@ public class RegisterSecondPage extends AppCompatActivity
         alertDialog.show();
     }
 
-    public void button_Submit(View view)
+    public void button_Next(View view)
     {
         if (ValidateForm())
         {
-            Intent intent = new Intent(RegisterSecondPage.this, CurrentMusic.class);
+            Intent intent = new Intent(RegisterSecondPage.this, RegisterThirdPage.class);
             startActivity(intent);
         }
     }

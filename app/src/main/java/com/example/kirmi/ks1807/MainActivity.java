@@ -8,7 +8,7 @@ import android.view.View;
 
 public class MainActivity extends AppCompatActivity
 {
-    DatabaseFunctions UserFunctions = new DatabaseFunctions();
+    final DatabaseFunctions UserFunctions = new DatabaseFunctions();
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -19,8 +19,6 @@ public class MainActivity extends AppCompatActivity
 
     public void button_Login(View view)
     {
-        //Add login validation code here and make sure this new intent is wrapped in it
-
         if(ValidateLogin())
         {
             String UserID = UserFunctions.GetUserID();
@@ -41,6 +39,13 @@ public class MainActivity extends AppCompatActivity
     public void button_Register(View view)
     {
         Intent intent = new Intent(MainActivity.this, Register.class);
+        startActivity(intent);
+    }
+
+    //For Emoji Experiment - Not to be in the final application
+    public void button_Experiment(View view)
+    {
+        Intent intent = new Intent(MainActivity.this, EmojiExperiment.class);
         startActivity(intent);
     }
 

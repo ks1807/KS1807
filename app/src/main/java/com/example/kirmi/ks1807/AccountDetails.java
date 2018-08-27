@@ -7,6 +7,7 @@ import android.view.View;
 
 public class AccountDetails extends AppCompatActivity
 {
+    String UserID = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -16,30 +17,34 @@ public class AccountDetails extends AppCompatActivity
 
         //Get the UserID for this login session.
         Intent intent = getIntent();
-        String UserID = intent.getStringExtra("UserID");
+        UserID = intent.getStringExtra("UserID");
     }
 
     public void button_Back(View view)
     {
         Intent intent = new Intent(AccountDetails.this, CurrentMusic.class);
+        intent.putExtra("UserID", UserID);
         startActivity(intent);
     }
 
     public void button_ChangePassword(View view)
     {
         Intent intent = new Intent(AccountDetails.this, ChangePassword.class);
+        intent.putExtra("UserID", UserID);
         startActivity(intent);
     }
 
     public void button_ChangeSettings(View view)
     {
         Intent intent = new Intent(AccountDetails.this, Settings.class);
+        intent.putExtra("UserID", UserID);
         startActivity(intent);
     }
 
     public void button_EditUserDetails(View view)
     {
         Intent intent = new Intent(AccountDetails.this, EditUserDetails.class);
+        intent.putExtra("UserID", UserID);
         startActivity(intent);
     }
 }

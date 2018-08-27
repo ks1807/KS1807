@@ -41,7 +41,6 @@ public class ListView_Tracks extends ArrayAdapter<String>
 
         //Handle buttons and add onClickListeners.
         Button DeleteButton = (Button)rowView.findViewById(R.id.btn_DeleteFromPlaylist);
-        TextView NameClick = (TextView)rowView.findViewById(R.id.Text_TrackName);
 
         DeleteButton.setOnClickListener(new View.OnClickListener()
         {
@@ -77,7 +76,7 @@ public class ListView_Tracks extends ArrayAdapter<String>
             }
         });
 
-        NameClick.setOnClickListener(new View.OnClickListener()
+        TextView_TrackName.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)

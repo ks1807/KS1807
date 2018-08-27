@@ -21,7 +21,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/text_EditSettings"
+            android:id="@+id/Text_EditSettings"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/Settings_Caption"
