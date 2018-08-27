@@ -13,9 +13,9 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginTop="8dp"
+        android:background="@drawable/title_text"
         android:baselineAligned="false"
         android:gravity="center"
-        android:text="@string/LandingCaption"
         android:textAlignment="center"
         android:textSize="24sp"
         android:textStyle="bold"
@@ -38,7 +38,7 @@
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.137"
+        app:layout_constraintVertical_bias="0.216"
         app:srcCompat="@android:drawable/sym_def_app_icon"
         tools:ignore="MissingConstraints" />
 
@@ -72,8 +72,8 @@
     <EditText
         android:id="@+id/EditText_UserName"
         android:layout_width="310dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
+        android:layout_height="45dp"
+        android:layout_marginBottom="12dp"
         android:background="@drawable/email"
         android:ems="10"
         android:hint="Email"
@@ -88,8 +88,8 @@
     <EditText
         android:id="@+id/EditText_Password"
         android:layout_width="310dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="12dp"
+        android:layout_height="49dp"
+        android:layout_marginBottom="8dp"
         android:background="@drawable/password"
         android:ems="10"
         android:hint="@string/EditPasswordHintCaption"
@@ -99,21 +99,19 @@
         android:textColorHint="#fff"
         app:layout_constraintBottom_toTopOf="@+id/btn_Login"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/btn_Login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="44dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginBottom="28dp"
         android:background="@drawable/signin"
         android:onClick="button_Login"
         app:layout_constraintBottom_toTopOf="@+id/btn_Register"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/or2"
