@@ -1,1 +1,1 @@
-include ':app', ':ks1807'
+include ':app', ':spotify-app-remote'
