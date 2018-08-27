@@ -7,7 +7,7 @@
     tools:context=".CurrentMusic">
 
     <LinearLayout
-        android:id="@+id/linearLayout3"
+        android:id="@+id/Layout_MusicHistory"
         android:layout_width="0dp"
         android:layout_height="435dp"
         android:layout_marginBottom="8dp"
@@ -125,6 +125,46 @@
 
         </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/Layout_MusicButtons"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_Play"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:minHeight="5dp"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp"
+                android:onClick="button_Play"
+                android:text="@string/Play_Caption" />
+
+            <Button
+                android:id="@+id/btn_Pause"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:minHeight="5dp"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp"
+                android:onClick="button_Pause"
+                android:text="@string/Pause_Caption" />
+
+            <Button
+                android:id="@+id/btn_Rewind"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:minHeight="5dp"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp"
+                android:onClick="button_Rewind"
+                android:text="@string/Rewind_Caption" />
+        </LinearLayout>
+
         <Button
             android:id="@+id/btn_ViewPlaylists"
             android:layout_width="match_parent"
@@ -140,19 +180,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minHeight="10dp"
-            android:onClick="button_EditAccountDetails"
             android:paddingBottom="10dp"
             android:paddingTop="10dp"
-            android:text="@string/AccountDetails_Caption" />
+            android:text="@string/AccountDetails_Caption"
+            android:onClick="button_EditAccountDetails"/>
 
         <Button
             android:id="@+id/btn_Logout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minHeight="10dp"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
             android:onClick="button_Logout"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
             android:text="@string/Logout_Caption" />
     </LinearLayout>
 

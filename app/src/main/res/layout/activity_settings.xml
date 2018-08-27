@@ -21,7 +21,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/text_EditSettings"
+            android:id="@+id/Text_EditSettings"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/Settings_Caption"
@@ -42,9 +42,10 @@
             android:textSize="14sp" />
 
         <ToggleButton
-            android:id="@+id/toggleButton"
+            android:id="@+id/ToggleButton_AutoMakeRecommendations"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:checked="true"
             android:text="ToggleButton"
             android:textOff="@string/No_Caption"
             android:textOn="@string/Yes_Caption" />
@@ -57,41 +58,20 @@
             android:textAlignment="center"
             android:textSize="14sp" />
 
-        <TextView
-            android:id="@+id/textView"
+        <LinearLayout
+            android:id="@+id/Layout_Spinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/Every_Caption" />
-
-        <RadioGroup
-            android:id="@+id/RadioGroup_FrequencySelect"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:checkedButton="@+id/RadioButton_EditEachTrack"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:id="@+id/RadioButton_EditEachTrack"
-                android:layout_width="129dp"
+            android:orientation="vertical"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp">
+            <Spinner
+                android:id="@+id/Spinner_AlertFrequency"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/AlertFrequencyEveryTrack_Caption" />
-
-            <RadioButton
-                android:id="@+id/RadioButton_EditFifteenMinutes"
-                android:layout_width="129dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/AlertFrequencyFifteenMinutes_Caption" />
-
-            <RadioButton
-                android:id="@+id/RadioButton_EditHour"
-                android:layout_width="129dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/AlertFrequencyHour_Caption" />
-        </RadioGroup>
+                android:spinnerMode="dropdown" />
+        </LinearLayout>
 
         <Button
             android:id="@+id/btn_SubmitSettings"

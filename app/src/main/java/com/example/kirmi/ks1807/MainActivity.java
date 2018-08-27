@@ -19,6 +19,7 @@ public class MainActivity extends AppCompatActivity
     private static final String CLIENT_ID = "9a7355bd24ff4544b4bdada73483aaa0";
     private static final String REDIRECT_URI = "com.example.kirmi.ks1807://callback";
     private SpotifyAppRemote mSpotifyAppRemote;
+    final DatabaseFunctions UserFunctions = new DatabaseFunctions();
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -29,10 +30,14 @@ public class MainActivity extends AppCompatActivity
 
     public void button_Login(View view)
     {
-        //Add login validation code here and make sure this new intent is wrapped in it
+        if(ValidateLogin())
+        {
+            String UserID = UserFunctions.GetUserID();
 
-        Intent intent = new Intent(MainActivity.this, CurrentMusic.class);
-        startActivity(intent);
+            Intent intent = new Intent(MainActivity.this, CurrentMusic.class);
+            intent.putExtra("UserID", UserID);
+            startActivity(intent);
+        }
     }
 
     public void button_LoginSpotify(View view)
@@ -86,4 +91,19 @@ public class MainActivity extends AppCompatActivity
         SpotifyAppRemote.CONNECTOR.disconnect(mSpotifyAppRemote);
     }
     ///---SPOTIFY TEST CODE---
+    //For Emoji Experiment - Not to be in the final application
+    public void button_Experiment(View view)
+    {
+        Intent intent = new Intent(MainActivity.this, EmojiExperiment.class);
+        startActivity(intent);
+    }
+
+    private boolean ValidateLogin()
+    {
+        boolean ValidationSuccessful = true;
+
+        //INSERT VALIDATION LOGIC AND ALERTS HERE
+
+        return ValidationSuccessful;
+    }
 }

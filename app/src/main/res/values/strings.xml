@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">KS1807</string>
-    <string name="LandingCaption">Welcome to Music for Mental Health</string>
+    <string name="LandingCaption">Music for Mental Health</string>
     <string name="LoginCaption">Login to your account below</string>
     <string name="SpotifyCaption">Have a Spotify Account? Login with the button below</string>
     <string name="RegisterCaption">Don\'t have an account? Register below</string>
@@ -66,4 +66,8 @@
     <string name="AccountDetailsHeading_Caption">Which of your account details do you want to change?</string>
     <string name="AccountDetails_Caption">Account Details</string>
     <string name="ChangeSettings_Caption">Change Settings</string>
+    <string name="Play_Caption">Play</string>
+    <string name="Pause_Caption">Pause</string>
+    <string name="Rewind_Caption">Rewind</string>
+    <string name="PasswordAgain_Caption">Enter your password again</string>
 </resources>

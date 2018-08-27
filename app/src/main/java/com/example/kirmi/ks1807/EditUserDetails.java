@@ -13,8 +13,9 @@ import android.widget.RadioButton;
 public class EditUserDetails extends AppCompatActivity
 {
     private final Context context = this;
-    CommonFunctions Common = new CommonFunctions();
-    DatabaseFunctions UserFunctions = new DatabaseFunctions();
+    final CommonFunctions Common = new CommonFunctions();
+    final DatabaseFunctions UserFunctions = new DatabaseFunctions();
+    String UserID = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -24,7 +25,7 @@ public class EditUserDetails extends AppCompatActivity
 
         //Get the UserID for this login session.
         Intent intent = getIntent();
-        String UserID = intent.getStringExtra("UserID");
+        UserID = intent.getStringExtra("UserID");
 
         String[] UserDetails;
         UserDetails = UserFunctions.GetUserDetails(UserID);
@@ -44,6 +45,7 @@ public class EditUserDetails extends AppCompatActivity
                     public void onClick(DialogInterface dialog,int id)
                     {
                         Intent intent = new Intent(EditUserDetails.this, AccountDetails.class);
+                        intent.putExtra("UserID", UserID);
                         startActivity(intent);
                     }
                 })
@@ -63,6 +65,7 @@ public class EditUserDetails extends AppCompatActivity
         if (ValidateForm())
         {
             Intent intent = new Intent(EditUserDetails.this, AccountDetails.class);
+            intent.putExtra("UserID", UserID);
             startActivity(intent);
         }
     }
@@ -104,7 +107,7 @@ public class EditUserDetails extends AppCompatActivity
         }
     }
 
-    boolean ValidateForm()
+    private boolean ValidateForm()
     {
         boolean ValidationSuccessful = true;
 

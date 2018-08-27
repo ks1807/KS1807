@@ -105,4 +105,10 @@ public class DatabaseFunctions
 
         return ReturnUserDetails;
     }
+
+    public String GetUserID()
+    {
+        String UserID = "DUMMY";
+        return UserID;
+    }
 }

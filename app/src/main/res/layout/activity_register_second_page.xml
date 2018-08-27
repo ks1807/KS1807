@@ -7,7 +7,7 @@
     tools:context=".RegisterSecondPage">
 
     <LinearLayout
-        android:id="@+id/linearLayout2"
+        android:id="@+id/Layout_SecondRegisterPage"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginBottom="8dp"
@@ -23,7 +23,7 @@
         app:layout_constraintVertical_bias="0.0">
 
         <TextView
-            android:id="@+id/text_EmailCaption2"
+            android:id="@+id/Text_Email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/EmailCaption"
@@ -31,7 +31,7 @@
             android:textSize="14sp" />
 
         <EditText
-            android:id="@+id/editText_Email"
+            android:id="@+id/EditText_Email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -48,7 +48,7 @@
             android:textSize="14sp" />
 
         <EditText
-            android:id="@+id/EditTest_MusicApp"
+            android:id="@+id/EditText_MusicApp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -74,7 +74,7 @@
             android:textSize="14sp" />
 
         <TextView
-            android:id="@+id/text_MusicListenQuestion"
+            android:id="@+id/Text_MusicListenQuestion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/MusicMoodQuestion_Caption"
@@ -82,7 +82,7 @@
             android:textSize="14sp" />
 
         <EditText
-            android:id="@+id/text_MusicMoodQuestion"
+            android:id="@+id/EditText_MusicListenQuestion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -102,8 +102,8 @@
             android:id="@+id/RadioGroup_Mood"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:checkedButton="@+id/RadioButton_MoodYes">
+            android:checkedButton="@+id/RadioButton_MoodYes"
+            android:orientation="horizontal">
 
             <RadioButton
                 android:id="@+id/RadioButton_MoodYes"
@@ -124,13 +124,19 @@
             android:id="@+id/btn_Submit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="button_Submit"
-            android:text="@string/Submit_Caption" />
+            android:minHeight="10dp"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:onClick="button_Next"
+            android:text="@string/Next_Caption" />
 
         <Button
             android:id="@+id/btn_BackRegister"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:minHeight="10dp"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
             android:onClick="button_Back"
             android:text="@string/BackButtonCaption" />
     </LinearLayout>

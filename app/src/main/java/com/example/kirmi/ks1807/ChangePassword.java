@@ -11,20 +11,27 @@ import android.view.View;
 public class ChangePassword extends AppCompatActivity
 {
     private final Context context = this;
+    String UserID = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_password);
+
+        //Get the UserID for this login session.
+        Intent intent = getIntent();
+        UserID = intent.getStringExtra("UserID");
     }
 
     public void button_Submit(View view)
     {
-        //Need to validate data here
-
-        Intent intent = new Intent(ChangePassword.this, AccountDetails.class);
-        startActivity(intent);
+        if (ValidateForm())
+        {
+            Intent intent = new Intent(ChangePassword.this, AccountDetails.class);
+            intent.putExtra("UserID", UserID);
+            startActivity(intent);
+        }
     }
 
     //Confirm if the user wants to go back if the button is pressed.
@@ -40,6 +47,7 @@ public class ChangePassword extends AppCompatActivity
                     public void onClick(DialogInterface dialog,int id)
                     {
                         Intent intent = new Intent(ChangePassword.this, AccountDetails.class);
+                        intent.putExtra("UserID", UserID);
                         startActivity(intent);
                     }
                 })
@@ -52,5 +60,14 @@ public class ChangePassword extends AppCompatActivity
                 });
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
+    }
+
+    private boolean ValidateForm()
+    {
+        boolean ValidationSuccessful = true;
+
+        //INSERT VALIDATION LOGIC AND ALERTS HERE
+
+        return ValidationSuccessful;
     }
 }

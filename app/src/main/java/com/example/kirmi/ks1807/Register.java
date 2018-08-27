@@ -55,7 +55,7 @@ public class Register extends AppCompatActivity
         }
     }
 
-    boolean ValidateForm()
+    private boolean ValidateForm()
     {
         boolean ValidationSuccessful = true;
 

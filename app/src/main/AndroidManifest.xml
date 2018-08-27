@@ -30,7 +30,9 @@
         <activity android:name=".MusicPlaylists" />
         <activity android:name=".ThePlayList" />
         <activity android:name=".Settings" />
-        <activity android:name=".AccountDetails"></activity>
+        <activity android:name=".AccountDetails" />
+        <activity android:name=".RegisterThirdPage" />
+        <activity android:name=".EmojiExperiment"></activity>
     </application>
 
 </manifest>
