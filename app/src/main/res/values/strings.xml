@@ -68,6 +68,6 @@
     <string name="ChangeSettings_Caption">Change Settings</string>
     <string name="Play_Caption">Play</string>
     <string name="Pause_Caption">Pause</string>
-    <string name="Rewind_Caption">Rewind</string>
+    <string name="Skip_Caption">Skip</string>
     <string name="PasswordAgain_Caption">Enter your password again</string>
 </resources>

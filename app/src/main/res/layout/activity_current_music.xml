@@ -154,15 +154,15 @@
                 android:text="@string/Pause_Caption" />
 
             <Button
-                android:id="@+id/btn_Rewind"
+                android:id="@+id/btn_Skip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:minHeight="5dp"
+                android:onClick="button_Skip"
                 android:paddingBottom="5dp"
                 android:paddingTop="5dp"
-                android:onClick="button_Rewind"
-                android:text="@string/Rewind_Caption" />
+                android:text="@string/Skip_Caption" />
         </LinearLayout>
 
         <Button

@@ -1,14 +1,29 @@
 package com.example.kirmi.ks1807;
 
 import android.app.AlertDialog;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.ServiceConnection;
+import android.os.IBinder;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
+
+import com.spotify.android.appremote.api.SpotifyAppRemote;
+import com.spotify.protocol.client.CallResult;
+import com.spotify.protocol.client.ErrorCallback;
+import com.spotify.protocol.client.Result;
+import com.spotify.protocol.types.PlayerState;
+import com.spotify.protocol.types.Track;
+
+import java.util.concurrent.TimeUnit;
 
 public class CurrentMusic extends AppCompatActivity
 {
@@ -16,6 +31,64 @@ public class CurrentMusic extends AppCompatActivity
     final CommonFunctions Common = new CommonFunctions();
     final DatabaseFunctions MusicFunctions = new DatabaseFunctions();
     String UserID = "";
+    spotifyService mService;
+    PlayerState playerState;
+    boolean mBound;
+
+    @Override
+    protected void onStop()
+    {
+        super.onStop();
+        unbindService(mConnection);
+        Toast.makeText(context, "DISCONNECTED SERVICE", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    protected void onStart()
+    {
+        super.onStart();
+        Intent intent = new Intent(this, spotifyService.class);
+        bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+    }
+
+    private ServiceConnection mConnection = new ServiceConnection() {
+
+        @Override
+        public void onServiceConnected(ComponentName className, IBinder service) {
+            spotifyService.LocalBinder binder = (spotifyService.LocalBinder) service;
+            mService = binder.getService();
+            try{
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {}
+            updatePlayerState();
+            Toast.makeText(context, "CONNECTED SERVICE", Toast.LENGTH_LONG).show();
+            mBound = true;
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName arg0) {
+            mBound = false;
+        }
+    };
+
+    private void updatePlayerState() {
+        Log.e("CurrentMusic", "BEGUN");
+        mService.mSpotifyAppRemote.getPlayerApi().getPlayerState()
+                .setResultCallback(new CallResult.ResultCallback<PlayerState>() {
+                    @Override
+                    public void onResult(PlayerState mPlayerState) {
+                        playerState = mPlayerState;
+                        Log.e("CurrentMusic", "ENDED");
+                        updateNames(playerState);
+                    }
+                })
+                .setErrorCallback(new ErrorCallback() {
+                    @Override
+                    public void onError(Throwable throwable) {
+                        Log.e("CurrentMusic", throwable.getMessage());
+                    }
+                });
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -29,13 +102,12 @@ public class CurrentMusic extends AppCompatActivity
 
         String[] MusicDetails;
         MusicDetails = MusicFunctions.GetMusicHistory(UserID);
-        DisplayUserName(MusicDetails);
 
         /*Check if the user has a prior history of listening to music through this app.
         If not then make the history fields invisible*/
         if (MusicDetails.length != 0)
         {
-            DisplayMusicHistory(MusicDetails);
+            //DisplayMusicHistory(MusicDetails);
         }
         else
         {
@@ -94,40 +166,51 @@ public class CurrentMusic extends AppCompatActivity
                 + ": " + MusicDetails[0] + " " + MusicDetails[1] + "!");
     }
 
-    public void DisplayMusicHistory(String[] MusicDetails)
+    private void updateNames(PlayerState playerState)
     {
         TextView TrackName = (TextView)findViewById(R.id.Text_TrackNameDisplay);
-        TrackName.setText(MusicDetails[2]);
-
         TextView TrackGenre = (TextView)findViewById(R.id.Text_TrackGenreDisplay);
-        TrackGenre.setText(MusicDetails[3]);
-
         TextView TrackArtist = (TextView)findViewById(R.id.Text_TrackArtistDisplay);
-        TrackArtist.setText(MusicDetails[4]);
-
         TextView TrackLength = (TextView)findViewById(R.id.Text_TrackLengthDisplay);
-        TrackLength.setText(MusicDetails[5]);
-
         TextView MoodBefore = (TextView)findViewById(R.id.Text_TrackMoodBeforeDisplay);
-        MoodBefore.setText(MusicDetails[6]);
-
         TextView MoodAfter = (TextView)findViewById(R.id.Text_TrackMoodAfterDisplay);
-        MoodAfter.setText(MusicDetails[7]);
+        Track track = playerState.track;
+        TrackName.setText(track.name);
+        TrackGenre.setText("Example Genre");
+        TrackArtist.setText(track.artist.name);
+        TrackLength.setText(DateUtils.formatElapsedTime(((int)track.duration)/1000));
+        MoodBefore.setText("Sad");
+        MoodAfter.setText("Happy");
     }
 
     public void button_Play(View view)
     {
-        //PLAY CODE HERE
+        mService.mSpotifyAppRemote.getPlayerApi().resume();
+        try{
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {}
+        updatePlayerState();
+        updateNames(playerState);
     }
 
     public void button_Pause(View view)
     {
-        //PAUSE CODE HERE
+        mService.mSpotifyAppRemote.getPlayerApi().pause();
+        try{
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {}
+        updatePlayerState();
+        updateNames(playerState);
     }
 
-    public void button_Rewind(View view)
+    public void button_Skip(View view)
     {
-        //REWIND CODE HERE
+        mService.mSpotifyAppRemote.getPlayerApi().skipNext();
+        try{
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {}
+        updatePlayerState();
+        updateNames(playerState);
     }
 
 }
