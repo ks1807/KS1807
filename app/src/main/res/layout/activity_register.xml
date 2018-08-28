@@ -26,19 +26,14 @@
             android:id="@+id/Text_Register"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="14dp"
             android:text="@string/RegisterPageCaption"
             android:textAlignment="center"
             android:textSize="18sp"
             android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/Text_FirstName"
+        <Space
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/FNameCaption"
-            android:textAlignment="center"
-            android:textSize="14sp" />
+            android:layout_height="18dp" />
 
         <EditText
             android:id="@+id/EditText_FirstName"
@@ -49,13 +44,9 @@
             android:inputType="textPersonName"
             android:textSize="14sp" />
 
-        <TextView
-            android:id="@+id/Text_LastName"
+        <Space
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/LNameCaption"
-            android:textAlignment="center"
-            android:textSize="14sp" />
+            android:layout_height="14dp" />
 
         <EditText
             android:id="@+id/EditText_LastName"
@@ -66,30 +57,48 @@
             android:inputType="textPersonName"
             android:textSize="14sp" />
 
-        <TextView
-            android:id="@+id/Text_UserNameCaption"
+        <Space
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/PreferredUserName_Caption"
-            android:textAlignment="center"
-            android:textSize="14sp" />
+            android:layout_height="14dp" />
 
         <EditText
-            android:id="@+id/EditText_UserName"
+            android:id="@+id/EditText_Email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="@string/Username_Caption"
+            android:hint="@string/EmailCaption"
             android:inputType="textPersonName"
             android:textSize="14sp" />
 
-        <TextView
-            android:id="@+id/Text_Age"
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="14dp" />
+
+        <EditText
+            android:id="@+id/editText_SecondPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/Age_Caption"
-            android:textAlignment="center"
+            android:ems="10"
+            android:hint="@string/EditPasswordHintCaption"
+            android:inputType="textPassword"
             android:textSize="14sp" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="14dp" />
+
+        <EditText
+            android:id="@+id/editText_FirstPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/NewPassword_Caption"
+            android:inputType="textPassword"
+            android:textSize="14sp" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="14dp" />
 
         <EditText
             android:id="@+id/EditText_Age"
@@ -100,13 +109,9 @@
             android:inputType="number"
             android:textSize="14sp" />
 
-        <TextView
-            android:id="@+id/Text_GenderCaption"
+        <Space
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/Gender_Caption"
-            android:textAlignment="center"
-            android:textSize="14sp" />
+            android:layout_height="14dp" />
 
         <RadioGroup
             android:id="@+id/RadioGroup_GenderSelect"
@@ -115,6 +120,15 @@
             android:layout_weight="1"
             android:checkedButton="@+id/RadioButton_EditEachTrack"
             android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/imageButton"
+                android:layout_width="83dp"
+                android:layout_height="32dp"
+                android:layout_weight="1"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                app:srcCompat="@drawable/ic_action_keyboard" />
 
             <RadioButton
                 android:id="@+id/RadioButton_EditEachTrack"

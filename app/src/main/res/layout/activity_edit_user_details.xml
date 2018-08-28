@@ -20,22 +20,23 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/text_EditUser"
+        <ImageView
+            android:id="@+id/imageView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/EditPageCaption"
-            android:textAlignment="center"
-            android:textSize="14sp"
-            android:textStyle="bold" />
+            app:srcCompat="@mipmap/ic_launcher_round" />
 
         <TextView
-            android:id="@+id/Text_EditFirstName"
+            android:id="@+id/Text_EditProfilePicture"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/FNameCaption"
+            android:text="@string/EditProfilePicture_Caption"
             android:textAlignment="center"
             android:textSize="14sp" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="18dp" />
 
         <EditText
             android:id="@+id/EditText_EditFirstname"
@@ -46,13 +47,9 @@
             android:inputType="textPersonName"
             android:textSize="14sp" />
 
-        <TextView
-            android:id="@+id/Text_EditLastName"
+        <Space
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/LNameCaption"
-            android:textAlignment="center"
-            android:textSize="14sp" />
+            android:layout_height="14dp" />
 
         <EditText
             android:id="@+id/EditText_EditLastName"
@@ -63,13 +60,9 @@
             android:inputType="textPersonName"
             android:textSize="14sp" />
 
-        <TextView
-            android:id="@+id/Text_EditEmail"
+        <Space
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/EmailCaption"
-            android:textAlignment="center"
-            android:textSize="14sp" />
+            android:layout_height="14dp" />
 
         <EditText
             android:id="@+id/EditText_EditEmail"
@@ -80,13 +73,9 @@
             android:inputType="textPersonName"
             android:textSize="14sp" />
 
-        <TextView
-            android:id="@+id/Text_EditAge"
+        <Space
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/Age_Caption"
-            android:textAlignment="center"
-            android:textSize="14sp" />
+            android:layout_height="14dp" />
 
         <EditText
             android:id="@+id/EditText_EditAge"
@@ -97,13 +86,9 @@
             android:inputType="number"
             android:textSize="14sp" />
 
-        <TextView
-            android:id="@+id/Text_EditMusicApp"
+        <Space
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/PreferredApp_Caption"
-            android:textAlignment="center"
-            android:textSize="14sp" />
+            android:layout_height="14dp" />
 
         <EditText
             android:id="@+id/EditText_EditMusicApp"
@@ -114,13 +99,9 @@
             android:inputType="textPersonName"
             android:textSize="14sp" />
 
-        <TextView
-            android:id="@+id/Text_EditGender"
+        <Space
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/Gender_Caption"
-            android:textAlignment="center"
-            android:textSize="14sp" />
+            android:layout_height="14dp" />
 
         <RadioGroup
             android:id="@+id/GenderSelect"
@@ -129,6 +110,15 @@
             android:layout_weight="1"
             android:checkedButton="@+id/RadioButton_EditEachTrack"
             android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/imageButton2"
+                android:layout_width="83dp"
+                android:layout_height="32dp"
+                android:layout_weight="1"
+                android:paddingEnd="10dp"
+                android:paddingStart="10dp"
+                app:srcCompat="@drawable/ic_action_keyboard" />
 
             <RadioButton
                 android:id="@+id/RadioButton_EditEachTrack"
@@ -150,27 +140,29 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/OtherCaption" />
+
         </RadioGroup>
+
+        <Button
+            android:id="@+id/btn_SubmitEdit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:minHeight="10dp"
+            android:onClick="button_Submit"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:text="@string/Submit_Caption" />
 
         <Button
             android:id="@+id/btn_BackEditUser"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minHeight="10dp"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
             android:onClick="button_Back"
-            android:text="@string/BackButtonCaption" />
-
-        <Button
-            android:id="@+id/btn_SubmitEdit"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="10dp"
-            android:paddingTop="10dp"
             android:paddingBottom="10dp"
-            android:onClick="button_Submit"
-            android:text="@string/Submit_Caption" />
+            android:paddingTop="10dp"
+            android:text="@string/BackButtonCaption" />
 
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

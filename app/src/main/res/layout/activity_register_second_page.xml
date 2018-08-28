@@ -23,29 +23,17 @@
         app:layout_constraintVertical_bias="0.0">
 
         <TextView
-            android:id="@+id/Text_Email"
+            android:id="@+id/Text_Register"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/EmailCaption"
+            android:text="@string/RegisterSecondPage_Caption"
             android:textAlignment="center"
-            android:textSize="14sp" />
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
-        <EditText
-            android:id="@+id/EditText_Email"
+        <Space
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="@string/EmailCaption"
-            android:inputType="textPersonName"
-            android:textSize="14sp" />
-
-        <TextView
-            android:id="@+id/Text_MusicApp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/PreferredApp_Caption"
-            android:textAlignment="center"
-            android:textSize="14sp" />
+            android:layout_height="18dp" />
 
         <EditText
             android:id="@+id/EditText_MusicApp"
@@ -55,6 +43,10 @@
             android:hint="@string/PreferredApp_Caption"
             android:inputType="textPersonName"
             android:textSize="14sp" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="14dp" />
 
         <TextView
             android:id="@+id/Text_GeneralMood"
@@ -73,6 +65,10 @@
             android:inputType="textPersonName"
             android:textSize="14sp" />
 
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="14dp" />
+
         <TextView
             android:id="@+id/Text_MusicListenQuestion"
             android:layout_width="match_parent"
@@ -89,6 +85,10 @@
             android:hint="@string/MoodExamples_Caption"
             android:inputType="textPersonName"
             android:textSize="14sp" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="14dp" />
 
         <TextView
             android:id="@+id/Text_MusicImproveQuestion"
@@ -120,15 +120,19 @@
                 android:text="@string/No_Caption" />
         </RadioGroup>
 
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="14dp" />
+
         <Button
             android:id="@+id/btn_Submit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minHeight="10dp"
+            android:onClick="button_Next"
             android:paddingBottom="10dp"
             android:paddingTop="10dp"
-            android:onClick="button_Next"
-            android:text="@string/Next_Caption" />
+            android:text="@string/RegistrationSubmit_Caption" />
 
         <Button
             android:id="@+id/btn_BackRegister"

@@ -10,7 +10,7 @@
     <string name="EditUserNameHintCaption">User Name</string>
     <string name="EditPasswordHintCaption">Password</string>
     <string name="LandingPageLogoDescription">Landing Page Logo</string>
-    <string name="RegisterPageCaption">Please register your details below</string>
+    <string name="RegisterPageCaption">Create an Account</string>
     <string name="FNameCaption">First Name</string>
     <string name="BackButtonCaption">Back</string>
     <string name="LNameCaption">Last Name</string>
@@ -35,7 +35,7 @@
     <string name="ChangeUserDetails_Caption">Change Details</string>
     <string name="ChangePasswordPage_Caption">Please specify your old password and the new password</string>
     <string name="OldPassword_Caption">Old Password</string>
-    <string name="NewPassword_Caption">New Password</string>
+    <string name="NewPassword_Caption">Confirm Password</string>
     <string name="NewPasswordAgain_Caption">Enter your new password again</string>
     <string name="EditPageCaption">Edit your current information below</string>
     <string name="PreferredUserName_Caption">Preferred User Name</string>
@@ -70,4 +70,7 @@
     <string name="Pause_Caption">Pause</string>
     <string name="Skip_Caption">Skip</string>
     <string name="PasswordAgain_Caption">Enter your password again</string>
+    <string name="RegistrationSubmit_Caption">Register Now</string>
+    <string name="RegisterSecondPage_Caption">Your music</string>
+    <string name="EditProfilePicture_Caption">Edit your profile picture</string>
 </resources>

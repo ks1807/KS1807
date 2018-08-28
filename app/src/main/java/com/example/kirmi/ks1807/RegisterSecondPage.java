@@ -19,11 +19,6 @@ public class RegisterSecondPage extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_second_page);
-
-        int unicode = 0x1F60A;
-        TextView FirstName = (TextView)findViewById(R.id.EditText_MusicListenQuestion);
-        FirstName.setText("Test " + Common.getEmojiByUnicode(unicode));
-
     }
 
     //Confirm if the user wants to go back if the button is pressed.
@@ -57,7 +52,7 @@ public class RegisterSecondPage extends AppCompatActivity
     {
         if (ValidateForm())
         {
-            Intent intent = new Intent(RegisterSecondPage.this, RegisterThirdPage.class);
+            Intent intent = new Intent(RegisterSecondPage.this, CurrentMusic.class);
             startActivity(intent);
         }
     }
