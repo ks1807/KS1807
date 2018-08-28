@@ -31,7 +31,7 @@
         android:layout_toLeftOf="@id/submit_btn"
         android:layout_toRightOf="@id/emoji_btn"
         emojicon:emojiconSize="28sp"
-        emojicon:emojiconUseSystemDefault="true"/>
+        emojicon:emojiconUseSystemDefault="false"/>
 
     <hani.momanii.supernova_emoji_library.Helper.EmojiconTextView
         android:id="@+id/textView"
@@ -44,6 +44,6 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="#000000"
         emojicon:emojiconSize="45sp"
-        emojicon:emojiconUseSystemDefault="true" />
+        emojicon:emojiconUseSystemDefault="false" />
 
 </RelativeLayout>
