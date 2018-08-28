@@ -37,19 +37,7 @@ public class EmojiExperiment extends AppCompatActivity
         emojIcon = new EmojIconActions(this, rootView, emojiconEditText, emojiImageView);
         emojIcon.ShowEmojIcon();
         emojIcon.setIconsIds(R.drawable.ic_action_keyboard, R.drawable.smiley);
-        emojIcon.setKeyboardListener(new EmojIconActions.KeyboardListener()
-        {
-            @Override
-            public void onKeyboardOpen()
-            {
-                Log.e(TAG, "Keyboard opened!");
-            }
 
-            @Override
-            public void onKeyboardClose() {
-                Log.e(TAG, "Keyboard closed");
-            }
-        });
 
         submitButton.setOnClickListener(new View.OnClickListener()
         {
@@ -59,7 +47,8 @@ public class EmojiExperiment extends AppCompatActivity
                 String newText = emojiconEditText.getText().toString();
                 textView.setText(newText);
                 String Test = newText;
-                Test = Test + " Blah";
+                Test = Test.toLowerCase();
+                textView.setText(Test);
             }
         });
     }

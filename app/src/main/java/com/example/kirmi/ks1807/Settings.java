@@ -33,7 +33,7 @@ public class Settings extends AppCompatActivity
     //Add options to the spinner
     public void AddAlertFrequencies()
     {
-        Spinner AlertFrequencyDropdown = findViewById(R.id.Spinner_AlertFrequency);
+        Spinner AlertFrequencyDropdown = (Spinner)findViewById(R.id.Spinner_AlertFrequency);
         String[] Frequencies = GetTrackFrequencies();
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>
