@@ -9,6 +9,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.RadioButton;
+import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.annotation.NonNull;
+import android.view.MenuItem;
 
 public class EditUserDetails extends AppCompatActivity
 {
@@ -22,6 +27,34 @@ public class EditUserDetails extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_user_details);
+
+        BottomNavigationView bottomNavigationView = (BottomNavigationView)
+                findViewById(R.id.navigation);
+
+        bottomNavigationView.setOnNavigationItemSelectedListener
+                (new BottomNavigationView.OnNavigationItemSelectedListener() {
+                     @Override
+                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                         Fragment selectedFragment = null;
+                         switch (item.getItemId()) {
+                             case R.id.btn_Home:
+                                 selectedFragment = BottomNavigationOption_One.newInstance();
+                                 break;
+                             case R.id.btn_Library:
+                                 selectedFragment = BottomNavigationOption_Two.newInstance();
+                                 break;
+                         }
+                         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                         transaction.replace(R.id.frame_layout, selectedFragment);
+                         transaction.commit();
+                         return true;
+                     }
+                 });
+
+        //Manually displaying the first fragment - one time only
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frame_layout, BottomNavigationOption_One.newInstance());
+        transaction.commit();
 
         //Get the UserID for this login session.
         Intent intent = getIntent();

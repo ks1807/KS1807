@@ -11,7 +11,8 @@ import com.spotify.android.appremote.api.SpotifyAppRemote;
 
 public class spotifyActiveReceiver extends BroadcastReceiver
 {
-    public void onReceive(Context context, Intent intent) {
+    public void onReceive(Context context, Intent intent)
+    {
         context.startService(new Intent(context, spotifyService.class));
     }
 }

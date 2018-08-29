@@ -1,43 +1,12 @@
-<android.support.v7.widget.Toolbar  xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/actionbarT"
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:minHeight="?attr/actionBarSize"
-    app:theme="@style/Base.Theme.AppCompat.CompactMenu" >
+    android:layout_height="match_parent">
 
-    <LinearLayout
-        android:id="@+id/Layout_BottomToolBar"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/btn_ToolbarHome"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/Home_Caption" />
-
-        <Button
-            android:id="@+id/btn_ToolbarPlaylists"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/PlayList_Caption" />
-
-        <Button
-            android:id="@+id/btn_ToolbarProfile"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/Profile_Caption" />
-
-        <Button
-            android:id="@+id/btn_ToolbarSettings"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/Settings_Caption" />
-    </LinearLayout>
-</android.support.v7.widget.Toolbar>
+    <item
+        android:id="@+id/HomeItem"
+        android:src="@drawable/emoji_0023"/>
+    <item
+        android:id="@+id/LibraryItem"
+        android:src="@drawable/emoji_0023"/>
+</menu>
