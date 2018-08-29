@@ -90,19 +90,6 @@
             android:layout_width="match_parent"
             android:layout_height="14dp" />
 
-        <EditText
-            android:id="@+id/EditText_EditMusicApp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="@string/PreferredApp_Caption"
-            android:inputType="textPersonName"
-            android:textSize="14sp" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="14dp" />
-
         <RadioGroup
             android:id="@+id/GenderSelect"
             android:layout_width="match_parent"
