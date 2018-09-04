@@ -9,4 +9,10 @@
     <item
         android:id="@+id/LibraryItem"
         android:src="@drawable/emoji_0023"/>
+    <item
+        android:id="@+id/LibraryProfile"
+        android:src="@drawable/emoji_0023"/>
+    <item
+        android:id="@+id/LibrarySettings"
+        android:src="@drawable/emoji_0023"/>
 </menu>

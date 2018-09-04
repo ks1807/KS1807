@@ -38,10 +38,7 @@ public class EditUserDetails extends AppCompatActivity
                          Fragment selectedFragment = null;
                          switch (item.getItemId()) {
                              case R.id.btn_Home:
-                                 selectedFragment = BottomNavigationOption_One.newInstance();
-                                 break;
-                             case R.id.btn_Library:
-                                 selectedFragment = BottomNavigationOption_Two.newInstance();
+                                 selectedFragment = BottomNavigationOptions.newInstance();
                                  break;
                          }
                          FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -51,9 +48,9 @@ public class EditUserDetails extends AppCompatActivity
                      }
                  });
 
-        //Manually displaying the first fragment - one time only
+        //Display fragment
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frame_layout, BottomNavigationOption_One.newInstance());
+        transaction.replace(R.id.frame_layout, BottomNavigationOptions.newInstance());
         transaction.commit();
 
         //Get the UserID for this login session.
