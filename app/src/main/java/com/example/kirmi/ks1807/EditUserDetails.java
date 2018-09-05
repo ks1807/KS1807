@@ -138,8 +138,78 @@ public class EditUserDetails extends AppCompatActivity
     {
         boolean ValidationSuccessful = true;
 
-        //INSERT VALIDATION LOGIC AND ALERTS HERE
+        String InvalidMessage = "";
 
+        //Convert the contents of the text boxes to strings
+        TextView FirstName = (TextView)findViewById(R.id.EditText_EditFirstname);
+        TextView LastName = (TextView)findViewById(R.id.EditText_EditLastName);
+        TextView Email = (TextView)findViewById(R.id.EditText_EditEmail);
+        TextView Age = (TextView)findViewById(R.id.EditText_EditAge);
+
+        String FName = FirstName.getText().toString();
+        String LName = LastName.getText().toString();
+        String TheEmail = Email.getText().toString();
+        String TheAge = Age.getText().toString();
+
+        //Validation dialogue
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+        alertDialogBuilder.setTitle("Invalid Edits");
+        alertDialogBuilder
+                .setCancelable(false)
+                .setPositiveButton("Ok",new DialogInterface.OnClickListener()
+                {
+                    public void onClick(DialogInterface dialog,int id)
+                    {
+                        //No action to be taken until validation issue is resolved.
+                    }
+                });
+
+        if (FName.equals("") && LName.equals(""))
+        {
+            ValidationSuccessful = false;
+            InvalidMessage = "You need to enter either a First Name or a Last Name.";
+            alertDialogBuilder.setMessage(InvalidMessage);
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            alertDialog.show();
+        }
+
+        if (!Common.IsEmailValid(TheEmail) && !TheEmail.equals("") && ValidationSuccessful)
+        {
+            ValidationSuccessful = false;
+            InvalidMessage = "Email Address is invalid.";
+            alertDialogBuilder.setMessage(InvalidMessage);
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            alertDialog.show();
+        }
+
+        //Note: User input will normally prevent these errors in the first place.
+        //But just in case validate it.
+        else if (!Common.isNumeric(TheAge))
+        {
+            if (!TheAge.equals(""))
+            {
+                ValidationSuccessful = false;
+                InvalidMessage = "Age must be a number.";
+                alertDialogBuilder.setMessage(InvalidMessage);
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
+            }
+        }
+        else
+        {
+            if (!TheAge.equals(""))
+            {
+                int AgeInt = Integer.parseInt(TheAge);
+                if (AgeInt < 0)
+                {
+                    ValidationSuccessful = false;
+                    InvalidMessage = "Age must be a positive number.";
+                    alertDialogBuilder.setMessage(InvalidMessage);
+                    AlertDialog alertDialog = alertDialogBuilder.create();
+                    alertDialog.show();
+                }
+            }
+        }
         return ValidationSuccessful;
     }
 }

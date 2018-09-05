@@ -110,4 +110,10 @@ public class DatabaseFunctions
         String UserID = "DUMMY";
         return UserID;
     }
+
+    public boolean VerifyPassword(String Password)
+    {
+        //Need to check if the password here matches the one being entered.
+        return true;
+    }
 }
