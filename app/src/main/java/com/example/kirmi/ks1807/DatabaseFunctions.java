@@ -98,7 +98,6 @@ public class DatabaseFunctions
         UserDetails.add("Obama");
         UserDetails.add("test@test.com.au");
         UserDetails.add("57");
-        UserDetails.add("Spotify");
         UserDetails.add("Other");
 
         String[] ReturnUserDetails = UserDetails.toArray(new String[UserDetails.size()]);

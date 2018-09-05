@@ -57,6 +57,32 @@ public class RegisterSecondPage extends AppCompatActivity
         }
     }
 
+    public void button_Skip(View view)
+    {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+        alertDialogBuilder.setTitle("Confirm skip");
+        alertDialogBuilder
+                .setMessage("Are you sure you wish to skip these questions?")
+                .setCancelable(false)
+                .setPositiveButton("Yes",new DialogInterface.OnClickListener()
+                {
+                    public void onClick(DialogInterface dialog,int id)
+                    {
+                        Intent intent = new Intent(RegisterSecondPage.this, CurrentMusic.class);
+                        startActivity(intent);
+                    }
+                })
+                .setNegativeButton("No",new DialogInterface.OnClickListener()
+                {
+                    public void onClick(DialogInterface dialog,int id)
+                    {
+                        dialog.cancel();
+                    }
+                });
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
+
     private boolean ValidateForm()
     {
         boolean ValidationSuccessful = true;

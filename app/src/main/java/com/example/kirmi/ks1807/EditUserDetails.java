@@ -9,6 +9,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.RadioButton;
+import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.annotation.NonNull;
+import android.view.MenuItem;
 
 public class EditUserDetails extends AppCompatActivity
 {
@@ -22,6 +27,31 @@ public class EditUserDetails extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_user_details);
+
+        BottomNavigationView bottomNavigationView = (BottomNavigationView)
+                findViewById(R.id.navigation);
+
+        bottomNavigationView.setOnNavigationItemSelectedListener
+                (new BottomNavigationView.OnNavigationItemSelectedListener() {
+                     @Override
+                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                         Fragment selectedFragment = null;
+                         switch (item.getItemId()) {
+                             case R.id.btn_Home:
+                                 selectedFragment = BottomNavigationOptions.newInstance();
+                                 break;
+                         }
+                         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                         transaction.replace(R.id.frame_layout, selectedFragment);
+                         transaction.commit();
+                         return true;
+                     }
+                 });
+
+        //Display fragment
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frame_layout, BottomNavigationOptions.newInstance());
+        transaction.commit();
 
         //Get the UserID for this login session.
         Intent intent = getIntent();
@@ -84,14 +114,11 @@ public class EditUserDetails extends AppCompatActivity
         TextView Age = (TextView)findViewById(R.id.EditText_EditAge);
         Age.setText(UserDetails[3]);
 
-        TextView MusicApp = (TextView)findViewById(R.id.EditText_EditMusicApp);
-        MusicApp.setText(UserDetails[4]);
-
         RadioButton GenderFemale = (RadioButton)findViewById(R.id.RadioButton_EditFemale);
         RadioButton GenderMale = (RadioButton)findViewById(R.id.RadioButton_EditEachTrack);
         RadioButton GenderOther = (RadioButton)findViewById(R.id.RadioButton_EditOther);
 
-        String Gender = UserDetails[5];
+        String Gender = UserDetails[4];
 
         if (Gender.equals("Male"))
         {

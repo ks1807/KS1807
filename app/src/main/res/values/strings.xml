@@ -73,4 +73,7 @@
     <string name="RegistrationSubmit_Caption">Register Now</string>
     <string name="RegisterSecondPage_Caption">Your music</string>
     <string name="EditProfilePicture_Caption">Edit your profile picture</string>
+    <string name="Profile_Caption">Profile</string>
+    <string name="Home_Caption">Home</string>
+    <string name="Library_Caption">Your Library</string>
 </resources>

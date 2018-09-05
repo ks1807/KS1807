@@ -70,7 +70,7 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="@string/EmailCaption"
-            android:inputType="textPersonName"
+            android:inputType="textEmailAddress"
             android:textSize="14sp" />
 
         <Space
@@ -90,24 +90,10 @@
             android:layout_width="match_parent"
             android:layout_height="14dp" />
 
-        <EditText
-            android:id="@+id/EditText_EditMusicApp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="@string/PreferredApp_Caption"
-            android:inputType="textPersonName"
-            android:textSize="14sp" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="14dp" />
-
         <RadioGroup
             android:id="@+id/GenderSelect"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:checkedButton="@+id/RadioButton_EditEachTrack"
             android:orientation="horizontal">
 
@@ -147,7 +133,6 @@
             android:id="@+id/btn_SubmitEdit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:minHeight="10dp"
             android:onClick="button_Submit"
             android:paddingBottom="10dp"
@@ -164,5 +149,24 @@
             android:paddingTop="10dp"
             android:text="@string/BackButtonCaption" />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <FrameLayout
+                android:id="@+id/frame_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:animateLayoutChanges="true"/>
+
+            <android.support.design.widget.BottomNavigationView
+                android:id="@+id/navigation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimary"
+                app:menu="@layout/login_bottom_tool_bar" />
+        </LinearLayout>
     </LinearLayout>
+
 </android.support.constraint.ConstraintLayout>
