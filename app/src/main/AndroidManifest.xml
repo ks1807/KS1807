@@ -46,7 +46,6 @@
         <activity android:name=".ThePlayList" />
         <activity android:name=".Settings" />
         <activity android:name=".AccountDetails" />
-        <activity android:name=".EmojiExperiment"></activity>
     </application>
 
 </manifest>

@@ -56,14 +56,6 @@ public class MainActivity extends AppCompatActivity
         startActivity(intent);
     }
 
-    ///---SPOTIFY TEST CODE---
-    //For Emoji Experiment - Not to be in the final application
-    public void button_Experiment(View view)
-    {
-        Intent intent = new Intent(MainActivity.this, EmojiExperiment.class);
-        startActivity(intent);
-    }
-
     private boolean ValidateLogin()
     {
         boolean ValidationSuccessful = true;

@@ -50,11 +50,8 @@ public class RegisterSecondPage extends AppCompatActivity
 
     public void button_Next(View view)
     {
-        if (ValidateForm())
-        {
-            Intent intent = new Intent(RegisterSecondPage.this, CurrentMusic.class);
-            startActivity(intent);
-        }
+        Intent intent = new Intent(RegisterSecondPage.this, CurrentMusic.class);
+        startActivity(intent);
     }
 
     public void button_Skip(View view)
@@ -62,7 +59,7 @@ public class RegisterSecondPage extends AppCompatActivity
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
         alertDialogBuilder.setTitle("Confirm skip");
         alertDialogBuilder
-                .setMessage("Are you sure you wish to skip these questions?")
+                .setMessage("Are you sure you wish to skip these questions and register your account?")
                 .setCancelable(false)
                 .setPositiveButton("Yes",new DialogInterface.OnClickListener()
                 {
@@ -81,14 +78,5 @@ public class RegisterSecondPage extends AppCompatActivity
                 });
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
-    }
-
-    private boolean ValidateForm()
-    {
-        boolean ValidationSuccessful = true;
-
-        //INSERT VALIDATION LOGIC AND ALERTS HERE
-
-        return ValidationSuccessful;
     }
 }

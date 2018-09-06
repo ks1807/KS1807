@@ -173,6 +173,15 @@ public class EditUserDetails extends AppCompatActivity
             alertDialog.show();
         }
 
+        if (TheEmail.equals("") && ValidationSuccessful)
+        {
+            ValidationSuccessful = false;
+            InvalidMessage = "You must enter an Email Address.";
+            alertDialogBuilder.setMessage(InvalidMessage);
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            alertDialog.show();
+        }
+
         if (!Common.IsEmailValid(TheEmail) && !TheEmail.equals("") && ValidationSuccessful)
         {
             ValidationSuccessful = false;
@@ -182,7 +191,7 @@ public class EditUserDetails extends AppCompatActivity
             alertDialog.show();
         }
 
-        //Note: User input will normally prevent these errors in the first place.
+        //Note: User input will normally prevent most of these errors in the first place.
         //But just in case validate it.
         else if (!Common.isNumeric(TheAge))
         {
@@ -200,10 +209,10 @@ public class EditUserDetails extends AppCompatActivity
             if (!TheAge.equals(""))
             {
                 int AgeInt = Integer.parseInt(TheAge);
-                if (AgeInt < 0)
+                if (AgeInt < 1)
                 {
                     ValidationSuccessful = false;
-                    InvalidMessage = "Age must be a positive number.";
+                    InvalidMessage = "Age must be a positive number greater than zero.";
                     alertDialogBuilder.setMessage(InvalidMessage);
                     AlertDialog alertDialog = alertDialogBuilder.create();
                     alertDialog.show();
