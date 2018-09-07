@@ -17,6 +17,7 @@ import android.widget.TextView;
 public class ChangePassword extends AppCompatActivity
 {
     private final Context context = this;
+    final CommonFunctions PasswordFunctions = new CommonFunctions();
     String UserID = "";
 
     @Override
@@ -159,13 +160,32 @@ public class ChangePassword extends AppCompatActivity
             alertDialog.show();
         }
 
+        if (!PasswordFunctions.ValidPassword(NewPass) && ValidationSuccessful)
+        {
+            ValidationSuccessful = false;
+            InvalidMessage = "Password must have at least 8 characters, have at least" +
+                    " one upper case and lower case letter and a special character.";
+            alertDialogBuilder.setMessage(InvalidMessage);
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            alertDialog.show();
+        }
+
         //Check if the old password is valid. NOTE: Functionality not implemented yet
         String OldDummy = "TEST";
 
         if (!OldPass.equals(OldDummy) && ValidationSuccessful)
         {
             ValidationSuccessful = false;
-            InvalidMessage = "The old password you have specified does not match your old password.";
+            InvalidMessage = "The old password you have specified does not match your current password.";
+            alertDialogBuilder.setMessage(InvalidMessage);
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            alertDialog.show();
+        }
+
+        if (!OldPass.equals(NewPass) && ValidationSuccessful)
+        {
+            ValidationSuccessful = false;
+            InvalidMessage = "The new password is exactly the same as your old password! Please use a different password.";
             alertDialogBuilder.setMessage(InvalidMessage);
             AlertDialog alertDialog = alertDialogBuilder.create();
             alertDialog.show();

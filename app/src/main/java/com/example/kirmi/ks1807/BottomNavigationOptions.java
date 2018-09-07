@@ -32,7 +32,7 @@ public class BottomNavigationOptions extends Fragment
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState)
         {
-            View ActivityView = inflater.inflate(R.layout.fragment_bottom_navigation_option__one, container,false);
+            View ActivityView = inflater.inflate(R.layout.fragment_bottom_navigation, container,false);
             HomeButton = (Button) ActivityView.findViewById(R.id.btn_Home);
             HomeButton.setOnClickListener(new OnClickListener()
             {

@@ -1,8 +1,7 @@
 package com.example.kirmi.ks1807;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-//Functions used by the entire application
+//Functions used by the entire application.
 public class CommonFunctions
 {
     public String getEmojiByUnicode(int unicode)
@@ -38,5 +37,22 @@ public class CommonFunctions
             return false;
         }
         return pat.matcher(email).matches();
+    }
+
+    /*Password must be at least 8 characters, have at least one upper and lower case letter
+    and a special character.
+    Code adapted from https://stackoverflow.com/questions/36574183/how-to-validate-password-field-in-android*/
+    public boolean ValidPassword(String password)
+    {
+        if (password.length() < 8)
+        {
+            return false;
+        }
+
+        Pattern pat;
+        String PASSWORD_REGEX = "^(?=.*[0-9])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\\S+$).{4,}$";
+        pat = Pattern.compile(PASSWORD_REGEX);
+
+        return pat.matcher(password).matches();
     }
 }
