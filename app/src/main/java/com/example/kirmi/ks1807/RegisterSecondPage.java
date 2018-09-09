@@ -13,12 +13,19 @@ public class RegisterSecondPage extends AppCompatActivity
 {
     private final Context context = this;
     final CommonFunctions Common = new CommonFunctions();
+    private DatabaseFunctions RegisterFunctions;
+    String UserID = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_second_page);
+        RegisterFunctions = new DatabaseFunctions(this);
+
+        //Get the UserID for this login session.
+        Intent intent = getIntent();
+        UserID = intent.getStringExtra("UserID");
     }
 
     //Confirm if the user wants to go back if the button is pressed.
@@ -34,6 +41,7 @@ public class RegisterSecondPage extends AppCompatActivity
                     public void onClick(DialogInterface dialog,int id)
                     {
                         Intent intent = new Intent(RegisterSecondPage.this, Register.class);
+                        intent.putExtra("UserID", UserID);
                         startActivity(intent);
                     }
                 })
@@ -50,11 +58,8 @@ public class RegisterSecondPage extends AppCompatActivity
 
     public void button_Next(View view)
     {
-        if (ValidateForm())
-        {
-            Intent intent = new Intent(RegisterSecondPage.this, CurrentMusic.class);
-            startActivity(intent);
-        }
+        Intent intent = new Intent(RegisterSecondPage.this, CurrentMusic.class);
+        startActivity(intent);
     }
 
     public void button_Skip(View view)
@@ -62,7 +67,7 @@ public class RegisterSecondPage extends AppCompatActivity
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
         alertDialogBuilder.setTitle("Confirm skip");
         alertDialogBuilder
-                .setMessage("Are you sure you wish to skip these questions?")
+                .setMessage("Are you sure you wish to skip these questions and register your account?")
                 .setCancelable(false)
                 .setPositiveButton("Yes",new DialogInterface.OnClickListener()
                 {
@@ -81,14 +86,5 @@ public class RegisterSecondPage extends AppCompatActivity
                 });
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
-    }
-
-    private boolean ValidateForm()
-    {
-        boolean ValidationSuccessful = true;
-
-        //INSERT VALIDATION LOGIC AND ALERTS HERE
-
-        return ValidationSuccessful;
     }
 }

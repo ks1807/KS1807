@@ -22,13 +22,15 @@ import com.spotify.protocol.types.Track;
 
 public class MainActivity extends AppCompatActivity
 {
-    final DatabaseFunctions UserFunctions = new DatabaseFunctions();
+    private final Context context = this;
+    private DatabaseFunctions UserFunctions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        UserFunctions = new DatabaseFunctions(this);
     }
 
     public void button_Login(View view)
@@ -53,14 +55,6 @@ public class MainActivity extends AppCompatActivity
     public void button_Register(View view)
     {
         Intent intent = new Intent(MainActivity.this, Register.class);
-        startActivity(intent);
-    }
-
-    ///---SPOTIFY TEST CODE---
-    //For Emoji Experiment - Not to be in the final application
-    public void button_Experiment(View view)
-    {
-        Intent intent = new Intent(MainActivity.this, EmojiExperiment.class);
         startActivity(intent);
     }
 

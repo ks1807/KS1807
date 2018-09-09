@@ -15,7 +15,7 @@ import android.view.View;
 public class MusicPlaylists extends AppCompatActivity
 {
     private final Context context = this;
-    DatabaseFunctions PlayListFunctions = new DatabaseFunctions();
+    private DatabaseFunctions PlayListFunctions;
     String UserID = "";
 
     @Override
@@ -23,6 +23,8 @@ public class MusicPlaylists extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_music_playlists);
+
+        PlayListFunctions = new DatabaseFunctions(this);
 
         BottomNavigationView bottomNavigationView = (BottomNavigationView)
                 findViewById(R.id.navigation);

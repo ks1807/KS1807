@@ -96,7 +96,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_gravity="bottom">
 
             <FrameLayout
                 android:id="@+id/frame_layout"
@@ -111,6 +112,7 @@
                 android:background="@color/colorPrimary"
                 app:menu="@layout/login_bottom_tool_bar" />
         </LinearLayout>
-
     </LinearLayout>
+
+
 </android.support.constraint.ConstraintLayout>

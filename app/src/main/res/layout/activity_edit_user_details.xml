@@ -20,20 +20,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:srcCompat="@mipmap/ic_launcher_round" />
-
-        <TextView
-            android:id="@+id/Text_EditProfilePicture"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/EditProfilePicture_Caption"
-            android:textAlignment="center"
-            android:textSize="14sp" />
-
         <Space
             android:layout_width="match_parent"
             android:layout_height="18dp" />
@@ -91,14 +77,14 @@
             android:layout_height="14dp" />
 
         <RadioGroup
-            android:id="@+id/GenderSelect"
+            android:id="@+id/RadioGroup_EditGenderSelect"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:checkedButton="@+id/RadioButton_EditEachTrack"
+            android:checkedButton="@+id/RadioButton_EditMale"
             android:orientation="horizontal">
 
             <ImageButton
-                android:id="@+id/imageButton2"
+                android:id="@+id/Img_EditGenderButton"
                 android:layout_width="83dp"
                 android:layout_height="32dp"
                 android:layout_weight="1"
@@ -107,7 +93,7 @@
                 app:srcCompat="@drawable/ic_action_keyboard" />
 
             <RadioButton
-                android:id="@+id/RadioButton_EditEachTrack"
+                android:id="@+id/RadioButton_EditMale"
                 android:layout_width="129dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

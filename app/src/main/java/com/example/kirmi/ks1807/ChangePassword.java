@@ -12,10 +12,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 public class ChangePassword extends AppCompatActivity
 {
     private final Context context = this;
+    final CommonFunctions PasswordFunctions = new CommonFunctions();
+    private DatabaseFunctions PasswordDatabaseFunctions;
     String UserID = "";
 
     @Override
@@ -23,6 +26,7 @@ public class ChangePassword extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_password);
+        PasswordDatabaseFunctions = new DatabaseFunctions(this);
 
         BottomNavigationView bottomNavigationView = (BottomNavigationView)
                 findViewById(R.id.navigation);
@@ -96,8 +100,98 @@ public class ChangePassword extends AppCompatActivity
     {
         boolean ValidationSuccessful = true;
 
-        //INSERT VALIDATION LOGIC AND ALERTS HERE
+        String InvalidMessage = "";
 
+        //Convert the contents of the text boxes to strings
+        TextView OldPassword = (TextView)findViewById(R.id.EditText_OldPassword);
+        TextView NewPassword = (TextView)findViewById(R.id.EditText_NewPassword);
+        TextView NewPasswordRepeat = (TextView)findViewById(R.id.EditTextNewPasswordAgain);
+
+        String OldPass = OldPassword.getText().toString();
+        String NewPass = NewPassword.getText().toString();
+        String NewPassRepeat = NewPasswordRepeat.getText().toString();
+
+        //Validation dialogue
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+        alertDialogBuilder.setTitle("Invalid Password");
+        alertDialogBuilder
+                .setCancelable(false)
+                .setPositiveButton("Ok",new DialogInterface.OnClickListener()
+                {
+                    public void onClick(DialogInterface dialog,int id)
+                    {
+                        //No action to be taken until validation issue is resolved.
+                    }
+                });
+
+        //Checks if password fields are empty. Display only the first error we find to the user.
+        if (OldPass.equals(""))
+        {
+            ValidationSuccessful = false;
+            InvalidMessage = "You need to enter your old password.";
+            alertDialogBuilder.setMessage(InvalidMessage);
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            alertDialog.show();
+        }
+
+        if (NewPass.equals("") && ValidationSuccessful)
+        {
+            ValidationSuccessful = false;
+            InvalidMessage = "You need to enter your new password.";
+            alertDialogBuilder.setMessage(InvalidMessage);
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            alertDialog.show();
+        }
+
+        if (NewPassRepeat.equals("") && ValidationSuccessful)
+        {
+            ValidationSuccessful = false;
+            InvalidMessage = "You need to enter your new password again.";
+            alertDialogBuilder.setMessage(InvalidMessage);
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            alertDialog.show();
+        }
+
+        //Check if both new passwords match.
+        if (!NewPass.equals(NewPassRepeat) && ValidationSuccessful)
+        {
+            ValidationSuccessful = false;
+            InvalidMessage = "The new password you entered does not match what is in confirm password field.";
+            alertDialogBuilder.setMessage(InvalidMessage);
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            alertDialog.show();
+        }
+
+        if (!PasswordFunctions.ValidPassword(NewPass) && ValidationSuccessful)
+        {
+            ValidationSuccessful = false;
+            InvalidMessage = "Password must have at least 8 characters, have at least" +
+                    " one upper case and lower case letter and a special character.";
+            alertDialogBuilder.setMessage(InvalidMessage);
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            alertDialog.show();
+        }
+
+        //Check if the old password is valid. NOTE: Functionality not implemented yet
+        String OldDummy = "TEST";
+
+        if (!OldPass.equals(OldDummy) && ValidationSuccessful)
+        {
+            ValidationSuccessful = false;
+            InvalidMessage = "The old password you have specified does not match your current password.";
+            alertDialogBuilder.setMessage(InvalidMessage);
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            alertDialog.show();
+        }
+
+        if (!OldPass.equals(NewPass) && ValidationSuccessful)
+        {
+            ValidationSuccessful = false;
+            InvalidMessage = "The new password is exactly the same as your old password! Please use a different password.";
+            alertDialogBuilder.setMessage(InvalidMessage);
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            alertDialog.show();
+        }
         return ValidationSuccessful;
     }
 }

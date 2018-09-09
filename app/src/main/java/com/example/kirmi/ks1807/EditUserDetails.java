@@ -15,11 +15,13 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.annotation.NonNull;
 import android.view.MenuItem;
 
+import java.util.ArrayList;
+
 public class EditUserDetails extends AppCompatActivity
 {
     private final Context context = this;
     final CommonFunctions Common = new CommonFunctions();
-    final DatabaseFunctions UserFunctions = new DatabaseFunctions();
+    private DatabaseFunctions UserFunctions;
     String UserID = "";
 
     @Override
@@ -27,6 +29,7 @@ public class EditUserDetails extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_user_details);
+        UserFunctions = new DatabaseFunctions(this);
 
         BottomNavigationView bottomNavigationView = (BottomNavigationView)
                 findViewById(R.id.navigation);
@@ -57,8 +60,8 @@ public class EditUserDetails extends AppCompatActivity
         Intent intent = getIntent();
         UserID = intent.getStringExtra("UserID");
 
-        String[] UserDetails;
-        UserDetails = UserFunctions.GetUserDetails(UserID);
+        ArrayList<String> UserDetails = UserFunctions.GetUserDetails(UserID);
+
         DisplayUserDetails(UserDetails);
     }
 
@@ -100,25 +103,25 @@ public class EditUserDetails extends AppCompatActivity
         }
     }
 
-    public void DisplayUserDetails(String[] UserDetails)
+    public void DisplayUserDetails(ArrayList<String> UserDetails)
     {
         TextView FirstName = (TextView)findViewById(R.id.EditText_EditFirstname);
-        FirstName.setText(UserDetails[0]);
+        FirstName.setText(UserDetails.get(0));
 
         TextView LastName = (TextView)findViewById(R.id.EditText_EditLastName);
-        LastName.setText(UserDetails[1]);
+        LastName.setText(UserDetails.get(1));
 
         TextView Email = (TextView)findViewById(R.id.EditText_EditEmail);
-        Email.setText(UserDetails[2]);
+        Email.setText(UserDetails.get(2));
 
         TextView Age = (TextView)findViewById(R.id.EditText_EditAge);
-        Age.setText(UserDetails[3]);
+        Age.setText(UserDetails.get(3));
 
         RadioButton GenderFemale = (RadioButton)findViewById(R.id.RadioButton_EditFemale);
-        RadioButton GenderMale = (RadioButton)findViewById(R.id.RadioButton_EditEachTrack);
+        RadioButton GenderMale = (RadioButton)findViewById(R.id.RadioButton_EditMale);
         RadioButton GenderOther = (RadioButton)findViewById(R.id.RadioButton_EditOther);
 
-        String Gender = UserDetails[4];
+        String Gender = UserDetails.get(4);
 
         if (Gender.equals("Male"))
         {
@@ -138,8 +141,87 @@ public class EditUserDetails extends AppCompatActivity
     {
         boolean ValidationSuccessful = true;
 
-        //INSERT VALIDATION LOGIC AND ALERTS HERE
+        String InvalidMessage = "";
 
+        //Convert the contents of the text boxes to strings
+        TextView FirstName = (TextView)findViewById(R.id.EditText_EditFirstname);
+        TextView LastName = (TextView)findViewById(R.id.EditText_EditLastName);
+        TextView Email = (TextView)findViewById(R.id.EditText_EditEmail);
+        TextView Age = (TextView)findViewById(R.id.EditText_EditAge);
+
+        String FName = FirstName.getText().toString();
+        String LName = LastName.getText().toString();
+        String TheEmail = Email.getText().toString();
+        String TheAge = Age.getText().toString();
+
+        //Validation dialogue
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+        alertDialogBuilder.setTitle("Invalid Edits");
+        alertDialogBuilder
+                .setCancelable(false)
+                .setPositiveButton("Ok",new DialogInterface.OnClickListener()
+                {
+                    public void onClick(DialogInterface dialog,int id)
+                    {
+                        //No action to be taken until validation issue is resolved.
+                    }
+                });
+
+        if (FName.equals("") && LName.equals(""))
+        {
+            ValidationSuccessful = false;
+            InvalidMessage = "You need to enter either a First Name or a Last Name.";
+            alertDialogBuilder.setMessage(InvalidMessage);
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            alertDialog.show();
+        }
+
+        if (TheEmail.equals("") && ValidationSuccessful)
+        {
+            ValidationSuccessful = false;
+            InvalidMessage = "You must enter an Email Address.";
+            alertDialogBuilder.setMessage(InvalidMessage);
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            alertDialog.show();
+        }
+
+        if (!Common.IsEmailValid(TheEmail) && !TheEmail.equals("") && ValidationSuccessful)
+        {
+            ValidationSuccessful = false;
+            InvalidMessage = "Email Address is invalid.";
+            alertDialogBuilder.setMessage(InvalidMessage);
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            alertDialog.show();
+        }
+
+        //Note: User input will normally prevent most of these errors in the first place.
+        //But just in case validate it.
+        else if (!Common.isNumeric(TheAge))
+        {
+            if (!TheAge.equals(""))
+            {
+                ValidationSuccessful = false;
+                InvalidMessage = "Age must be a number.";
+                alertDialogBuilder.setMessage(InvalidMessage);
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
+            }
+        }
+        else
+        {
+            if (!TheAge.equals(""))
+            {
+                int AgeInt = Integer.parseInt(TheAge);
+                if (AgeInt < 1)
+                {
+                    ValidationSuccessful = false;
+                    InvalidMessage = "Age must be a positive number greater than zero.";
+                    alertDialogBuilder.setMessage(InvalidMessage);
+                    AlertDialog alertDialog = alertDialogBuilder.create();
+                    alertDialog.show();
+                }
+            }
+        }
         return ValidationSuccessful;
     }
 }

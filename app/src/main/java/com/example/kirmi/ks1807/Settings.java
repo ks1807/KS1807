@@ -19,7 +19,7 @@ public class Settings extends AppCompatActivity
 {
     private final Context context = this;
     CommonFunctions Common = new CommonFunctions();
-    DatabaseFunctions SettingFunctions = new DatabaseFunctions();
+    private DatabaseFunctions SettingFunctions;
     String UserID = "";
 
     @Override
@@ -27,6 +27,7 @@ public class Settings extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+        SettingFunctions = new DatabaseFunctions(this);
 
         BottomNavigationView bottomNavigationView = (BottomNavigationView)
                 findViewById(R.id.navigation);
@@ -100,26 +101,14 @@ public class Settings extends AppCompatActivity
 
     public void button_Submit(View view)
     {
-        if (ValidateForm())
-        {
-            Intent intent = new Intent(Settings.this, AccountDetails.class);
-            intent.putExtra("UserID", UserID);
-            startActivity(intent);
-        }
+        Intent intent = new Intent(Settings.this, AccountDetails.class);
+        intent.putExtra("UserID", UserID);
+        startActivity(intent);
     }
 
     public String[] GetTrackFrequencies()
     {
         String[] TrackFrequencies = getResources().getStringArray(R.array.AlertFrequencies);
         return TrackFrequencies;
-    }
-
-    private boolean ValidateForm()
-    {
-        boolean ValidationSuccessful = true;
-
-        //INSERT VALIDATION LOGIC AND ALERTS HERE
-
-        return ValidationSuccessful;
     }
 }

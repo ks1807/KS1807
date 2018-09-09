@@ -34,7 +34,8 @@ public class CurrentMusic extends AppCompatActivity
 {
     private final Context context = this;
     final CommonFunctions Common = new CommonFunctions();
-    final DatabaseFunctions MusicFunctions = new DatabaseFunctions();
+    private DatabaseFunctions MusicFunctions;
+
     String UserID = "";
     spotifyService mService;
     PlayerState playerState;
@@ -100,6 +101,7 @@ public class CurrentMusic extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_current_music);
+        MusicFunctions = new DatabaseFunctions(this);
 
         BottomNavigationView bottomNavigationView = (BottomNavigationView)
                 findViewById(R.id.navigation);

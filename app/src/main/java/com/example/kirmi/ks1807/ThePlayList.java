@@ -10,7 +10,7 @@ import android.widget.ListView;
 public class ThePlayList extends AppCompatActivity
 {
     private final Context context = this;
-    DatabaseFunctions TrackFunctions = new DatabaseFunctions();
+    DatabaseFunctions TrackFunctions = new DatabaseFunctions(context);
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
