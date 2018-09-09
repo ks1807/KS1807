@@ -19,7 +19,7 @@ public class EditUserDetails extends AppCompatActivity
 {
     private final Context context = this;
     final CommonFunctions Common = new CommonFunctions();
-    final DatabaseFunctions UserFunctions = new DatabaseFunctions();
+    private DatabaseFunctions UserFunctions;
     String UserID = "";
 
     @Override
@@ -27,6 +27,7 @@ public class EditUserDetails extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_user_details);
+        UserFunctions = new DatabaseFunctions(this);
 
         BottomNavigationView bottomNavigationView = (BottomNavigationView)
                 findViewById(R.id.navigation);

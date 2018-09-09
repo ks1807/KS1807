@@ -13,13 +13,14 @@ public class Register extends AppCompatActivity
 {
     private final Context context = this;
     final CommonFunctions Common = new CommonFunctions();
-    DatabaseFunctions RegisterFunctions = new DatabaseFunctions();
+    private DatabaseFunctions RegisterFunctions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        RegisterFunctions = new DatabaseFunctions(this);
     }
 
     //Confirm if the user wants to go back if the button is pressed.

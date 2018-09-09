@@ -1,9 +1,65 @@
 package com.example.kirmi.ks1807;
 
 import java.util.ArrayList;
+import android.database.Cursor;
+import android.content.Context;
+import android.util.Log;
+import android.database.sqlite.*;
 
 public class DatabaseFunctions
 {
+    //Create the local database for storing user data and settings
+    private static final String DBNAME = "MusicMentalHealthDB";
+    private static final int DB_VERSION = 2;
+    final DatabaseSchema DBSchema = new DatabaseSchema();
+    private final String Create_AllTables = DBSchema.CreateAllTables();
+
+    private DatabaseFunctions.SQLHelper helper;
+    private SQLiteDatabase db;
+    private Context context;
+
+    public DatabaseFunctions(Context c)
+    {
+        this.context = c;
+        helper = new DatabaseFunctions.SQLHelper(c);
+        this.db = helper.getWritableDatabase();
+    }
+
+    public DatabaseFunctions openReadable() throws android.database.SQLException
+    {
+        helper = new DatabaseFunctions.SQLHelper(context);
+        db = helper.getReadableDatabase();
+        return this;
+    }
+
+    public void close()
+    {
+        helper.close();
+    }
+
+    public class SQLHelper extends SQLiteOpenHelper
+    {
+        public SQLHelper (Context c) {
+            super(c, DBNAME, null, DB_VERSION);
+        }
+
+        @Override
+        public void onCreate(SQLiteDatabase db)
+        {
+            db.execSQL(Create_AllTables);
+        }
+
+        @Override
+        public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion)
+        {
+            Log.w(DBNAME, "Upgrading database (dropping tables and re-creating them)");
+            db.execSQL(DBSchema.DropAllTables());
+            onCreate(db);
+        }
+    }
+
+    //Start of our functions designed for selecting/updating/inserting into the database
+
     public String[] GetMusicHistory(String UserID)
     {
         //REPLACE WITH A DB CALL and pass UserID into it.

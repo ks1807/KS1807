@@ -19,7 +19,7 @@ public class Settings extends AppCompatActivity
 {
     private final Context context = this;
     CommonFunctions Common = new CommonFunctions();
-    DatabaseFunctions SettingFunctions = new DatabaseFunctions();
+    private DatabaseFunctions SettingFunctions;
     String UserID = "";
 
     @Override
@@ -27,6 +27,7 @@ public class Settings extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+        SettingFunctions = new DatabaseFunctions(this);
 
         BottomNavigationView bottomNavigationView = (BottomNavigationView)
                 findViewById(R.id.navigation);
