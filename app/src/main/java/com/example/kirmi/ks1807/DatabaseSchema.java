@@ -1,5 +1,7 @@
 package com.example.kirmi.ks1807;
 
+import java.util.ArrayList;
+
 //This file is where the we define all of our tables and columns for our local database.
 public class DatabaseSchema
 {
@@ -12,35 +14,35 @@ public class DatabaseSchema
     private static final String DBTable_UserDiary = "UserDiary";
     private static final String DBTable_UserSettings = "UserSettings";
 
-    public String CreateAllTables()
+    public  ArrayList<String> CreateAllTables()
     {
-        String TableCreate = "";
+        ArrayList<String> TablesToCreate = new ArrayList<String>();
 
-        TableCreate = TableCreate + CreateUserAccount();
-        TableCreate = TableCreate + CreateUserPassword();
-        TableCreate = TableCreate + CreateMusicTrack();
-        TableCreate = TableCreate + CreatePlayList();
-        TableCreate = TableCreate + CreateUserMood();
-        TableCreate = TableCreate + CreateTracksInPlayList();
-        TableCreate = TableCreate + CreateUserDiary();
-        TableCreate = TableCreate + CreateUserSettings();
-
-        return TableCreate;
+        TablesToCreate.add(CreateUserAccount());
+        TablesToCreate.add(CreateUserPassword());
+        TablesToCreate.add(CreateMusicTrack());
+        TablesToCreate.add(CreatePlayList());
+        TablesToCreate.add(CreateUserMood());
+        TablesToCreate.add(CreateTracksInPlayList());
+        TablesToCreate.add(CreateUserDiary());
+        TablesToCreate.add(CreateUserSettings());
+        return TablesToCreate;
     }
 
-    public String DropAllTables()
+    public ArrayList<String> DropAllTables()
     {
-        String TableDrop = "";
+        ArrayList<String> TablesToDrop = new ArrayList<String>();
 
-        TableDrop = TableDrop + "DROP TABLE IF EXISTS " + DBTable_UserAccount + " ";
-        TableDrop = TableDrop + "DROP TABLE IF EXISTS " + DBTable_UserPassword + " ";
-        TableDrop = TableDrop + "DROP TABLE IF EXISTS " + DBTable_MusicTrack + " ";
-        TableDrop = TableDrop + "DROP TABLE IF EXISTS " + DBTable_PlayList + " ";
-        TableDrop = TableDrop + "DROP TABLE IF EXISTS " + DBTable_TracksInPlayList + " ";
-        TableDrop = TableDrop + "DROP TABLE IF EXISTS " + DBTable_UserMood + " ";
-        TableDrop = TableDrop + "DROP TABLE IF EXISTS " + DBTable_UserDiary + " ";
-        TableDrop = TableDrop + "DROP TABLE IF EXISTS " + DBTable_UserSettings + " ";
-        return TableDrop;
+        TablesToDrop.add("DROP TABLE IF EXISTS " + DBTable_UserAccount + "; ");
+        TablesToDrop.add("DROP TABLE IF EXISTS " + DBTable_UserPassword + "; ");
+        TablesToDrop.add("DROP TABLE IF EXISTS " + DBTable_MusicTrack + "; ");
+        TablesToDrop.add("DROP TABLE IF EXISTS " + DBTable_PlayList + "; ");
+        TablesToDrop.add("DROP TABLE IF EXISTS " + DBTable_TracksInPlayList + "; ");
+        TablesToDrop.add("DROP TABLE IF EXISTS " + DBTable_UserMood + "; ");
+        TablesToDrop.add("DROP TABLE IF EXISTS " + DBTable_UserDiary + "; ");
+        TablesToDrop.add("DROP TABLE IF EXISTS " + DBTable_UserSettings + "; ");
+
+        return TablesToDrop;
     }
 
     private String CreateMusicTrack()

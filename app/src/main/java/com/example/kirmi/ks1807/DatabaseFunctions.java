@@ -14,7 +14,8 @@ public class DatabaseFunctions
     private static final String DBNAME = "MusicMentalHealthDB";
     private static final int DB_VERSION = 3;
     final DatabaseSchema DBSchema = new DatabaseSchema();
-    private final String Create_AllTables = DBSchema.CreateAllTables();
+    private final ArrayList<String> Create_AllTables = DBSchema.CreateAllTables();
+    private final ArrayList<String> Drop_AllTables = DBSchema.DropAllTables();
 
     private DatabaseFunctions.SQLHelper helper;
     private SQLiteDatabase db;
@@ -48,19 +49,34 @@ public class DatabaseFunctions
         @Override
         public void onCreate(SQLiteDatabase db)
         {
-            db.execSQL(Create_AllTables);
+            //Statements for table create can only be executed one at a time.
+            for (int i = 0; i < Create_AllTables.size(); i++)
+            {
+                db.execSQL(Create_AllTables.get(i));
+            }
         }
 
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion)
         {
             Log.w(DBNAME, "Upgrading database (dropping tables and re-creating them)");
-            db.execSQL(DBSchema.DropAllTables());
+
+            //Statements for table drops can only be executed one at a time.
+            for (int i = 0; i < Drop_AllTables.size(); i++)
+            {
+                db.execSQL(Drop_AllTables.get(i));
+            }
             onCreate(db);
         }
     }
 
     //Start of our functions designed for selecting/updating/inserting into the database
+
+    //For testing only - Be careful with this!
+    private void DeleteEverything()
+    {
+        context.deleteDatabase(DBNAME);
+    }
 
     public String[] GetMusicHistory(String UserID)
     {
@@ -241,6 +257,25 @@ public class DatabaseFunctions
         return LastName;
     }
 
+    private String GetUserPassword(String UserID)
+    {
+        String Password = "";
+        String[] columns = new String[] {"Password"};
+        Cursor cursor = db.query("UserPassword", columns, "UserID = " + UserID, null, null, null, null);
+        cursor.moveToFirst();
+
+        while (cursor.isAfterLast() == false)
+        {
+            Password = cursor.getString(cursor.getColumnIndex("Password"));
+            cursor.moveToNext();
+        }
+        if (cursor != null && !cursor.isClosed())
+        {
+            cursor.close();
+        }
+        return Password;
+    }
+
     public ArrayList<String> GetUserDetails(String UserID)
     {
         //REPLACE WITH A DB CALL and pass UserID into it.
@@ -266,7 +301,7 @@ public class DatabaseFunctions
         UserDetails.add(GetLastName(UserID));
         UserDetails.add(GetEmailAddress(UserID));
         UserDetails.add(GetAge(UserID));
-        UserDetails.add("P@ssw0rd1");
+        UserDetails.add(GetUserPassword(UserID));
         UserDetails.add(GetGender(UserID));
         return UserDetails;
     }
@@ -275,6 +310,27 @@ public class DatabaseFunctions
     {
         String UserID = "DUMMY";
         return UserID;
+    }
+
+    private boolean InsertNewPassword (String UserID, String Password)
+    {
+        synchronized (this.db)
+        {
+            ContentValues NewPassword = new ContentValues();
+            NewPassword.put("UserID", UserID);
+            NewPassword.put("Password", Password);
+
+            try
+            {
+                db.insertOrThrow("UserPassword", null, NewPassword);
+            } catch (Exception e)
+            {
+                Log.e("Error in inserting rows", e.toString());
+                e.printStackTrace();
+                return false;
+            }
+            return true;
+        }
     }
 
     public Long InsertNewUser(String FirstName, String LastName, String EmailAddress, String Age,
@@ -305,7 +361,64 @@ public class DatabaseFunctions
                 e.printStackTrace();
                 return ID;
             }
+
+            //Once we have the UserID we need to insert their password data into a different table.
+            InsertNewPassword(String.valueOf(ID), Password);
             return ID;
+        }
+    }
+
+    private boolean UpdateNewPassword (String UserID, String Password)
+    {
+        synchronized (this.db)
+        {
+            ContentValues NewPassword = new ContentValues();
+            NewPassword.put("UserID", UserID);
+            NewPassword.put("Password", Password);
+
+            try
+            {
+                db.update("UserPassword", NewPassword, " UserID = " + UserID, null);
+            } catch (Exception e)
+            {
+                Log.e("Error in inserting rows", e.toString());
+                e.printStackTrace();
+                return false;
+            }
+            return true;
+        }
+    }
+
+    public boolean UpdateNewUser(String FirstName, String LastName, String EmailAddress, String Age,
+                              String Gender, String Password, String UserID)
+    {
+        synchronized(this.db)
+        {
+            ContentValues UpdateNewUser = new ContentValues();
+            UpdateNewUser.put("FirstName", FirstName);
+            UpdateNewUser.put("LastName", LastName);
+            UpdateNewUser.put("EmailAddress", EmailAddress);
+
+            if (!Age.equals(""))
+            {
+                int AgeNum = Integer.parseInt(Age);
+                UpdateNewUser.put("Age", AgeNum);
+            }
+            UpdateNewUser.put("Gender", Gender);
+
+            try
+            {
+                db.update("UserAccount", UpdateNewUser, " UserID = " + UserID, null);
+            } catch (Exception e)
+            {
+                Log.e("Error in inserting rows", e.toString());
+                e.printStackTrace();
+                return false;
+            }
+
+            //Update the existing password record as well.
+            boolean PasswordUpdated = UpdateNewPassword(UserID, Password);
+            return PasswordUpdated;
         }
     }
 

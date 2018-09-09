@@ -69,7 +69,17 @@ public class Register extends AppCompatActivity
         if (ValidateForm())
         {
             Intent intent = new Intent(Register.this, RegisterSecondPage.class);
-            intent.putExtra("UserID", String.valueOf(UserID));
+
+            /*If the user has not been to this page before, use the value found in the DB,
+            otherwise just use the ID that was passed back.*/
+            if (BackUserID == null)
+            {
+                intent.putExtra("UserID", String.valueOf(UserID));
+            }
+            else
+            {
+                intent.putExtra("UserID", BackUserID);
+            }
             startActivity(intent);
         }
     }
@@ -79,7 +89,6 @@ public class Register extends AppCompatActivity
     {
         RegisterFunctions.openReadable();
 
-        //Get all the fields one by one with this serial number.
         ArrayList<String> tableContent = RegisterFunctions.GetUserDetailsRegisterPage(BackUserID);
         String TheFirstName = tableContent.get(0);
         String TheLastName = tableContent.get(1);
@@ -88,7 +97,7 @@ public class Register extends AppCompatActivity
         String ThePassword = tableContent.get(4);
         String TheGender = tableContent.get(5);
 
-        //Populate all the fields with the data.
+        //Populate all the fields with the database data.
         TextView FirstName = (TextView)findViewById(R.id.EditText_FirstName);
         FirstName.setText(TheFirstName);
         TextView LastName = (TextView)findViewById(R.id.EditText_LastName);
@@ -265,15 +274,24 @@ public class Register extends AppCompatActivity
             alertDialog.show();
         }
 
-        if (ValidationSuccessful)
+        /*Insert if this is the first time the user is on this page, otherwise just update what is
+        already there*/
+        if (ValidationSuccessful && (BackUserID == null))
         {
             //Insert the record. If it fails then fail the validation as well.
-            UserID = RegisterFunctions.InsertNewUser(FName, LName, TheEmail, TheAge, TheGender, NewPass);
+            UserID = RegisterFunctions.InsertNewUser(FName, LName, TheEmail, TheAge, TheGender,
+                    NewPass);
 
             if (UserID == -1)
             {
                 ValidationSuccessful = false;
             }
+        }
+        else if(ValidationSuccessful)
+        {
+            //Update the record. If it fails then fail the validation as well.
+            ValidationSuccessful = RegisterFunctions.UpdateNewUser(FName, LName, TheEmail, TheAge, TheGender,
+                    NewPass, BackUserID);
         }
         return ValidationSuccessful;
     }
