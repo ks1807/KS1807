@@ -54,7 +54,7 @@ public class DatabaseSchema
         final String Length = "Length TEXT, ";
         final String HowManyTimesListened = "HowManyTimesListened TEXT ";
 
-        MusicTrack = "CREATE TABLE " + DBTable_UserAccount + "(" + TrackID + UserID +
+        MusicTrack = "CREATE TABLE " + DBTable_MusicTrack + "(" + TrackID + UserID +
                 TrackName + Genre + Artist + Length + HowManyTimesListened + ");\n";
         return MusicTrack;
     }
@@ -67,7 +67,7 @@ public class DatabaseSchema
         final String PlayListName = "PlayListName TEXT, ";
         final String RecommendedBy = "RecommendedBy TEXT ";
 
-        PlayList = "CREATE TABLE " + DBTable_UserAccount + "(" + PlayListID + UserID +
+        PlayList = "CREATE TABLE " + DBTable_PlayList + "(" + PlayListID + UserID +
                 PlayListName + RecommendedBy + ");\n";
         return PlayList;
     }
@@ -80,7 +80,7 @@ public class DatabaseSchema
         final String PlayListID = "PlayListID INTEGER, ";
         final String TrackID = "TrackID INTEGER ";
 
-        TracksInPlayList = "CREATE TABLE " + DBTable_UserAccount + "(" + TracksInPlayListID + UserID +
+        TracksInPlayList = "CREATE TABLE " + DBTable_TracksInPlayList + "(" + TracksInPlayListID + UserID +
                 PlayListID + TrackID + ");\n";
         return TracksInPlayList;
     }
@@ -97,7 +97,7 @@ public class DatabaseSchema
         final String MoodAfterTime = "MoodAfterTime DATETIME, ";
         final String UserLiked = "UserLiked TEXT ";
 
-        UserMood = "CREATE TABLE " + DBTable_UserAccount + "(" + MoodID + UserID +
+        UserMood = "CREATE TABLE " + DBTable_UserMood + "(" + MoodID + UserID +
                 TrackID + MoodBefore + MoodBeforeTime + MoodAfter + MoodAfterTime +
                 UserLiked + ");\n";
         return UserMood;
@@ -110,7 +110,7 @@ public class DatabaseSchema
         final String UserID = "UserID INTEGER, ";
         final String Password = "Password TEXT ";
 
-        UserPassword = "CREATE TABLE " + DBTable_UserAccount + "(" + PasswordID + UserID +
+        UserPassword = "CREATE TABLE " + DBTable_UserPassword + "(" + PasswordID + UserID +
                 Password + ");\n";
         return UserPassword;
     }
@@ -144,7 +144,7 @@ public class DatabaseSchema
         final String DiaryEntryDate = "DiaryEntryDate DATETIME, ";
         final String DiaryEntry = "DiaryEntry TEXT ";
 
-        UserDiary = "CREATE TABLE " + DBTable_UserAccount + "(" + UserDiaryID + UserID +
+        UserDiary = "CREATE TABLE " + DBTable_UserDiary + "(" + UserDiaryID + UserID +
                 DiaryEntryDate + DiaryEntry + ");\n";
         return UserDiary;
     }
@@ -158,7 +158,7 @@ public class DatabaseSchema
         final String MakeRecommendations = "MakeRecommendations TEXT, ";
         final String AllowFriendRecommendations = "AllowFriendRecommendations TEXT ";
 
-        UserSettings = "CREATE TABLE " + DBTable_UserAccount + "(" + UserSettingID + UserID +
+        UserSettings = "CREATE TABLE " + DBTable_UserSettings + "(" + UserSettingID + UserID +
                 MoodFrequency + MakeRecommendations + AllowFriendRecommendations + ");\n";
         return UserSettings;
     }

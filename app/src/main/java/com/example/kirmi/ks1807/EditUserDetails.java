@@ -15,6 +15,8 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.annotation.NonNull;
 import android.view.MenuItem;
 
+import java.util.ArrayList;
+
 public class EditUserDetails extends AppCompatActivity
 {
     private final Context context = this;
@@ -58,8 +60,8 @@ public class EditUserDetails extends AppCompatActivity
         Intent intent = getIntent();
         UserID = intent.getStringExtra("UserID");
 
-        String[] UserDetails;
-        UserDetails = UserFunctions.GetUserDetails(UserID);
+        ArrayList<String> UserDetails = UserFunctions.GetUserDetails(UserID);
+
         DisplayUserDetails(UserDetails);
     }
 
@@ -101,25 +103,25 @@ public class EditUserDetails extends AppCompatActivity
         }
     }
 
-    public void DisplayUserDetails(String[] UserDetails)
+    public void DisplayUserDetails(ArrayList<String> UserDetails)
     {
         TextView FirstName = (TextView)findViewById(R.id.EditText_EditFirstname);
-        FirstName.setText(UserDetails[0]);
+        FirstName.setText(UserDetails.get(0));
 
         TextView LastName = (TextView)findViewById(R.id.EditText_EditLastName);
-        LastName.setText(UserDetails[1]);
+        LastName.setText(UserDetails.get(1));
 
         TextView Email = (TextView)findViewById(R.id.EditText_EditEmail);
-        Email.setText(UserDetails[2]);
+        Email.setText(UserDetails.get(2));
 
         TextView Age = (TextView)findViewById(R.id.EditText_EditAge);
-        Age.setText(UserDetails[3]);
+        Age.setText(UserDetails.get(3));
 
         RadioButton GenderFemale = (RadioButton)findViewById(R.id.RadioButton_EditFemale);
-        RadioButton GenderMale = (RadioButton)findViewById(R.id.RadioButton_EditEachTrack);
+        RadioButton GenderMale = (RadioButton)findViewById(R.id.RadioButton_EditMale);
         RadioButton GenderOther = (RadioButton)findViewById(R.id.RadioButton_EditOther);
 
-        String Gender = UserDetails[4];
+        String Gender = UserDetails.get(4);
 
         if (Gender.equals("Male"))
         {

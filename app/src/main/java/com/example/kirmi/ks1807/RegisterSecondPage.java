@@ -14,6 +14,7 @@ public class RegisterSecondPage extends AppCompatActivity
     private final Context context = this;
     final CommonFunctions Common = new CommonFunctions();
     private DatabaseFunctions RegisterFunctions;
+    String UserID = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -21,6 +22,10 @@ public class RegisterSecondPage extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_second_page);
         RegisterFunctions = new DatabaseFunctions(this);
+
+        //Get the UserID for this login session.
+        Intent intent = getIntent();
+        UserID = intent.getStringExtra("UserID");
     }
 
     //Confirm if the user wants to go back if the button is pressed.
@@ -36,6 +41,7 @@ public class RegisterSecondPage extends AppCompatActivity
                     public void onClick(DialogInterface dialog,int id)
                     {
                         Intent intent = new Intent(RegisterSecondPage.this, Register.class);
+                        intent.putExtra("UserID", UserID);
                         startActivity(intent);
                     }
                 })

@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.content.Context;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.RadioButton;
+import java.util.ArrayList;
 
 public class Register extends AppCompatActivity
 {
@@ -15,12 +17,24 @@ public class Register extends AppCompatActivity
     final CommonFunctions Common = new CommonFunctions();
     private DatabaseFunctions RegisterFunctions;
 
+    long UserID = -1;
+    String BackUserID = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         RegisterFunctions = new DatabaseFunctions(this);
+
+        //Get the UserID for this login session if user went back from second page.
+        Intent intent = getIntent();
+        BackUserID = intent.getStringExtra("UserID");
+
+        if (BackUserID != null && !BackUserID.equals(""))
+        {
+            ShowUserDetails();
+        }
     }
 
     //Confirm if the user wants to go back if the button is pressed.
@@ -55,7 +69,54 @@ public class Register extends AppCompatActivity
         if (ValidateForm())
         {
             Intent intent = new Intent(Register.this, RegisterSecondPage.class);
+            intent.putExtra("UserID", String.valueOf(UserID));
             startActivity(intent);
+        }
+    }
+
+    //Repopulate the fields if user has gone back.
+    private void ShowUserDetails()
+    {
+        RegisterFunctions.openReadable();
+
+        //Get all the fields one by one with this serial number.
+        ArrayList<String> tableContent = RegisterFunctions.GetUserDetailsRegisterPage(BackUserID);
+        String TheFirstName = tableContent.get(0);
+        String TheLastName = tableContent.get(1);
+        String TheEmail = tableContent.get(2);
+        String TheAge = tableContent.get(3);
+        String ThePassword = tableContent.get(4);
+        String TheGender = tableContent.get(5);
+
+        //Populate all the fields with the data.
+        TextView FirstName = (TextView)findViewById(R.id.EditText_FirstName);
+        FirstName.setText(TheFirstName);
+        TextView LastName = (TextView)findViewById(R.id.EditText_LastName);
+        LastName.setText(TheLastName);
+        TextView Email = (TextView)findViewById(R.id.EditText_Email);
+        Email.setText(TheEmail);
+        TextView Age = (TextView)findViewById(R.id.EditText_Age);
+        Age.setText(TheAge);
+        TextView NewPassword = (TextView)findViewById(R.id.EditText_Password);
+        NewPassword.setText(ThePassword);
+        TextView NewPasswordRepeat = (TextView)findViewById(R.id.EditText_ConfirmPassword);
+        NewPasswordRepeat.setText(ThePassword);
+
+        RadioButton GenderFemale = (RadioButton)findViewById(R.id.RadioButton_Female);
+        RadioButton GenderMale = (RadioButton)findViewById(R.id.RadioButton_Male);
+        RadioButton GenderOther = (RadioButton)findViewById(R.id.RadioButton_Other);
+
+        if (TheGender.equals("Male"))
+        {
+            GenderMale.setChecked(true);
+        }
+        else if (TheGender.equals("Female"))
+        {
+            GenderFemale.setChecked(true);
+        }
+        else if (TheGender.equals("Other"))
+        {
+            GenderOther.setChecked(true);
         }
     }
 
@@ -79,6 +140,11 @@ public class Register extends AppCompatActivity
         String TheAge = Age.getText().toString();
         String NewPass = NewPassword.getText().toString();
         String NewPassRepeat = NewPasswordRepeat.getText().toString();
+
+        //Get the gender
+        RadioButton GenderFemale = (RadioButton)findViewById(R.id.RadioButton_Female);
+        RadioButton GenderMale = (RadioButton)findViewById(R.id.RadioButton_Male);
+        RadioButton GenderOther = (RadioButton)findViewById(R.id.RadioButton_Other);
 
         //Validation dialogue
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
@@ -174,6 +240,39 @@ public class Register extends AppCompatActivity
                     AlertDialog alertDialog = alertDialogBuilder.create();
                     alertDialog.show();
                 }
+            }
+        }
+
+        String TheGender = "";
+        if (GenderMale.isChecked())
+        {
+            TheGender = GenderMale.getText().toString();
+        }
+        else if(GenderFemale.isChecked())
+        {
+            TheGender = GenderFemale.getText().toString();
+        }
+        else if(GenderOther.isChecked())
+        {
+            TheGender = GenderOther.getText().toString();
+        }
+        else
+        {
+            ValidationSuccessful = false;
+            InvalidMessage = "No gender. This error should never happen.";
+            alertDialogBuilder.setMessage(InvalidMessage);
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            alertDialog.show();
+        }
+
+        if (ValidationSuccessful)
+        {
+            //Insert the record. If it fails then fail the validation as well.
+            UserID = RegisterFunctions.InsertNewUser(FName, LName, TheEmail, TheAge, TheGender, NewPass);
+
+            if (UserID == -1)
+            {
+                ValidationSuccessful = false;
             }
         }
         return ValidationSuccessful;
