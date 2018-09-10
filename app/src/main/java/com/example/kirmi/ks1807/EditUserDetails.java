@@ -222,6 +222,41 @@ public class EditUserDetails extends AppCompatActivity
                 }
             }
         }
+
+        //Get the gender
+        RadioButton GenderFemale = (RadioButton)findViewById(R.id.RadioButton_EditMale);
+        RadioButton GenderMale = (RadioButton)findViewById(R.id.RadioButton_EditFemale);
+        RadioButton GenderOther = (RadioButton)findViewById(R.id.RadioButton_EditOther);
+
+        String TheGender = "";
+        if (GenderMale.isChecked())
+        {
+            TheGender = GenderMale.getText().toString();
+        }
+        else if(GenderFemale.isChecked())
+        {
+            TheGender = GenderFemale.getText().toString();
+        }
+        else if(GenderOther.isChecked())
+        {
+            TheGender = GenderOther.getText().toString();
+        }
+        else
+        {
+            ValidationSuccessful = false;
+            InvalidMessage = "No gender. This error should never happen.";
+            alertDialogBuilder.setMessage(InvalidMessage);
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            alertDialog.show();
+        }
+
+        if(ValidationSuccessful)
+        {
+            //Update the record. If it fails then fail the validation as well.
+            ValidationSuccessful = UserFunctions.UpdateCurrentUser(FName, LName, TheEmail, TheAge,
+                    TheGender, UserID);
+        }
+
         return ValidationSuccessful;
     }
 }

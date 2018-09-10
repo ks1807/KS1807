@@ -108,7 +108,6 @@ public class Settings extends AppCompatActivity
 
     public String[] GetTrackFrequencies()
     {
-        String[] TrackFrequencies = getResources().getStringArray(R.array.AlertFrequencies);
-        return TrackFrequencies;
+        return getResources().getStringArray(R.array.AlertFrequencies);
     }
 }

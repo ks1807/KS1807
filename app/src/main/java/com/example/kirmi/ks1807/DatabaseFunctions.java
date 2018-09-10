@@ -6,14 +6,13 @@ import android.content.Context;
 import android.content.*;
 import android.util.Log;
 import android.database.sqlite.*;
-import java.util.ArrayList;
 
 public class DatabaseFunctions
 {
     //Create the local database for storing user data and settings
     private static final String DBNAME = "MusicMentalHealthDB";
     private static final int DB_VERSION = 3;
-    final DatabaseSchema DBSchema = new DatabaseSchema();
+    private final DatabaseSchema DBSchema = new DatabaseSchema();
     private final ArrayList<String> Create_AllTables = DBSchema.CreateAllTables();
     private final ArrayList<String> Drop_AllTables = DBSchema.DropAllTables();
 
@@ -42,7 +41,8 @@ public class DatabaseFunctions
 
     public class SQLHelper extends SQLiteOpenHelper
     {
-        public SQLHelper (Context c) {
+        private SQLHelper (Context c)
+        {
             super(c, DBNAME, null, DB_VERSION);
         }
 
@@ -93,9 +93,7 @@ public class DatabaseFunctions
         UserDetails.add("Sad");
         UserDetails.add("Happy");
 
-        String[] ReturnUserDetails = UserDetails.toArray(new String[UserDetails.size()]);
-
-        return ReturnUserDetails;
+        return UserDetails.toArray(new String[UserDetails.size()]);
     }
 
     //Get list of Playlist IDs
@@ -109,9 +107,7 @@ public class DatabaseFunctions
         PlaylistIDs.add("2");
         PlaylistIDs.add("3");
 
-        String[] ReturnPlaylistIDs = PlaylistIDs.toArray(new String[PlaylistIDs.size()]);
-
-        return ReturnPlaylistIDs;
+        return PlaylistIDs.toArray(new String[PlaylistIDs.size()]);
     }
 
     //Get list of Playlist Names
@@ -125,9 +121,7 @@ public class DatabaseFunctions
         PlaylistNames.add("Rock and Roll");
         PlaylistNames.add("Recommendations");
 
-        String[] ReturnPlaylistNames = PlaylistNames.toArray(new String[PlaylistNames.size()]);
-
-        return ReturnPlaylistNames;
+        return PlaylistNames.toArray(new String[PlaylistNames.size()]);
     }
 
     //Get list of Track IDs
@@ -141,9 +135,7 @@ public class DatabaseFunctions
         TrackIDs.add("2");
         TrackIDs.add("3");
 
-        String[] ReturnTrackIDs = TrackIDs.toArray(new String[TrackIDs.size()]);
-
-        return ReturnTrackIDs;
+        return TrackIDs.toArray(new String[TrackIDs.size()]);
     }
 
     //Get list of Track Names
@@ -169,7 +161,7 @@ public class DatabaseFunctions
         Cursor cursor = db.query("UserAccount", columns, "UserID = " + UserID, null, null, null, null);
         cursor.moveToFirst();
 
-        while (cursor.isAfterLast() == false)
+        while (!cursor.isAfterLast())
         {
             Age = cursor.getString(cursor.getColumnIndex("Age"));
             cursor.moveToNext();
@@ -188,7 +180,7 @@ public class DatabaseFunctions
         Cursor cursor = db.query("UserAccount", columns, "UserID = " + UserID, null, null, null, null);
         cursor.moveToFirst();
 
-        while (cursor.isAfterLast() == false)
+        while (!cursor.isAfterLast())
         {
             EmailAddress = cursor.getString(cursor.getColumnIndex("EmailAddress"));
             cursor.moveToNext();
@@ -207,7 +199,7 @@ public class DatabaseFunctions
         Cursor cursor = db.query("UserAccount", columns, "UserID = " + UserID, null, null, null, null);
         cursor.moveToFirst();
 
-        while (cursor.isAfterLast() == false)
+        while (!cursor.isAfterLast())
         {
             FirstName = cursor.getString(cursor.getColumnIndex("FirstName"));
             cursor.moveToNext();
@@ -226,7 +218,7 @@ public class DatabaseFunctions
         Cursor cursor = db.query("UserAccount", columns, "UserID = " + UserID, null, null, null, null);
         cursor.moveToFirst();
 
-        while (cursor.isAfterLast() == false)
+        while (!cursor.isAfterLast())
         {
             Gender = cursor.getString(cursor.getColumnIndex("Gender"));
             cursor.moveToNext();
@@ -245,7 +237,7 @@ public class DatabaseFunctions
         Cursor cursor = db.query("UserAccount", columns, "UserID = " + UserID, null, null, null, null);
         cursor.moveToFirst();
 
-        while (cursor.isAfterLast() == false)
+        while (!cursor.isAfterLast())
         {
             LastName = cursor.getString(cursor.getColumnIndex("LastName"));
             cursor.moveToNext();
@@ -264,7 +256,7 @@ public class DatabaseFunctions
         Cursor cursor = db.query("UserPassword", columns, "UserID = " + UserID, null, null, null, null);
         cursor.moveToFirst();
 
-        while (cursor.isAfterLast() == false)
+        while (!cursor.isAfterLast())
         {
             Password = cursor.getString(cursor.getColumnIndex("Password"));
             cursor.moveToNext();
@@ -278,23 +270,18 @@ public class DatabaseFunctions
 
     public ArrayList<String> GetUserDetails(String UserID)
     {
-        //REPLACE WITH A DB CALL and pass UserID into it.
-
         ArrayList<String> UserDetails = new ArrayList<String>();
 
-        UserDetails.add("Barrack");
-        UserDetails.add("Obama");
-        UserDetails.add("test@test.com.au");
-        UserDetails.add("57");
-        UserDetails.add("Other");
-
+        UserDetails.add(GetFirstName(UserID));
+        UserDetails.add(GetLastName(UserID));
+        UserDetails.add(GetEmailAddress(UserID));
+        UserDetails.add(GetAge(UserID));
+        UserDetails.add(GetGender(UserID));
         return UserDetails;
     }
 
     public ArrayList<String> GetUserDetailsRegisterPage(String UserID)
     {
-        //REPLACE WITH A DB CALL and pass UserID into it.
-
         ArrayList<String> UserDetails = new ArrayList<String>();
 
         UserDetails.add(GetFirstName(UserID));
@@ -325,7 +312,31 @@ public class DatabaseFunctions
                 db.insertOrThrow("UserPassword", null, NewPassword);
             } catch (Exception e)
             {
-                Log.e("Error in inserting rows", e.toString());
+                Log.e("Error in inserting row", e.toString());
+                e.printStackTrace();
+                return false;
+            }
+            return true;
+        }
+    }
+
+    //Create a new settings record with default values set.
+    private boolean InsertNewSettings (String UserID)
+    {
+        synchronized (this.db)
+        {
+            ContentValues NewPassword = new ContentValues();
+            NewPassword.put("UserID", UserID);
+            NewPassword.put("MoodFrequency", "Once Per Track");
+            NewPassword.put("MakeRecommendations", "Yes");
+            NewPassword.put("AllowFriendRecommendations", "Yes");
+
+            try
+            {
+                db.insertOrThrow("UserSettings", null, NewPassword);
+            } catch (Exception e)
+            {
+                Log.e("Error in inserting row", e.toString());
                 e.printStackTrace();
                 return false;
             }
@@ -363,7 +374,18 @@ public class DatabaseFunctions
             }
 
             //Once we have the UserID we need to insert their password data into a different table.
-            InsertNewPassword(String.valueOf(ID), Password);
+            if (!InsertNewPassword(String.valueOf(ID), Password))
+            {
+                //Return -1 if it failed.
+                ID = -1;
+            }
+
+            //Insert new settings record as well.
+            if(!InsertNewSettings(String.valueOf(ID)))
+            {
+                //Return -1 if it failed.
+                ID = -1;
+            }
             return ID;
         }
     }
@@ -389,6 +411,36 @@ public class DatabaseFunctions
         }
     }
 
+    public boolean UpdateCurrentUser(String FirstName, String LastName, String EmailAddress, String Age,
+                                 String Gender, String UserID)
+    {
+        synchronized(this.db)
+        {
+            ContentValues UpdateNewUser = new ContentValues();
+            UpdateNewUser.put("FirstName", FirstName);
+            UpdateNewUser.put("LastName", LastName);
+            UpdateNewUser.put("EmailAddress", EmailAddress);
+
+            if (!Age.equals(""))
+            {
+                int AgeNum = Integer.parseInt(Age);
+                UpdateNewUser.put("Age", AgeNum);
+            }
+            UpdateNewUser.put("Gender", Gender);
+
+            try
+            {
+                db.update("UserAccount", UpdateNewUser, " UserID = " + UserID, null);
+            } catch (Exception e)
+            {
+                Log.e("Error in updating rows", e.toString());
+                e.printStackTrace();
+                return false;
+            }
+        }
+        return true;
+    }
+
     public boolean UpdateNewUser(String FirstName, String LastName, String EmailAddress, String Age,
                               String Gender, String Password, String UserID)
     {
@@ -411,14 +463,37 @@ public class DatabaseFunctions
                 db.update("UserAccount", UpdateNewUser, " UserID = " + UserID, null);
             } catch (Exception e)
             {
-                Log.e("Error in inserting rows", e.toString());
+                Log.e("Error in updating rows", e.toString());
                 e.printStackTrace();
                 return false;
             }
 
             //Update the existing password record as well.
-            boolean PasswordUpdated = UpdateNewPassword(UserID, Password);
-            return PasswordUpdated;
+            return UpdateNewPassword(UserID, Password);
+        }
+    }
+
+    public boolean UpdateNewUserSecondPage(String PreferredPlatform, String MusicQuestionOne, String MusicQuestionTwo,
+                                 String MusicQuestionThree, String UserID)
+    {
+        synchronized(this.db)
+        {
+            ContentValues UpdateNewUser = new ContentValues();
+            UpdateNewUser.put("PreferredPlatform", PreferredPlatform);
+            UpdateNewUser.put("MusicQuestionOne", MusicQuestionOne);
+            UpdateNewUser.put("MusicQuestionTwo", MusicQuestionTwo);
+            UpdateNewUser.put("MusicQuestionThree", MusicQuestionThree);
+
+            try
+            {
+                db.update("UserAccount", UpdateNewUser, " UserID = " + UserID, null);
+            } catch (Exception e)
+            {
+                Log.e("Error in updating rows", e.toString());
+                e.printStackTrace();
+                return false;
+            }
+            return true;
         }
     }
 
