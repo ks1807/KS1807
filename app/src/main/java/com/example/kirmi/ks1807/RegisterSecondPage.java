@@ -137,11 +137,7 @@ public class RegisterSecondPage extends AppCompatActivity
         }
 
         //Update the user with the settings, return false if the update failed.
-        boolean Successful = RegisterFunctions.UpdateNewUserSecondPage(ThePreferredPlatform, TheMusicQuestionOne,
+        return RegisterFunctions.UpdateNewUserSecondPage(ThePreferredPlatform, TheMusicQuestionOne,
                 TheMusicQuestionTwo, TheMood, UserID);
-
-
-
-        return Successful;
     }
 }

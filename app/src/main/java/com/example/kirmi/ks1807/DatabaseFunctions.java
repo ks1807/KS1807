@@ -249,6 +249,44 @@ public class DatabaseFunctions
         return LastName;
     }
 
+    private String GetMakeRecommendations(String UserID)
+    {
+        String MakeRecommendations = "";
+        String[] columns = new String[] {"MakeRecommendations"};
+        Cursor cursor = db.query("UserSettings", columns, "UserID = " + UserID, null, null, null, null);
+        cursor.moveToFirst();
+
+        while (!cursor.isAfterLast())
+        {
+            MakeRecommendations = cursor.getString(cursor.getColumnIndex("MakeRecommendations"));
+            cursor.moveToNext();
+        }
+        if (cursor != null && !cursor.isClosed())
+        {
+            cursor.close();
+        }
+        return MakeRecommendations;
+    }
+
+    private String GetMoodFrequency(String UserID)
+    {
+        String MoodFrequency = "";
+        String[] columns = new String[] {"MoodFrequency"};
+        Cursor cursor = db.query("UserSettings", columns, "UserID = " + UserID, null, null, null, null);
+        cursor.moveToFirst();
+
+        while (!cursor.isAfterLast())
+        {
+            MoodFrequency = cursor.getString(cursor.getColumnIndex("MoodFrequency"));
+            cursor.moveToNext();
+        }
+        if (cursor != null && !cursor.isClosed())
+        {
+            cursor.close();
+        }
+        return MoodFrequency;
+    }
+
     private String GetUserPassword(String UserID)
     {
         String Password = "";
@@ -266,6 +304,15 @@ public class DatabaseFunctions
             cursor.close();
         }
         return Password;
+    }
+
+    public ArrayList<String> GetUserSettings(String UserID)
+    {
+        ArrayList<String> UserSettings = new ArrayList<String>();
+
+        UserSettings.add(GetMakeRecommendations(UserID));
+        UserSettings.add(GetMoodFrequency(UserID));
+        return UserSettings;
     }
 
     public ArrayList<String> GetUserDetails(String UserID)
@@ -368,7 +415,7 @@ public class DatabaseFunctions
                 ID = db.insertOrThrow("UserAccount", null, NewUser);
             } catch (Exception e)
             {
-                Log.e("Error in inserting rows", e.toString());
+                Log.e("Error in inserting row", e.toString());
                 e.printStackTrace();
                 return ID;
             }
@@ -403,7 +450,7 @@ public class DatabaseFunctions
                 db.update("UserPassword", NewPassword, " UserID = " + UserID, null);
             } catch (Exception e)
             {
-                Log.e("Error in inserting rows", e.toString());
+                Log.e("Error in inserting row", e.toString());
                 e.printStackTrace();
                 return false;
             }
@@ -433,7 +480,7 @@ public class DatabaseFunctions
                 db.update("UserAccount", UpdateNewUser, " UserID = " + UserID, null);
             } catch (Exception e)
             {
-                Log.e("Error in updating rows", e.toString());
+                Log.e("Error in updating row", e.toString());
                 e.printStackTrace();
                 return false;
             }
@@ -463,7 +510,7 @@ public class DatabaseFunctions
                 db.update("UserAccount", UpdateNewUser, " UserID = " + UserID, null);
             } catch (Exception e)
             {
-                Log.e("Error in updating rows", e.toString());
+                Log.e("Error in updating row", e.toString());
                 e.printStackTrace();
                 return false;
             }
@@ -489,7 +536,30 @@ public class DatabaseFunctions
                 db.update("UserAccount", UpdateNewUser, " UserID = " + UserID, null);
             } catch (Exception e)
             {
-                Log.e("Error in updating rows", e.toString());
+                Log.e("Error in updating row", e.toString());
+                e.printStackTrace();
+                return false;
+            }
+            return true;
+        }
+    }
+
+    public boolean UpdateSettings (String MakeRecommendations, String MoodFrequency,
+                                    String UserID)
+    {
+        synchronized (this.db)
+        {
+            ContentValues NewPassword = new ContentValues();
+            NewPassword.put("UserID", UserID);
+            NewPassword.put("MakeRecommendations", MakeRecommendations);
+            NewPassword.put("MoodFrequency", MoodFrequency);
+
+            try
+            {
+                db.update("UserSettings", NewPassword, " UserID = " + UserID, null);
+            } catch (Exception e)
+            {
+                Log.e("Error in updating row", e.toString());
                 e.printStackTrace();
                 return false;
             }
