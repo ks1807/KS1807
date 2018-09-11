@@ -1,7 +1,9 @@
 package com.example.kirmi.ks1807;
 
+import android.app.AlertDialog;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.ServiceConnection;
 import android.net.Uri;
 import android.os.IBinder;
@@ -11,6 +13,7 @@ import android.os.Bundle;
 import android.content.Intent;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.spotify.android.appremote.api.ConnectionParams;
@@ -24,6 +27,7 @@ public class MainActivity extends AppCompatActivity
 {
     private final Context context = this;
     private DatabaseFunctions UserFunctions;
+    String UserID = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -37,8 +41,6 @@ public class MainActivity extends AppCompatActivity
     {
         if(ValidateLogin())
         {
-            String UserID = UserFunctions.GetUserID();
-
             Intent intent = new Intent(MainActivity.this, CurrentMusic.class);
             intent.putExtra("UserID", UserID);
             startActivity(intent);
@@ -61,8 +63,62 @@ public class MainActivity extends AppCompatActivity
     private boolean ValidateLogin()
     {
         boolean ValidationSuccessful = true;
-        //INSERT VALIDATION LOGIC AND ALERTS HERE
+        String InvalidMessage = "";
 
+        //Convert the contents of the text boxes to strings
+        TextView EmailAddress = (TextView)findViewById(R.id.EditText_UserName);
+        TextView Password = (TextView)findViewById(R.id.EditText_Password);
+
+        String TheEmailAddress = EmailAddress.getText().toString();
+        String ThePassword = Password.getText().toString();
+
+        //Validation dialogue
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+        alertDialogBuilder.setTitle("Invalid Credentials");
+        alertDialogBuilder
+                .setCancelable(false)
+                .setPositiveButton("Ok",new DialogInterface.OnClickListener()
+                {
+                    public void onClick(DialogInterface dialog,int id)
+                    {
+                        //No action to be taken until login issue is resolved.
+                    }
+                });
+
+        if (TheEmailAddress.equals(""))
+        {
+            ValidationSuccessful = false;
+            InvalidMessage = "You need to enter an Email Address to login.";
+            alertDialogBuilder.setMessage(InvalidMessage);
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            alertDialog.show();
+        }
+
+        if (ThePassword.equals("") && ValidationSuccessful)
+        {
+            ValidationSuccessful = false;
+            InvalidMessage = "You need to enter your password to login.";
+            alertDialogBuilder.setMessage(InvalidMessage);
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            alertDialog.show();
+        }
+
+        //Validate the login and get the UserID. Don't run this if validation failed earlier.
+        if(ValidationSuccessful)
+        {
+            UserID = UserFunctions.VerifyLogin(TheEmailAddress, ThePassword);
+        }
+
+        //Blank ID means either the email or password were incorrect.
+        if (UserID.equals("") && ValidationSuccessful)
+        {
+            ValidationSuccessful = false;
+            InvalidMessage = "Your login was unsuccessful. Please check that your Email Address" +
+                    " and Password have been typed in correctly.";
+            alertDialogBuilder.setMessage(InvalidMessage);
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            alertDialog.show();
+        }
         return ValidationSuccessful;
     }
 }

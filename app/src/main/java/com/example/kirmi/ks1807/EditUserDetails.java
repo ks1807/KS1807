@@ -194,6 +194,15 @@ public class EditUserDetails extends AppCompatActivity
             alertDialog.show();
         }
 
+        if (!UserFunctions.IsEmailAddressUnique(TheEmail) && ValidationSuccessful)
+        {
+            ValidationSuccessful = false;
+            InvalidMessage = "Email Address is already in use. Please pick another one.";
+            alertDialogBuilder.setMessage(InvalidMessage);
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            alertDialog.show();
+        }
+
         //Note: User input will normally prevent most of these errors in the first place.
         //But just in case validate it.
         else if (!Common.isNumeric(TheAge))

@@ -172,10 +172,7 @@ public class ChangePassword extends AppCompatActivity
             alertDialog.show();
         }
 
-        //Check if the old password is valid. NOTE: Functionality not implemented yet
-        String OldDummy = "TEST";
-
-        if (!OldPass.equals(OldDummy) && ValidationSuccessful)
+        if (!PasswordDatabaseFunctions.VerifyPassword(UserID, OldPass) && ValidationSuccessful)
         {
             ValidationSuccessful = false;
             InvalidMessage = "The old password you have specified does not match your current password.";
@@ -184,7 +181,7 @@ public class ChangePassword extends AppCompatActivity
             alertDialog.show();
         }
 
-        if (!OldPass.equals(NewPass) && ValidationSuccessful)
+        if (OldPass.equals(NewPass) && ValidationSuccessful)
         {
             ValidationSuccessful = false;
             InvalidMessage = "The new password is exactly the same as your old password! Please use a different password.";
@@ -192,6 +189,13 @@ public class ChangePassword extends AppCompatActivity
             AlertDialog alertDialog = alertDialogBuilder.create();
             alertDialog.show();
         }
+
+        if(ValidationSuccessful)
+        {
+            //Update the password. If it fails then fail the validation as well.
+            ValidationSuccessful = PasswordDatabaseFunctions.UpdateNewPassword(UserID, NewPass);
+        }
+
         return ValidationSuccessful;
     }
 }

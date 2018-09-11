@@ -195,6 +195,15 @@ public class Register extends AppCompatActivity
             alertDialog.show();
         }
 
+        if (!RegisterFunctions.IsEmailAddressUnique(TheEmail) && ValidationSuccessful)
+        {
+            ValidationSuccessful = false;
+            InvalidMessage = "Email Address is already in use. Please pick another one.";
+            alertDialogBuilder.setMessage(InvalidMessage);
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            alertDialog.show();
+        }
+
         if (NewPass.equals("") && ValidationSuccessful)
         {
             ValidationSuccessful = false;

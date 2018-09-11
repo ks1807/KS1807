@@ -78,6 +78,13 @@ public class DatabaseFunctions
         context.deleteDatabase(DBNAME);
     }
 
+    private String EncryptPassword(String Password)
+    {
+        //Need to figure out how to do this.
+
+        return Password;
+    }
+
     public String[] GetMusicHistory(String UserID)
     {
         //REPLACE WITH A DB CALL and pass UserID into it.
@@ -340,14 +347,29 @@ public class DatabaseFunctions
         return UserDetails;
     }
 
-    public String GetUserID()
+    private String GetUserID(String EmailAddress)
     {
-        String UserID = "DUMMY";
+            String UserID = "";
+            String[] columns = new String[]{"UserID"};
+            Cursor cursor = db.query("UserAccount", columns, "EmailAddress = " + "'" + EmailAddress + "'", null, null, null, null);
+            cursor.moveToFirst();
+
+            while (!cursor.isAfterLast())
+            {
+                UserID = cursor.getString(cursor.getColumnIndex("UserID"));
+                cursor.moveToNext();
+            }
+            if (cursor != null && !cursor.isClosed())
+            {
+                cursor.close();
+            }
         return UserID;
     }
 
     private boolean InsertNewPassword (String UserID, String Password)
     {
+        Password = EncryptPassword(Password);
+
         synchronized (this.db)
         {
             ContentValues NewPassword = new ContentValues();
@@ -437,8 +459,33 @@ public class DatabaseFunctions
         }
     }
 
-    private boolean UpdateNewPassword (String UserID, String Password)
+    public boolean IsEmailAddressUnique(String EmailAddress)
     {
+        String Email = "";
+        String[] columns = new String[] {"EmailAddress"};
+        Cursor cursor = db.query("UserAccount", columns, "EmailAddress = " + "'" + EmailAddress + "'", null, null, null, null);
+        cursor.moveToFirst();
+
+        while (!cursor.isAfterLast())
+        {
+            Email = cursor.getString(cursor.getColumnIndex("EmailAddress"));
+            if (Email.equals(EmailAddress))
+            {
+                return false;
+            }
+            cursor.moveToNext();
+        }
+        if (cursor != null && !cursor.isClosed())
+        {
+            cursor.close();
+        }
+        return true;
+    }
+
+    public boolean UpdateNewPassword (String UserID, String Password)
+    {
+        Password = EncryptPassword(Password);
+
         synchronized (this.db)
         {
             ContentValues NewPassword = new ContentValues();
@@ -549,14 +596,14 @@ public class DatabaseFunctions
     {
         synchronized (this.db)
         {
-            ContentValues NewPassword = new ContentValues();
-            NewPassword.put("UserID", UserID);
-            NewPassword.put("MakeRecommendations", MakeRecommendations);
-            NewPassword.put("MoodFrequency", MoodFrequency);
+            ContentValues NewSettings = new ContentValues();
+            NewSettings.put("UserID", UserID);
+            NewSettings.put("MakeRecommendations", MakeRecommendations);
+            NewSettings.put("MoodFrequency", MoodFrequency);
 
             try
             {
-                db.update("UserSettings", NewPassword, " UserID = " + UserID, null);
+                db.update("UserSettings", NewSettings, " UserID = " + UserID, null);
             } catch (Exception e)
             {
                 Log.e("Error in updating row", e.toString());
@@ -567,9 +614,43 @@ public class DatabaseFunctions
         }
     }
 
-    public boolean VerifyPassword(String Password)
+    public String VerifyLogin(String EmailAddress, String Password)
     {
-        //Need to check if the password here matches the one being entered.
-        return true;
+        String UserID = GetUserID(EmailAddress);
+
+        //Don't bother checking password if the ID does not match.
+        if(UserID.equals(""))
+        {
+            return "";
+        }
+
+        Password = EncryptPassword(Password);
+        String StoredPassword = GetUserPassword(UserID);
+
+        //If password is wrong, don't return an ID.
+        if (Password.equals(StoredPassword))
+        {
+            return UserID;
+        }
+        else
+        {
+            return "";
+        }
+    }
+
+    public boolean VerifyPassword(String UserID, String Password)
+    {
+        Password = EncryptPassword(Password);
+
+        String StoredPassword = GetUserPassword(UserID);
+
+        if (Password.equals(StoredPassword))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 }
