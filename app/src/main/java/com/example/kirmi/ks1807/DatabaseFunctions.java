@@ -81,6 +81,7 @@ public class DatabaseFunctions
     private String EncryptPassword(String Password)
     {
         //Need to figure out how to do this.
+        //Might have to do this on the server side.
 
         return Password;
     }

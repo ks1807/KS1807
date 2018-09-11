@@ -20,18 +20,26 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <TextView
+            android:id="@+id/Text_YourProfile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/YourProfile_Caption"
+            android:textAlignment="center"
+            android:textStyle="bold" />
+
         <Space
             android:layout_width="match_parent"
             android:layout_height="18dp" />
 
         <EditText
-            android:id="@+id/EditText_EditFirstname"
+            android:id="@+id/EditText_EditFirstName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="@string/FNameCaption"
             android:inputType="textPersonName"
-            android:textSize="14sp" />
+            android:textSize="14sp"/>
 
         <Space
             android:layout_width="match_parent"
@@ -44,7 +52,7 @@
             android:ems="10"
             android:hint="@string/LNameCaption"
             android:inputType="textPersonName"
-            android:textSize="14sp" />
+            android:textSize="14sp"/>
 
         <Space
             android:layout_width="match_parent"
@@ -57,7 +65,7 @@
             android:ems="10"
             android:hint="@string/EmailCaption"
             android:inputType="textEmailAddress"
-            android:textSize="14sp" />
+            android:textSize="14sp"/>
 
         <Space
             android:layout_width="match_parent"
@@ -70,7 +78,7 @@
             android:ems="10"
             android:hint="@string/Age_Caption"
             android:inputType="number"
-            android:textSize="14sp" />
+            android:textSize="14sp"/>
 
         <Space
             android:layout_width="match_parent"
@@ -116,6 +124,27 @@
         </RadioGroup>
 
         <Button
+            android:id="@+id/btn_Edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="10dp"
+            android:onClick="button_Edit"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:text="@string/Edit_Caption" />
+
+        <Button
+            android:id="@+id/btn_View"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="10dp"
+            android:onClick="button_View"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:text="@string/View_Caption"
+            android:visibility="gone" />
+
+        <Button
             android:id="@+id/btn_SubmitEdit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -123,7 +152,8 @@
             android:onClick="button_Submit"
             android:paddingBottom="10dp"
             android:paddingTop="10dp"
-            android:text="@string/Submit_Caption" />
+            android:text="@string/Submit_Caption"
+            android:visibility="gone" />
 
         <Button
             android:id="@+id/btn_BackEditUser"

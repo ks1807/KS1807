@@ -19,6 +19,7 @@ public class Register extends AppCompatActivity
 
     long UserID = -1;
     String BackUserID = "";
+    String CurrentEmailAddress = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -100,14 +101,20 @@ public class Register extends AppCompatActivity
         //Populate all the fields with the database data.
         TextView FirstName = (TextView)findViewById(R.id.EditText_FirstName);
         FirstName.setText(TheFirstName);
+
         TextView LastName = (TextView)findViewById(R.id.EditText_LastName);
         LastName.setText(TheLastName);
+
         TextView Email = (TextView)findViewById(R.id.EditText_Email);
         Email.setText(TheEmail);
+        CurrentEmailAddress = TheEmail;
+
         TextView Age = (TextView)findViewById(R.id.EditText_Age);
         Age.setText(TheAge);
+
         TextView NewPassword = (TextView)findViewById(R.id.EditText_Password);
         NewPassword.setText(ThePassword);
+
         TextView NewPasswordRepeat = (TextView)findViewById(R.id.EditText_ConfirmPassword);
         NewPasswordRepeat.setText(ThePassword);
 
@@ -195,7 +202,10 @@ public class Register extends AppCompatActivity
             alertDialog.show();
         }
 
-        if (!RegisterFunctions.IsEmailAddressUnique(TheEmail) && ValidationSuccessful)
+        /*Check if the email address is used by another user and also don't trigger validation if
+        the user is not changing their email address (if they already set this before)*/
+        if (!RegisterFunctions.IsEmailAddressUnique(TheEmail)
+                && !TheEmail.equals(CurrentEmailAddress) && ValidationSuccessful)
         {
             ValidationSuccessful = false;
             InvalidMessage = "Email Address is already in use. Please pick another one.";

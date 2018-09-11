@@ -63,7 +63,7 @@
     <string name="AlertFrequencyFifteenMinutes_Caption">15 Minutes</string>
     <string name="Every_Caption">Every...</string>
     <string name="AlertFrequencyHour_Caption">Hour</string>
-    <string name="AccountDetailsHeading_Caption">Which of your account details do you want to change?</string>
+    <string name="AccountDetailsHeading_Caption">Which of your account details do you want to view or change?</string>
     <string name="AccountDetails_Caption">Account Details</string>
     <string name="ChangeSettings_Caption">Change Settings</string>
     <string name="Play_Caption">Play</string>
@@ -76,4 +76,8 @@
     <string name="Profile_Caption">Profile</string>
     <string name="Home_Caption">Home</string>
     <string name="Library_Caption">Your Library</string>
+    <string name="YourProfile_Caption">Your Profile</string>
+    <string name="Edit_Caption">Edit</string>
+    <string name="View_Caption">View</string>
+    <string name="ViewProfile_Caption">View/Edit Profile</string>
 </resources>

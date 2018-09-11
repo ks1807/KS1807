@@ -7,7 +7,7 @@
     tools:context=".AccountDetails">
 
     <LinearLayout
-        android:id="@+id/linearLayout3"
+        android:id="@+id/Layout_AccountDetails"
         android:layout_width="0dp"
         android:layout_height="435dp"
         android:layout_marginBottom="8dp"
@@ -34,6 +34,16 @@
             android:layout_height="18dp" />
 
         <Button
+            android:id="@+id/btn_ChangeUserDetails"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="10dp"
+            android:onClick="button_EditUserDetails"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:text="@string/ViewProfile_Caption" />
+
+        <Button
             android:id="@+id/btn_ChangeSettings"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -42,16 +52,6 @@
             android:paddingBottom="10dp"
             android:paddingTop="10dp"
             android:text="@string/ChangeSettings_Caption" />
-
-        <Button
-            android:id="@+id/btn_ChangeUserDetails"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="10dp"
-            android:onClick="button_EditUserDetails"
-            android:paddingBottom="10dp"
-            android:paddingTop="10dp"
-            android:text="@string/ChangeUserDetails_Caption" />
 
         <Button
             android:id="@+id/btn_ChangePassword"
@@ -68,10 +68,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minHeight="10dp"
+            android:onClick="button_Back"
             android:paddingBottom="10dp"
             android:paddingTop="10dp"
-            android:text="@string/BackButtonCaption"
-            android:onClick="button_Back"/>
+            android:text="@string/BackButtonCaption" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -82,7 +82,7 @@
                 android:id="@+id/frame_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:animateLayoutChanges="true"/>
+                android:animateLayoutChanges="true" />
 
             <android.support.design.widget.BottomNavigationView
                 android:id="@+id/navigation"
