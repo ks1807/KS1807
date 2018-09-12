@@ -277,7 +277,8 @@ public class EditUserDetails extends AppCompatActivity
 
         /*Check if the email address is used by another user and also don't trigger validation if
         the user is not changing their address*/
-        if (!UserFunctions.IsEmailAddressUnique(TheEmail) && !TheEmail.equals(CurrentEmailAddress)
+        if (!UserFunctions.IsEmailAddressUnique(TheEmail) &&
+                !TheEmail.toLowerCase().equals(CurrentEmailAddress.toLowerCase())
                 && ValidationSuccessful)
         {
             ValidationSuccessful = false;

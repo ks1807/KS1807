@@ -5,8 +5,8 @@ import java.util.ArrayList;
 //This file is where the we define all of our tables and columns for our local database.
 public class DatabaseSchema
 {
+    private static final String DBTable_MoodScore = "MoodScore";
     private static final String DBTable_UserAccount = "UserAccount";
-    private static final String DBTable_UserPassword = "UserPassword";
     private static final String DBTable_MusicTrack = "MusicTrack";
     private static final String DBTable_PlayList = "PlayList";
     private static final String DBTable_TracksInPlayList = "TracksInPlayList";
@@ -18,8 +18,8 @@ public class DatabaseSchema
     {
         ArrayList<String> TablesToCreate = new ArrayList<String>();
 
+        TablesToCreate.add(CreateMoodScore());
         TablesToCreate.add(CreateUserAccount());
-        TablesToCreate.add(CreateUserPassword());
         TablesToCreate.add(CreateMusicTrack());
         TablesToCreate.add(CreatePlayList());
         TablesToCreate.add(CreateUserMood());
@@ -33,31 +33,40 @@ public class DatabaseSchema
     {
         ArrayList<String> TablesToDrop = new ArrayList<String>();
 
+        TablesToDrop.add("DROP TABLE IF EXISTS " + DBTable_MoodScore + "; ");
         TablesToDrop.add("DROP TABLE IF EXISTS " + DBTable_UserAccount + "; ");
-        TablesToDrop.add("DROP TABLE IF EXISTS " + DBTable_UserPassword + "; ");
         TablesToDrop.add("DROP TABLE IF EXISTS " + DBTable_MusicTrack + "; ");
         TablesToDrop.add("DROP TABLE IF EXISTS " + DBTable_PlayList + "; ");
         TablesToDrop.add("DROP TABLE IF EXISTS " + DBTable_TracksInPlayList + "; ");
         TablesToDrop.add("DROP TABLE IF EXISTS " + DBTable_UserMood + "; ");
         TablesToDrop.add("DROP TABLE IF EXISTS " + DBTable_UserDiary + "; ");
         TablesToDrop.add("DROP TABLE IF EXISTS " + DBTable_UserSettings + "; ");
-
         return TablesToDrop;
+    }
+
+    private String CreateMoodScore()
+    {
+        String MoodScore;
+        final String MoodScoreID = "MoodScoreID INTEGER PRIMARY KEY AUTOINCREMENT, ";
+        final String Mood = "Mood TEXT, ";
+        final String Score = "Score INTEGER ";
+
+        MoodScore = "CREATE TABLE " + DBTable_MoodScore + "(" + MoodScoreID + Mood + Score
+                + ");\n";
+        return MoodScore;
     }
 
     private String CreateMusicTrack()
     {
         String MusicTrack;
         final String TrackID = "TrackID INTEGER PRIMARY KEY AUTOINCREMENT, ";
-        final String UserID = "UserID INTEGER, ";
         final String TrackName = "TrackName TEXT, ";
         final String Genre = "Genre TEXT, ";
         final String Artist = "Artist TEXT, ";
-        final String Length = "Length TEXT, ";
-        final String HowManyTimesListened = "HowManyTimesListened TEXT ";
+        final String Length = "Length TEXT ";
 
-        MusicTrack = "CREATE TABLE " + DBTable_MusicTrack + "(" + TrackID + UserID +
-                TrackName + Genre + Artist + Length + HowManyTimesListened + ");\n";
+        MusicTrack = "CREATE TABLE " + DBTable_MusicTrack + "(" + TrackID +
+                TrackName + Genre + Artist + Length + ");\n";
         return MusicTrack;
     }
 
@@ -105,18 +114,6 @@ public class DatabaseSchema
         return UserMood;
     }
 
-    private String CreateUserPassword()
-    {
-        String UserPassword;
-        final String PasswordID = "PasswordID INTEGER PRIMARY KEY AUTOINCREMENT, ";
-        final String UserID = "UserID INTEGER, ";
-        final String Password = "Password TEXT ";
-
-        UserPassword = "CREATE TABLE " + DBTable_UserPassword + "(" + PasswordID + UserID +
-                Password + ");\n";
-        return UserPassword;
-    }
-
     private String CreateUserAccount()
     {
         String UserAccount;
@@ -130,11 +127,13 @@ public class DatabaseSchema
         final String SpotifyID = "SpotifyID TEXT, ";
         final String MusicQuestionOne = "MusicQuestionOne TEXT, ";
         final String MusicQuestionTwo = "MusicQuestionTwo TEXT, ";
-        final String MusicQuestionThree = "MusicQuestionThree TEXT";
+        final String MusicQuestionThree = "MusicQuestionThree TEXT,";
+        final String Password = "Password TEXT";
 
         UserAccount = "CREATE TABLE " + DBTable_UserAccount + "(" + UserID + FirstName +
                 LastName + Age + Gender + EmailAddress + PreferredPlatform +
-                SpotifyID + MusicQuestionOne + MusicQuestionTwo + MusicQuestionThree + ");\n";
+                SpotifyID + MusicQuestionOne + MusicQuestionTwo + MusicQuestionThree + Password +
+                ");\n";
         return UserAccount;
     }
 
@@ -144,7 +143,7 @@ public class DatabaseSchema
         final String UserDiaryID = "UserDiaryID INTEGER PRIMARY KEY AUTOINCREMENT, ";
         final String UserID = "UserID INTEGER, ";
         final String DiaryEntryDate = "DiaryEntryDate DATETIME, ";
-        final String DiaryEntry = "DiaryEntry TEXT ";
+        final String DiaryEntry = "DiaryEntryText TEXT ";
 
         UserDiary = "CREATE TABLE " + DBTable_UserDiary + "(" + UserDiaryID + UserID +
                 DiaryEntryDate + DiaryEntry + ");\n";
@@ -158,10 +157,10 @@ public class DatabaseSchema
         final String UserID = "UserID INTEGER, ";
         final String MoodFrequency = "MoodFrequency TEXT, ";
         final String MakeRecommendations = "MakeRecommendations TEXT, ";
-        final String AllowFriendRecommendations = "AllowFriendRecommendations TEXT ";
+        final String RememberLogin = "RememberLogin TEXT ";
 
         UserSettings = "CREATE TABLE " + DBTable_UserSettings + "(" + UserSettingID + UserID +
-                MoodFrequency + MakeRecommendations + AllowFriendRecommendations + ");\n";
+                MoodFrequency + MakeRecommendations + RememberLogin + ");\n";
         return UserSettings;
     }
 }
