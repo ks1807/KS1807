@@ -106,11 +106,12 @@ public class DatabaseSchema
         final String MoodBeforeTime = "MoodBeforeTime DATETIME, ";
         final String MoodAfter = "MoodAfter TEXT, ";
         final String MoodAfterTime = "MoodAfterTime DATETIME, ";
-        final String UserLiked = "UserLiked TEXT ";
+        final String UserLiked = "UserLiked TEXT, ";
+        final String HasBeenRecommended = "HasBeenRecommended TEXT ";
 
         UserMood = "CREATE TABLE " + DBTable_UserMood + "(" + MoodID + UserID +
                 TrackID + MoodBefore + MoodBeforeTime + MoodAfter + MoodAfterTime +
-                UserLiked + ");\n";
+                UserLiked + HasBeenRecommended + ");\n";
         return UserMood;
     }
 
