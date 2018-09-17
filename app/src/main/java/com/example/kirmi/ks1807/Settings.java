@@ -14,6 +14,9 @@ import android.widget.ArrayAdapter;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ToggleButton;
+
+import java.util.ArrayList;
 
 public class Settings extends AppCompatActivity
 {
@@ -59,6 +62,7 @@ public class Settings extends AppCompatActivity
         UserID = intent.getStringExtra("UserID");
 
         AddAlertFrequencies();
+        ShowUserSettings();
     }
 
     //Add options to the spinner
@@ -101,14 +105,54 @@ public class Settings extends AppCompatActivity
 
     public void button_Submit(View view)
     {
-        Intent intent = new Intent(Settings.this, AccountDetails.class);
-        intent.putExtra("UserID", UserID);
-        startActivity(intent);
+        if (UpdateSettings())
+        {
+            Intent intent = new Intent(Settings.this, AccountDetails.class);
+            intent.putExtra("UserID", UserID);
+            startActivity(intent);
+        }
     }
 
     public String[] GetTrackFrequencies()
     {
-        String[] TrackFrequencies = getResources().getStringArray(R.array.AlertFrequencies);
-        return TrackFrequencies;
+        return getResources().getStringArray(R.array.AlertFrequencies);
+    }
+
+    private boolean UpdateSettings()
+    {
+        //Convert the contents of the Toggle Button and Spinner to strings
+        ToggleButton MakeRecommendations = (ToggleButton) findViewById(R.id.ToggleButton_AutoMakeRecommendations);
+        Spinner MoodFrequency = (Spinner) findViewById(R.id.Spinner_AlertFrequency);
+
+        String MakeRecommendationsText = MakeRecommendations.getText().toString();
+        String MoodFrequencyText = MoodFrequency.getSelectedItem().toString();
+
+        //Update the user with the settings, return false if the update failed.
+        return SettingFunctions.UpdateSettings(MakeRecommendationsText, MoodFrequencyText, UserID);
+    }
+
+    private void ShowUserSettings()
+    {
+        SettingFunctions.openReadable();
+
+        ArrayList<String> tableContent = SettingFunctions.GetUserSettings(UserID);
+        String MakeRecommendations = tableContent.get(0);
+        String MoodFrequency = tableContent.get(1);
+
+        ToggleButton BtnMakeRecommendations = (ToggleButton) findViewById(R.id.ToggleButton_AutoMakeRecommendations);
+        Spinner SpinnerMoodFrequency = (Spinner) findViewById(R.id.Spinner_AlertFrequency);
+
+        if (MakeRecommendations.equals("Yes"))
+        {
+            BtnMakeRecommendations.setChecked(true);
+        }
+        else if (MakeRecommendations.equals("No"))
+        {
+            BtnMakeRecommendations.setChecked(false);
+        }
+
+        //Set the Spinner position to match the string retrieved from the database.
+        ArrayAdapter SpinnerAdapter = (ArrayAdapter) SpinnerMoodFrequency.getAdapter();
+        SpinnerMoodFrequency.setSelection(SpinnerAdapter.getPosition(MoodFrequency));
     }
 }

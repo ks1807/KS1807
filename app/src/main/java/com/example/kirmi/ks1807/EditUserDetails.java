@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.RadioButton;
 import android.support.design.widget.BottomNavigationView;
@@ -23,6 +25,7 @@ public class EditUserDetails extends AppCompatActivity
     final CommonFunctions Common = new CommonFunctions();
     private DatabaseFunctions UserFunctions;
     String UserID = "";
+    String CurrentEmailAddress = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -63,6 +66,7 @@ public class EditUserDetails extends AppCompatActivity
         ArrayList<String> UserDetails = UserFunctions.GetUserDetails(UserID);
 
         DisplayUserDetails(UserDetails);
+        DisableAllFields();
     }
 
     //Confirm if the user wants to go back if the button is pressed.
@@ -93,6 +97,20 @@ public class EditUserDetails extends AppCompatActivity
         alertDialog.show();
     }
 
+    public void button_Edit(View view)
+    {
+        EnableAllFields();
+
+        Button EditButton = (Button)findViewById(R.id.btn_Edit);
+        EditButton.setVisibility(View.GONE);
+
+        Button ViewButton = (Button)findViewById(R.id.btn_View);
+        ViewButton.setVisibility(View.VISIBLE);
+
+        Button SubmitButton = (Button)findViewById(R.id.btn_SubmitEdit);
+        SubmitButton.setVisibility(View.VISIBLE);
+    }
+
     public void button_Submit(View view)
     {
         if (ValidateForm())
@@ -103,9 +121,47 @@ public class EditUserDetails extends AppCompatActivity
         }
     }
 
+    public void button_View(View view)
+    {
+        DisableAllFields();
+
+        Button EditButton = (Button)findViewById(R.id.btn_Edit);
+        EditButton.setVisibility(View.VISIBLE);
+
+        Button ViewButton = (Button)findViewById(R.id.btn_View);
+        ViewButton.setVisibility(View.GONE);
+
+        Button SubmitButton = (Button)findViewById(R.id.btn_SubmitEdit);
+        SubmitButton.setVisibility(View.GONE);
+    }
+
+    private void DisableAllFields()
+    {
+        TextView FirstName = (TextView)findViewById(R.id.EditText_EditFirstName);
+        FirstName.setEnabled(false);
+
+        TextView LastName = (TextView)findViewById(R.id.EditText_EditLastName);
+        LastName.setEnabled(false);
+
+        TextView Email = (TextView)findViewById(R.id.EditText_EditEmail);
+        Email.setEnabled(false);
+
+        TextView Age = (TextView)findViewById(R.id.EditText_EditAge);
+        Age.setEnabled(false);
+
+        RadioButton GenderFemale = (RadioButton)findViewById(R.id.RadioButton_EditFemale);
+        GenderFemale.setEnabled(false);
+
+        RadioButton GenderMale = (RadioButton)findViewById(R.id.RadioButton_EditMale);
+        GenderMale.setEnabled(false);
+
+        RadioButton GenderOther = (RadioButton)findViewById(R.id.RadioButton_EditOther);
+        GenderOther.setEnabled(false);
+    }
+
     public void DisplayUserDetails(ArrayList<String> UserDetails)
     {
-        TextView FirstName = (TextView)findViewById(R.id.EditText_EditFirstname);
+        TextView FirstName = (TextView)findViewById(R.id.EditText_EditFirstName);
         FirstName.setText(UserDetails.get(0));
 
         TextView LastName = (TextView)findViewById(R.id.EditText_EditLastName);
@@ -113,6 +169,7 @@ public class EditUserDetails extends AppCompatActivity
 
         TextView Email = (TextView)findViewById(R.id.EditText_EditEmail);
         Email.setText(UserDetails.get(2));
+        CurrentEmailAddress = UserDetails.get(2);
 
         TextView Age = (TextView)findViewById(R.id.EditText_EditAge);
         Age.setText(UserDetails.get(3));
@@ -137,6 +194,30 @@ public class EditUserDetails extends AppCompatActivity
         }
     }
 
+    private void EnableAllFields()
+    {
+        TextView FirstName = (TextView)findViewById(R.id.EditText_EditFirstName);
+        FirstName.setEnabled(true);
+
+        TextView LastName = (TextView)findViewById(R.id.EditText_EditLastName);
+        LastName.setEnabled(true);
+
+        TextView Email = (TextView)findViewById(R.id.EditText_EditEmail);
+        Email.setEnabled(true);
+
+        TextView Age = (TextView)findViewById(R.id.EditText_EditAge);
+        Age.setEnabled(true);
+
+        RadioButton GenderFemale = (RadioButton)findViewById(R.id.RadioButton_EditFemale);
+        GenderFemale.setEnabled(true);
+
+        RadioButton GenderMale = (RadioButton)findViewById(R.id.RadioButton_EditMale);
+        GenderMale.setEnabled(true);
+
+        RadioButton GenderOther = (RadioButton)findViewById(R.id.RadioButton_EditOther);
+        GenderOther.setEnabled(true);
+    }
+
     private boolean ValidateForm()
     {
         boolean ValidationSuccessful = true;
@@ -144,7 +225,7 @@ public class EditUserDetails extends AppCompatActivity
         String InvalidMessage = "";
 
         //Convert the contents of the text boxes to strings
-        TextView FirstName = (TextView)findViewById(R.id.EditText_EditFirstname);
+        TextView FirstName = (TextView)findViewById(R.id.EditText_EditFirstName);
         TextView LastName = (TextView)findViewById(R.id.EditText_EditLastName);
         TextView Email = (TextView)findViewById(R.id.EditText_EditEmail);
         TextView Age = (TextView)findViewById(R.id.EditText_EditAge);
@@ -194,6 +275,19 @@ public class EditUserDetails extends AppCompatActivity
             alertDialog.show();
         }
 
+        /*Check if the email address is used by another user and also don't trigger validation if
+        the user is not changing their address*/
+        if (!UserFunctions.IsEmailAddressUnique(TheEmail) &&
+                !TheEmail.toLowerCase().equals(CurrentEmailAddress.toLowerCase())
+                && ValidationSuccessful)
+        {
+            ValidationSuccessful = false;
+            InvalidMessage = "Email Address is already in use. Please pick another one.";
+            alertDialogBuilder.setMessage(InvalidMessage);
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            alertDialog.show();
+        }
+
         //Note: User input will normally prevent most of these errors in the first place.
         //But just in case validate it.
         else if (!Common.isNumeric(TheAge))
@@ -222,6 +316,41 @@ public class EditUserDetails extends AppCompatActivity
                 }
             }
         }
+
+        //Get the gender
+        RadioButton GenderFemale = (RadioButton)findViewById(R.id.RadioButton_EditMale);
+        RadioButton GenderMale = (RadioButton)findViewById(R.id.RadioButton_EditFemale);
+        RadioButton GenderOther = (RadioButton)findViewById(R.id.RadioButton_EditOther);
+
+        String TheGender = "";
+        if (GenderMale.isChecked())
+        {
+            TheGender = GenderMale.getText().toString();
+        }
+        else if(GenderFemale.isChecked())
+        {
+            TheGender = GenderFemale.getText().toString();
+        }
+        else if(GenderOther.isChecked())
+        {
+            TheGender = GenderOther.getText().toString();
+        }
+        else
+        {
+            ValidationSuccessful = false;
+            InvalidMessage = "No gender. This error should never happen.";
+            alertDialogBuilder.setMessage(InvalidMessage);
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            alertDialog.show();
+        }
+
+        if(ValidationSuccessful)
+        {
+            //Update the record. If it fails then fail the validation as well.
+            ValidationSuccessful = UserFunctions.UpdateCurrentUser(FName, LName, TheEmail, TheAge,
+                    TheGender, UserID);
+        }
+
         return ValidationSuccessful;
     }
 }

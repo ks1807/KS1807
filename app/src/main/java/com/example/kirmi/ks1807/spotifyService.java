@@ -5,6 +5,7 @@ import android.os.Binder;
 import android.os.IBinder;
 import android.app.Service;
 import android.content.Intent;
+import android.text.format.DateUtils;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -23,6 +24,7 @@ public class spotifyService extends Service
     private static final String CLIENT_ID = "9a7355bd24ff4544b4bdada73483aaa0";
     private static final String REDIRECT_URI = "com.example.kirmi.ks1807://callback";
     public SpotifyAppRemote mSpotifyAppRemote;
+    GeneratePlaylists PlayListFunctions = new GeneratePlaylists();
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -62,8 +64,16 @@ public class spotifyService extends Service
                 .subscribeToPlayerState().setEventCallback(new Subscription.EventCallback<PlayerState>() {
             public void onEvent(PlayerState playerState) {
                 final Track track = playerState.track;
-                if (track != null) {
-                    Toast.makeText(t, track.name + " by " + track.artist.name, Toast.LENGTH_LONG).show();
+                if (track != null)
+                {
+                    Toast.makeText(t, track.name + " by " + track.artist.name,
+                            Toast.LENGTH_LONG).show();
+
+                    int MoodID = PlayListFunctions.TrackStarted("1", track.name,
+                            "GENRE?", track.artist.name,
+                            DateUtils.formatElapsedTime(((int)track.duration)/1000));
+
+                    PlayListFunctions.TrackEnded(MoodID);
                 }
             }
         });
