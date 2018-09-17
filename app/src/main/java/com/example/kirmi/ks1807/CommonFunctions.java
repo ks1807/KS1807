@@ -9,6 +9,35 @@ public class CommonFunctions
         return new String(Character.toChars(unicode));
     }
 
+    public int GetArrayIndexFromString(String[] Array, String SearchString)
+    {
+        int Index=0;
+        for(int i=0; i<Array.length; i++)
+        {
+            if(Array[i].equals(SearchString))
+            {
+                Index=i;
+                break;
+            }
+        }
+        return Index;
+    }
+
+    //Gets the index place for the highest number in a floating point array.
+    public int GetIndexOfMaximumFloatValue(float[] FloatArray)
+    {
+        float MaximumValue = FloatArray[0];
+        int i;
+        for (i = 1; i < FloatArray.length; i++)
+        {
+            if (FloatArray[i] > MaximumValue)
+            {
+                MaximumValue = FloatArray[i];
+            }
+        }
+        return i;
+    }
+
     //Checks if a string is a number or not.
     public boolean isNumeric(String TheString)
     {
