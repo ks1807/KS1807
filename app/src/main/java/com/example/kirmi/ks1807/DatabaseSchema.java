@@ -130,11 +130,11 @@ public class DatabaseSchema
         final String MusicQuestionOne = "MusicQuestionOne TEXT, ";
         final String MusicQuestionTwo = "MusicQuestionTwo TEXT, ";
         final String MusicQuestionThree = "MusicQuestionThree TEXT,";
-        final String Password = "Password TEXT";
+        final String UserPassword = "UserPassword TEXT";
 
         UserAccount = "CREATE TABLE " + DBTable_UserAccount + "(" + UserID + FirstName +
                 LastName + Age + Gender + EmailAddress + PreferredPlatform +
-                SpotifyID + MusicQuestionOne + MusicQuestionTwo + MusicQuestionThree + Password +
+                SpotifyID + MusicQuestionOne + MusicQuestionTwo + MusicQuestionThree + UserPassword +
                 ");\n";
         return UserAccount;
     }

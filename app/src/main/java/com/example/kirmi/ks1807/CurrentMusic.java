@@ -33,7 +33,6 @@ import java.util.concurrent.TimeUnit;
 public class CurrentMusic extends AppCompatActivity
 {
     private final Context context = this;
-    final CommonFunctions Common = new CommonFunctions();
     private DatabaseFunctions MusicFunctions;
 
     String UserID = "";
@@ -107,11 +106,14 @@ public class CurrentMusic extends AppCompatActivity
                 findViewById(R.id.navigation);
 
         bottomNavigationView.setOnNavigationItemSelectedListener
-                (new BottomNavigationView.OnNavigationItemSelectedListener() {
+                (new BottomNavigationView.OnNavigationItemSelectedListener()
+                {
                     @Override
-                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                    public boolean onNavigationItemSelected(@NonNull MenuItem item)
+                    {
                         Fragment selectedFragment = null;
-                        switch (item.getItemId()) {
+                        switch (item.getItemId())
+                        {
                             case R.id.btn_Home:
                                 selectedFragment = BottomNavigationOptions.newInstance();
                                 break;
