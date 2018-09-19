@@ -11,7 +11,7 @@ public class DatabaseFunctions
 {
     //Create the local database for storing user data and settings
     private static final String DBNAME = "MusicMentalHealthDB";
-    private static final int DB_VERSION = 9;
+    private static final int DB_VERSION = 10;
     private final DatabaseSchema DBSchema = new DatabaseSchema();
     private final ArrayList<String> Create_AllTables = DBSchema.CreateAllTables();
     private final ArrayList<String> Drop_AllTables = DBSchema.DropAllTables();
@@ -78,28 +78,27 @@ public class DatabaseFunctions
         context.deleteDatabase(DBNAME);
     }
 
-    private String EncryptPassword(String Password)
+    private String EncryptPassword(String UserPassword)
     {
         //Need to figure out how to do this.
         //Might have to do this on the server side.
 
-        return Password;
+        return UserPassword;
     }
 
     public String[] GetMusicHistory(String UserID)
     {
-        //REPLACE WITH A DB CALL and pass UserID into it.
-
         ArrayList<String> UserDetails = new ArrayList<String>();
 
-        UserDetails.add("Barrack");
-        UserDetails.add("Obama");
-        UserDetails.add("Beethoven: Sinfonía No. 6 en Fa Mayor \"Pastoral\"");
+        /*Gets the last ten music tracks that the user has listened to, using the mood after
+        time as the time when the user finished the song*/
+        String SQLQuery = "SELECT DISTINCT TOP (10) TrackName, Genre, Artist, Length " +
+                "FROM MusicTrack INNER JOIN UserMood ON MusicTrack.TrackID = UserMood.TrackID " +
+                "WHERE UserMood.UserID = " + UserID + " ORDER BY UserMood.MoodAfterTime DESC";
+        UserDetails.add("The best song in the universe");
         UserDetails.add("Classical");
-        UserDetails.add("Orquesta del Cine Infantil");
-        UserDetails.add("12:13");
-        UserDetails.add("Sad");
-        UserDetails.add("Happy");
+        UserDetails.add("Mr Song Writer");
+        UserDetails.add("3:15");
 
         return UserDetails.toArray(new String[UserDetails.size()]);
     }
@@ -297,21 +296,21 @@ public class DatabaseFunctions
 
     private String GetUserPassword(String UserID)
     {
-        String Password = "";
-        String[] columns = new String[] {"Password"};
+        String UserPassword = "";
+        String[] columns = new String[] {"UserPassword"};
         Cursor cursor = db.query("UserAccount", columns, "UserID = " + UserID, null, null, null, null);
         cursor.moveToFirst();
 
         while (!cursor.isAfterLast())
         {
-            Password = cursor.getString(cursor.getColumnIndex("Password"));
+            UserPassword = cursor.getString(cursor.getColumnIndex("UserPassword"));
             cursor.moveToNext();
         }
         if (cursor != null && !cursor.isClosed())
         {
             cursor.close();
         }
-        return Password;
+        return UserPassword;
     }
 
     public ArrayList<String> GetUserSettings(String UserID)
@@ -375,15 +374,15 @@ public class DatabaseFunctions
     {
         synchronized (this.db)
         {
-            ContentValues NewPassword = new ContentValues();
-            NewPassword.put("UserID", UserID);
-            NewPassword.put("MoodFrequency", "Once Per Track");
-            NewPassword.put("MakeRecommendations", "Yes");
-            NewPassword.put("RememberLogin", "No");
+            ContentValues NewSettings = new ContentValues();
+            NewSettings.put("UserID", UserID);
+            NewSettings.put("MoodFrequency", "Once Per Track");
+            NewSettings.put("MakeRecommendations", "Yes");
+            NewSettings.put("RememberLogin", "No");
 
             try
             {
-                db.insertOrThrow("UserSettings", null, NewPassword);
+                db.insertOrThrow("UserSettings", null, NewSettings);
             } catch (Exception e)
             {
                 Log.e("Error in inserting row", e.toString());
@@ -395,10 +394,10 @@ public class DatabaseFunctions
     }
 
     public Long InsertNewUser(String FirstName, String LastName, String EmailAddress, String Age,
-                                 String Gender, String Password)
+                                 String Gender, String UserPassword)
     {
         long ID = -1;
-        Password = EncryptPassword(Password);
+        UserPassword = EncryptPassword(UserPassword);
 
         //Make the Email Address all lowercase to ensure case insensitive search.
         EmailAddress = EmailAddress.toLowerCase();
@@ -416,7 +415,7 @@ public class DatabaseFunctions
                 NewUser.put("Age", AgeNum);
             }
             NewUser.put("Gender", Gender);
-            NewUser.put("Password", Password);
+            NewUser.put("UserPassword", UserPassword);
 
             try
             {
@@ -464,15 +463,15 @@ public class DatabaseFunctions
         return true;
     }
 
-    public boolean UpdateNewPassword (String UserID, String Password)
+    public boolean UpdateNewPassword (String UserID, String UserPassword)
     {
-        Password = EncryptPassword(Password);
+        UserPassword = EncryptPassword(UserPassword);
 
         synchronized (this.db)
         {
             ContentValues NewPassword = new ContentValues();
             NewPassword.put("UserID", UserID);
-            NewPassword.put("Password", Password);
+            NewPassword.put("UserPassword", UserPassword);
 
             try
             {
@@ -521,9 +520,9 @@ public class DatabaseFunctions
     }
 
     public boolean UpdateNewUser(String FirstName, String LastName, String EmailAddress, String Age,
-                              String Gender, String Password, String UserID)
+                              String Gender, String UserPassword, String UserID)
     {
-        Password = EncryptPassword(Password);
+        UserPassword = EncryptPassword(UserPassword);
 
         synchronized(this.db)
         {
@@ -531,7 +530,7 @@ public class DatabaseFunctions
             UpdateNewUser.put("FirstName", FirstName);
             UpdateNewUser.put("LastName", LastName);
             UpdateNewUser.put("EmailAddress", EmailAddress);
-            UpdateNewUser.put("Password", Password);
+            UpdateNewUser.put("UserPassword", UserPassword);
 
             if (!Age.equals(""))
             {
@@ -601,7 +600,7 @@ public class DatabaseFunctions
         }
     }
 
-    public String VerifyLogin(String EmailAddress, String Password)
+    public String VerifyLogin(String EmailAddress, String UserPassword)
     {
         String UserID = GetUserID(EmailAddress);
 
@@ -611,11 +610,11 @@ public class DatabaseFunctions
             return "";
         }
 
-        Password = EncryptPassword(Password);
+        UserPassword = EncryptPassword(UserPassword);
         String StoredPassword = GetUserPassword(UserID);
 
         //If password is wrong, don't return an ID.
-        if (Password.equals(StoredPassword))
+        if (UserPassword.equals(StoredPassword))
         {
             return UserID;
         }
@@ -625,13 +624,13 @@ public class DatabaseFunctions
         }
     }
 
-    public boolean VerifyPassword(String UserID, String Password)
+    public boolean VerifyPassword(String UserID, String UserPassword)
     {
-        Password = EncryptPassword(Password);
+        UserPassword = EncryptPassword(UserPassword);
 
         String StoredPassword = GetUserPassword(UserID);
 
-        if (Password.equals(StoredPassword))
+        if (UserPassword.equals(StoredPassword))
         {
             return true;
         }
