@@ -70,7 +70,7 @@
 
     <EditText
         android:id="@+id/EditText_UserName"
-        android:fontFamily="@font/roboto"
+        android:fontFamily="@font/roboto_regular"
         android:layout_width="310dp"
         android:layout_height="45dp"
         android:layout_marginBottom="8dp"
@@ -93,7 +93,7 @@
         android:layout_marginBottom="8dp"
         android:background="@drawable/password"
         android:ems="10"
-        android:fontFamily="@font/roboto"
+        android:fontFamily="@font/roboto_regular"
         android:hint="Password"
         android:inputType="textPassword"
         android:paddingLeft="60dp"

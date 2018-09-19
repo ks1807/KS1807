@@ -147,6 +147,7 @@
             android:layout_width="129dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:button="@null"
             android:text="@string/MaleCaption" />
 
         <RadioButton
