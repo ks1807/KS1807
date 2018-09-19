@@ -1,9 +1,9 @@
 package com.example.kirmi.ks1807;
 
-import java.text.SimpleDateFormat;
+import java.text.ParseException;
 import java.util.Date;
 
-//All of this could be moved to the server...
+//All of this is to be moved to the server...
 public class GeneratePlaylists
 {
     private int AddTrack(String TrackName, String Genre, String Artist, String Length)
@@ -94,58 +94,65 @@ public class GeneratePlaylists
         String SQLQuery = "SELECT MoodFrequency FROM UserSettings WHERE UserID = " + "'" +
                 UserID + "'";
 
-        String MoodFrequency = "Once per track";
+        String MoodFrequency = "Once per hour";
 
         /*Get the MoodAfterTime (Datetime) of the last entry into the UserMood table.*/
         SQLQuery = "SELECT TOP 1 MoodAfterTime FROM UserMood WHERE UserID = " + "'" +
                 UserID + "'" +
         " ORDER BY MoodAfterTime DESC";
 
-        Date MoodAfterTime = new Date();
+        String MoodAfterTimeString = "2018-09-20 11:34:46";
 
-        //IS THIS THE CORRECT FORMAT?
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        Date CurrentDate = new Date();
-
-        long DateDifference = CurrentDate.getTime() - MoodAfterTime.getTime();
-        long MinutesDifference = DateDifference / (60 * 1000) % 60;
-
-        switch(MoodFrequency)
+        try
         {
-            case "Once per track" :
-                return true;
-            case "Once every 15 minutes":
-                if (MinutesDifference > 15)
-                {
+            CommonFunctions Common = new CommonFunctions();
+            Date MoodAfterTime = Common.DateFromStringSQLFormat(MoodAfterTimeString);
+            Date CurrentDate = new Date();
+
+            long DateDifference = CurrentDate.getTime() - MoodAfterTime.getTime();
+            long MinutesDifference = DateDifference / (60 * 1000) % 60;
+
+                switch(MoodFrequency)
+            {
+                case "Once per track" :
                     return true;
-                }
-                else
-                {
+                case "Once every 15 minutes":
+                    if (MinutesDifference > 15)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                case "Once per hour":
+                    if (MinutesDifference > 60)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                case "Once per 24 hours":
+                    //1440 - Number of Minutes in a day
+                    if (MinutesDifference > 1440)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                case "Never" :
                     return false;
-                }
-            case "Once per hour":
-                if (MinutesDifference > 60)
-                {
-                    return true;
-                }
-                else
-                {
+                default :
                     return false;
-                }
-            case "Once per 24 hours":
-                //1440 - Number of Minutes in a day
-                if (MinutesDifference > 1440)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            case "Never" :
-                return false;
-            default :
-                return false;
+            }
+        } catch (ParseException e)
+        {
+            e.printStackTrace();
+            return false;
         }
     }
 
@@ -405,32 +412,39 @@ public class GeneratePlaylists
 
         if (CheckMoodEntry(UserID))
         {
-            //ALERT TO USER - ENTER MOOD
-
-            boolean UserEnteredMood = true;
-            String BeforeMood = "Happy";
-            //IS THIS THE CORRECT FORMAT?
-            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-            Date MoodBeforeTime = new Date();
-
-            //ALERT TO USER - ENTER MOOD
-
-            if (UserEnteredMood)
+            try
             {
+                //ALERT TO USER - ENTER MOOD
+                boolean UserEnteredMood = true;
+                String BeforeMood = "Happy";
+
+                String MoodBeforeTimeString = "2018-05-23 06:34:46";
+                CommonFunctions Common = new CommonFunctions();
+                Date MoodBeforeTime = Common.DateFromStringSQLFormat(MoodBeforeTimeString);
+                //ALERT TO USER - ENTER MOOD
+
+                if (UserEnteredMood)
+                {
                 /*System gets current Date/Time, BeforeMood, UserID and Track ID and adds
                 these to UserMood database table.*/
-                //NOTE SCOPE_IDENTITY() SHOULD JUST GET THE NEWLY INSERTED ID. IF IT DOESN'T WORK
-                //THEN JUST MAKE A DIFFERENT SELECT QUERY
-                String SQLQuery = "INSERT INTO UserMood (UserID, TrackID, MoodBefore," +
-                        "MoodBeforeTime)\n" +
-                        "VALUES('" + UserID + "', '" + TrackID + "', '" +
-                        BeforeMood + "', '" + MoodBeforeTime + "')\n" +
-                        "SELECT * FROM SCOPE_IDENTITY()";
-                MoodID = 2;
-                return MoodID;
-            }
-            else
+                    /*NOTE SCOPE_IDENTITY() SHOULD JUST GET THE NEWLY INSERTED ID. IF IT DOESN'T
+                    WORK THEN JUST MAKE A DIFFERENT SELECT QUERY*/
+                    String SQLQuery = "INSERT INTO UserMood (UserID, TrackID, MoodBefore," +
+                            "MoodBeforeTime)\n" +
+                            "VALUES('" + UserID + "', '" + TrackID + "', '" +
+                            BeforeMood + "', '" + MoodBeforeTime + "')\n" +
+                            "SELECT * FROM SCOPE_IDENTITY()";
+                    MoodID = 2;
+                    return MoodID;
+                }
+                else
+                {
+                    return -1;
+                }
+
+            } catch (ParseException e)
             {
+                e.printStackTrace();
                 return -1;
             }
         }
@@ -442,62 +456,67 @@ public class GeneratePlaylists
 
     private boolean UserEnterMoodAfter(int MoodID)
     {
-        //ALERT TO USER - ENTER AFTER MOOD
-        String AfterMood = "Sad";
-        String UserLiked = "Yes";
-        //ALERT TO USER - ENTER AFTER MOOD
-
-        //IS THIS THE CORRECT FORMAT?
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        Date MoodAfterDate = new Date();
-
-        boolean UserEnteredMood = true;
-
-        if (UserEnteredMood)
+        try
         {
-            /*System to get the BeforeMood from the table by matching this with MoodID.*/
-            String SQLQuery = "SELECT BeforeMood FROM UserMood WHERE MoodID = " + "'" +
-                    MoodID + "'";
+            //ALERT TO USER - ENTER AFTER MOOD
+            String AfterMood = "Sad";
+            String UserLiked = "Yes";
+            String MoodAfterTimeString = "2018-05-23 06:34:46";
+            CommonFunctions Common = new CommonFunctions();
+            Date MoodAfterTime = Common.DateFromStringSQLFormat(MoodAfterTimeString);
+            //ALERT TO USER - ENTER AFTER MOOD
 
-            /*System to get the UserID from the table by matching this with MoodID.*/
-            SQLQuery = "SELECT UserID FROM UserMood WHERE MoodID = " + "'" +
-                    MoodID + "'";
+            boolean UserEnteredMood = true;
 
-            String UserID = "1";
-
-            String BeforeMood = "Happy";
-            int BeforeScore = ConvertMoodToNumber(BeforeMood);
-            int AfterScore = ConvertMoodToNumber(AfterMood);
-            int ScoreDiff = AfterScore - BeforeScore;
-
-            if (ScoreDiff < -3 || ScoreDiff > 3)
+            if (UserEnteredMood)
             {
-                //OPEN DIARY ALERT
-                String DiaryEntryText = "Dear Diary...";
-                //OPEN DIARY ALERT
+                /*System to get the BeforeMood from the table by matching this with MoodID.*/
+                String SQLQuery = "SELECT BeforeMood FROM UserMood WHERE MoodID = " + "'" +
+                        MoodID + "'";
 
-                //IS THIS THE CORRECT FORMAT?
-                SimpleDateFormat DiaryFormatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-                Date DiaryEntryDate = new Date();
+                /*System to get the UserID from the table by matching this with MoodID.*/
+                SQLQuery = "SELECT UserID FROM UserMood WHERE MoodID = " + "'" +
+                        MoodID + "'";
 
-                //INSERT DIARY ENTRY
-                SQLQuery = "INSERT INTO UserDiary (UserID, TrackID, MoodBefore," +
-                        "MoodBeforeTime)\n" +
-                        "VALUES('" + UserID + "', '" + DiaryEntryDate + "', '" +
-                        DiaryEntryText +"')";
-            }
+                String UserID = "1";
+
+                String BeforeMood = "Happy";
+                int BeforeScore = ConvertMoodToNumber(BeforeMood);
+                int AfterScore = ConvertMoodToNumber(AfterMood);
+                int ScoreDiff = AfterScore - BeforeScore;
+
+                if (ScoreDiff < -3 || ScoreDiff > 3)
+                {
+                    //OPEN DIARY ALERT
+                    String DiaryEntryText = "Dear Diary...";
+                    String DiaryEntryTimeString = "2018-05-23 06:34:46";
+                    Date DiaryEntryTime = Common.DateFromStringSQLFormat(DiaryEntryTimeString);
+                    //OPEN DIARY ALERT
+
+                    //INSERT DIARY ENTRY
+                    SQLQuery = "INSERT INTO UserDiary (UserID, TrackID, MoodBefore," +
+                            "MoodBeforeTime)\n" +
+                            "VALUES('" + UserID + "', '" + DiaryEntryTime + "', '" +
+                            DiaryEntryText +"')";
+                }
 
             /*System gets current Date/Time, AfterMood, UserLiked, MoodID and updates the UserMood
             database table with these parameters where MoodID matches.*/
-            SQLQuery = "UPDATE UserMood SET AfterMood = '" + AfterMood + "', " +
-                    "MoodAfterDate = '" + MoodAfterDate + "', " + "UserLiked = '" +
-                    UserLiked + "', " + "HasBeenRecommended = '" + "No" + "\n" +
-                    "WHERE MoodID = '" + MoodID + "'";
+                SQLQuery = "UPDATE UserMood SET AfterMood = '" + AfterMood + "', " +
+                        "MoodAfterDate = '" + MoodAfterTime + "', " + "UserLiked = '" +
+                        UserLiked + "', " + "HasBeenRecommended = '" + "No" + "\n" +
+                        "WHERE MoodID = '" + MoodID + "'";
 
-            AddTracksToPlaylist(UserID);
+                AddTracksToPlaylist(UserID);
 
-            return true;
+                return true;
+            }
+            return false;
         }
-        return false;
+        catch (ParseException e)
+        {
+            e.printStackTrace();
+            return false;
+        }
     }
 }

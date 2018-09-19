@@ -1,10 +1,30 @@
 package com.example.kirmi.ks1807;
+
 import java.util.regex.Pattern;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.text.ParseException;
 
 //Functions used by the entire application.
 public class CommonFunctions
 {
-    public String getEmojiByUnicode(int unicode)
+    //Gets a string and formats it into the format used by SQL Server.
+    public Date DateFromStringSQLFormat(String DateString) throws ParseException
+    {
+        SimpleDateFormat SQLServerDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+        try
+        {
+            Date FormattedDate = SQLServerDateFormat.parse(DateString);
+            return FormattedDate;
+        } catch (ParseException e)
+        { //Return current date if the parse fails.
+            e.printStackTrace();
+            return new Date();
+        }
+    }
+
+    public String GetEmojiByUnicode(int unicode)
     {
         return new String(Character.toChars(unicode));
     }
