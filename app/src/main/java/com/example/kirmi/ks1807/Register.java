@@ -119,7 +119,7 @@ public class Register extends AppCompatActivity
         NewPasswordRepeat.setText(ThePassword);
 
         RadioButton GenderFemale = (RadioButton)findViewById(R.id.RadioButton_Female);
-        RadioButton GenderMale = (RadioButton)findViewById(R.id.RadioButton_Male);
+        RadioButton GenderMale = (RadioButton)findViewById(R.id.RadioButton_empty);
         RadioButton GenderOther = (RadioButton)findViewById(R.id.RadioButton_Other);
 
         if (TheGender.equals("Male"))
@@ -159,7 +159,7 @@ public class Register extends AppCompatActivity
 
         //Get the gender
         RadioButton GenderFemale = (RadioButton)findViewById(R.id.RadioButton_Female);
-        RadioButton GenderMale = (RadioButton)findViewById(R.id.RadioButton_Male);
+        RadioButton GenderMale = (RadioButton)findViewById(R.id.RadioButton_empty);
         RadioButton GenderOther = (RadioButton)findViewById(R.id.RadioButton_Other);
 
         //Validation dialogue
