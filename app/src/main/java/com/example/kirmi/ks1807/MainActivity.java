@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.content.Intent;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.EditText;
 
 public class MainActivity extends AppCompatActivity
 {
@@ -22,6 +23,27 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         UserFunctions = new DatabaseFunctions(this);
+
+        //Ensures that password hint disappears when user focuses the text box.
+        final EditText PasswordTextBox = (EditText) findViewById(R.id.EditText_Password);
+        PasswordTextBox.setOnFocusChangeListener(new View.OnFocusChangeListener()
+        {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus)
+            {
+                String TextBoxString = PasswordTextBox.getText().toString();
+                if (hasFocus)
+                {
+                    PasswordTextBox.setText("");
+                }
+                /*If user unfocuses the text box but hasn't typed anything yet, repopulate the
+                field. But if they have started typing just leave it as it is.*/
+                else if (!hasFocus && TextBoxString.equals(""))
+                {
+                    PasswordTextBox.setText("password");
+                }
+            }
+        });
     }
 
     public void button_Login(View view)
