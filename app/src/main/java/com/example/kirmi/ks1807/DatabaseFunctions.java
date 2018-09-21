@@ -1,6 +1,9 @@
 package com.example.kirmi.ks1807;
 
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
+
 import android.database.Cursor;
 import android.content.Context;
 import android.content.*;
@@ -11,7 +14,7 @@ public class DatabaseFunctions
 {
     //Create the local database for storing user data and settings
     private static final String DBNAME = "MusicMentalHealthDB";
-    private static final int DB_VERSION = 10;
+    private static final int DB_VERSION = 12;
     private final DatabaseSchema DBSchema = new DatabaseSchema();
     private final ArrayList<String> Create_AllTables = DBSchema.CreateAllTables();
     private final ArrayList<String> Drop_AllTables = DBSchema.DropAllTables();
@@ -161,23 +164,23 @@ public class DatabaseFunctions
         return ReturnTrackNames;
     }
 
-    private String GetAge(String UserID)
+    private String GetDateOfBirth(String UserID)
     {
-        String Age = "";
-        String[] columns = new String[] {"Age"};
+        String DateOfBirth = "";
+        String[] columns = new String[] {"DateOfBirth"};
         Cursor cursor = db.query("UserAccount", columns, "UserID = " + UserID, null, null, null, null);
         cursor.moveToFirst();
 
         while (!cursor.isAfterLast())
         {
-            Age = cursor.getString(cursor.getColumnIndex("Age"));
+            DateOfBirth = cursor.getString(cursor.getColumnIndex("DateOfBirth"));
             cursor.moveToNext();
         }
         if (cursor != null && !cursor.isClosed())
         {
             cursor.close();
         }
-        return Age;
+        return DateOfBirth;
     }
 
     private String GetEmailAddress(String UserID)
@@ -329,7 +332,7 @@ public class DatabaseFunctions
         UserDetails.add(GetFirstName(UserID));
         UserDetails.add(GetLastName(UserID));
         UserDetails.add(GetEmailAddress(UserID));
-        UserDetails.add(GetAge(UserID));
+        UserDetails.add(GetDateOfBirth(UserID));
         UserDetails.add(GetGender(UserID));
         return UserDetails;
     }
@@ -341,7 +344,7 @@ public class DatabaseFunctions
         UserDetails.add(GetFirstName(UserID));
         UserDetails.add(GetLastName(UserID));
         UserDetails.add(GetEmailAddress(UserID));
-        UserDetails.add(GetAge(UserID));
+        UserDetails.add(GetDateOfBirth(UserID));
         UserDetails.add(GetUserPassword(UserID));
         UserDetails.add(GetGender(UserID));
         return UserDetails;
@@ -393,7 +396,7 @@ public class DatabaseFunctions
         }
     }
 
-    public Long InsertNewUser(String FirstName, String LastName, String EmailAddress, String Age,
+    public Long InsertNewUser(String FirstName, String LastName, String EmailAddress, String DateOfBirth,
                                  String Gender, String UserPassword)
     {
         long ID = -1;
@@ -409,10 +412,18 @@ public class DatabaseFunctions
             NewUser.put("LastName", LastName);
             NewUser.put("EmailAddress", EmailAddress);
 
-            if (!Age.equals(""))
+            if (!DateOfBirth.equals(""))
             {
-                int AgeNum = Integer.parseInt(Age);
-                NewUser.put("Age", AgeNum);
+                CommonFunctions Common = new CommonFunctions();
+                try
+                {
+                    Date TestDOB = Common.DateFromStringAustraliaFormat(DateOfBirth);
+                    NewUser.put("DateOfBirth", DateOfBirth);
+                }
+                catch (ParseException e)
+                {
+                    e.printStackTrace();
+                }
             }
             NewUser.put("Gender", Gender);
             NewUser.put("UserPassword", UserPassword);
@@ -486,8 +497,8 @@ public class DatabaseFunctions
         }
     }
 
-    public boolean UpdateCurrentUser(String FirstName, String LastName, String EmailAddress, String Age,
-                                 String Gender, String UserID)
+    public boolean UpdateCurrentUser(String FirstName, String LastName, String EmailAddress,
+                                     String DateOfBirth, String Gender, String UserID)
     {
         //Make the Email Address all lowercase to ensure case insensitive search.
         EmailAddress = EmailAddress.toLowerCase();
@@ -499,10 +510,18 @@ public class DatabaseFunctions
             UpdateCurrentUser.put("LastName", LastName);
             UpdateCurrentUser.put("EmailAddress", EmailAddress);
 
-            if (!Age.equals(""))
+            if (!DateOfBirth.equals(""))
             {
-                int AgeNum = Integer.parseInt(Age);
-                UpdateCurrentUser.put("Age", AgeNum);
+                CommonFunctions Common = new CommonFunctions();
+                try
+                {
+                    Date TestDOB = Common.DateFromStringAustraliaFormat(DateOfBirth);
+                    UpdateCurrentUser.put("DateOfBirth", DateOfBirth);
+                }
+                catch (ParseException e)
+                {
+                    e.printStackTrace();
+                }
             }
             UpdateCurrentUser.put("Gender", Gender);
 
@@ -519,8 +538,9 @@ public class DatabaseFunctions
         return true;
     }
 
-    public boolean UpdateNewUser(String FirstName, String LastName, String EmailAddress, String Age,
-                              String Gender, String UserPassword, String UserID)
+    public boolean UpdateNewUser(String FirstName, String LastName, String EmailAddress,
+                                 String DateOfBirth, String Gender, String UserPassword,
+                                 String UserID)
     {
         UserPassword = EncryptPassword(UserPassword);
 
@@ -532,10 +552,18 @@ public class DatabaseFunctions
             UpdateNewUser.put("EmailAddress", EmailAddress);
             UpdateNewUser.put("UserPassword", UserPassword);
 
-            if (!Age.equals(""))
+            if (!DateOfBirth.equals(""))
             {
-                int AgeNum = Integer.parseInt(Age);
-                UpdateNewUser.put("Age", AgeNum);
+                CommonFunctions Common = new CommonFunctions();
+                try
+                {
+                    Date TestDOB = Common.DateFromStringAustraliaFormat(DateOfBirth);
+                    UpdateNewUser.put("DateOfBirth", DateOfBirth);
+                }
+                catch (ParseException e)
+                {
+                    e.printStackTrace();
+                }
             }
             UpdateNewUser.put("Gender", Gender);
 

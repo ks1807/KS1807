@@ -9,7 +9,10 @@ import android.content.Context;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.RadioButton;
+
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Register extends AppCompatActivity
 {
@@ -94,7 +97,7 @@ public class Register extends AppCompatActivity
         String TheFirstName = tableContent.get(0);
         String TheLastName = tableContent.get(1);
         String TheEmail = tableContent.get(2);
-        String TheAge = tableContent.get(3);
+        String TheDateOfBirth = tableContent.get(3);
         String ThePassword = tableContent.get(4);
         String TheGender = tableContent.get(5);
 
@@ -109,8 +112,8 @@ public class Register extends AppCompatActivity
         Email.setText(TheEmail);
         CurrentEmailAddress = TheEmail;
 
-        TextView Age = (TextView)findViewById(R.id.EditText_Age);
-        Age.setText(TheAge);
+        TextView DateOfBirth = (TextView)findViewById(R.id.EditText_DateOfBirth);
+        DateOfBirth.setText(TheDateOfBirth);
 
         TextView NewPassword = (TextView)findViewById(R.id.EditText_Password);
         NewPassword.setText(ThePassword);
@@ -146,14 +149,14 @@ public class Register extends AppCompatActivity
         TextView FirstName = (TextView)findViewById(R.id.EditText_FirstName);
         TextView LastName = (TextView)findViewById(R.id.EditText_LastName);
         TextView Email = (TextView)findViewById(R.id.EditText_Email);
-        TextView Age = (TextView)findViewById(R.id.EditText_Age);
+        TextView DateOfBirth = (TextView)findViewById(R.id.EditText_DateOfBirth);
         TextView NewPassword = (TextView)findViewById(R.id.EditText_Password);
         TextView NewPasswordRepeat = (TextView)findViewById(R.id.EditText_ConfirmPassword);
 
         String FName = FirstName.getText().toString();
         String LName = LastName.getText().toString();
         String TheEmail = Email.getText().toString();
-        String TheAge = Age.getText().toString();
+        String TheDateOfBirth = DateOfBirth.getText().toString();
         String NewPass = NewPassword.getText().toString();
         String NewPassRepeat = NewPasswordRepeat.getText().toString();
 
@@ -243,32 +246,30 @@ public class Register extends AppCompatActivity
             alertDialog.show();
         }
 
-        //Note: User input will normally prevent most of these errors in the first place.
-        //But just in case validate it.
-        else if (!Common.isNumeric(TheAge))
+        if (!TheDateOfBirth.equals("") && ValidationSuccessful)
         {
-            if (!TheAge.equals(""))
+            CommonFunctions Common = new CommonFunctions();
+            try
             {
-                ValidationSuccessful = false;
-                InvalidMessage = "Age must be a number.";
-                alertDialogBuilder.setMessage(InvalidMessage);
-                AlertDialog alertDialog = alertDialogBuilder.create();
-                alertDialog.show();
-            }
-        }
-        else
-        {
-            if (!TheAge.equals(""))
-            {
-                int AgeInt = Integer.parseInt(TheAge);
-                if (AgeInt < 1)
+                Date DOBTest = Common.DateFromStringAustraliaFormat(TheDateOfBirth);
+                if (DOBTest.after(new Date()))
                 {
                     ValidationSuccessful = false;
-                    InvalidMessage = "Age must be a positive number greater than zero.";
+                    InvalidMessage = "Date of Birth is invalid as it is in the future.";
                     alertDialogBuilder.setMessage(InvalidMessage);
                     AlertDialog alertDialog = alertDialogBuilder.create();
                     alertDialog.show();
                 }
+            }
+            catch (ParseException e)
+            {
+                e.printStackTrace();
+                ValidationSuccessful = false;
+                InvalidMessage = "Date of Birth must be a valid date in the format of " +
+                        "Day, Month and Year.";
+                alertDialogBuilder.setMessage(InvalidMessage);
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
             }
         }
 
@@ -299,8 +300,8 @@ public class Register extends AppCompatActivity
         if (ValidationSuccessful && (BackUserID == null))
         {
             //Insert the record. If it fails then fail the validation as well.
-            UserID = RegisterFunctions.InsertNewUser(FName, LName, TheEmail, TheAge, TheGender,
-                    NewPass);
+            UserID = RegisterFunctions.InsertNewUser(FName, LName, TheEmail, TheDateOfBirth,
+                    TheGender, NewPass);
 
             if (UserID == -1)
             {
@@ -310,8 +311,8 @@ public class Register extends AppCompatActivity
         else if(ValidationSuccessful)
         {
             //Update the record. If it fails then fail the validation as well.
-            ValidationSuccessful = RegisterFunctions.UpdateNewUser(FName, LName, TheEmail, TheAge, TheGender,
-                    NewPass, BackUserID);
+            ValidationSuccessful = RegisterFunctions.UpdateNewUser(FName, LName, TheEmail,
+                    TheDateOfBirth, TheGender, NewPass, BackUserID);
         }
         return ValidationSuccessful;
     }

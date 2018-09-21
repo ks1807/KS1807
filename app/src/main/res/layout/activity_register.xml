@@ -129,20 +129,20 @@
         android:textColorHint="#fff"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/EditText_Age"
+        app:layout_constraintBottom_toTopOf="@+id/EditText_DateOfBirth"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/EditText_Password" />
 
     <EditText
-        android:id="@+id/EditText_Age"
+        android:id="@+id/EditText_DateOfBirth"
         android:layout_width="310dp"
         android:layout_height="45dp"
         android:background="@drawable/age"
         android:ems="10"
         android:fontFamily="@font/roboto_regular"
-        android:hint="@string/Age_Caption"
-        android:inputType="number"
+        android:hint="@string/DateOfBirth_Caption"
+        android:inputType="date"
         android:paddingLeft="50dp"
         android:textColor="#fff"
         android:textColorHint="#fff"
@@ -165,7 +165,7 @@
         app:layout_constraintBottom_toTopOf="@+id/btn_Submit"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/EditText_Age">
+        app:layout_constraintTop_toBottomOf="@+id/EditText_DateOfBirth">
 
         <RadioButton
             android:id="@+id/RadioButton_empty"

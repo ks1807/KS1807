@@ -122,7 +122,7 @@ public class DatabaseSchema
         final String UserID = "UserID INTEGER PRIMARY KEY AUTOINCREMENT, ";
         final String FirstName = "FirstName TEXT, ";
         final String LastName = "LastName TEXT, ";
-        final String Age = "Age INTEGER, ";
+        final String DateOfBirth = "DateOfBirth DATE, ";
         final String Gender = "Gender TEXT, ";
         final String EmailAddress = "EmailAddress TEXT, ";
         final String PreferredPlatform = "PreferredPlatform TEXT, ";
@@ -133,7 +133,7 @@ public class DatabaseSchema
         final String UserPassword = "UserPassword TEXT";
 
         UserAccount = "CREATE TABLE " + DBTable_UserAccount + "(" + UserID + FirstName +
-                LastName + Age + Gender + EmailAddress + PreferredPlatform +
+                LastName + DateOfBirth + Gender + EmailAddress + PreferredPlatform +
                 SpotifyID + MusicQuestionOne + MusicQuestionTwo + MusicQuestionThree + UserPassword +
                 ");\n";
         return UserAccount;

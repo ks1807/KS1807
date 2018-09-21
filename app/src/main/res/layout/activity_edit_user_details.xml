@@ -72,12 +72,12 @@
             android:layout_height="14dp" />
 
         <EditText
-            android:id="@+id/EditText_EditAge"
+            android:id="@+id/EditText_EditDateOfBirth"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="@string/Age_Caption"
-            android:inputType="number"
+            android:hint="@string/DateOfBirth_Caption"
+            android:inputType="date"
             android:textSize="14sp"/>
 
         <Space

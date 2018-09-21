@@ -9,18 +9,32 @@ import java.text.ParseException;
 public class CommonFunctions
 {
     //Gets a string and formats it into the format used by SQL Server.
-    public Date DateFromStringSQLFormat(String DateString) throws ParseException
+    public Date DateTimeFromStringSQLFormat(String DateString) throws ParseException
     {
         SimpleDateFormat SQLServerDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
         try
         {
             Date FormattedDate = SQLServerDateFormat.parse(DateString);
             return FormattedDate;
         } catch (ParseException e)
-        { //Return current date if the parse fails.
+        {
             e.printStackTrace();
-            return new Date();
+            throw new ParseException("Invalid Datetime SQL Format", -1);
+        }
+    }
+
+    public Date DateFromStringAustraliaFormat(String DateString) throws ParseException
+    {
+        SimpleDateFormat SQLServerDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        SQLServerDateFormat.setLenient(false);
+        try
+        {
+            Date FormattedDate = SQLServerDateFormat.parse(DateString);
+            return FormattedDate;
+        } catch (ParseException e)
+        {
+            e.printStackTrace();
+            throw new ParseException("Invalid Date Australian Format", -1);
         }
     }
 

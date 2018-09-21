@@ -108,7 +108,7 @@ public class GeneratePlaylists
         try
         {
             CommonFunctions Common = new CommonFunctions();
-            Date MoodAfterTime = Common.DateFromStringSQLFormat(MoodAfterTimeString);
+            Date MoodAfterTime = Common.DateTimeFromStringSQLFormat(MoodAfterTimeString);
             Date CurrentDate = new Date();
 
             long DateDifference = CurrentDate.getTime() - MoodAfterTime.getTime();
@@ -422,7 +422,7 @@ public class GeneratePlaylists
 
                 String MoodBeforeTimeString = "2018-05-23 06:34:46";
                 CommonFunctions Common = new CommonFunctions();
-                Date MoodBeforeTime = Common.DateFromStringSQLFormat(MoodBeforeTimeString);
+                Date MoodBeforeTime = Common.DateTimeFromStringSQLFormat(MoodBeforeTimeString);
                 //ALERT TO USER - ENTER MOOD
 
                 if (UserEnteredMood)
@@ -465,7 +465,7 @@ public class GeneratePlaylists
             String UserLiked = "Yes";
             String MoodAfterTimeString = "2018-05-23 06:34:46";
             CommonFunctions Common = new CommonFunctions();
-            Date MoodAfterTime = Common.DateFromStringSQLFormat(MoodAfterTimeString);
+            Date MoodAfterTime = Common.DateTimeFromStringSQLFormat(MoodAfterTimeString);
             //ALERT TO USER - ENTER AFTER MOOD
 
             boolean UserEnteredMood = true;
@@ -492,7 +492,7 @@ public class GeneratePlaylists
                     //OPEN DIARY ALERT
                     String DiaryEntryText = "Dear Diary...";
                     String DiaryEntryTimeString = "2018-05-23 06:34:46";
-                    Date DiaryEntryTime = Common.DateFromStringSQLFormat(DiaryEntryTimeString);
+                    Date DiaryEntryTime = Common.DateTimeFromStringSQLFormat(DiaryEntryTimeString);
                     //OPEN DIARY ALERT
 
                     //INSERT DIARY ENTRY

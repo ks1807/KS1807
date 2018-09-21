@@ -8,7 +8,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.RadioButton;
 import android.support.design.widget.BottomNavigationView;
@@ -16,8 +15,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.annotation.NonNull;
 import android.view.MenuItem;
-
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class EditUserDetails extends AppCompatActivity
 {
@@ -146,8 +146,8 @@ public class EditUserDetails extends AppCompatActivity
         TextView Email = (TextView)findViewById(R.id.EditText_EditEmail);
         Email.setEnabled(false);
 
-        TextView Age = (TextView)findViewById(R.id.EditText_EditAge);
-        Age.setEnabled(false);
+        TextView DateOfBirth = (TextView)findViewById(R.id.EditText_EditDateOfBirth);
+        DateOfBirth.setEnabled(false);
 
         RadioButton GenderFemale = (RadioButton)findViewById(R.id.RadioButton_EditFemale);
         GenderFemale.setEnabled(false);
@@ -171,8 +171,8 @@ public class EditUserDetails extends AppCompatActivity
         Email.setText(UserDetails.get(2));
         CurrentEmailAddress = UserDetails.get(2);
 
-        TextView Age = (TextView)findViewById(R.id.EditText_EditAge);
-        Age.setText(UserDetails.get(3));
+        TextView DateOfBirth = (TextView)findViewById(R.id.EditText_EditDateOfBirth);
+        DateOfBirth.setText(UserDetails.get(3));
 
         RadioButton GenderFemale = (RadioButton)findViewById(R.id.RadioButton_EditFemale);
         RadioButton GenderMale = (RadioButton)findViewById(R.id.RadioButton_EditMale);
@@ -205,8 +205,8 @@ public class EditUserDetails extends AppCompatActivity
         TextView Email = (TextView)findViewById(R.id.EditText_EditEmail);
         Email.setEnabled(true);
 
-        TextView Age = (TextView)findViewById(R.id.EditText_EditAge);
-        Age.setEnabled(true);
+        TextView DateOfBirth = (TextView)findViewById(R.id.EditText_EditDateOfBirth);
+        DateOfBirth.setEnabled(true);
 
         RadioButton GenderFemale = (RadioButton)findViewById(R.id.RadioButton_EditFemale);
         GenderFemale.setEnabled(true);
@@ -228,12 +228,12 @@ public class EditUserDetails extends AppCompatActivity
         TextView FirstName = (TextView)findViewById(R.id.EditText_EditFirstName);
         TextView LastName = (TextView)findViewById(R.id.EditText_EditLastName);
         TextView Email = (TextView)findViewById(R.id.EditText_EditEmail);
-        TextView Age = (TextView)findViewById(R.id.EditText_EditAge);
+        TextView DateOfBirth = (TextView)findViewById(R.id.EditText_EditDateOfBirth);
 
         String FName = FirstName.getText().toString();
         String LName = LastName.getText().toString();
         String TheEmail = Email.getText().toString();
-        String TheAge = Age.getText().toString();
+        String TheDateOfBirth = DateOfBirth.getText().toString();
 
         //Validation dialogue
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
@@ -288,32 +288,30 @@ public class EditUserDetails extends AppCompatActivity
             alertDialog.show();
         }
 
-        //Note: User input will normally prevent most of these errors in the first place.
-        //But just in case validate it.
-        else if (!Common.isNumeric(TheAge))
+        if (!TheDateOfBirth.equals("") && ValidationSuccessful)
         {
-            if (!TheAge.equals(""))
+            CommonFunctions Common = new CommonFunctions();
+            try
             {
-                ValidationSuccessful = false;
-                InvalidMessage = "Age must be a number.";
-                alertDialogBuilder.setMessage(InvalidMessage);
-                AlertDialog alertDialog = alertDialogBuilder.create();
-                alertDialog.show();
-            }
-        }
-        else
-        {
-            if (!TheAge.equals(""))
-            {
-                int AgeInt = Integer.parseInt(TheAge);
-                if (AgeInt < 1)
+                Date DOBTest = Common.DateFromStringAustraliaFormat(TheDateOfBirth);
+                if (DOBTest.after(new Date()))
                 {
                     ValidationSuccessful = false;
-                    InvalidMessage = "Age must be a positive number greater than zero.";
+                    InvalidMessage = "Date of Birth is invalid as it is in the future.";
                     alertDialogBuilder.setMessage(InvalidMessage);
                     AlertDialog alertDialog = alertDialogBuilder.create();
                     alertDialog.show();
                 }
+            }
+            catch (ParseException e)
+            {
+                e.printStackTrace();
+                ValidationSuccessful = false;
+                InvalidMessage = "Date of Birth must be a valid date in the format of " +
+                        "Day, Month and Year.";
+                alertDialogBuilder.setMessage(InvalidMessage);
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
             }
         }
 
@@ -347,8 +345,8 @@ public class EditUserDetails extends AppCompatActivity
         if(ValidationSuccessful)
         {
             //Update the record. If it fails then fail the validation as well.
-            ValidationSuccessful = UserFunctions.UpdateCurrentUser(FName, LName, TheEmail, TheAge,
-                    TheGender, UserID);
+            ValidationSuccessful = UserFunctions.UpdateCurrentUser(FName, LName, TheEmail,
+                    TheDateOfBirth, TheGender, UserID);
         }
 
         return ValidationSuccessful;
