@@ -160,7 +160,7 @@
         android:layout_height="45dp"
         android:layout_weight="1"
         android:background="@drawable/genderback"
-        android:checkedButton="@+id/RadioButton_empty"
+        android:checkedButton="@+id/RadioButton_Male"
         android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@+id/btn_Submit"
         app:layout_constraintEnd_toEndOf="parent"
@@ -175,12 +175,13 @@
             android:button="@null" />
 
         <RadioButton
-            android:id="@+id/radioButton_Male"
+            android:id="@+id/RadioButton_Male"
             android:layout_width="89dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/maleunselected"
-            android:button="@null" />
+            android:background="@drawable/maleselected"
+            android:button="@null"
+            android:onClick="RadioButtonMale"/>
 
         <RadioButton
             android:id="@+id/RadioButton_Female"
@@ -188,7 +189,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@drawable/femaleunselected"
-            android:button="@null" />
+            android:button="@null"
+            android:onClick="RadioButtonFemale"/>
 
         <RadioButton
             android:id="@+id/RadioButton_Other"
@@ -196,7 +198,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@drawable/otherunselected"
-            android:button="@null" />
+            android:button="@null"
+            android:onClick="RadioButtonOther"/>
 
     </RadioGroup>
 

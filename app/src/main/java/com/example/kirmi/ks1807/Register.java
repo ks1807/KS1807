@@ -9,7 +9,6 @@ import android.content.Context;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.RadioButton;
-
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -88,6 +87,40 @@ public class Register extends AppCompatActivity
         }
     }
 
+    //Buttons that switch the graphics of the gender radio buttons to indicate what is selected.
+    public void RadioButtonMale(View view)
+    {
+        RadioButton GenderMale = (RadioButton) findViewById(R.id.RadioButton_Male);
+        RadioButton GenderFemale = (RadioButton) findViewById(R.id.RadioButton_Female);
+        RadioButton GenderOther = (RadioButton) findViewById(R.id.RadioButton_Other);
+
+        GenderMale.setBackgroundResource(R.drawable.maleselected);
+        GenderFemale.setBackgroundResource(R.drawable.femaleunselected);
+        GenderOther.setBackgroundResource(R.drawable.otherunselected);
+    }
+
+    public void RadioButtonFemale(View view)
+    {
+        RadioButton GenderMale = (RadioButton) findViewById(R.id.RadioButton_Male);
+        RadioButton GenderFemale = (RadioButton) findViewById(R.id.RadioButton_Female);
+        RadioButton GenderOther = (RadioButton) findViewById(R.id.RadioButton_Other);
+
+        GenderMale.setBackgroundResource(R.drawable.maleunselected);
+        GenderFemale.setBackgroundResource(R.drawable.femaleselected);
+        GenderOther.setBackgroundResource(R.drawable.otherunselected);
+    }
+
+    public void RadioButtonOther(View view)
+    {
+        RadioButton GenderMale = (RadioButton) findViewById(R.id.RadioButton_Male);
+        RadioButton GenderFemale = (RadioButton) findViewById(R.id.RadioButton_Female);
+        RadioButton GenderOther = (RadioButton) findViewById(R.id.RadioButton_Other);
+
+        GenderMale.setBackgroundResource(R.drawable.maleunselected);
+        GenderFemale.setBackgroundResource(R.drawable.femaleunselected);
+        GenderOther.setBackgroundResource(R.drawable.otherselected);
+    }
+
     //Repopulate the fields if user has gone back.
     private void ShowUserDetails()
     {
@@ -121,20 +154,31 @@ public class Register extends AppCompatActivity
         TextView NewPasswordRepeat = (TextView)findViewById(R.id.EditText_ConfirmPassword);
         NewPasswordRepeat.setText(ThePassword);
 
-        RadioButton GenderFemale = (RadioButton)findViewById(R.id.RadioButton_Female);
-        RadioButton GenderMale = (RadioButton)findViewById(R.id.RadioButton_empty);
-        RadioButton GenderOther = (RadioButton)findViewById(R.id.RadioButton_Other);
+        final RadioButton GenderMale = (RadioButton) findViewById(R.id.RadioButton_Male);
+        final RadioButton GenderFemale = (RadioButton) findViewById(R.id.RadioButton_Female);
+        final RadioButton GenderOther = (RadioButton) findViewById(R.id.RadioButton_Other);
 
+        /*Make sure that the buttons have their image and checked status set to what the user
+        put in the database*/
         if (TheGender.equals("Male"))
         {
+            GenderMale.setBackgroundResource(R.drawable.maleselected);
+            GenderFemale.setBackgroundResource(R.drawable.femaleunselected);
+            GenderOther.setBackgroundResource(R.drawable.otherunselected);
             GenderMale.setChecked(true);
         }
         else if (TheGender.equals("Female"))
         {
+            GenderMale.setBackgroundResource(R.drawable.maleunselected);
+            GenderFemale.setBackgroundResource(R.drawable.femaleselected);
+            GenderOther.setBackgroundResource(R.drawable.otherunselected);
             GenderFemale.setChecked(true);
         }
         else if (TheGender.equals("Other"))
         {
+            GenderMale.setBackgroundResource(R.drawable.maleunselected);
+            GenderFemale.setBackgroundResource(R.drawable.femaleunselected);
+            GenderOther.setBackgroundResource(R.drawable.otherselected);
             GenderOther.setChecked(true);
         }
     }
@@ -162,7 +206,7 @@ public class Register extends AppCompatActivity
 
         //Get the gender
         RadioButton GenderFemale = (RadioButton)findViewById(R.id.RadioButton_Female);
-        RadioButton GenderMale = (RadioButton)findViewById(R.id.RadioButton_empty);
+        RadioButton GenderMale = (RadioButton)findViewById(R.id.RadioButton_Male);
         RadioButton GenderOther = (RadioButton)findViewById(R.id.RadioButton_Other);
 
         //Validation dialogue
@@ -276,15 +320,15 @@ public class Register extends AppCompatActivity
         String TheGender = "";
         if (GenderMale.isChecked())
         {
-            TheGender = GenderMale.getText().toString();
+            TheGender = "Male";
         }
         else if(GenderFemale.isChecked())
         {
-            TheGender = GenderFemale.getText().toString();
+            TheGender = "Female";
         }
         else if(GenderOther.isChecked())
         {
-            TheGender = GenderOther.getText().toString();
+            TheGender = "Other";
         }
         else
         {
