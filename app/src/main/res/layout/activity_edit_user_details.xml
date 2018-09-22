@@ -88,39 +88,45 @@
             android:id="@+id/RadioGroup_EditGenderSelect"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:checkedButton="@+id/RadioButton_EditMale"
-            android:orientation="horizontal">
+            android:background="@drawable/genderback"
+            android:orientation="horizontal"
+            android:checkedButton="@+id/RadioButton_EditMale">
 
-            <ImageButton
-                android:id="@+id/Img_EditGenderButton"
+            <RadioButton
+                android:id="@+id/RadioButtonEdit_empty"
                 android:layout_width="83dp"
                 android:layout_height="32dp"
                 android:layout_weight="1"
                 android:paddingEnd="10dp"
                 android:paddingStart="10dp"
-                app:srcCompat="@drawable/ic_action_keyboard" />
+                android:button="@null" />
 
             <RadioButton
                 android:id="@+id/RadioButton_EditMale"
                 android:layout_width="129dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/MaleCaption" />
+                android:background="@drawable/maleselected"
+                android:button="@null"
+                android:onClick="RadioButtonMale"/>
 
             <RadioButton
                 android:id="@+id/RadioButton_EditFemale"
                 android:layout_width="129dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/FemaleCaption" />
+                android:background="@drawable/femaleunselected"
+                android:button="@null"
+                android:onClick="RadioButtonFemale"/>
 
             <RadioButton
                 android:id="@+id/RadioButton_EditOther"
                 android:layout_width="129dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/OtherCaption" />
-
+                android:background="@drawable/otherunselected"
+                android:button="@null"
+                android:onClick="RadioButtonOther"/>
         </RadioGroup>
 
         <Button

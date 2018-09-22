@@ -180,16 +180,27 @@ public class EditUserDetails extends AppCompatActivity
 
         String Gender = UserDetails.get(4);
 
+        /*Make sure that the buttons have their image and checked status set to what the user
+        put in the database*/
         if (Gender.equals("Male"))
         {
+            GenderMale.setBackgroundResource(R.drawable.maleselected);
+            GenderFemale.setBackgroundResource(R.drawable.femaleunselected);
+            GenderOther.setBackgroundResource(R.drawable.otherunselected);
             GenderMale.setChecked(true);
         }
         else if (Gender.equals("Female"))
         {
+            GenderMale.setBackgroundResource(R.drawable.maleunselected);
+            GenderFemale.setBackgroundResource(R.drawable.femaleselected);
+            GenderOther.setBackgroundResource(R.drawable.otherunselected);
             GenderFemale.setChecked(true);
         }
         else if (Gender.equals("Other"))
         {
+            GenderMale.setBackgroundResource(R.drawable.maleunselected);
+            GenderFemale.setBackgroundResource(R.drawable.femaleunselected);
+            GenderOther.setBackgroundResource(R.drawable.otherselected);
             GenderOther.setChecked(true);
         }
     }
@@ -216,6 +227,40 @@ public class EditUserDetails extends AppCompatActivity
 
         RadioButton GenderOther = (RadioButton)findViewById(R.id.RadioButton_EditOther);
         GenderOther.setEnabled(true);
+    }
+
+    //Buttons that switch the graphics of the gender radio buttons to indicate what is selected.
+    public void RadioButtonMale(View view)
+    {
+        RadioButton GenderMale = (RadioButton) findViewById(R.id.RadioButton_EditMale);
+        RadioButton GenderFemale = (RadioButton) findViewById(R.id.RadioButton_EditFemale);
+        RadioButton GenderOther = (RadioButton) findViewById(R.id.RadioButton_EditOther);
+
+        GenderMale.setBackgroundResource(R.drawable.maleselected);
+        GenderFemale.setBackgroundResource(R.drawable.femaleunselected);
+        GenderOther.setBackgroundResource(R.drawable.otherunselected);
+    }
+
+    public void RadioButtonFemale(View view)
+    {
+        RadioButton GenderMale = (RadioButton) findViewById(R.id.RadioButton_EditMale);
+        RadioButton GenderFemale = (RadioButton) findViewById(R.id.RadioButton_EditFemale);
+        RadioButton GenderOther = (RadioButton) findViewById(R.id.RadioButton_EditOther);
+
+        GenderMale.setBackgroundResource(R.drawable.maleunselected);
+        GenderFemale.setBackgroundResource(R.drawable.femaleselected);
+        GenderOther.setBackgroundResource(R.drawable.otherunselected);
+    }
+
+    public void RadioButtonOther(View view)
+    {
+        RadioButton GenderMale = (RadioButton) findViewById(R.id.RadioButton_EditMale);
+        RadioButton GenderFemale = (RadioButton) findViewById(R.id.RadioButton_EditFemale);
+        RadioButton GenderOther = (RadioButton) findViewById(R.id.RadioButton_EditOther);
+
+        GenderMale.setBackgroundResource(R.drawable.maleunselected);
+        GenderFemale.setBackgroundResource(R.drawable.femaleunselected);
+        GenderOther.setBackgroundResource(R.drawable.otherselected);
     }
 
     private boolean ValidateForm()
@@ -308,30 +353,29 @@ public class EditUserDetails extends AppCompatActivity
                 e.printStackTrace();
                 ValidationSuccessful = false;
                 InvalidMessage = "Date of Birth must be a valid date in the format of " +
-                        "Day, Month and Year.";
+                        "Day, Month and Year (DD/MM/YYYY).";
                 alertDialogBuilder.setMessage(InvalidMessage);
                 AlertDialog alertDialog = alertDialogBuilder.create();
                 alertDialog.show();
             }
         }
 
-        //Get the gender
-        RadioButton GenderFemale = (RadioButton)findViewById(R.id.RadioButton_EditMale);
-        RadioButton GenderMale = (RadioButton)findViewById(R.id.RadioButton_EditFemale);
+        RadioButton GenderMale = (RadioButton)findViewById(R.id.RadioButton_EditMale);
+        RadioButton GenderFemale = (RadioButton)findViewById(R.id.RadioButton_EditFemale);
         RadioButton GenderOther = (RadioButton)findViewById(R.id.RadioButton_EditOther);
 
         String TheGender = "";
         if (GenderMale.isChecked())
         {
-            TheGender = GenderMale.getText().toString();
+            TheGender = "Male";
         }
         else if(GenderFemale.isChecked())
         {
-            TheGender = GenderFemale.getText().toString();
+            TheGender = "Female";
         }
         else if(GenderOther.isChecked())
         {
-            TheGender = GenderOther.getText().toString();
+            TheGender = "Other";
         }
         else
         {

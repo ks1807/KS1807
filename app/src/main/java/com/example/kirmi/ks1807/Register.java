@@ -310,7 +310,7 @@ public class Register extends AppCompatActivity
                 e.printStackTrace();
                 ValidationSuccessful = false;
                 InvalidMessage = "Date of Birth must be a valid date in the format of " +
-                        "Day, Month and Year.";
+                        "Day, Month and Year (DD/MM/YYYY).";
                 alertDialogBuilder.setMessage(InvalidMessage);
                 AlertDialog alertDialog = alertDialogBuilder.create();
                 alertDialog.show();
