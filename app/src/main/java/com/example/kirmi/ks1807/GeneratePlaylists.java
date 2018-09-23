@@ -16,14 +16,18 @@ public class GeneratePlaylists
 
         /*Verify that we haven't already inserted this record before. If we have then just get the
         ID*/
-        String SQLQuery = "SELECT TrackID FROM";
-        /*Create a new record in the MusicTrack table and get back the ID of the newly inserted
-        record*/
-        SQLQuery = "INSERT INTO MusicTrack (TrackName, Genre, Artist, Length)\n" +
-                "VALUES(\"" + TrackName + "\", \"" + Genre + "\", \"" + Artist + "\", \"" + Length +
-                "\")\n\nSELECT * FROM SCOPE_IDENTITY()";
+        String SQLQuery = "SELECT TrackID FROM MusicTrack WHERE TrackName = '" + TrackName + "'" ;
 
-        int TrackID = 1;
+        int TrackID = 0;
+
+        if (TrackID == 0)
+        {
+                    /*Create a new record in the MusicTrack table and get back the ID of the newly inserted
+        record*/
+            SQLQuery = "INSERT INTO MusicTrack (TrackName, Genre, Artist, Length)\n" +
+                    "VALUES('" + TrackName + "', '" + Genre + "', '" + Artist + "', '" + Length +
+                    "')\n\nSELECT SCOPE_IDENTITY()";
+        }
 
         return TrackID;
     }
@@ -32,16 +36,16 @@ public class GeneratePlaylists
     {
         /*Count all rows in the UserMood table that have a match UserID
         and where HasBeenRecommended = “No”.*/
-        String SQLQuery = "SELECT Count(UserID) FROM UserMood WHERE UserID = " + "\"" +
-                UserID + "\" AND HasBeenRecommended = \"No\"";
+        String SQLQuery = "SELECT Count(UserID) FROM UserMood WHERE UserID = " + "'" +
+                UserID + "' AND HasBeenRecommended = 'No'";
 
         int NonRecommendedCount = 11;
 
         if (NonRecommendedCount > 10)
         {
             //Checks if the user wants the system to make recommendations.
-            SQLQuery = "SELECT UserID FROM UserSettings WHERE UserID = " + "\"" +
-                    UserID + "\" AND HasBeenRecommended = \"Yes\"";
+            SQLQuery = "SELECT UserID FROM UserSettings WHERE UserID = " + "'" +
+                    UserID + "' AND MakeRecommendations = 'Yes'";
 
             boolean RecommendationsOn = true;
             if (RecommendationsOn)
@@ -53,8 +57,8 @@ public class GeneratePlaylists
                 as ‘Music To Make You Feel Better’ and RecommendedBy as ‘System’.
                 Get the PlayListID of this newly inserted record.*/
                 SQLQuery = "INSERT INTO PlayList (UserID, PlayListName, RecommendedBy)\n" +
-                "VALUES(\"" + UserID + "\", " + "\"Music To Make You Feel Better\"" + ", \"" +
-                        "System" + "\")\n\nSELECT * FROM SCOPE_IDENTITY()";
+                "VALUES('" + UserID + "', " + "'Music To Make You Feel Better'" + ", '" +
+                        "System" + "')\n\nSELECT SCOPE_IDENTITY()";
 
                 int PlayListID = 5;
 
@@ -65,16 +69,16 @@ public class GeneratePlaylists
                     /*Insert a record into the TracksInPlayList table with the current
                     UserID, the PlayListID and the RecommendedTrackID from the array.*/
                     SQLQuery = "INSERT INTO TracksInPlayList (UserID, PlayListID, TrackID)\n" +
-                            "VALUES(\"" + UserID + "\", \"" + PlayListID +
-                            "\", \"" + TrackIDToInsert + "\")";
+                            "VALUES('" + UserID + "', '" + PlayListID +
+                            "', '" + TrackIDToInsert + "')";
                 }
 
                 /*Insert a record into the PlayList table with the current UserID, PlayListName
                 as ‘Music that others are listening to’ and RecommendedBy as ‘Users’.
                 Get the PlayListID of this newly inserted record.*/
                 SQLQuery = "INSERT INTO PlayList (UserID, PlayListName, RecommendedBy)\n" +
-                        "VALUES(\"" + UserID + "\", " + "\"Music that others are listening to\"" +
-                        ", \"" + "Users" + "\")\n\nSELECT * FROM SCOPE_IDENTITY()";
+                        "VALUES('" + UserID + "', " + "'Music that others are listening to'" +
+                        ", '" + "Users" + "')\n\nSELECT SCOPE_IDENTITY()";
 
                 for (int i = 0; i < UserTrackIDs.length; i++)
                 {
@@ -83,8 +87,8 @@ public class GeneratePlaylists
                     /*Insert a record into the TracksInPlayList table with the current
                     UserID, the PlayListID and the UserTrackID from the array.*/
                     SQLQuery = "INSERT INTO TracksInPlayList (UserID, PlayListID, TrackID)\n" +
-                            "VALUES(\"" + UserID + "\", \"" + PlayListID +
-                            "\", \"" + TrackIDToInsert + "\")";
+                            "VALUES('" + UserID + "', '" + PlayListID +
+                            "', '" + TrackIDToInsert + "')";
                 }
             }
         }
@@ -93,14 +97,14 @@ public class GeneratePlaylists
     private boolean CheckMoodEntry(String UserID)
     {
         /*Get the MoodFrequency (String) parameter from the UserSettings database table.*/
-        String SQLQuery = "SELECT MoodFrequency FROM UserSettings WHERE UserID = " + "\"" +
-                UserID + "\"";
+        String SQLQuery = "SELECT MoodFrequency FROM UserSettings WHERE UserID = " + "'" +
+                UserID + "'";
 
         String MoodFrequency = "Once per hour";
 
         /*Get the MoodAfterTime (Datetime) of the last entry into the UserMood table.*/
-        SQLQuery = "SELECT TOP (1) MoodAfterTime FROM UserMood WHERE UserID = " + "\"" +
-                UserID + "\"" +
+        SQLQuery = "SELECT TOP (1) MoodAfterTime FROM UserMood WHERE UserID = " + "'" +
+                UserID + "'" +
         " ORDER BY MoodAfterTime DESC";
 
         String MoodAfterTimeString = "2018-09-20 11:34:46";
@@ -163,7 +167,7 @@ public class GeneratePlaylists
         int Score = 0;
 
         //Select the score from the MoodScore table.
-        String SQLQuery = "SELECT Score FROM MoodScore WHERE Mood = " + "\"" +
+        String SQLQuery = "SELECT Score FROM MoodScore WHERE Mood = " + "'" +
                 MoodName + "'";
 
         String MoodScore = "2";
@@ -192,13 +196,12 @@ public class GeneratePlaylists
 
         /*Select 10 unique music and random tracks that belong to this genre. Note ORDER BY newid()
         should make the selection random*/
-        String SQLQuery = "SELECT DISTINCT TOP (10) TrackID FROM MusicTrack WHERE Genre = " + "\"" +
-                HighestGenre + "\" ORDER BY newid()";
+        String SQLQuery = "SELECT TOP (10) TrackID FROM MusicTrack WHERE Genre = " + "'" +
+                HighestGenre + "' ORDER BY newid()";
 
-        int TrackIDs[] = {1,2,3};
+        int TrackIDs[] = {1,2,3,50,34,43,4,5,9,67};
 
         return TrackIDs;
-
     }
 
     private int[] MakeRecommendationUsers()
@@ -221,19 +224,29 @@ public class GeneratePlaylists
 
         /*Select 10 unique music and random tracks that belong to this genre. Note ORDER BY newid()
         should make the selection random*/
-        String SQLQuery = "SELECT DISTINCT TOP (10) TrackID FROM MusicTrack WHERE Genre = " + "\"" +
-                HighestGenre + "\" ORDER BY newid()";
+        String SQLQuery = "SELECT TOP (10) TrackID FROM MusicTrack WHERE Genre = '" +
+                HighestGenre + "' ORDER BY newid()";
 
-        int TrackIDs[] = {1,2,3};
+        int TrackIDs[] = {1,2,3,50,34,43,4,5,9,67};
 
         return TrackIDs;
     }
 
     private String[][] SetRecommendationScoreForGenre(String UserID)
     {
-        /*Get the list of all unique genres from the MusicTrack table. Put these genres into a
-        string array Genres.*/
-        String SQLQuery = "SELECT DISTINCT Genre FROM MusicTrack";
+        String SQLQuery = "";
+
+        /*Get the list of all unique genres from the MusicTrack table (as long as the genre has
+        been listened to at least once by the user)*/
+        if (!UserID.equals(""))
+        {
+            SQLQuery = "SELECT DISTINCT Genre FROM MusicTrack INNER JOIN UserMood ON " +
+                    "MusicTrack.TrackID = UserMood.TrackID WHERE UserID = '" + UserID + "'";
+        }
+        else /*Or get all Genres that all users have ever listened to*/
+        {
+            SQLQuery = "SELECT DISTINCT Genre FROM MusicTrack";
+        }
 
         int GenreSize = 10;
         String Genres[] = new String[GenreSize];
@@ -258,23 +271,21 @@ public class GeneratePlaylists
             GenreTrackCount[i] = 0;
         }
 
-        int TrackArray[] = {1, 2};
+        int TrackArray[] = {1, 2, 4, 23, 12};
         int TrackArraySize = 0;
 
         /*Get the list of all unique TrackIDs from the UserMood table with a matching UserID.*/
         if (!UserID.equals(""))
         {
             SQLQuery = "SELECT DISTINCT TrackID FROM UserMood WHERE UserID = " +
-                    "\"" + UserID + "\"";
-            TrackArraySize = 5;
-            //TrackArraySize = TrackArray.length;
+                    "'" + UserID + "'";
+            TrackArraySize = TrackArray.length;
         }
         /*Get the list of all unique TrackIDs from the UserMood table.*/
         else
         {
             SQLQuery = "SELECT DISTINCT TrackID FROM UserMood";
-            TrackArraySize = 5;
-            //TrackArraySize = TrackArray.length;
+            TrackArraySize = TrackArray.length;
         }
 
         //Create an empty second float array of the same size as TrackArray called TrackScores.
@@ -287,7 +298,7 @@ public class GeneratePlaylists
             /*For the nth TrackID in the TrackArray, match the TrackID with the Genre through the
             MusicTrack table.*/
             SQLQuery = "SELECT DISTINCT Genre FROM MusicTrack WHERE TrackID = " +
-                    "\"" + TrackArray[i] + "\"";
+                    "'" + TrackArray[i] + "'";
 
             String TheGenre = "TEST";
 
@@ -308,7 +319,15 @@ public class GeneratePlaylists
         {
             /*We now get the average genre score for each genre, which is all of the track scores
             per genre divided by the number of tracks in that genre.*/
-            float Average = GenreScores[i]/(float)GenreTrackCount[i];
+            float TrackCount = GenreTrackCount[i];
+
+            //Avoid Divide by Zero Error
+            if (TrackCount == 0.0)
+            {
+                TrackCount = 1;
+            }
+
+            float Average = GenreScores[i]/TrackCount;
             String TheGenre = Genres[i];
             AverageGenreScores[0][i] = TheGenre;
             AverageGenreScores[1][i] = String.valueOf(Average);
@@ -325,8 +344,8 @@ public class GeneratePlaylists
         if (!UserID.equals(""))
         {
             //Count the number of rows we need to go through.
-            SQLQuery = "SELECT Count(UserID) FROM UserMood WHERE UserID = \"" + UserID + "\"" +
-                    "AND TrackID = \"" + TrackID + "\"";
+            SQLQuery = "SELECT Count(UserID) FROM UserMood WHERE UserID = '" + UserID + "' " +
+                    "AND TrackID = '" + TrackID + "'";
 
             int RowCount = 4;
 
@@ -336,16 +355,16 @@ public class GeneratePlaylists
             int i;
             for (i = 1; i < RowCount; i++)
             {
-                SQLQuery = "SELECT BeforeMood FROM (SELECT ROW_NUMBER() OVER" +
-                        "(ORDER BY BeforeMood ASC) AS rownumber, BeforeMood FROM UserMood" +
-                        "WHERE UserID = \"" + UserID + "\" AND TrackID = \"" + TrackID + "\")" +
+                SQLQuery = "SELECT MoodBefore FROM (SELECT ROW_NUMBER() OVER" +
+                        "(ORDER BY MoodBefore ASC) AS rownumber, MoodBefore FROM UserMood " +
+                        "WHERE UserID = '" + UserID + "' AND TrackID = '" + TrackID + "')" +
                         "AS Mood WHERE rownumber <= " + i;
 
                 String BeforeMood = "Happy";
 
-                SQLQuery = "SELECT AfterMood FROM (SELECT ROW_NUMBER() OVER" +
-                        "(ORDER BY AfterMood ASC) AS rownumber, AfterMood FROM UserMood" +
-                        "WHERE UserID = \"" + UserID + "\" AND TrackID = \"" + TrackID + "')" +
+                SQLQuery = "SELECT MoodAfter FROM (SELECT ROW_NUMBER() OVER" +
+                        "(ORDER BY MoodAfter ASC) AS rownumber, MoodAfter FROM UserMood " +
+                        "WHERE UserID = '" + UserID + "' AND TrackID = '" + TrackID + "')" +
                         "AS Mood WHERE rownumber <= " + i;
 
                 String AfterMood = "Sad";
@@ -360,7 +379,7 @@ public class GeneratePlaylists
         {
             //Count the number of rows we need to go through.
             SQLQuery = "SELECT Count(UserID) FROM UserMood WHERE " +
-                    "AND TrackID = \"" + TrackID + "\"";
+                    "TrackID = '" + TrackID + "'";
 
             int RowCount = 4;
 
@@ -370,16 +389,16 @@ public class GeneratePlaylists
             int i;
             for (i = 1; i < RowCount; i++)
             {
-                SQLQuery = "SELECT BeforeMood FROM (SELECT ROW_NUMBER() OVER" +
-                        "(ORDER BY BeforeMood ASC) AS RowNumber, BeforeMood FROM UserMood" +
-                        "WHERE TrackID = \"" + TrackID + "\")" +
+                SQLQuery = "SELECT MoodBefore FROM (SELECT ROW_NUMBER() OVER" +
+                        "(ORDER BY MoodBefore ASC) AS RowNumber, MoodBefore FROM UserMood" +
+                        "WHERE TrackID = '" + TrackID + "')" +
                         "AS Mood WHERE RowNumber <= " + i;
 
                 String BeforeMood = "Happy";
 
-                SQLQuery = "SELECT AfterMood FROM (SELECT ROW_NUMBER() OVER" +
-                        "(ORDER BY AfterMood ASC) AS RowNumber, AfterMood FROM UserMood" +
-                        "WHERE TrackID = \"" + TrackID + "\")" +
+                SQLQuery = "SELECT MoodAfter FROM (SELECT ROW_NUMBER() OVER" +
+                        "(ORDER BY MoodAfter ASC) AS RowNumber, MoodAfter FROM UserMood" +
+                        "WHERE TrackID = '" + TrackID + "')" +
                         "AS Mood WHERE RowNumber <= " + i;
 
                 String AfterMood = "Sad";
@@ -394,7 +413,9 @@ public class GeneratePlaylists
 
     public void TrackEnded(int MoodID)
     {
-        if (MoodID > 0)
+        MoodID = 2; //TEST
+
+        if (MoodID > 1)
         {
             UserEnterMoodAfter(MoodID);
         }
@@ -414,39 +435,27 @@ public class GeneratePlaylists
 
         if (CheckMoodEntry(UserID))
         {
-            try
+            //ALERT TO USER - ENTER MOOD
+            boolean UserEnteredMood = true;
+            String BeforeMood = "Happy";
+
+            String MoodBeforeTime = "2018-05-23 06:34:46";
+            //ALERT TO USER - ENTER MOOD
+
+            if (UserEnteredMood)
             {
-                //ALERT TO USER - ENTER MOOD
-                boolean UserEnteredMood = true;
-                String BeforeMood = "Happy";
-
-                String MoodBeforeTimeString = "2018-05-23 06:34:46";
-                CommonFunctions Common = new CommonFunctions();
-                Date MoodBeforeTime = Common.DateTimeFromStringSQLFormat(MoodBeforeTimeString);
-                //ALERT TO USER - ENTER MOOD
-
-                if (UserEnteredMood)
-                {
-                /*System gets current Date/Time, BeforeMood, UserID and Track ID and adds
-                these to UserMood database table.*/
-                    /*NOTE SCOPE_IDENTITY() SHOULD JUST GET THE NEWLY INSERTED ID. IF IT DOESN\"T
-                    WORK THEN JUST MAKE A DIFFERENT SELECT QUERY*/
-                    String SQLQuery = "INSERT INTO UserMood (UserID, TrackID, MoodBefore," +
-                            "MoodBeforeTime)\n" +
-                            "VALUES(\"" + UserID + "\", \"" + TrackID + "\", \"" +
-                            BeforeMood + "\", \"" + MoodBeforeTime + "\")\n" +
-                            "SELECT * FROM SCOPE_IDENTITY()";
-                    MoodID = 2;
-                    return MoodID;
-                }
-                else
-                {
-                    return -1;
-                }
-
-            } catch (ParseException e)
+            /*System gets current Date/Time, BeforeMood, UserID and Track ID and adds
+            these to UserMood database table.*/
+                String SQLQuery = "INSERT INTO UserMood (UserID, TrackID, MoodBefore," +
+                        "MoodBeforeTime)\n" +
+                        "VALUES('" + UserID + "', '" + TrackID + "', '" +
+                        BeforeMood + "', '" + MoodBeforeTime + "')\n" +
+                        "SELECT SCOPE_IDENTITY()";
+                MoodID = 2;
+                return MoodID;
+            }
+            else
             {
-                e.printStackTrace();
                 return -1;
             }
         }
@@ -458,67 +467,57 @@ public class GeneratePlaylists
 
     private boolean UserEnterMoodAfter(int MoodID)
     {
-        try
+        //ALERT TO USER - ENTER AFTER MOOD
+        String AfterMood = "Sad";
+        String UserLiked = "Yes";
+        String MoodAfterTime = "2018-05-23 06:34:46";
+        //ALERT TO USER - ENTER AFTER MOOD
+
+        boolean UserEnteredMood = true;
+
+        if (UserEnteredMood)
         {
-            //ALERT TO USER - ENTER AFTER MOOD
-            String AfterMood = "Sad";
-            String UserLiked = "Yes";
-            String MoodAfterTimeString = "2018-05-23 06:34:46";
-            CommonFunctions Common = new CommonFunctions();
-            Date MoodAfterTime = Common.DateTimeFromStringSQLFormat(MoodAfterTimeString);
-            //ALERT TO USER - ENTER AFTER MOOD
+            /*System to get the BeforeMood from the table by matching this with MoodID.*/
+            String SQLQuery = "SELECT MoodBefore FROM UserMood WHERE MoodID = " + "'" +
+                    MoodID + "'";
 
-            boolean UserEnteredMood = true;
+            /*System to get the UserID from the table by matching this with MoodID.*/
+            SQLQuery = "SELECT UserID FROM UserMood WHERE MoodID = " + "'" +
+                    MoodID + "'";
 
-            if (UserEnteredMood)
+            String UserID = "1";
+
+            String BeforeMood = "Happy";
+            int BeforeScore = ConvertMoodToNumber(BeforeMood);
+            int AfterScore = ConvertMoodToNumber(AfterMood);
+            int ScoreDiff = AfterScore - BeforeScore;
+
+            ScoreDiff = 6; //TEST
+
+            if (ScoreDiff < -3 || ScoreDiff > 3)
             {
-                /*System to get the BeforeMood from the table by matching this with MoodID.*/
-                String SQLQuery = "SELECT BeforeMood FROM UserMood WHERE MoodID = " + "\"" +
-                        MoodID + "\"";
+                //OPEN DIARY ALERT
+                String DiaryEntryText = "Dear Diary...";
+                String DiaryEntryTime = "2018-05-23 06:34:46";
+                //OPEN DIARY ALERT
 
-                /*System to get the UserID from the table by matching this with MoodID.*/
-                SQLQuery = "SELECT UserID FROM UserMood WHERE MoodID = " + "\"" +
-                        MoodID + "\"";
-
-                String UserID = "1";
-
-                String BeforeMood = "Happy";
-                int BeforeScore = ConvertMoodToNumber(BeforeMood);
-                int AfterScore = ConvertMoodToNumber(AfterMood);
-                int ScoreDiff = AfterScore - BeforeScore;
-
-                if (ScoreDiff < -3 || ScoreDiff > 3)
-                {
-                    //OPEN DIARY ALERT
-                    String DiaryEntryText = "Dear Diary...";
-                    String DiaryEntryTimeString = "2018-05-23 06:34:46";
-                    Date DiaryEntryTime = Common.DateTimeFromStringSQLFormat(DiaryEntryTimeString);
-                    //OPEN DIARY ALERT
-
-                    //INSERT DIARY ENTRY
-                    SQLQuery = "INSERT INTO UserDiary (UserID, TrackID, MoodBefore," +
-                            "MoodBeforeTime)\n" +
-                            "VALUES(\"" + UserID + "\", \"" + DiaryEntryTime + "\", \"" +
-                            DiaryEntryText +"\")";
-                }
-
-            /*System gets current Date/Time, AfterMood, UserLiked, MoodID and updates the UserMood
-            database table with these parameters where MoodID matches.*/
-                SQLQuery = "UPDATE UserMood SET AfterMood = \"" + AfterMood + "\", " +
-                        "MoodAfterDate = \"" + MoodAfterTime + "\", " + "UserLiked = \"" +
-                        UserLiked + "\", " + "HasBeenRecommended = \"" + "No" + "\n" +
-                        "WHERE MoodID = \"" + MoodID + "\"";
-
-                AddTracksToPlaylist(UserID);
-
-                return true;
+                //INSERT DIARY ENTRY
+                SQLQuery = "INSERT INTO UserDiary (UserID, DiaryEntryDate, DiaryEntryText)\n" +
+                        "VALUES('" + UserID + "', '" + DiaryEntryTime + "', '" +
+                        DiaryEntryText +"')";
             }
-            return false;
+
+        /*System gets current Date/Time, AfterMood, UserLiked, MoodID and updates the UserMood
+        database table with these parameters where MoodID matches.*/
+            SQLQuery = "UPDATE UserMood SET MoodAfter = '" + AfterMood + "', " +
+                    "MoodAfterTime = '" + MoodAfterTime + "', " + "UserLiked = '" +
+                    UserLiked + "', " + "HasBeenRecommended = '" + "No" + "'\n" +
+                    "WHERE MoodID = '" + MoodID + "'";
+
+            AddTracksToPlaylist(UserID);
+
+            return true;
         }
-        catch (ParseException e)
-        {
-            e.printStackTrace();
-            return false;
-        }
+        return false;
     }
 }

@@ -48,9 +48,9 @@ public class DatabaseSchema
     {
         String MoodScore;
         final String MoodScoreID = "MoodScoreID INTEGER PRIMARY KEY AUTOINCREMENT, ";
-        final String Mood = "Mood TEXT, ";
+        final String Mood = "Mood VARCHAR (100), ";
         final String Score = "Score INTEGER, ";
-        final String Emoticon = "Emoticon TEXT";
+        final String Emoticon = "Emoticon VARCHAR (100)";
 
         MoodScore = "CREATE TABLE " + DBTable_MoodScore + "(" + MoodScoreID + Mood + Score
                 + Emoticon + ");\n";
@@ -61,10 +61,10 @@ public class DatabaseSchema
     {
         String MusicTrack;
         final String TrackID = "TrackID INTEGER PRIMARY KEY AUTOINCREMENT, ";
-        final String TrackName = "TrackName TEXT, ";
-        final String Genre = "Genre TEXT, ";
-        final String Artist = "Artist TEXT, ";
-        final String Length = "Length TEXT";
+        final String TrackName = "TrackName VARCHAR (100), ";
+        final String Genre = "Genre VARCHAR (100), ";
+        final String Artist = "Artist VARCHAR (100), ";
+        final String Length = "Length VARCHAR (100)";
 
         MusicTrack = "CREATE TABLE " + DBTable_MusicTrack + "(" + TrackID +
                 TrackName + Genre + Artist + Length + ");\n";
@@ -76,8 +76,8 @@ public class DatabaseSchema
         String PlayList;
         final String PlayListID = "PlayListID INTEGER PRIMARY KEY AUTOINCREMENT, ";
         final String UserID = "UserID INTEGER, ";
-        final String PlayListName = "PlayListName TEXT, ";
-        final String RecommendedBy = "RecommendedBy TEXT";
+        final String PlayListName = "PlayListName VARCHAR (100), ";
+        final String RecommendedBy = "RecommendedBy VARCHAR (100)";
 
         PlayList = "CREATE TABLE " + DBTable_PlayList + "(" + PlayListID + UserID +
                 PlayListName + RecommendedBy + ");\n";
@@ -103,12 +103,12 @@ public class DatabaseSchema
         final String MoodID = "MoodID INTEGER PRIMARY KEY AUTOINCREMENT, ";
         final String UserID = "UserID INTEGER, ";
         final String TrackID = "TrackID INTEGER, ";
-        final String MoodBefore = "MoodBefore TEXT, ";
+        final String MoodBefore = "MoodBefore VARCHAR (100), ";
         final String MoodBeforeTime = "MoodBeforeTime DATETIME, ";
-        final String MoodAfter = "MoodAfter TEXT, ";
+        final String MoodAfter = "MoodAfter VARCHAR (100), ";
         final String MoodAfterTime = "MoodAfterTime DATETIME, ";
-        final String UserLiked = "UserLiked TEXT, ";
-        final String HasBeenRecommended = "HasBeenRecommended TEXT";
+        final String UserLiked = "UserLiked VARCHAR (100), ";
+        final String HasBeenRecommended = "HasBeenRecommended VARCHAR (100)";
 
         UserMood = "CREATE TABLE " + DBTable_UserMood + "(" + MoodID + UserID +
                 TrackID + MoodBefore + MoodBeforeTime + MoodAfter + MoodAfterTime +
@@ -120,17 +120,17 @@ public class DatabaseSchema
     {
         String UserAccount;
         final String UserID = "UserID INTEGER PRIMARY KEY AUTOINCREMENT, ";
-        final String FirstName = "FirstName TEXT, ";
-        final String LastName = "LastName TEXT, ";
+        final String FirstName = "FirstName VARCHAR (100), ";
+        final String LastName = "LastName VARCHAR (100), ";
         final String DateOfBirth = "DateOfBirth DATE, ";
-        final String Gender = "Gender TEXT, ";
-        final String EmailAddress = "EmailAddress TEXT, ";
-        final String PreferredPlatform = "PreferredPlatform TEXT, ";
-        final String SpotifyID = "SpotifyID TEXT, ";
-        final String MusicQuestionOne = "MusicQuestionOne TEXT, ";
-        final String MusicQuestionTwo = "MusicQuestionTwo TEXT, ";
-        final String MusicQuestionThree = "MusicQuestionThree TEXT,";
-        final String UserPassword = "UserPassword TEXT";
+        final String Gender = "Gender VARCHAR (100), ";
+        final String EmailAddress = "EmailAddress VARCHAR (100), ";
+        final String PreferredPlatform = "PreferredPlatform VARCHAR (100), ";
+        final String SpotifyID = "SpotifyID VARCHAR (100), ";
+        final String MusicQuestionOne = "MusicQuestionOne VARCHAR (100), ";
+        final String MusicQuestionTwo = "MusicQuestionTwo VARCHAR (100), ";
+        final String MusicQuestionThree = "MusicQuestionThree VARCHAR (100),";
+        final String UserPassword = "UserPassword VARCHAR (100)";
 
         UserAccount = "CREATE TABLE " + DBTable_UserAccount + "(" + UserID + FirstName +
                 LastName + DateOfBirth + Gender + EmailAddress + PreferredPlatform +
@@ -145,7 +145,7 @@ public class DatabaseSchema
         final String UserDiaryID = "UserDiaryID INTEGER PRIMARY KEY AUTOINCREMENT, ";
         final String UserID = "UserID INTEGER, ";
         final String DiaryEntryDate = "DiaryEntryDate DATETIME, ";
-        final String DiaryEntry = "DiaryEntryText TEXT";
+        final String DiaryEntry = "DiaryEntryText VARCHAR (2000)";
 
         UserDiary = "CREATE TABLE " + DBTable_UserDiary + "(" + UserDiaryID + UserID +
                 DiaryEntryDate + DiaryEntry + ");\n";
@@ -157,9 +157,9 @@ public class DatabaseSchema
         String UserSettings;
         final String UserSettingID = "UserSettingID INTEGER PRIMARY KEY AUTOINCREMENT, ";
         final String UserID = "UserID INTEGER, ";
-        final String MoodFrequency = "MoodFrequency TEXT, ";
-        final String MakeRecommendations = "MakeRecommendations TEXT, ";
-        final String RememberLogin = "RememberLogin TEXT";
+        final String MoodFrequency = "MoodFrequency VARCHAR (100), ";
+        final String MakeRecommendations = "MakeRecommendations VARCHAR (100), ";
+        final String RememberLogin = "RememberLogin VARCHAR (100)";
 
         UserSettings = "CREATE TABLE " + DBTable_UserSettings + "(" + UserSettingID + UserID +
                 MoodFrequency + MakeRecommendations + RememberLogin + ");\n";

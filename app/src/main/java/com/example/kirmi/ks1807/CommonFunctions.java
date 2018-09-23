@@ -62,7 +62,7 @@ public class CommonFunctions
     {
         float MaximumValue = FloatArray[0];
         int i;
-        for (i = 1; i < FloatArray.length; i++)
+        for (i = 1; i < FloatArray.length - 1; i++)
         {
             if (FloatArray[i] > MaximumValue)
             {
