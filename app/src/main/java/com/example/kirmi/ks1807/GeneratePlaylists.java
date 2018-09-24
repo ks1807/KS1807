@@ -1,16 +1,30 @@
 package com.example.kirmi.ks1807;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 //All of this is to be moved to the server...
 public class GeneratePlaylists
 {
+    private static final String JDBCDriver = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
+    private static final String ServerName = "JONATHONPC\\SQLEXPRESS";
+    private static final String ServerPort = "1433";
+    private static final String DatabaseName = "MFMHDatabase";
+
+    private static final String JDBC_URL = "jdbc:microsoft:sqlserver://" + ServerName
+            + ":" + ServerPort + ";databasename=" + DatabaseName + ";integratedSecurity=true;";
+
     private int AddTrack(String TrackName, String Genre, String Artist, String Length)
     {
         //Dummy data, to be passed in through Spotify API
-        TrackName = "BestMusicTrack";
-        Genre = "Rock";
+        TrackName = "Harmonielehre";
+        Genre = "Instrumental";
         Artist = "John Adams";
         Length = "3:25";
 
@@ -44,11 +58,11 @@ public class GeneratePlaylists
         if (NonRecommendedCount > 10)
         {
             //Checks if the user wants the system to make recommendations.
-            SQLQuery = "SELECT UserID FROM UserSettings WHERE UserID = " + "'" +
+            SQLQuery = "SELECT Count(UserID) FROM UserSettings WHERE UserID = " + "'" +
                     UserID + "' AND MakeRecommendations = 'Yes'";
 
-            boolean RecommendationsOn = true;
-            if (RecommendationsOn)
+            int RecommendationsOn = 1;
+            if (RecommendationsOn > 0)
             {
                 int TrackIDs[] = MakeRecommendation(UserID);
                 int UserTrackIDs[] = MakeRecommendationUsers();
@@ -111,12 +125,11 @@ public class GeneratePlaylists
 
         try
         {
-            CommonFunctions Common = new CommonFunctions();
-            Date MoodAfterTime = Common.DateTimeFromStringSQLFormat(MoodAfterTimeString);
+            Date MoodAfterTime = DateTimeFromStringSQLFormat(MoodAfterTimeString);
             Date CurrentDate = new Date();
 
             long DateDifference = CurrentDate.getTime() - MoodAfterTime.getTime();
-            long MinutesDifference = DateDifference / (60 * 1000) % 60;
+            long MinutesDifference = DateDifference / (60 * 1000);
 
                 switch(MoodFrequency)
             {
@@ -167,13 +180,56 @@ public class GeneratePlaylists
         int Score = 0;
 
         //Select the score from the MoodScore table.
-        String SQLQuery = "SELECT Score FROM MoodScore WHERE Mood = " + "'" +
-                MoodName + "'";
+        String SQLQuery = "SELECT Score FROM MoodScore WHERE Mood = " + "'" + MoodName + "'";
 
         String MoodScore = "2";
         Score = Integer.parseInt(MoodScore);
 
         return Score;
+    }
+
+    //Gets a string and formats it into the format used by SQL Server.
+    public Date DateTimeFromStringSQLFormat(String DateString) throws ParseException
+    {
+        SimpleDateFormat SQLServerDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        try
+        {
+            Date FormattedDate = SQLServerDateFormat.parse(DateString);
+            return FormattedDate;
+        } catch (ParseException e)
+        {
+            e.printStackTrace();
+            throw new ParseException("Invalid Datetime SQL Format", -1);
+        }
+    }
+
+    public int GetArrayIndexFromString(String[] Array, String SearchString)
+    {
+        int Index=0;
+        for(int i=0; i<Array.length; i++)
+        {
+            if(Array[i].equals(SearchString))
+            {
+                Index=i;
+                break;
+            }
+        }
+        return Index;
+    }
+
+    //Gets the index place for the highest number in a floating point array.
+    public int GetIndexOfMaximumFloatValue(float[] FloatArray)
+    {
+        float MaximumValue = FloatArray[0];
+        int i;
+        for (i = 1; i < FloatArray.length - 1; i++)
+        {
+            if (FloatArray[i] > MaximumValue)
+            {
+                MaximumValue = FloatArray[i];
+            }
+        }
+        return i;
     }
 
     private int[] MakeRecommendation(String UserID)
@@ -188,8 +244,7 @@ public class GeneratePlaylists
         }
 
         //Now we check which of these genres has the highest number and get its place in the index.
-        CommonFunctions Common = new CommonFunctions();
-        int Index = Common.GetIndexOfMaximumFloatValue(GenreScores);
+        int Index = GetIndexOfMaximumFloatValue(GenreScores);
 
         //We then get the string value of this genre from the index.
         String HighestGenre= GenresAndScores[0][Index];
@@ -216,8 +271,7 @@ public class GeneratePlaylists
         }
 
         //Now we check which of these genres has the highest number and get its place in the index.
-        CommonFunctions Common = new CommonFunctions();
-        int Index = Common.GetIndexOfMaximumFloatValue(GenreScores);
+        int Index = GetIndexOfMaximumFloatValue(GenreScores);
 
         //We then get the string value of this genre from the index.
         String HighestGenre= GenresAndScores[0][Index];
@@ -305,8 +359,7 @@ public class GeneratePlaylists
             /*Make sure that the Genre Scores correspond to where the string was originally
             added in the Genre array (so that the Classical Music score should go where
             Classical Music was added)*/
-            CommonFunctions Common = new CommonFunctions();
-            int GenreIndex = Common.GetArrayIndexFromString(Genres, TheGenre);
+            int GenreIndex = GetArrayIndexFromString(Genres, TheGenre);
 
             /*Add up the scores for each music track in the same genre and count how many music
             tracks are in that genre.*/
@@ -355,17 +408,17 @@ public class GeneratePlaylists
             int i;
             for (i = 1; i < RowCount; i++)
             {
-                SQLQuery = "SELECT MoodBefore FROM (SELECT ROW_NUMBER() OVER" +
+                SQLQuery = "SELECT TOP(1) MoodBefore FROM (SELECT ROW_NUMBER() OVER" +
                         "(ORDER BY MoodBefore ASC) AS rownumber, MoodBefore FROM UserMood " +
                         "WHERE UserID = '" + UserID + "' AND TrackID = '" + TrackID + "')" +
-                        "AS Mood WHERE rownumber <= " + i;
+                        "AS Mood WHERE rownumber = " + i;
 
                 String BeforeMood = "Happy";
 
-                SQLQuery = "SELECT MoodAfter FROM (SELECT ROW_NUMBER() OVER" +
+                SQLQuery = "SELECT TOP(1) MoodAfter FROM (SELECT ROW_NUMBER() OVER" +
                         "(ORDER BY MoodAfter ASC) AS rownumber, MoodAfter FROM UserMood " +
                         "WHERE UserID = '" + UserID + "' AND TrackID = '" + TrackID + "')" +
-                        "AS Mood WHERE rownumber <= " + i;
+                        "AS Mood WHERE rownumber = " + i;
 
                 String AfterMood = "Sad";
 
@@ -389,17 +442,17 @@ public class GeneratePlaylists
             int i;
             for (i = 1; i < RowCount; i++)
             {
-                SQLQuery = "SELECT MoodBefore FROM (SELECT ROW_NUMBER() OVER" +
-                        "(ORDER BY MoodBefore ASC) AS RowNumber, MoodBefore FROM UserMood" +
+                SQLQuery = "SELECT TOP(1) MoodBefore FROM (SELECT ROW_NUMBER() OVER" +
+                        "(ORDER BY MoodBefore ASC) AS RowNumber, MoodBefore FROM UserMood " +
                         "WHERE TrackID = '" + TrackID + "')" +
-                        "AS Mood WHERE RowNumber <= " + i;
+                        " AS Mood WHERE RowNumber = " + i;
 
                 String BeforeMood = "Happy";
 
-                SQLQuery = "SELECT MoodAfter FROM (SELECT ROW_NUMBER() OVER" +
-                        "(ORDER BY MoodAfter ASC) AS RowNumber, MoodAfter FROM UserMood" +
+                SQLQuery = "SELECT TOP(1) MoodAfter FROM (SELECT ROW_NUMBER() OVER" +
+                        "(ORDER BY MoodAfter ASC) AS RowNumber, MoodAfter FROM UserMood " +
                         "WHERE TrackID = '" + TrackID + "')" +
-                        "AS Mood WHERE RowNumber <= " + i;
+                        " AS Mood WHERE RowNumber = " + i;
 
                 String AfterMood = "Sad";
 
