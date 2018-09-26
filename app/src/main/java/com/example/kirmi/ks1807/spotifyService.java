@@ -24,7 +24,6 @@ public class spotifyService extends Service
     private static final String CLIENT_ID = "9a7355bd24ff4544b4bdada73483aaa0";
     private static final String REDIRECT_URI = "com.example.kirmi.ks1807://callback";
     public SpotifyAppRemote mSpotifyAppRemote;
-    GeneratePlaylists PlayListFunctions = new GeneratePlaylists();
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -68,12 +67,6 @@ public class spotifyService extends Service
                 {
                     Toast.makeText(t, track.name + " by " + track.artist.name,
                             Toast.LENGTH_LONG).show();
-
-                    int MoodID = PlayListFunctions.TrackStarted("1", track.name,
-                            "GENRE?", track.artist.name,
-                            DateUtils.formatElapsedTime(((int)track.duration)/1000));
-
-                    PlayListFunctions.TrackEnded(MoodID);
                 }
             }
         });

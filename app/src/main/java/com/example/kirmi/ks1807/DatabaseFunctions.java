@@ -557,7 +557,7 @@ public class DatabaseFunctions
                 CommonFunctions Common = new CommonFunctions();
                 try
                 {
-                    Date TestDOB = Common.DateFromStringAustraliaFormat(DateOfBirth);
+                    Common.DateFromStringAustraliaFormat(DateOfBirth);
                     UpdateNewUser.put("DateOfBirth", DateOfBirth);
                 }
                 catch (ParseException e)
