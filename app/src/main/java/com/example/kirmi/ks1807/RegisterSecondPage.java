@@ -32,6 +32,7 @@ public class RegisterSecondPage extends AppCompatActivity
     //Confirm if the user wants to go back if the button is pressed.
     public void button_Back(View view)
     {
+
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
         alertDialogBuilder.setTitle("Confirm going back to previous page");
         alertDialogBuilder

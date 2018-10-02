@@ -4,154 +4,176 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/backnightnature3"
     tools:context=".RegisterSecondPage">
 
-    <LinearLayout
-        android:id="@+id/Layout_SecondRegisterPage"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:orientation="vertical"
+    <TextView
+        android:id="@+id/Text_Register"
+        android:layout_width="182dp"
+        android:layout_height="41dp"
+        android:background="@drawable/registertitle2"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/EditText_MusicApp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/EditText_MusicApp"
+        android:layout_width="276dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/PreferredApp_Caption"
+        android:inputType="textPersonName"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toTopOf="@+id/Text_GeneralMood"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Text_Register" />
+
+    <TextView
+        android:id="@+id/Text_GeneralMood"
+        android:layout_width="match_parent"
+        android:layout_height="31dp"
+        android:text="@string/GeneralMoodQuestion_Caption"
+        android:textAlignment="center"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toTopOf="@+id/EditText_GeneralMood"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/EditText_MusicApp" />
+
+    <EditText
+        android:id="@+id/EditText_GeneralMood"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/MoodExamples_Caption"
+        android:inputType="textPersonName"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toTopOf="@+id/Text_MusicListenQuestion"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Text_GeneralMood" />
+
+    <TextView
+        android:id="@+id/Text_MusicListenQuestion"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:text="@string/MusicMoodQuestion_Caption"
+        android:textAlignment="center"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toTopOf="@+id/EditText_MusicListenQuestion"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/EditText_GeneralMood" />
+
+    <EditText
+        android:id="@+id/EditText_MusicListenQuestion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/MoodExamples_Caption"
+        android:inputType="textPersonName"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toTopOf="@+id/Text_MusicImproveQuestion"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Text_MusicListenQuestion" />
+
+    <TextView
+        android:id="@+id/Text_MusicImproveQuestion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/MusicImproveQuestion_Caption"
+        android:textAlignment="center"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toTopOf="@+id/RadioGroup_Mood"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/EditText_MusicListenQuestion" />
+
+    <RadioGroup
+        android:id="@+id/RadioGroup_Mood"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:checkedButton="@+id/RadioButton_MoodYes"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/btn_Submit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Text_MusicImproveQuestion">
+
+        <RadioButton
+            android:id="@+id/RadioButton_MoodYes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/Yes_Caption" />
+
+        <RadioButton
+            android:id="@+id/RadioButton_MoodNo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/No_Caption" />
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/btn_Submit"
+        android:layout_width="197dp"
+        android:layout_height="45dp"
+        android:background="@drawable/registernow"
+        android:minHeight="10dp"
+        android:onClick="button_Next"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/btn_Skip"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/RadioGroup_Mood" />
+
+    <Button
+        android:id="@+id/btn_Skip"
+        android:layout_width="89dp"
+        android:layout_height="45dp"
+        android:background="@drawable/skip"
+        android:minHeight="10dp"
+        android:onClick="button_Skip"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_Submit" />
+
+    <Button
+        android:id="@+id/btn_BackRegister"
+        android:layout_width="24dp"
+        android:layout_height="22dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/back"
+        android:minHeight="10dp"
+        android:onClick="button_Back"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/EditText_MusicApp"
+        app:layout_constraintEnd_toStartOf="@+id/Text_Register"
+        app:layout_constraintHorizontal_bias="0.35"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintVertical_bias="0.32" />
 
-        <TextView
-            android:id="@+id/Text_Register"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/RegisterSecondPage_Caption"
-            android:textAlignment="center"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="18dp" />
-
-        <EditText
-            android:id="@+id/EditText_MusicApp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="@string/PreferredApp_Caption"
-            android:inputType="textPersonName"
-            android:textSize="14sp" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="14dp" />
-
-        <TextView
-            android:id="@+id/Text_GeneralMood"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/GeneralMoodQuestion_Caption"
-            android:textAlignment="center"
-            android:textSize="14sp" />
-
-        <EditText
-            android:id="@+id/EditText_GeneralMood"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="@string/MoodExamples_Caption"
-            android:inputType="textPersonName"
-            android:textSize="14sp" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="14dp" />
-
-        <TextView
-            android:id="@+id/Text_MusicListenQuestion"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/MusicMoodQuestion_Caption"
-            android:textAlignment="center"
-            android:textSize="14sp" />
-
-        <EditText
-            android:id="@+id/EditText_MusicListenQuestion"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="@string/MoodExamples_Caption"
-            android:inputType="textPersonName"
-            android:textSize="14sp" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="14dp" />
-
-        <TextView
-            android:id="@+id/Text_MusicImproveQuestion"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/MusicImproveQuestion_Caption"
-            android:textAlignment="center"
-            android:textSize="14sp" />
-
-        <RadioGroup
-            android:id="@+id/RadioGroup_Mood"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:checkedButton="@+id/RadioButton_MoodYes"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:id="@+id/RadioButton_MoodYes"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/Yes_Caption" />
-
-            <RadioButton
-                android:id="@+id/RadioButton_MoodNo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/No_Caption" />
-        </RadioGroup>
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="14dp" />
-
-        <Button
-            android:id="@+id/btn_Submit"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="10dp"
-            android:onClick="button_Next"
-            android:paddingBottom="10dp"
-            android:paddingTop="10dp"
-            android:text="@string/RegistrationSubmit_Caption" />
-
-        <Button
-            android:id="@+id/btn_Skip"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="10dp"
-            android:onClick="button_Skip"
-            android:paddingBottom="10dp"
-            android:paddingTop="10dp"
-            android:text="@string/Skip_Caption" />
-
-        <Button
-            android:id="@+id/btn_BackRegister"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="10dp"
-            android:paddingBottom="10dp"
-            android:paddingTop="10dp"
-            android:onClick="button_Back"
-            android:text="@string/BackButtonCaption" />
-    </LinearLayout>
 </android.support.constraint.ConstraintLayout>

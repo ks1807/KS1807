@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/backnightnature"
+    android:background="@drawable/backnightnature3"
     tools:context=".MainActivity">
 
     <TextView
@@ -94,12 +94,12 @@
         android:background="@drawable/password"
         android:ems="10"
         android:fontFamily="@font/roboto_regular"
-        android:textStyle="bold"
+        android:hint="********"
         android:inputType="textPassword"
         android:paddingLeft="60dp"
-        android:text="Password"
         android:textColor="#fff"
         android:textColorHint="#fff"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/btn_Login"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
