@@ -8,21 +8,6 @@ import java.text.ParseException;
 //Functions used by the entire application.
 public class CommonFunctions
 {
-    //Gets a string and formats it into the format used by SQL Server.
-    public Date DateTimeFromStringSQLFormat(String DateString) throws ParseException
-    {
-        SimpleDateFormat SQLServerDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        try
-        {
-            Date FormattedDate = SQLServerDateFormat.parse(DateString);
-            return FormattedDate;
-        } catch (ParseException e)
-        {
-            e.printStackTrace();
-            throw new ParseException("Invalid Datetime SQL Format", -1);
-        }
-    }
-
     public Date DateFromStringAustraliaFormat(String DateString) throws ParseException
     {
         SimpleDateFormat SQLServerDateFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -41,35 +26,6 @@ public class CommonFunctions
     public String GetEmojiByUnicode(int unicode)
     {
         return new String(Character.toChars(unicode));
-    }
-
-    public int GetArrayIndexFromString(String[] Array, String SearchString)
-    {
-        int Index=0;
-        for(int i=0; i<Array.length; i++)
-        {
-            if(Array[i].equals(SearchString))
-            {
-                Index=i;
-                break;
-            }
-        }
-        return Index;
-    }
-
-    //Gets the index place for the highest number in a floating point array.
-    public int GetIndexOfMaximumFloatValue(float[] FloatArray)
-    {
-        float MaximumValue = FloatArray[0];
-        int i;
-        for (i = 1; i < FloatArray.length - 1; i++)
-        {
-            if (FloatArray[i] > MaximumValue)
-            {
-                MaximumValue = FloatArray[i];
-            }
-        }
-        return i;
     }
 
     //Checks if a string is a number or not.
