@@ -10,6 +10,11 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import com.spotify.sdk.android.authentication.*;
+
+import static com.spotify.sdk.android.authentication.LoginActivity.REQUEST_CODE;
 
 public class MainActivity extends AppCompatActivity
 {
@@ -58,9 +63,34 @@ public class MainActivity extends AppCompatActivity
 
     public void button_LoginSpotify(View view)
     {
-        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse
-                ("https://www.spotify.com/login?continue=https%3A%2F%2Fwww.spotify.com%2Fau%2Faccount%2Foverview%2F"));
-        startActivity(browserIntent);
+        AuthenticationRequest.Builder builder = new AuthenticationRequest.Builder(BackgroundService.CLIENT_ID,
+                AuthenticationResponse.Type.TOKEN, BackgroundService.REDIRECT_URI);
+        builder.setScopes(new String[]{"streaming"});
+        AuthenticationRequest request = builder.build();
+        AuthenticationClient.openLoginActivity(this, REQUEST_CODE, request);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
+        // Check if it's from spotify
+        if (requestCode == REQUEST_CODE) {
+            AuthenticationResponse response = AuthenticationClient.getResponse(resultCode, intent);
+            switch (response.getType()) {
+                // Response was successful and contains auth token
+                case TOKEN:
+                    // Handle successful response
+                    Toast.makeText(this, "Got token: " + response.getAccessToken(), Toast.LENGTH_SHORT).show();
+                    break;
+                case ERROR:
+                    // Handle error response
+                    Toast.makeText(this, response.getError(), Toast.LENGTH_SHORT).show();
+                    break;
+                    // Other cases, not sure what they are.
+                default:
+                    Toast.makeText(this, "Default response, should not happen", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     public void button_Register(View view)

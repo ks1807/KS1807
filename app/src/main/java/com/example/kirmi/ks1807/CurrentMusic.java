@@ -21,14 +21,10 @@ import android.widget.TextView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.spotify.android.appremote.api.SpotifyAppRemote;
 import com.spotify.protocol.client.CallResult;
 import com.spotify.protocol.client.ErrorCallback;
-import com.spotify.protocol.client.Result;
 import com.spotify.protocol.types.PlayerState;
 import com.spotify.protocol.types.Track;
-
-import java.util.concurrent.TimeUnit;
 
 public class CurrentMusic extends AppCompatActivity
 {
@@ -36,7 +32,7 @@ public class CurrentMusic extends AppCompatActivity
     private DatabaseFunctions MusicFunctions;
 
     String UserID = "";
-    spotifyService mService;
+    BackgroundService mService;
     PlayerState playerState;
     boolean mBound;
 
@@ -52,7 +48,7 @@ public class CurrentMusic extends AppCompatActivity
     protected void onStart()
     {
         super.onStart();
-        Intent intent = new Intent(this, spotifyService.class);
+        Intent intent = new Intent(this, BackgroundService.class);
         bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
     }
 
@@ -60,7 +56,7 @@ public class CurrentMusic extends AppCompatActivity
 
         @Override
         public void onServiceConnected(ComponentName className, IBinder service) {
-            spotifyService.LocalBinder binder = (spotifyService.LocalBinder) service;
+            BackgroundService.LocalBinder binder = (BackgroundService.LocalBinder) service;
             mService = binder.getService();
             try{
                 Thread.sleep(1000);
@@ -78,7 +74,7 @@ public class CurrentMusic extends AppCompatActivity
 
     private void updatePlayerState() {
         Log.e("CurrentMusic", "BEGUN");
-        mService.mSpotifyAppRemote.getPlayerApi().getPlayerState()
+        mService.spotifyAppRemote.getPlayerApi().getPlayerState()
                 .setResultCallback(new CallResult.ResultCallback<PlayerState>() {
                     @Override
                     public void onResult(PlayerState mPlayerState) {
@@ -219,7 +215,7 @@ public class CurrentMusic extends AppCompatActivity
 
     public void button_Play(View view)
     {
-        mService.mSpotifyAppRemote.getPlayerApi().resume();
+        mService.spotifyAppRemote.getPlayerApi().resume();
         try{
             Thread.sleep(1000);
         } catch (InterruptedException e) {}
@@ -229,7 +225,7 @@ public class CurrentMusic extends AppCompatActivity
 
     public void button_Pause(View view)
     {
-        mService.mSpotifyAppRemote.getPlayerApi().pause();
+        mService.spotifyAppRemote.getPlayerApi().pause();
         try{
             Thread.sleep(1000);
         } catch (InterruptedException e) {}
@@ -239,7 +235,7 @@ public class CurrentMusic extends AppCompatActivity
 
     public void button_Skip(View view)
     {
-        mService.mSpotifyAppRemote.getPlayerApi().skipNext();
+        mService.spotifyAppRemote.getPlayerApi().skipNext();
         try{
             Thread.sleep(1000);
         } catch (InterruptedException e) {}
