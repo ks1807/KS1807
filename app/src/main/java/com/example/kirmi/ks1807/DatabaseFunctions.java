@@ -345,7 +345,6 @@ public class DatabaseFunctions
         UserDetails.add(GetLastName(UserID));
         UserDetails.add(GetEmailAddress(UserID));
         UserDetails.add(GetDateOfBirth(UserID));
-        UserDetails.add(GetUserPassword(UserID));
         UserDetails.add(GetGender(UserID));
         return UserDetails;
     }

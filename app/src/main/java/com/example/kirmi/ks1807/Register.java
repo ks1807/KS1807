@@ -132,8 +132,7 @@ public class Register extends AppCompatActivity
         String TheLastName = tableContent.get(1);
         String TheEmail = tableContent.get(2);
         String TheDateOfBirth = tableContent.get(3);
-        String ThePassword = tableContent.get(4);
-        String TheGender = tableContent.get(5);
+        String TheGender = tableContent.get(4);
 
         //Populate all the fields with the database data.
         TextView FirstName = (TextView)findViewById(R.id.EditText_FirstName);
@@ -148,12 +147,6 @@ public class Register extends AppCompatActivity
 
         TextView DateOfBirth = (TextView)findViewById(R.id.EditText_DateOfBirth);
         DateOfBirth.setText(TheDateOfBirth);
-
-        TextView NewPassword = (TextView)findViewById(R.id.EditText_Password);
-        NewPassword.setText(ThePassword);
-
-        TextView NewPasswordRepeat = (TextView)findViewById(R.id.EditText_ConfirmPassword);
-        NewPasswordRepeat.setText(ThePassword);
 
         final RadioButton GenderMale = (RadioButton) findViewById(R.id.RadioButton_Male);
         final RadioButton GenderFemale = (RadioButton) findViewById(R.id.RadioButton_Female);
