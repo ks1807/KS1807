@@ -25,6 +25,9 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
+        //run service
+        if(!BackgroundService.isRunning)
+            new BackgroundServiceStarter().onReceive(context, new Intent());
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         UserFunctions = new DatabaseFunctions(this);
@@ -72,6 +75,7 @@ public class MainActivity extends AppCompatActivity
                 case TOKEN:
                     // Handle successful response
                     Toast.makeText(this, "Got token: " + response.getAccessToken(), Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(this, CurrentMusic.class));
                     break;
                 case ERROR:
                     // Handle error response
@@ -79,7 +83,7 @@ public class MainActivity extends AppCompatActivity
                     break;
                     // Other cases, not sure what they are.
                 default:
-                    Toast.makeText(this, "Default response, should not happen", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "An error occured, please try again", Toast.LENGTH_SHORT).show();
             }
         }
     }
