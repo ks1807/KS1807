@@ -5,6 +5,7 @@
     <!-- For receiving the boot completed broadcast -->
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
     <application
         android:allowBackup="true"
@@ -61,7 +62,6 @@
         <activity android:name=".ThePlayList" />
         <activity android:name=".Settings" />
         <activity android:name=".AccountDetails" />
-        <activity android:name=".Overlay"></activity>
     </application>
 
 </manifest>
