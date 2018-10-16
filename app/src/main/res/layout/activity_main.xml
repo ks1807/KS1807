@@ -41,41 +41,14 @@
         app:layout_constraintVertical_bias="0.216"
         tools:ignore="MissingConstraints" />
 
-    <Button
-        android:id="@+id/btn_SpotifyLogin"
-        android:layout_width="310dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="4dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/login_spotify"
-        android:onClick="button_LoginSpotify"
-        app:layout_constraintBottom_toTopOf="@+id/EditText_UserName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Img_LandingLogo"
-        app:layout_constraintVertical_bias="0.177" />
-
-    <TextView
-        android:id="@+id/Text_or"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/or1"
-        app:layout_constraintBottom_toTopOf="@+id/EditText_UserName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_SpotifyLogin" />
-
     <EditText
         android:id="@+id/EditText_UserName"
-        android:fontFamily="@font/roboto_regular"
         android:layout_width="310dp"
         android:layout_height="45dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginTop="40dp"
         android:background="@drawable/email"
         android:ems="10"
+        android:fontFamily="@font/roboto_regular"
         android:hint="Email"
         android:inputType="textPersonName"
         android:paddingLeft="60dp"
@@ -84,13 +57,15 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/EditText_Password"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Img_LandingLogo"
+        app:layout_constraintVertical_bias="0.0" />
 
     <EditText
         android:id="@+id/EditText_Password"
         android:layout_width="310dp"
         android:layout_height="45dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginTop="24dp"
         android:background="@drawable/password"
         android:ems="10"
         android:fontFamily="@font/roboto_regular"
@@ -100,16 +75,17 @@
         android:textColor="#fff"
         android:textColorHint="#fff"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/btn_Login"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.618" />
 
     <Button
         android:id="@+id/btn_Login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="28dp"
+        android:layout_marginBottom="64dp"
         android:background="@drawable/signin"
         android:onClick="button_Login"
         app:layout_constraintBottom_toTopOf="@+id/btn_Register"
@@ -120,7 +96,7 @@
         android:id="@+id/Text_Or2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="20dp"
         android:background="@drawable/or2"
         app:layout_constraintBottom_toTopOf="@+id/btn_Register"
         app:layout_constraintEnd_toEndOf="parent"

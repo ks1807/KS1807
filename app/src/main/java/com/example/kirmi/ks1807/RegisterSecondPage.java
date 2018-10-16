@@ -62,7 +62,7 @@ public class RegisterSecondPage extends AppCompatActivity
     {
         if (UpdateSecondPage())
         {
-            Intent intent = new Intent(RegisterSecondPage.this, CurrentMusic.class);
+            Intent intent = new Intent(RegisterSecondPage.this, OtherPlatforms.class);
             intent.putExtra("UserID", UserID);
             startActivity(intent);
         }
@@ -85,60 +85,61 @@ public class RegisterSecondPage extends AppCompatActivity
         }
     }
 
-    public void button_Skip(View view)
-    {
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
-        alertDialogBuilder.setTitle("Confirm skip");
-        alertDialogBuilder
-                .setMessage("Are you sure you wish to skip these questions and register your account?")
-                .setCancelable(false)
-                .setPositiveButton("Yes",new DialogInterface.OnClickListener()
-                {
-                    public void onClick(DialogInterface dialog,int id)
-                    {
-                        Intent intent = new Intent(RegisterSecondPage.this, CurrentMusic.class);
-                        intent.putExtra("UserID", UserID);
-                        startActivity(intent);
-                    }
-                })
-                .setNegativeButton("No",new DialogInterface.OnClickListener()
-                {
-                    public void onClick(DialogInterface dialog,int id)
-                    {
-                        dialog.cancel();
-                    }
-                });
-        AlertDialog alertDialog = alertDialogBuilder.create();
-        alertDialog.show();
-    }
+//    public void button_Skip(View view)
+//    {
+//        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+//        alertDialogBuilder.setTitle("Confirm skip");
+//        alertDialogBuilder
+//                .setMessage("Are you sure you wish to skip these questions and register your account?")
+//                .setCancelable(false)
+//                .setPositiveButton("Yes",new DialogInterface.OnClickListener()
+//                {
+//                    public void onClick(DialogInterface dialog,int id)
+//                    {
+//                        Intent intent = new Intent(RegisterSecondPage.this, CurrentMusic.class);
+//                        intent.putExtra("UserID", UserID);
+//                        startActivity(intent);
+//                    }
+//                })
+//                .setNegativeButton("No",new DialogInterface.OnClickListener()
+//                {
+//                    public void onClick(DialogInterface dialog,int id)
+//                    {
+//                        dialog.cancel();
+//                    }
+//                });
+//        AlertDialog alertDialog = alertDialogBuilder.create();
+//        alertDialog.show();
+//    }
 
     private boolean UpdateSecondPage()
     {
         //Convert the contents of the text boxes to strings
-        TextView PreferredPlatform = (TextView)findViewById(R.id.EditText_MusicApp);
-        TextView MusicQuestionOne = (TextView)findViewById(R.id.EditText_GeneralMood);
-        TextView MusicQuestionTwo = (TextView)findViewById(R.id.EditText_MusicListenQuestion);
-
-        String ThePreferredPlatform = PreferredPlatform.getText().toString();
-        String TheMusicQuestionOne = MusicQuestionOne.getText().toString();
-        String TheMusicQuestionTwo = MusicQuestionTwo.getText().toString();
-
-        //Get the gender
-        RadioButton MoodYes = (RadioButton)findViewById(R.id.RadioButton_MoodYes);
-        RadioButton MoodNo = (RadioButton)findViewById(R.id.RadioButton_MoodNo);
-
-        String TheMood = "";
-        if (MoodYes.isChecked())
-        {
-            TheMood = MoodYes.getText().toString();
-        }
-        else if(MoodNo.isChecked())
-        {
-            TheMood = MoodNo.getText().toString();
-        }
+//        TextView PreferredPlatform = (TextView)findViewById(R.id.EditText_);
+//        TextView MusicQuestionOne = (TextView)findViewById(R.id.EditText_GeneralMood);
+//        TextView MusicQuestionTwo = (TextView)findViewById(R.id.EditText_MusicListenQuestion);
+//
+//        String ThePreferredPlatform = PreferredPlatform.getText().toString();
+//        String TheMusicQuestionOne = MusicQuestionOne.getText().toString();
+//        String TheMusicQuestionTwo = MusicQuestionTwo.getText().toString();
+//
+//        //Get the gender
+//        RadioButton MoodYes = (RadioButton)findViewById(R.id.RadioButton_MoodYes);
+//        RadioButton MoodNo = (RadioButton)findViewById(R.id.RadioButton_MoodNo);
+//
+//        String TheMood = "";
+//        if (MoodYes.isChecked())
+//        {
+//            TheMood = MoodYes.getText().toString();
+//        }
+//        else if(MoodNo.isChecked())
+//        {
+//            TheMood = MoodNo.getText().toString();
+//        }
 
         //Update the user with the settings, return false if the update failed.
-        return RegisterFunctions.UpdateNewUserSecondPage(ThePreferredPlatform, TheMusicQuestionOne,
-                TheMusicQuestionTwo, TheMood, UserID);
+//        return RegisterFunctions.UpdateNewUserSecondPage(ThePreferredPlatform, TheMusicQuestionOne,
+//                TheMusicQuestionTwo, TheMood, UserID);
+        return true;
     }
 }

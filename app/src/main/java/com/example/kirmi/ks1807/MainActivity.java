@@ -55,19 +55,10 @@ public class MainActivity extends AppCompatActivity
     {
         if(ValidateLogin())
         {
-            Intent intent = new Intent(MainActivity.this, CurrentMusic.class);
+            Intent intent = new Intent(MainActivity.this, AccountDetails.class);
             intent.putExtra("UserID", UserID);
             startActivity(intent);
         }
-    }
-
-    public void button_LoginSpotify(View view)
-    {
-        AuthenticationRequest.Builder builder = new AuthenticationRequest.Builder(BackgroundService.CLIENT_ID,
-                AuthenticationResponse.Type.TOKEN, BackgroundService.REDIRECT_URI);
-        builder.setScopes(new String[]{"streaming"});
-        AuthenticationRequest request = builder.build();
-        AuthenticationClient.openLoginActivity(this, REQUEST_CODE, request);
     }
 
     @Override

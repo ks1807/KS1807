@@ -15,149 +15,10 @@
         android:textAlignment="center"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/EditText_MusicApp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/EditText_MusicApp"
-        android:layout_width="276dp"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/PreferredApp_Caption"
-        android:inputType="textPersonName"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toTopOf="@+id/Text_GeneralMood"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Text_Register" />
-
-    <TextView
-        android:id="@+id/Text_GeneralMood"
-        android:layout_width="match_parent"
-        android:layout_height="31dp"
-        android:text="@string/GeneralMoodQuestion_Caption"
-        android:textAlignment="center"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toTopOf="@+id/EditText_GeneralMood"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/EditText_MusicApp" />
-
-    <EditText
-        android:id="@+id/EditText_GeneralMood"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/MoodExamples_Caption"
-        android:inputType="textPersonName"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toTopOf="@+id/Text_MusicListenQuestion"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Text_GeneralMood" />
-
-    <TextView
-        android:id="@+id/Text_MusicListenQuestion"
-        android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:text="@string/MusicMoodQuestion_Caption"
-        android:textAlignment="center"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toTopOf="@+id/EditText_MusicListenQuestion"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/EditText_GeneralMood" />
-
-    <EditText
-        android:id="@+id/EditText_MusicListenQuestion"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/MoodExamples_Caption"
-        android:inputType="textPersonName"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toTopOf="@+id/Text_MusicImproveQuestion"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Text_MusicListenQuestion" />
-
-    <TextView
-        android:id="@+id/Text_MusicImproveQuestion"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/MusicImproveQuestion_Caption"
-        android:textAlignment="center"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toTopOf="@+id/RadioGroup_Mood"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/EditText_MusicListenQuestion" />
-
-    <RadioGroup
-        android:id="@+id/RadioGroup_Mood"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:checkedButton="@+id/RadioButton_MoodYes"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/btn_Submit"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Text_MusicImproveQuestion">
-
-        <RadioButton
-            android:id="@+id/RadioButton_MoodYes"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/Yes_Caption" />
-
-        <RadioButton
-            android:id="@+id/RadioButton_MoodNo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/No_Caption" />
-    </RadioGroup>
-
-    <Button
-        android:id="@+id/btn_Submit"
-        android:layout_width="197dp"
-        android:layout_height="45dp"
-        android:background="@drawable/registernow"
-        android:minHeight="10dp"
-        android:onClick="button_Next"
-        android:paddingBottom="10dp"
-        android:paddingTop="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/btn_Skip"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/RadioGroup_Mood" />
-
-    <Button
-        android:id="@+id/btn_Skip"
-        android:layout_width="89dp"
-        android:layout_height="45dp"
-        android:background="@drawable/skip"
-        android:minHeight="10dp"
-        android:onClick="button_Skip"
-        android:paddingBottom="10dp"
-        android:paddingTop="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_Submit" />
 
     <Button
         android:id="@+id/btn_BackRegister"
@@ -169,11 +30,86 @@
         android:onClick="button_Back"
         android:paddingBottom="10dp"
         android:paddingTop="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/EditText_MusicApp"
         app:layout_constraintEnd_toStartOf="@+id/Text_Register"
         app:layout_constraintHorizontal_bias="0.35"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.32" />
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/q2text"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:fontFamily="@font/roboto_medium"
+        android:text="TextView"
+        android:textColor="#ffffff"
+        app:layout_constraintBottom_toTopOf="@+id/q3text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinner" />
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="213dp"
+        android:layout_height="35dp"
+        app:layout_constraintBottom_toTopOf="@+id/q2text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/q1text" />
+
+    <TextView
+        android:id="@+id/q4text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto_medium"
+        android:text="TextView"
+        android:textColor="#ffffff"
+        app:layout_constraintBottom_toTopOf="@+id/btn_Submit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/q3text" />
+
+    <TextView
+        android:id="@+id/q3text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto_medium"
+        android:text="TextView"
+        android:textColor="#ffffff"
+        app:layout_constraintBottom_toTopOf="@+id/q4text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/q2text" />
+
+    <TextView
+        android:id="@+id/q1text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto_medium"
+        android:text="TextView"
+        android:textColor="#ffffff"
+        app:layout_constraintBottom_toTopOf="@+id/spinner"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Text_Register" />
+
+    <Button
+        android:id="@+id/btn_Submit"
+        android:layout_width="197dp"
+        android:layout_height="45dp"
+        android:background="@drawable/registernow"
+        android:minHeight="10dp"
+        android:onClick="button_Next"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/q4text" />
 
 </android.support.constraint.ConstraintLayout>

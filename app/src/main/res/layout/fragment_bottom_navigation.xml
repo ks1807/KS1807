@@ -7,67 +7,69 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:baselineAligned="false"
         android:orientation="horizontal"
-        android:layout_centerInParent="true"
-        android:baselineAligned="false">
+        android:background="@drawable/navbarback">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:orientation="vertical">
 
             <Button
                 android:id="@+id/btn_Home"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:contentDescription="@string/Home_Caption"
-                android:text="@string/Home_Caption"
-                android:layout_gravity="center"/>
+                android:layout_gravity="bottom"
+                android:background="@drawable/homebtnselected"/>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:layout_weight="1" >
+            android:layout_weight="1"
+            android:orientation="vertical">
 
             <Button
                 android:id="@+id/btn_Library"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
                 android:contentDescription="@string/Library_Caption"
-                android:text="@string/Library_Caption"
-                android:layout_gravity="center"/>
+                android:text="@string/Library_Caption" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:layout_weight="1" >
+            android:layout_weight="1"
+            android:orientation="vertical">
 
             <Button
                 android:id="@+id/btn_Profile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
                 android:contentDescription="@string/Profile_Caption"
-                android:text="@string/Profile_Caption"
-                android:layout_gravity="center"/>
+                android:text="@string/Profile_Caption" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:layout_weight="1" >
+            android:layout_weight="1"
+            android:orientation="vertical">
 
             <Button
                 android:id="@+id/btn_Settings"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
                 android:contentDescription="@string/Settings_Caption"
-                android:text="@string/Settings_Caption"
-                android:layout_gravity="center"/>
+                android:text="@string/Settings_Caption" />
         </LinearLayout>
     </LinearLayout>
 

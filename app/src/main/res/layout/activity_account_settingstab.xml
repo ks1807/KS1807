@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/text_EditRecommendations"
+        android:layout_width="299dp"
+        android:layout_height="29dp"
+        android:text="@string/RecommendationsSetting_Caption"
+        android:textAlignment="center"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toTopOf="@+id/toggleButton_AutoMakeRecommendations"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.508"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.72" />
+
+    <ToggleButton
+        android:id="@+id/toggleButton_AutoMakeRecommendations"
+        android:layout_width="156dp"
+        android:layout_height="wrap_content"
+        android:checked="true"
+        android:text="ToggleButton"
+        android:textOff="@string/No_Caption"
+        android:textOn="@string/Yes_Caption"
+        app:layout_constraintBottom_toTopOf="@+id/text_FrequencyOfMoodAlerts"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_EditRecommendations" />
+
+    <TextView
+        android:id="@+id/text_FrequencyOfMoodAlerts"
+        android:layout_width="273dp"
+        android:layout_height="28dp"
+        android:text="@string/MoodFrequencyAlertSettings_Caption"
+        android:textAlignment="center"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toTopOf="@+id/Layout_Spinner"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.505"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toggleButton_AutoMakeRecommendations" />
+
+    <LinearLayout
+        android:id="@+id/Layout_Spinner"
+        android:layout_width="206dp"
+        android:layout_height="40dp"
+        android:orientation="vertical"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp"
+        app:layout_constraintBottom_toTopOf="@+id/btn_SubmitSettings2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_FrequencyOfMoodAlerts">
+
+        <Spinner
+            android:id="@+id/Spinner_AlertFrequency"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:spinnerMode="dropdown" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_SubmitSettings2"
+        android:layout_width="138dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="200dp"
+        android:minHeight="10dp"
+        android:onClick="button_Submit"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        android:text="@string/Submit_Caption"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</android.support.constraint.ConstraintLayout>
