@@ -21,68 +21,68 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/q1text"
+        android:id="@+id/QuestionOne_Text"
         android:layout_width="280dp"
         android:layout_height="wrap_content"
         android:background="@drawable/q1"
         android:fontFamily="@font/roboto_medium"
         android:textColor="#ffffff"
-        app:layout_constraintBottom_toTopOf="@+id/spinner1"
+        app:layout_constraintBottom_toTopOf="@+id/QuestionOne_Spinner"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Text_Register" />
 
     <Spinner
-        android:id="@+id/spinner1"
+        android:id="@+id/QuestionOne_Spinner"
         android:layout_width="211dp"
         android:layout_height="40dp"
         android:background="@drawable/dropdown"
-        app:layout_constraintBottom_toTopOf="@+id/q2text"
+        app:layout_constraintBottom_toTopOf="@+id/QuestionTwo_Text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/q1text" />
+        app:layout_constraintTop_toBottomOf="@+id/QuestionOne_Text" />
 
     <TextView
-        android:id="@+id/q2text"
+        android:id="@+id/QuestionTwo_Text"
         android:layout_width="wrap_content"
         android:layout_height="44dp"
         android:background="@drawable/q2"
         android:fontFamily="@font/roboto_medium"
         android:textColor="#ffffff"
-        app:layout_constraintBottom_toTopOf="@+id/spinner2"
+        app:layout_constraintBottom_toTopOf="@+id/QuestionTwo_Spinner"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinner1" />
+        app:layout_constraintTop_toBottomOf="@+id/QuestionOne_Spinner" />
 
     <Spinner
-        android:id="@+id/spinner2"
+        android:id="@+id/QuestionTwo_Spinner"
         android:layout_width="211dp"
         android:layout_height="40dp"
         android:background="@drawable/dropdown"
-        app:layout_constraintBottom_toTopOf="@+id/q3text"
+        app:layout_constraintBottom_toTopOf="@+id/QuestionThree_Text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/q2text" />
+        app:layout_constraintTop_toBottomOf="@+id/QuestionTwo_Text" />
 
     <TextView
-        android:id="@+id/q4text"
+        android:id="@+id/QuestionFour_Text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/q4"
         android:fontFamily="@font/roboto_medium"
         android:textColor="#ffffff"
-        app:layout_constraintBottom_toTopOf="@+id/spinner4"
+        app:layout_constraintBottom_toTopOf="@+id/QuestionFour_Spinner"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinner3" />
+        app:layout_constraintTop_toBottomOf="@+id/QuestionThree_Spinner" />
 
     <Spinner
-        android:id="@+id/spinner4"
+        android:id="@+id/QuestionFour_Spinner"
         android:layout_width="211dp"
         android:layout_height="40dp"
         android:background="@drawable/dropdown"
@@ -90,31 +90,31 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/q4text" />
+        app:layout_constraintTop_toBottomOf="@+id/QuestionFour_Text" />
 
     <TextView
-        android:id="@+id/q3text"
+        android:id="@+id/QuestionThree_Text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/q3"
         android:fontFamily="@font/roboto_medium"
         android:textColor="#ffffff"
-        app:layout_constraintBottom_toTopOf="@+id/spinner3"
+        app:layout_constraintBottom_toTopOf="@+id/QuestionThree_Spinner"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinner2" />
+        app:layout_constraintTop_toBottomOf="@+id/QuestionTwo_Spinner" />
 
     <Spinner
-        android:id="@+id/spinner3"
+        android:id="@+id/QuestionThree_Spinner"
         android:layout_width="211dp"
         android:background="@drawable/dropdown"
         android:layout_height="40dp"
-        app:layout_constraintBottom_toTopOf="@+id/q4text"
+        app:layout_constraintBottom_toTopOf="@+id/QuestionFour_Text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/q3text" />
+        app:layout_constraintTop_toBottomOf="@+id/QuestionThree_Text" />
 
     <Button
         android:id="@+id/btn_BackRegister"
@@ -144,6 +144,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinner4" />
+        app:layout_constraintTop_toBottomOf="@+id/QuestionFour_Spinner" />
 
 </android.support.constraint.ConstraintLayout>

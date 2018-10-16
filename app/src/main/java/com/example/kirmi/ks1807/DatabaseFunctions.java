@@ -14,7 +14,7 @@ public class DatabaseFunctions
 {
     //Create the local database for storing user data and settings
     private static final String DBNAME = "MusicMentalHealthDB";
-    private static final int DB_VERSION = 13;
+    private static final int DB_VERSION = 14;
     private final DatabaseSchema DBSchema = new DatabaseSchema();
     private final ArrayList<String> Create_AllTables = DBSchema.CreateAllTables();
     private final ArrayList<String> Drop_AllTables = DBSchema.DropAllTables();
@@ -580,16 +580,17 @@ public class DatabaseFunctions
         }
     }
 
-    public boolean UpdateNewUserSecondPage(String PreferredPlatform, String MusicQuestionOne, String MusicQuestionTwo,
-                                 String MusicQuestionThree, String UserID)
+    public boolean UpdateNewUserSecondPage(String MusicQuestionOne, String MusicQuestionTwo,
+                                           String MusicQuestionThree, String MusicQuestionFour,
+                                           String UserID)
     {
         synchronized(this.db)
         {
             ContentValues UpdateNewUser = new ContentValues();
-            UpdateNewUser.put("PreferredPlatform", PreferredPlatform);
             UpdateNewUser.put("MusicQuestionOne", MusicQuestionOne);
             UpdateNewUser.put("MusicQuestionTwo", MusicQuestionTwo);
             UpdateNewUser.put("MusicQuestionThree", MusicQuestionThree);
+            UpdateNewUser.put("MusicQuestionFour", MusicQuestionFour);
 
             try
             {
