@@ -4,6 +4,7 @@ import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.PixelFormat;
 import android.os.Binder;
 import android.os.Build;
@@ -12,6 +13,7 @@ import android.app.Service;
 import android.content.Intent;
 import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v4.app.NotificationCompat;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -32,6 +34,7 @@ import com.spotify.android.appremote.api.error.SpotifyDisconnectedException;
 import com.spotify.android.appremote.api.error.UnsupportedFeatureVersionException;
 import com.spotify.android.appremote.api.error.UserNotAuthorizedException;
 import com.spotify.protocol.client.Subscription;
+import com.spotify.protocol.types.PlayerContext;
 import com.spotify.protocol.types.PlayerState;
 import com.spotify.protocol.types.Track;
 
@@ -71,7 +74,7 @@ public class BackgroundService extends Service
             SpotifyAppRemote.CONNECTOR.disconnect(spotifyAppRemote);
     }
 
-    public int OnStartCommand(Intent intent, int flags, int startId)
+    public int onStartCommand(Intent intent, int flags, int startId)
     {
         return START_STICKY;
     }
@@ -151,19 +154,34 @@ public class BackgroundService extends Service
     void connected()
     {
         //Music change detector
-        spotifyAppRemote.getPlayerApi()
-                .subscribeToPlayerState().setEventCallback(new Subscription.EventCallback<PlayerState>() {
+        spotifyAppRemote.getPlayerApi().subscribeToPlayerState().setEventCallback(new Subscription.EventCallback<PlayerState>() {
             public void onEvent(PlayerState playerState) {
-                if(!lastSong.equals(playerState.track.name)) {
-                    lastSong = playerState.track.name;
-                    //Create overlay
+                if(!lastSong.equals(playerState.track.uri)) {
+                    final CharSequence[] items = {
+                            new String(Character.toChars(0x1F603)) + "Happy",
+                            new String(Character.toChars(0x1F61F)) + "Sad",
+                            new String(Character.toChars(0x1F620)) + "Angry"};
+                    android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(getApplicationContext());
+                    builder.setTitle("How are you feeling?");
+                    builder.setItems(items, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            Toast.makeText(getApplicationContext(), "Selected " + items[i], Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    android.app.AlertDialog dialog = builder.create();
+                    dialog.setCanceledOnTouchOutside(false);
+                    dialog.setCancelable(false);
+                    dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY);
+                    dialog.show();
+
+                    final Track track = playerState.track;
+                    if (track != null) {
+                        Toast.makeText(t, track.name + " by " + track.artist.name,
+                                Toast.LENGTH_SHORT).show();
+                    }
+                    lastSong = playerState.track.uri;
                 }
-                /*final Track track = playerState.track;
-                if (track != null)
-                {
-                    Toast.makeText(t, track.name + " by " + track.artist.name,
-                            Toast.LENGTH_SHORT).show();
-                }*/
                 Log.d("playerstate", playerState.toString());
             }
         });
