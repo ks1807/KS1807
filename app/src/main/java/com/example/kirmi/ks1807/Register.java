@@ -7,8 +7,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.content.Context;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.RadioButton;
+import android.widget.Toast;
+
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -88,6 +91,27 @@ public class Register extends AppCompatActivity
         }
     }
 
+    public void button_RegisterNow(View view)
+    {
+        if (ValidateForm())
+        {
+
+            Intent intent = new Intent(Register.this, OtherPlatforms.class);
+
+            /*If the user has not been to this page before, use the value found in the DB,
+            otherwise just use the ID that was passed back.*/
+            if (BackUserID == null)
+            {
+                intent.putExtra("UserID", String.valueOf(UserID));
+            }
+            else
+            {
+                intent.putExtra("UserID", BackUserID);
+            }
+            startActivity(intent);
+        }
+    }
+
     //Buttons that switch the graphics of the gender radio buttons to indicate what is selected.
     public void RadioButtonMale(View view)
     {
@@ -98,6 +122,55 @@ public class Register extends AppCompatActivity
         GenderMale.setBackgroundResource(R.drawable.maleselected);
         GenderFemale.setBackgroundResource(R.drawable.femaleunselected);
         GenderOther.setBackgroundResource(R.drawable.otherunselected);
+    }
+
+    public void RadioButtonYesResearch(View view)
+    {
+        RadioButton yes1 = (RadioButton) findViewById(R.id.RadioButton_Yes1);
+        RadioButton no1 = (RadioButton) findViewById(R.id.RadioButton_No1);
+
+        yes1.setBackgroundResource(R.drawable.yesselected);
+        no1.setBackgroundResource(R.drawable.nounselected);
+
+        Toast.makeText(this, "Ethics Statement", Toast.LENGTH_SHORT).show();
+    }
+
+    public void RadioButtonNoResearch(View view)
+    {
+        RadioButton yes1 = (RadioButton) findViewById(R.id.RadioButton_Yes1);
+        RadioButton no1 = (RadioButton) findViewById(R.id.RadioButton_No1);
+
+        yes1.setBackgroundResource(R.drawable.yesunselected);
+        no1.setBackgroundResource(R.drawable.noselected);
+    }
+
+    public void RadioButtonYesMoreQues(View view)
+    {
+        RadioButton yes = (RadioButton) findViewById(R.id.RadioButton_Yes);
+        RadioButton no = (RadioButton) findViewById(R.id.RadioButton_No);
+        Button register = (Button) findViewById(R.id.btn_Submit);
+        Button next = (Button) findViewById(R.id.btn_Next);
+
+        yes.setBackgroundResource(R.drawable.yesselected);
+        no.setBackgroundResource(R.drawable.nounselected);
+
+        next.setVisibility(view.VISIBLE);
+        register.setVisibility(view.INVISIBLE);
+    }
+
+    public void RadioButtonNoMoreQues(View view)
+    {
+        RadioButton yes = (RadioButton) findViewById(R.id.RadioButton_Yes);
+        RadioButton no = (RadioButton) findViewById(R.id.RadioButton_No);
+
+        Button register = (Button) findViewById(R.id.btn_Submit);
+        Button next = (Button) findViewById(R.id.btn_Next);
+
+        yes.setBackgroundResource(R.drawable.yesunselected);
+        no.setBackgroundResource(R.drawable.noselected);
+
+        next.setVisibility(view.INVISIBLE);
+        register.setVisibility(view.VISIBLE);
     }
 
     public void RadioButtonFemale(View view)

@@ -10,7 +10,7 @@
     <LinearLayout
         android:id="@+id/Layout_MusicHistory"
         android:layout_width="0dp"
-        android:layout_height="435dp"
+        android:layout_height="0dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
@@ -138,9 +138,9 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:minHeight="5dp"
+                android:onClick="button_Play"
                 android:paddingBottom="5dp"
                 android:paddingTop="5dp"
-                android:onClick="button_Play"
                 android:text="@string/Play_Caption" />
 
             <Button
@@ -149,9 +149,9 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:minHeight="5dp"
+                android:onClick="button_Pause"
                 android:paddingBottom="5dp"
                 android:paddingTop="5dp"
-                android:onClick="button_Pause"
                 android:text="@string/Pause_Caption" />
 
             <Button
@@ -181,10 +181,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minHeight="10dp"
+            android:onClick="button_EditAccountDetails"
             android:paddingBottom="10dp"
             android:paddingTop="10dp"
-            android:text="@string/AccountDetails_Caption"
-            android:onClick="button_EditAccountDetails"/>
+            android:text="@string/AccountDetails_Caption" />
 
         <Button
             android:id="@+id/btn_Logout"
@@ -205,7 +205,7 @@
                 android:id="@+id/frame_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:animateLayoutChanges="true"/>
+                android:animateLayoutChanges="true" />
 
             <android.support.design.widget.BottomNavigationView
                 android:id="@+id/navigation"

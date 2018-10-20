@@ -12,16 +12,16 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
-import com.example.kirmi.ks1807.R;
 
-public class NavBarMain extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener{
+public class NavBarMain extends AppCompatActivity
+        implements BottomNavigationView.OnNavigationItemSelectedListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navbarmain);
 
-        BottomNavigationView nav = (BottomNavigationView) findViewById(R.id.bottom_nav);
+        BottomNavigationView nav = findViewById(R.id.bottom_nav);
         nav.setOnNavigationItemSelectedListener(this);
 
         loadFragment(new HomeFragment());

@@ -1,13 +1,273 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:orientation="vertical"
+    android:background="@drawable/backnightnature3">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Resources Page"
-        android:textStyle="bold"
-        android:layout_gravity="center"/>
+        android:orientation="vertical">
 
-</FrameLayout>
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="23dp" />
+
+        <TextView
+            android:id="@+id/text_resourcetitle"
+            android:layout_width="158dp"
+            android:layout_height="48dp"
+            android:layout_gravity="center"
+            android:background="@drawable/resourcetitle"
+            android:textSize="28sp"
+            android:textStyle="bold" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="23dp" />
+
+        <TextView
+            android:id="@+id/text_resq1"
+            android:layout_width="362dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:autoLink="web"
+            android:clickable="true"
+            android:focusable="true"
+            android:fontFamily="@font/roboto_medium"
+            android:linksClickable="true"
+            android:padding="10dp"
+            android:text="@string/resourceq1"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/text_resq2"
+            android:layout_width="362dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:autoLink="web"
+            android:clickable="true"
+            android:focusable="true"
+            android:fontFamily="@font/roboto_medium"
+            android:linksClickable="true"
+            android:padding="10dp"
+            android:text="@string/resourcesq2"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/text_resq3"
+            android:layout_width="362dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:autoLink="web"
+            android:clickable="true"
+            android:focusable="true"
+            android:fontFamily="@font/roboto_medium"
+            android:linksClickable="true"
+            android:padding="10dp"
+            android:text="@string/resourcesq3"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/text_resq4"
+            android:layout_width="363dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:autoLink="web"
+            android:clickable="true"
+            android:focusable="true"
+            android:fontFamily="@font/roboto_medium"
+            android:linksClickable="true"
+            android:padding="10dp"
+            android:text="@string/resourcesq4"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/text_resq5"
+            android:layout_width="363dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:autoLink="web"
+            android:clickable="true"
+            android:focusable="true"
+            android:fontFamily="@font/roboto_medium"
+            android:linksClickable="true"
+            android:padding="10dp"
+            android:text="@string/resourcesq5"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/text_resq6"
+            android:layout_width="362dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:autoLink="web"
+            android:clickable="true"
+            android:focusable="true"
+            android:fontFamily="@font/roboto_medium"
+            android:linksClickable="true"
+            android:padding="10dp"
+            android:singleLine="false"
+            android:text="@string/resourcesq6"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/text_resq6.1"
+            android:layout_width="318dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:autoLink="web"
+            android:clickable="true"
+            android:focusable="true"
+            android:fontFamily="@font/roboto_medium"
+            android:linksClickable="true"
+            android:padding="10dp"
+            android:text="@string/resourcesq61"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/text_resq7"
+            android:layout_width="361dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:autoLink="web"
+            android:clickable="true"
+            android:focusable="true"
+            android:fontFamily="@font/roboto_medium"
+            android:linksClickable="true"
+            android:padding="10dp"
+            android:text="@string/resources7"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/text_resq8"
+            android:layout_width="359dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:autoLink="web"
+            android:clickable="true"
+            android:focusable="true"
+            android:fontFamily="@font/roboto_medium"
+            android:linksClickable="true"
+            android:padding="10dp"
+            android:text="@string/resources8"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/text_resq9"
+            android:layout_width="359dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="8dp"
+            android:fontFamily="@font/roboto_medium"
+            android:padding="10dp"
+            android:text="@string/resourcesq9"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/text_reslink2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:autoLink="web"
+                android:clickable="true"
+                android:focusable="true"
+                android:fontFamily="@font/roboto_medium"
+                android:linksClickable="true"
+                android:padding="10dp"
+                android:text="@string/blackDogLink"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+            <Space
+                android:layout_width="32dp"
+                android:layout_height="15dp"
+                android:layout_weight="0" />
+
+            <TextView
+                android:id="@+id/text_reslink1"
+                android:layout_width="92dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:autoLink="web"
+                android:clickable="true"
+                android:focusable="true"
+                android:fontFamily="@font/roboto_medium"
+                android:linksClickable="true"
+                android:padding="10dp"
+                android:text="@string/lifelineLink"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/text_reslink4"
+                android:layout_width="wrap_content"
+                android:layout_height="44dp"
+                android:layout_gravity="center"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="4dp"
+                android:autoLink="web"
+                android:clickable="true"
+                android:focusable="true"
+                android:fontFamily="@font/roboto_medium"
+                android:linksClickable="true"
+                android:padding="10dp"
+                android:text="@string/headspacelink"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+            <Space
+                android:layout_width="36dp"
+                android:layout_height="35dp"
+                android:layout_weight="0" />
+
+            <TextView
+                android:id="@+id/text_reslink3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:autoLink="web"
+                android:clickable="true"
+                android:focusable="true"
+                android:fontFamily="@font/roboto_medium"
+                android:linksClickable="true"
+                android:padding="10dp"
+                android:text="@string/beyoundBluelink"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

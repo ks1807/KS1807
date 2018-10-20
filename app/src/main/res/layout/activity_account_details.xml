@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AccountDetails">
+    tools:context=".AccountDetails"
+    android:background="@drawable/backnightnature3">
 
     <LinearLayout
         android:id="@+id/Layout_AccountDetails"

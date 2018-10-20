@@ -4,18 +4,26 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class RegisterSecondPage extends AppCompatActivity
 {
     private final Context context = this;
+    final CommonFunctions Common = new CommonFunctions();
     private DatabaseFunctions RegisterFunctions;
     String UserID = "";
+    Spinner s1, s2, s3, s4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -27,6 +35,22 @@ public class RegisterSecondPage extends AppCompatActivity
         //Get the UserID for this login session.
         Intent intent = getIntent();
         UserID = intent.getStringExtra("UserID");
+
+        s1 = (Spinner) findViewById(R.id.spinner1);
+        s2 = (Spinner) findViewById(R.id.spinner2);
+        s3 = (Spinner) findViewById(R.id.spinner3);
+        s4 = (Spinner) findViewById(R.id.spinner4);
+
+        ArrayAdapter<CharSequence> adapter1 = ArrayAdapter.createFromResource(this, R.array.spinner1ques,
+                R.layout.spinner_item);
+
+        adapter1.setDropDownViewResource(R.layout.spinner_item);
+        s1.setAdapter(adapter1);
+        s2.setAdapter(adapter1);
+        s3.setAdapter(adapter1);
+        s4.setAdapter(adapter1);
+
+
     }
 
     //Confirm if the user wants to go back if the button is pressed.
@@ -58,7 +82,7 @@ public class RegisterSecondPage extends AppCompatActivity
         alertDialog.show();
     }
 
-    public void button_Next(View view)
+    public void button_RegisterNow2(View view)
     {
         if (UpdateSecondPage())
         {
@@ -85,34 +109,56 @@ public class RegisterSecondPage extends AppCompatActivity
         }
     }
 
+//    public void button_Skip(View view)
+//    {
+//        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+//        alertDialogBuilder.setTitle("Confirm skip");
+//        alertDialogBuilder
+//                .setMessage("Are you sure you wish to skip these questions and register your account?")
+//                .setCancelable(false)
+//                .setPositiveButton("Yes",new DialogInterface.OnClickListener()
+//                {
+//                    public void onClick(DialogInterface dialog,int id)
+//                    {
+//                        Intent intent = new Intent(RegisterSecondPage.this, CurrentMusic.class);
+//                        intent.putExtra("UserID", UserID);
+//                        startActivity(intent);
+//                    }
+//                })
+//                .setNegativeButton("No",new DialogInterface.OnClickListener()
+//                {
+//                    public void onClick(DialogInterface dialog,int id)
+//                    {
+//                        dialog.cancel();
+//                    }
+//                });
+//        AlertDialog alertDialog = alertDialogBuilder.create();
+//        alertDialog.show();
+//    }
+
     private boolean UpdateSecondPage()
     {
-        //Convert Spinner contents to strings
-        Spinner MusicQuestionOne = (Spinner) findViewById(R.id.QuestionOne_Spinner);
-        Spinner MusicQuestionTwo = (Spinner) findViewById(R.id.QuestionTwo_Spinner);
-        Spinner MusicQuestionThree = (Spinner) findViewById(R.id.QuestionThree_Spinner);
-        Spinner MusicQuestionFour = (Spinner) findViewById(R.id.QuestionFour_Spinner);
 
         String TheMusicQuestionOne = "";
         String TheMusicQuestionTwo = "";
         String TheMusicQuestionThree = "";
         String TheMusicQuestionFour = "";
 
-        if (MusicQuestionOne.getSelectedItem() != null)
+        if (s1.getSelectedItem() != null)
         {
-            TheMusicQuestionOne = MusicQuestionOne.getSelectedItem().toString();
+            TheMusicQuestionOne = s1.getSelectedItem().toString();
         }
-        if (MusicQuestionTwo.getSelectedItem() != null)
+        if (s2.getSelectedItem() != null)
         {
-            TheMusicQuestionTwo = MusicQuestionTwo.getSelectedItem().toString();
+            TheMusicQuestionTwo = s2.getSelectedItem().toString();
         }
-        if (MusicQuestionThree.getSelectedItem() != null)
+        if (s3.getSelectedItem() != null)
         {
-            TheMusicQuestionThree = MusicQuestionThree.getSelectedItem().toString();
+            TheMusicQuestionThree = s3.getSelectedItem().toString();
         }
-        if (MusicQuestionFour.getSelectedItem() != null)
+        if (s4.getSelectedItem() != null)
         {
-            TheMusicQuestionFour = MusicQuestionFour.getSelectedItem().toString();
+            TheMusicQuestionFour = s4.getSelectedItem().toString();
         }
 
         //Update the user with the settings, return false if the update failed.

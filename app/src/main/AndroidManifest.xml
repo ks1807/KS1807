@@ -61,7 +61,9 @@
         <activity android:name=".RegisterSecondPage" />
         <activity android:name=".MusicPlaylists" />
         <activity android:name=".ThePlayList" />
+        <activity android:name=".OtherPlatforms"/>
         <activity android:name=".Settings" />
+        <activity android:name=".NavBarMain" />
         <activity android:name=".AccountDetails" />
     </application>
 </manifest>

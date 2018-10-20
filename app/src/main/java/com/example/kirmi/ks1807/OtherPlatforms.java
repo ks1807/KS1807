@@ -22,12 +22,12 @@ public class OtherPlatforms extends AppCompatActivity {
     }
 
     public void button_back(View view) {
-        Intent intent = new Intent(OtherPlatforms.this, MainActivity.class);
+        Intent intent = new Intent(OtherPlatforms.this, RegisterSecondPage.class);
         startActivity(intent);
     }
 
-    public void button_go(View view) {
-        Intent intent = new Intent(OtherPlatforms.this, AccountDetails.class);
+    public void button_connect(View view) {
+        Intent intent = new Intent(OtherPlatforms.this, NavBarMain.class);
         startActivity(intent);
     }
 
