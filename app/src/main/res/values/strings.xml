@@ -5,6 +5,18 @@
         <item>Often</item>
         <item>Almost always</item>
     </string-array>
+
+    <string-array name="profileoptions">
+        <item>Edit</item>
+        <item>Change Password</item>
+    </string-array>
+    
+    <string-array name="trackalertoptions">
+        <item>Once every track</item>
+        <item>Once every 2 tracks</item>
+        <!--....-->
+    </string-array>
+
     <string name="app_name">KS1807</string>
     <string name="LandingCaption">Music for Mental Health</string>
     <string name="LoginCaption">Login to your account below</string>
@@ -64,7 +76,7 @@
     <string name="AddToPlayList_Caption">Add Track to this Playlist</string>
     <string name="Settings_Caption">Settings</string>
     <string name="RecommendationsSetting_Caption">Automatically Make Music Recommendations</string>
-    <string name="MoodFrequencyAlertSettings_Caption">How often do you want to receive alerts?</string>
+    <string name="MoodFrequencyAlertSettings_Caption">How often would you like to receive alerts?</string>
     <string name="AlertFrequencyEveryTrack_Caption">Per Track</string>
     <string name="AlertFrequencyFifteenMinutes_Caption">15 Minutes</string>
     <string name="Every_Caption">Every...</string>

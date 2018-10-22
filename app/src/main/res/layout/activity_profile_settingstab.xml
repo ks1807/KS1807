@@ -13,7 +13,31 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="right"
+                android:orientation="horizontal">
+
+
+                <Button
+                    android:id="@+id/btn_Options"
+                    android:layout_width="5dp"
+                    android:layout_height="24dp"
+                    android:layout_weight="0"
+                    android:background="@drawable/dots" />
+
+                <Space
+                    android:layout_width="30dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0" />
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="24dp" />
 
             <EditText
                 android:id="@+id/editText_EditFirstName"
@@ -24,6 +48,7 @@
                 android:ems="10"
                 android:inputType="textPersonName"
                 android:paddingLeft="50dp"
+                android:enabled="false"
                 android:textSize="14sp" />
 
             <Space
@@ -37,6 +62,7 @@
                 android:layout_gravity="center_horizontal"
                 android:background="@drawable/settingslastname"
                 android:ems="10"
+                android:enabled="false"
                 android:inputType="textPersonName"
                 android:paddingLeft="50dp"
                 android:textSize="14sp" />
@@ -52,6 +78,7 @@
                 android:layout_gravity="center_horizontal"
                 android:background="@drawable/settingsemail"
                 android:ems="10"
+                android:enabled="false"
                 android:inputType="textEmailAddress"
                 android:paddingLeft="50dp"
                 android:textSize="14sp" />
@@ -67,6 +94,7 @@
                 android:layout_gravity="center_horizontal"
                 android:background="@drawable/settingsage"
                 android:ems="10"
+                android:enabled="false"
                 android:inputType="date"
                 android:paddingLeft="50dp"
                 android:textSize="14sp" />
@@ -91,7 +119,8 @@
                     android:layout_weight="1"
                     android:button="@null"
                     android:paddingStart="10dp"
-                    android:paddingEnd="10dp" />
+                    android:paddingEnd="10dp"
+                    android:enabled="false"/>
 
                 <RadioButton
                     android:id="@+id/RadioButton_EditMale"
@@ -100,7 +129,8 @@
                     android:layout_weight="1"
                     android:background="@drawable/settingsmaleselected"
                     android:button="@null"
-                    android:onClick="SettingsRadioButtonMale" />
+                    android:onClick="SettingsRadioButtonMale"
+                    android:enabled="false"/>
 
                 <RadioButton
                     android:id="@+id/RadioButton_EditFemale"
@@ -109,7 +139,8 @@
                     android:layout_weight="1"
                     android:background="@drawable/settingsfemaleunselected"
                     android:button="@null"
-                    android:onClick="SettingsRadioButtonFemale" />
+                    android:onClick="SettingsRadioButtonFemale"
+                    android:enabled="false"/>
 
                 <RadioButton
                     android:id="@+id/RadioButton_EditOther"
@@ -118,12 +149,13 @@
                     android:layout_weight="1"
                     android:background="@drawable/settingsotherunselected"
                     android:button="@null"
-                    android:onClick="SettingsRadioButtonOther" />
+                    android:onClick="SettingsRadioButtonOther"
+                    android:enabled="false"/>
             </RadioGroup>
 
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="39dp" />
+                android:layout_height="20dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"

@@ -50,7 +50,6 @@ public class RegisterSecondPage extends AppCompatActivity
         s3.setAdapter(adapter1);
         s4.setAdapter(adapter1);
 
-
     }
 
     //Confirm if the user wants to go back if the button is pressed.
