@@ -421,6 +421,8 @@ public class Register extends AppCompatActivity
         }
         else if(ValidationSuccessful)
         {
+            NewPass = Common.EncryptPassword(NewPass);
+
             //Update the record. If it fails then fail the validation as well.
             ValidationSuccessful = RegisterFunctions.UpdateNewUser(FName, LName, TheEmail,
                     TheDateOfBirth, TheGender, NewPass, BackUserID);

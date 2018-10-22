@@ -4,6 +4,8 @@ import java.util.regex.Pattern;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.text.ParseException;
+import java.security.NoSuchAlgorithmException;
+import java.security.MessageDigest;
 
 //Functions used by the entire application.
 public class CommonFunctions
@@ -26,6 +28,41 @@ public class CommonFunctions
     public String GetEmojiByUnicode(int unicode)
     {
         return new String(Character.toChars(unicode));
+    }
+
+    /*Code for this algorithm derived from:
+    https://howtodoinjava.com/security/how-to-generate-secure-password-hash-md5-sha-pbkdf2-bcrypt-examples/
+    */
+    public String EncryptPassword(String Password)
+    {
+        String EncryptedPassword = "";
+        try
+        {
+            //Using MD5 Message-Digest Algorithm to encrypt the password.
+            MessageDigest Digest = MessageDigest.getInstance("MD5");
+
+            //Add password bytes to digest.
+            Digest.update(Password.getBytes());
+
+            //Get the hash's bytes.
+            byte[] Bytes = Digest.digest();
+
+            //Convert these decimal bytes to hexadecimal format.
+            StringBuilder StringToBuild = new StringBuilder();
+
+            for(int i=0; i< Bytes.length ;i++)
+            {
+                StringToBuild.append(Integer.toString((Bytes[i] & 0xff) +
+                        0x100, 16).substring(1));
+            }
+
+            EncryptedPassword = StringToBuild.toString();
+        }
+        catch (NoSuchAlgorithmException e)
+        {
+            e.printStackTrace();
+        }
+        return EncryptedPassword;
     }
 
     //Checks if a string is a number or not.
