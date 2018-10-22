@@ -14,7 +14,7 @@ public class DatabaseFunctions
 {
     //Create the local database for storing user data and settings
     private static final String DBNAME = "MusicMentalHealthDB";
-    private static final int DB_VERSION = 14;
+    private static final int DB_VERSION = 15;
     private final DatabaseSchema DBSchema = new DatabaseSchema();
     private final ArrayList<String> Create_AllTables = DBSchema.CreateAllTables();
     private final ArrayList<String> Drop_AllTables = DBSchema.DropAllTables();

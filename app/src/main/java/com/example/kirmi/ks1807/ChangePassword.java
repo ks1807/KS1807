@@ -192,6 +192,8 @@ public class ChangePassword extends AppCompatActivity
 
         if(ValidationSuccessful)
         {
+            NewPass = PasswordFunctions.EncryptPassword(NewPass);
+
             //Update the password. If it fails then fail the validation as well.
             ValidationSuccessful = PasswordDatabaseFunctions.UpdateNewPassword(UserID, NewPass);
         }
