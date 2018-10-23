@@ -14,7 +14,7 @@
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="15dp" />
+            android:layout_height="2dp" />
 
         <TextView
             android:id="@+id/text_EditRecommendations"
@@ -32,12 +32,14 @@
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:layout_gravity="center_horizontal"
+            android:checkedButton="@id/RadioButton_SettingsYes"
             android:orientation="horizontal">
 
             <RadioButton
                 android:id="@+id/RadioButton_SettingsYes"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:background="@drawable/settingsyesselected"
                 android:layout_weight="1"
                 android:button="@null" />
 
@@ -50,6 +52,7 @@
                 android:id="@+id/RadioButton_SettingsNo"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:background="@drawable/settingnonormal"
                 android:layout_weight="1"
                 android:button="@null" />
         </RadioGroup>
@@ -90,7 +93,7 @@
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="95dp" />
+            android:layout_height="67dp" />
 
         <Button
             android:id="@+id/btn_SubmitSettings"

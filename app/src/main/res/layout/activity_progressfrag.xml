@@ -10,13 +10,24 @@
 
 
         <TextView
-            android:id="@+id/textView2"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:id="@+id/text_progresstitle"
+            android:layout_width="176dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/progresstitle"
             android:fontFamily="@font/roboto_black"
-            android:text="Progress"
             android:textAlignment="center"
             android:textColor="@color/white"
             android:textSize="36sp" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="34dp" />
+
+        <com.jjoe64.graphview.GraphView
+            android:id="@+id/graph"
+            android:layout_width="match_parent"
+            android:layout_height="400dp" />
+
     </LinearLayout>
 </ScrollView>

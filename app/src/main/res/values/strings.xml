@@ -105,19 +105,19 @@
     <string name="nav_settings_title">Settings</string>
     <string name="moremoodques">Want to tell us more about your mood?</string>
     <string name="researchques">Want to help with our research?</string>
-    <string name="resourceq1"><a href="https://www.beyondblue.org.au/personal-best/pillar/in-focus/depression-vs-sadness">1. What\'s the differece between depression and sadness?</a></string>
-    <string name="resourcesq2"><a href="https://www.beyondblue.org.au/personal-best/pillar/wellbeing/why-listening-to-music-makes-you-feel-good">2. How does music help?</a></string>
-    <string name="resourcesq3"><a href="https://theconversation.com/sad-music-and-depression-does-it-help-66123">3. Can music ever be harmful?</a></string>
-    <string name="resourcesq4"><a href="https://www.beyondblue.org.au/personal-best/pillar/supporting-yourself/exercise-your-way-to-good-mental-health">4. How does exercise help?</a></string>
-    <string name="resourcesq5"><a href="https://greatergood.berkeley.edu/article/item/three_ways_mindfulness_reduces_depression">5. What is mindfulness and how does it help?</a></string>
+    <string name="resourceq1"><a href="https://www.beyondblue.org.au/personal-best/pillar/in-focus/depression-vs-sadness">1. <u>What\'s the differece between depression and sadness?</u></a></string>
+    <string name="resourcesq2"><a href="https://www.beyondblue.org.au/personal-best/pillar/wellbeing/why-listening-to-music-makes-you-feel-good">2. <u>How does music help?</u></a></string>
+    <string name="resourcesq3"><a href="https://theconversation.com/sad-music-and-depression-does-it-help-66123">3. <u>Can music ever be harmful?</u></a></string>
+    <string name="resourcesq4"><a href="https://www.beyondblue.org.au/personal-best/pillar/supporting-yourself/exercise-your-way-to-good-mental-health">4. <u>How does exercise help?</u></a></string>
+    <string name="resourcesq5"><a href="https://greatergood.berkeley.edu/article/item/three_ways_mindfulness_reduces_depression">5. <u>What is mindfulness and how does it help?</u></a></string>
     <string name="resourcesq60">6. Other people\'s stories:</string>
-    <string name="resourcesq6"><a href="https://www.glamourmagazine.co.uk/gallery/celebrities-talking-about-depression-anxiety-and-mental-health">-> Celebrities talk about depression and anxiety</a></string>
-    <string name="resourcesq61"><a href="">-> Want to share your story about depression or anxiety and what has helped you?</a></string>
-    <string name="resources7"><a href="https://www.lifeline.org.au/get-help/online-services/crisis-chat">7. In crisis? Talk to somebody right now</a></string>
-    <string name="resources8"><a href="https://headspace.org.au/headspace-centres/">8. Where can I get help near me?</a></string>
+    <string name="resourcesq6"><a href="https://www.glamourmagazine.co.uk/gallery/celebrities-talking-about-depression-anxiety-and-mental-health">-> <u>Celebrities talk about depression and anxiety</u></a></string>
+    <string name="resourcesq61"><a href="">-> <u>Want to share your story about depression or anxiety and what has helped you?</u></a></string>
+    <string name="resources7"><a href="https://www.lifeline.org.au/get-help/online-services/crisis-chat">7. <u>In crisis? Talk to somebody right now</u></a></string>
+    <string name="resources8"><a href="https://headspace.org.au/headspace-centres/">8. <u>Where can I get help near me?</u></a></string>
     <string name="resourcesq9">9. Where can I get more information?</string>
-    <string name="beyoundBluelink"><a href="https://www.beyondblue.org.au/">-> Beyond Blue</a></string>
-    <string name="headspacelink"><a href="https://headspace.org.au/">-> Headspace</a></string>
-    <string name="lifelineLink"><a href="https://www.lifeline.org.au/">-> Lifeline</a></string>
-    <string name="blackDogLink"><a href="https://www.blackdoginstitute.org.au/">-> Black Dog Institute</a></string>
+    <string name="beyoundBluelink"><a href="https://www.beyondblue.org.au/">-> <u>Beyond Blue</u></a></string>
+    <string name="headspacelink"><a href="https://headspace.org.au/">-> <u>Headspace</u></a></string>
+    <string name="lifelineLink"><a href="https://www.lifeline.org.au/">-> <u>Lifeline</u></a></string>
+    <string name="blackDogLink"><a href="https://www.blackdoginstitute.org.au/">-> <u>Black Dog Institute</u></a></string>
 </resources>

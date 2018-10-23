@@ -144,7 +144,6 @@ public class MainActivity extends AppCompatActivity
         //Validate the login and get the UserID. Don't run this if validation failed earlier.
         if(ValidationSuccessful)
         {
-            ThePassword = Common.EncryptPassword(ThePassword);
             UserID = UserFunctions.VerifyLogin(TheEmailAddress, ThePassword);
         }
 
