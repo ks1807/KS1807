@@ -14,7 +14,7 @@
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="2dp" />
+            android:layout_height="15dp" />
 
         <TextView
             android:id="@+id/text_EditRecommendations"
@@ -25,7 +25,7 @@
             android:text="@string/RecommendationsSetting_Caption"
             android:textAlignment="center"
             android:textColor="@color/white"
-            android:textSize="16sp" />
+            android:textSize="18sp" />
 
         <RadioGroup
             android:id="@+id/RadioGroup_Recommendation"
@@ -70,7 +70,7 @@
             android:text="@string/MoodFrequencyAlertSettings_Caption"
             android:textAlignment="center"
             android:textColor="@color/white"
-            android:textSize="16sp" />
+            android:textSize="18sp" />
 
         <LinearLayout
             android:id="@+id/Layout_Spinner"

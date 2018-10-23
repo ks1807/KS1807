@@ -202,6 +202,7 @@ public class ProfileSettings extends Fragment {
                                                     public void onClick(DialogInterface dialog,int id)
                                                     {
                                                         options.setVisibility(View.VISIBLE);
+                                                        updatepass.setVisibility(View.GONE);
 
                                                         changepassback.setVisibility(View.INVISIBLE);
                                                         userdetails.setVisibility(View.VISIBLE);
