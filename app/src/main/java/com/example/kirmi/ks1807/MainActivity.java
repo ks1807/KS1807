@@ -63,6 +63,7 @@ public class MainActivity extends AppCompatActivity
             Intent intent = new Intent(MainActivity.this, NavBarMain.class);
             intent.putExtra("UserID", UserID);
             startActivity(intent);
+
         }
     }
 

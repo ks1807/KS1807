@@ -1,6 +1,7 @@
 package com.example.kirmi.ks1807;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -14,20 +15,27 @@ import static com.spotify.sdk.android.authentication.LoginActivity.REQUEST_CODE;
 
 public class OtherPlatforms extends AppCompatActivity {
 
+    String UserID = "";
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_platforms);
 
+        Intent intent = getIntent();
+        UserID = intent.getStringExtra("UserID");
+
     }
 
     public void button_back(View view) {
         Intent intent = new Intent(OtherPlatforms.this, RegisterSecondPage.class);
+        intent.putExtra("UserID", UserID);
         startActivity(intent);
     }
 
     public void button_connect(View view) {
         Intent intent = new Intent(OtherPlatforms.this, NavBarMain.class);
+        intent.putExtra("UserID", UserID);
         startActivity(intent);
     }
 
