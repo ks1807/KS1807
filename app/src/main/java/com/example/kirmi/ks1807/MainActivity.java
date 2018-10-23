@@ -22,7 +22,6 @@ public class MainActivity extends AppCompatActivity
 {
     private final Context context = this;
     private DatabaseFunctions UserFunctions;
-    final CommonFunctions Common = new CommonFunctions();
     String UserID = "";
 
     @Override
