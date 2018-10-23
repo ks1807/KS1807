@@ -22,7 +22,6 @@ public class MainActivity extends AppCompatActivity
 {
     private final Context context = this;
     private DatabaseFunctions UserFunctions;
-    final CommonFunctions Common = new CommonFunctions();
     String UserID = "";
 
     @Override
@@ -143,7 +142,6 @@ public class MainActivity extends AppCompatActivity
         //Validate the login and get the UserID. Don't run this if validation failed earlier.
         if(ValidationSuccessful)
         {
-            ThePassword = Common.EncryptPassword(ThePassword);
             UserID = UserFunctions.VerifyLogin(TheEmailAddress, ThePassword);
         }
 
