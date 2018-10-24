@@ -81,14 +81,6 @@ public class DatabaseFunctions
         context.deleteDatabase(DBNAME);
     }
 
-    private String EncryptPassword(String UserPassword)
-    {
-        //Need to figure out how to do this.
-        //Might have to do this on the server side.
-
-        return UserPassword;
-    }
-
     public String[] GetMusicHistory(String UserID)
     {
         ArrayList<String> UserDetails = new ArrayList<String>();
@@ -399,7 +391,6 @@ public class DatabaseFunctions
                                  String Gender, String UserPassword)
     {
         long ID = -1;
-        UserPassword = EncryptPassword(UserPassword);
 
         //Make the Email Address all lowercase to ensure case insensitive search.
         EmailAddress = EmailAddress.toLowerCase();
@@ -475,8 +466,6 @@ public class DatabaseFunctions
 
     public boolean UpdateNewPassword (String UserID, String UserPassword)
     {
-        UserPassword = EncryptPassword(UserPassword);
-
         synchronized (this.db)
         {
             ContentValues NewPassword = new ContentValues();
@@ -541,8 +530,6 @@ public class DatabaseFunctions
                                  String DateOfBirth, String Gender, String UserPassword,
                                  String UserID)
     {
-        UserPassword = EncryptPassword(UserPassword);
-
         synchronized(this.db)
         {
             ContentValues UpdateNewUser = new ContentValues();
@@ -637,8 +624,6 @@ public class DatabaseFunctions
         {
             return "";
         }
-
-        UserPassword = EncryptPassword(UserPassword);
         String StoredPassword = GetUserPassword(UserID);
 
         //If password is wrong, don't return an ID.
@@ -654,8 +639,6 @@ public class DatabaseFunctions
 
     public boolean VerifyPassword(String UserID, String UserPassword)
     {
-        UserPassword = EncryptPassword(UserPassword);
-
         String StoredPassword = GetUserPassword(UserID);
 
         if (UserPassword.equals(StoredPassword))
