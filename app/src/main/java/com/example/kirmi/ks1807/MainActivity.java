@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity
 {
     private final Context context = this;
     private DatabaseFunctions UserFunctions;
+    final CommonFunctions PasswordFunctions = new CommonFunctions();
     String UserID = "";
 
     @Override
@@ -77,7 +78,7 @@ public class MainActivity extends AppCompatActivity
                 case TOKEN:
                     // Handle successful response
                     Toast.makeText(this, "Got token: " + response.getAccessToken(), Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(this, NavBarMain.class));
+                    startActivity(new Intent(this, CurrentMusic.class));
                     break;
                 case ERROR:
                     // Handle error response
@@ -123,7 +124,6 @@ public class MainActivity extends AppCompatActivity
 
         if (TheEmailAddress.equals(""))
         {
-            Toast.makeText(this, "email empty", Toast.LENGTH_SHORT).show();
             ValidationSuccessful = false;
             InvalidMessage = "You need to enter an Email Address to login.";
             alertDialogBuilder.setMessage(InvalidMessage);
@@ -133,7 +133,6 @@ public class MainActivity extends AppCompatActivity
 
         if (ThePassword.equals("") && ValidationSuccessful)
         {
-            Toast.makeText(this, "password empty", Toast.LENGTH_SHORT).show();
             ValidationSuccessful = false;
             InvalidMessage = "You need to enter your password to login.";
             alertDialogBuilder.setMessage(InvalidMessage);
@@ -144,13 +143,10 @@ public class MainActivity extends AppCompatActivity
         //Validate the login and get the UserID. Don't run this if validation failed earlier.
         if(ValidationSuccessful)
         {
-            Toast.makeText(this, "validation in", Toast.LENGTH_SHORT).show();
+            ThePassword = PasswordFunctions.EncryptPassword(ThePassword);
             Global.UserID = UserFunctions.VerifyLogin(TheEmailAddress, ThePassword);
             UserID = Global.UserID;
-        } else {
-            Toast.makeText(this, "false" , Toast.LENGTH_SHORT).show();
         }
-
 
         //Blank ID means either the email or password were incorrect.
         if (UserID.equals("") && ValidationSuccessful)
