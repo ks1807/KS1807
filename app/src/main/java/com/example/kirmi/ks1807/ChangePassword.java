@@ -1,4 +1,4 @@
-package com.example.kirmi.ks1807;
+/*package com.example.kirmi.ks1807;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -172,7 +172,8 @@ public class ChangePassword extends AppCompatActivity
             alertDialog.show();
         }
 
-        if (!PasswordDatabaseFunctions.VerifyPassword(UserID, OldPass) && ValidationSuccessful)
+        String TestPassword = PasswordFunctions.EncryptPassword(OldPass);
+        if (!PasswordDatabaseFunctions.VerifyPassword(UserID, TestPassword) && ValidationSuccessful)
         {
             ValidationSuccessful = false;
             InvalidMessage = "The old password you have specified does not match your current password.";
@@ -201,3 +202,4 @@ public class ChangePassword extends AppCompatActivity
         return ValidationSuccessful;
     }
 }
+*/

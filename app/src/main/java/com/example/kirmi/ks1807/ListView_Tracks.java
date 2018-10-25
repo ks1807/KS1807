@@ -1,4 +1,4 @@
-package com.example.kirmi.ks1807;
+/*package com.example.kirmi.ks1807;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -33,6 +33,7 @@ public class ListView_Tracks extends ArrayAdapter<String>
         rowView.setFocusable(false);
 
         /*Hidden TrackID Field.*/
+/*
         TextView TextView_TrackID = (TextView) rowView.findViewById(R.id.Text_TrackID);
         TextView_TrackID.setText(TrackID[position]);
 
@@ -91,3 +92,4 @@ public class ListView_Tracks extends ArrayAdapter<String>
         return rowView;
     }
 }
+*/

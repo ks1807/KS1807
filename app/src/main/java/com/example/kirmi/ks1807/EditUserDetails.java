@@ -1,4 +1,4 @@
-package com.example.kirmi.ks1807;
+/*package com.example.kirmi.ks1807;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -182,6 +182,7 @@ public class EditUserDetails extends AppCompatActivity
 
         /*Make sure that the buttons have their image and checked status set to what the user
         put in the database*/
+/*
         if (Gender.equals("Male"))
         {
             GenderMale.setBackgroundResource(R.drawable.maleselected);
@@ -322,6 +323,7 @@ public class EditUserDetails extends AppCompatActivity
 
         /*Check if the email address is used by another user and also don't trigger validation if
         the user is not changing their address*/
+/*
         if (!UserFunctions.IsEmailAddressUnique(TheEmail) &&
                 !TheEmail.toLowerCase().equals(CurrentEmailAddress.toLowerCase())
                 && ValidationSuccessful)
@@ -395,4 +397,4 @@ public class EditUserDetails extends AppCompatActivity
 
         return ValidationSuccessful;
     }
-}
+}*/

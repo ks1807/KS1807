@@ -1,4 +1,4 @@
-package com.example.kirmi.ks1807;
+/*package com.example.kirmi.ks1807;
 
 import android.app.AlertDialog;
 import android.content.ComponentName;
@@ -135,6 +135,7 @@ public class CurrentMusic extends AppCompatActivity
 
         /*Check if the user has a prior history of listening to music through this app.
         If not then make the history fields invisible*/
+/*
         if (MusicDetails.length != 0)
         {
             //DisplayMusicHistory(MusicDetails);
@@ -243,4 +244,4 @@ public class CurrentMusic extends AppCompatActivity
         updateNames(playerState);
     }
 
-}
+}*/

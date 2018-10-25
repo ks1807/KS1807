@@ -1,4 +1,4 @@
-package com.example.kirmi.ks1807;
+/*package com.example.kirmi.ks1807;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -156,3 +156,4 @@ public class Settings extends AppCompatActivity
         SpinnerMoodFrequency.setSelection(SpinnerAdapter.getPosition(MoodFrequency));
     }
 }
+*/

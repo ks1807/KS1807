@@ -1,4 +1,4 @@
-package com.example.kirmi.ks1807;
+/*package com.example.kirmi.ks1807;
 import android.content.*;
 import android.view.*;
 import android.app.AlertDialog;
@@ -25,6 +25,7 @@ public class ListView_Playlists extends ArrayAdapter<String>
             rowView.setFocusable(false);
 
             /*Hidden PlayList Field.*/
+/*
             final TextView TextView_PlayListID = (TextView) rowView.findViewById(R.id.Text_PlaylistID);
             TextView_PlayListID.setText(PlayListID[position]);
 
@@ -105,4 +106,4 @@ public class ListView_Playlists extends ArrayAdapter<String>
 
             return rowView;
         }
-    }
+    }*/

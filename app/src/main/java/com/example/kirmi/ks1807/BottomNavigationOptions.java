@@ -1,4 +1,4 @@
-package com.example.kirmi.ks1807;
+/*package com.example.kirmi.ks1807;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -94,4 +94,4 @@ public class BottomNavigationOptions extends Fragment
             });
             return ActivityView;
         }
-}
+}*/

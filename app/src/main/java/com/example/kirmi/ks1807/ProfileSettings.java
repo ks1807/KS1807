@@ -490,7 +490,6 @@ public class ProfileSettings extends Fragment {
         String InvalidMessage = "";
 
         //Convert the contents of the text boxes to strings
-
         String OldPass = oldpass.getText().toString();
         String NewPass = newpass.getText().toString();
         String NewPassRepeat = newpassagain.getText().toString();
@@ -556,7 +555,8 @@ public class ProfileSettings extends Fragment {
             alertDialog.show();
         }
 
-        if (!UserFunctions.VerifyPassword(UserID, OldPass) && ValidationSuccessful)
+        String TestPassword = Common.EncryptPassword(OldPass);
+        if (!UserFunctions.VerifyPassword(UserID, TestPassword) && ValidationSuccessful)
         {
             ValidationSuccessful = false;
             InvalidMessage = "The old password you have specified does not match your current password.";
@@ -581,7 +581,6 @@ public class ProfileSettings extends Fragment {
             //Update the password. If it fails then fail the validation as well.
             ValidationSuccessful = UserFunctions.UpdateNewPassword(UserID, NewPass);
         }
-
         return ValidationSuccessful;
     }
 

@@ -1,4 +1,4 @@
-package com.example.kirmi.ks1807;
+/* package com.example.kirmi.ks1807;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -57,7 +57,7 @@ public class AccountDetails extends AppCompatActivity
         startActivity(intent);
     }
 
-    public void button_ChangePassword(View view)
+   public void button_ChangePassword(View view)
     {
         Intent intent = new Intent(AccountDetails.this, ChangePassword.class);
         intent.putExtra("UserID", UserID);
@@ -78,3 +78,4 @@ public class AccountDetails extends AppCompatActivity
         startActivity(intent);
     }
 }
+*/

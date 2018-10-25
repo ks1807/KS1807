@@ -1,4 +1,4 @@
-package com.example.kirmi.ks1807;
+/*package com.example.kirmi.ks1807;
 
 import android.content.Context;
 import android.content.Intent;
@@ -45,3 +45,4 @@ public class ThePlayList extends AppCompatActivity
         startActivity(intent);
     }
 }
+*/

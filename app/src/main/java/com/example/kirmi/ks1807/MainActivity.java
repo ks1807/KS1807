@@ -67,29 +67,6 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
-        super.onActivityResult(requestCode, resultCode, intent);
-        // Check if it's from spotify
-        if (requestCode == REQUEST_CODE) {
-            AuthenticationResponse response = AuthenticationClient.getResponse(resultCode, intent);
-            switch (response.getType()) {
-                // Response was successful and contains auth token
-                case TOKEN:
-                    // Handle successful response
-                    Toast.makeText(this, "Got token: " + response.getAccessToken(), Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(this, CurrentMusic.class));
-                    break;
-                case ERROR:
-                    // Handle error response
-                    Toast.makeText(this, response.getError(), Toast.LENGTH_SHORT).show();
-                    break;
-                    // Other cases, not sure what they are.
-                default:
-                    Toast.makeText(this, "An error occured, please try again", Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
 
     public void button_Register(View view)
     {
