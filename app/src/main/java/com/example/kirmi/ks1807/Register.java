@@ -465,6 +465,7 @@ public class Register extends AppCompatActivity
         already there*/
         if (ValidationSuccessful && (BackUserID == "" || BackUserID == null))
         {
+            NewPass = Common.EncryptPassword(NewPass);
             //Insert the record. If it fails then fail the validation as well.
             UserID = RegisterFunctions.InsertNewUser(FName, LName, TheEmail, TheDateOfBirth,
                     TheGender, NewPass);

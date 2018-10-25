@@ -556,7 +556,8 @@ public class ProfileSettings extends Fragment {
             alertDialog.show();
         }
 
-        if (!UserFunctions.VerifyPassword(UserID, OldPass) && ValidationSuccessful)
+        String TestPassword = Common.EncryptPassword(OldPass);
+        if (!UserFunctions.VerifyPassword(UserID, TestPassword) && ValidationSuccessful)
         {
             ValidationSuccessful = false;
             InvalidMessage = "The old password you have specified does not match your current password.";
