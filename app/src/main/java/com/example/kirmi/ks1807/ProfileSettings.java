@@ -54,7 +54,7 @@ public class ProfileSettings extends Fragment {
         UserID = Global.UserID;
         UserFunctions = new DatabaseFunctions(getContext());
 
-        //Connecting the elements from the view to the java variables
+
         userdetails = (LinearLayout)view.findViewById(R.id.user_details);
 
         firstN = (EditText)view.findViewById(R.id.editText_EditFirstName);
@@ -166,7 +166,7 @@ public class ProfileSettings extends Fragment {
                                         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
                                         alertDialogBuilder.setTitle("Confirm exit");
                                         alertDialogBuilder
-                                                .setMessage("Are you sure you wish to go back?")
+                                                .setMessage("Are you sure you wish to go back? All changes will be discarded.")
                                                 .setCancelable(false)
                                                 .setPositiveButton("Yes",new DialogInterface.OnClickListener()
                                                 {
@@ -206,7 +206,7 @@ public class ProfileSettings extends Fragment {
                                         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
                                         alertDialogBuilder.setTitle("Confirm exit");
                                         alertDialogBuilder
-                                                .setMessage("Are you sure you wish to go back?")
+                                                .setMessage("Are you sure you wish to go back? All changes will be discarded.")
                                                 .setCancelable(false)
                                                 .setPositiveButton("Yes",new DialogInterface.OnClickListener()
                                                 {
@@ -579,8 +579,10 @@ public class ProfileSettings extends Fragment {
             alertDialog.show();
         }
 
+        String TestPassword = Common.EncryptPassword(OldPass);
+
         //Checking id the old password entered here is the same as the one in the database
-        if (!UserFunctions.VerifyPassword(UserID, OldPass) && ValidationSuccessful)
+        if (!UserFunctions.VerifyPassword(UserID, TestPassword) && ValidationSuccessful)
         {
             ValidationSuccessful = false;
             InvalidMessage = "The old password you have specified does not match your current password.";
