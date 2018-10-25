@@ -22,7 +22,6 @@ import java.util.Date;
 public class Register extends AppCompatActivity
 {
     private final Context context = this;
-    final CommonFunctions Common = new CommonFunctions();
     private DatabaseFunctions RegisterFunctions;
 
     long UserID = -1;
@@ -287,7 +286,7 @@ public class Register extends AppCompatActivity
     private boolean ValidateForm()
     {
         boolean ValidationSuccessful = true;
-
+        final CommonFunctions Common = new CommonFunctions();
         String InvalidMessage = "";
 
         //Convert the contents of the text boxes to strings
@@ -381,6 +380,16 @@ public class Register extends AppCompatActivity
             alertDialog.show();
         }
 
+        if (!Common.ValidPassword(NewPass) && ValidationSuccessful)
+        {
+            ValidationSuccessful = false;
+            InvalidMessage = "Password must have at least 8 characters, have at least" +
+                    " one upper case, lower case letter, a number and a special character.";
+            alertDialogBuilder.setMessage(InvalidMessage);
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            alertDialog.show();
+        }
+
         //Check if both new passwords match.
         if (!NewPass.equals(NewPassRepeat) && ValidationSuccessful)
         {
@@ -393,7 +402,6 @@ public class Register extends AppCompatActivity
 
         if (!TheDateOfBirth.equals("") && ValidationSuccessful)
         {
-            CommonFunctions Common = new CommonFunctions();
             try
             {
                 Date DOBTest = Common.DateFromStringAustraliaFormat(TheDateOfBirth);

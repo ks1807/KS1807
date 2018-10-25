@@ -106,7 +106,7 @@ public class CommonFunctions
         }
 
         Pattern pat;
-        String PASSWORD_REGEX = "^(?=.*[0-9])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\\S+$).{4,}$";
+        String PASSWORD_REGEX = "^(?=.*[0-9])(?=.*[A-Z])(?=.*[/@#$%^&+=!])(?=\\S+$).{4,}$";
         pat = Pattern.compile(PASSWORD_REGEX);
 
         return pat.matcher(password).matches();

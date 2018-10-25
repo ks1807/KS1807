@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:fadeScrollbars="false"
+    android:scrollbarAlwaysDrawVerticalTrack="true"
+    android:scrollbarSize="5dp"
+    android:scrollbarThumbVertical="@color/white">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -38,7 +40,7 @@
             android:padding="10dp"
             android:text="@string/resources1"
             android:textColor="@color/white"
-            android:textSize="17sp"
+            android:textSize="18sp"
             android:textStyle="bold" />
 
         <TextView
@@ -182,8 +184,11 @@
             android:layout_width="362dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginBottom="8dp"
+            android:autoLink="web"
+            android:clickable="true"
+            android:focusable="true"
             android:fontFamily="@font/roboto_medium"
+            android:linksClickable="true"
             android:padding="10dp"
             android:text="@string/resourcesq9"
             android:textColor="@color/white"

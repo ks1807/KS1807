@@ -122,4 +122,5 @@
     <string name="lifelineLink"><a href="https://www.lifeline.org.au/">-> <u>Lifeline</u></a></string>
     <string name="blackDogLink"><a href="https://www.blackdoginstitute.org.au/">-> <u>Black Dog Institute</u></a></string>
     <string name="DateOfBirth_Caption">DD/MM/YYYY</string>
+    <string name="Password_Caption" >••••••••</string>
 </resources>

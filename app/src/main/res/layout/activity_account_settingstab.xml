@@ -5,11 +5,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:fadeScrollbars="false"
+    android:scrollbarAlwaysDrawVerticalTrack="true"
+    android:scrollbarSize="5dp"
+    android:scrollbarThumbVertical="@color/white">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="100dp"
         android:orientation="vertical">
 
         <Space
@@ -39,8 +43,8 @@
                 android:id="@+id/RadioButton_SettingsYes"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:background="@drawable/settingsyesselected"
                 android:layout_weight="1"
+                android:background="@drawable/settingsyesselected"
                 android:button="@null" />
 
             <Space
@@ -52,8 +56,8 @@
                 android:id="@+id/RadioButton_SettingsNo"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:background="@drawable/settingnonormal"
                 android:layout_weight="1"
+                android:background="@drawable/settingnonormal"
                 android:button="@null" />
         </RadioGroup>
 
@@ -93,19 +97,21 @@
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="67dp" />
+            android:layout_height="47dp" />
 
         <Button
             android:id="@+id/btn_SubmitSettings"
             android:layout_width="210dp"
             android:layout_height="45dp"
             android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="200dp"
             android:background="@drawable/settingssubmit"
             android:minHeight="10dp"
             android:onClick="button_Submit"
             android:paddingTop="10dp"
             android:paddingBottom="10dp" />
 
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="29dp" />
     </LinearLayout>
-    </ScrollView>
+</ScrollView>
