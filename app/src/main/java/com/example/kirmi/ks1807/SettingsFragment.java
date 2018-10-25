@@ -22,46 +22,20 @@ import java.util.List;
 
 public class SettingsFragment extends Fragment {
 
-    String UserID="";
-    TextView userID;
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_settingsfrag, null);
 
+        //Settings the container in which the content of the two tabs will show
         ViewPager viewPager = (ViewPager) view.findViewById(R.id.tabcontainer);
         setupViewPager(viewPager);
+
         // Set Tabs inside Toolbar
         TabLayout tabs = (TabLayout) view.findViewById(R.id.tabs);
         tabs.setupWithViewPager(viewPager);
 
-        UserID = getArguments().getString("UserID");
-
-//        userID = (TextView)view.findViewById(R.id.text_userID);
-//        userID.setText(UserID);
-//
-//        Bundle bundle = new Bundle();
-//        bundle.putString("UserID", UserID);
-//        AccountSettings account = new AccountSettings();
-//        account.setArguments(bundle);
-//
-//        ProfileSettings profile = new ProfileSettings();
-//        profile.setArguments(bundle);
-
-
         return view;
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-//        AccountSettings fragment = new AccountSettings();
-//        Bundle bundle = new Bundle();
-//        bundle.putString("UserID", UserID);
-//        fragment.setArguments(bundle);
-//        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.tabcontainer,fragment).commit();
     }
 
     // Add Fragments to Tabs
@@ -72,6 +46,7 @@ public class SettingsFragment extends Fragment {
         viewPager.setAdapter(adapter);
     }
 
+    //Fragment tab adapter to add the tabs as fragments
     static class Adapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragmentList = new ArrayList<>();
         private final List<String> mFragmentTitleList = new ArrayList<>();
@@ -94,7 +69,6 @@ public class SettingsFragment extends Fragment {
             mFragmentList.add(fragment);
             mFragmentTitleList.add(title);
         }
-
 
         @Override
         public CharSequence getPageTitle(int position) {

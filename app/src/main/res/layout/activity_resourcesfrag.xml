@@ -33,12 +33,13 @@
             android:autoLink="web"
             android:clickable="true"
             android:focusable="true"
-            android:fontFamily="@font/roboto_medium"
+            android:fontFamily="@font/roboto_black"
             android:linksClickable="true"
             android:padding="10dp"
-            android:text="@string/resourceq1"
+            android:text="@string/resources1"
             android:textColor="@color/white"
-            android:textSize="16sp" />
+            android:textSize="17sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/text_resq2"
@@ -51,7 +52,7 @@
             android:fontFamily="@font/roboto_medium"
             android:linksClickable="true"
             android:padding="10dp"
-            android:text="@string/resourcesq2"
+            android:text="@string/resourceq2"
             android:textColor="@color/white"
             android:textSize="16sp" />
 
@@ -101,7 +102,7 @@
             android:textSize="16sp" />
 
         <TextView
-            android:id="@+id/text_resq60"
+            android:id="@+id/text_resq6"
             android:layout_width="362dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -111,38 +112,7 @@
             android:fontFamily="@font/roboto_medium"
             android:linksClickable="true"
             android:padding="10dp"
-            android:text="@string/resourcesq60"
-            android:textColor="@color/white"
-            android:textSize="16sp" />
-
-        <TextView
-            android:id="@+id/text_resq6"
-            android:layout_width="321dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:autoLink="web"
-            android:clickable="true"
-            android:focusable="true"
-            android:fontFamily="@font/roboto_medium"
-            android:linksClickable="true"
-            android:padding="10dp"
-            android:singleLine="false"
             android:text="@string/resourcesq6"
-            android:textColor="@color/white"
-            android:textSize="16sp" />
-
-        <TextView
-            android:id="@+id/text_resq6.1"
-            android:layout_width="318dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:autoLink="web"
-            android:clickable="true"
-            android:focusable="true"
-            android:fontFamily="@font/roboto_medium"
-            android:linksClickable="true"
-            android:padding="10dp"
-            android:text="@string/resourcesq61"
             android:textColor="@color/white"
             android:textSize="16sp" />
 
@@ -157,7 +127,38 @@
             android:fontFamily="@font/roboto_medium"
             android:linksClickable="true"
             android:padding="10dp"
-            android:text="@string/resources7"
+            android:text="@string/resourcesq7"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/text_resq70"
+            android:layout_width="320dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:autoLink="web"
+            android:clickable="true"
+            android:focusable="true"
+            android:fontFamily="@font/roboto_medium"
+            android:linksClickable="true"
+            android:padding="10dp"
+            android:singleLine="false"
+            android:text="@string/resourcesq70"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/text_resq71"
+            android:layout_width="320dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:autoLink="web"
+            android:clickable="true"
+            android:focusable="true"
+            android:fontFamily="@font/roboto_medium"
+            android:linksClickable="true"
+            android:padding="10dp"
+            android:text="@string/resourcesq71"
             android:textColor="@color/white"
             android:textSize="16sp" />
 

@@ -33,8 +33,7 @@ public class RegisterSecondPage extends AppCompatActivity
         RegisterFunctions = new DatabaseFunctions(this);
 
         //Get the UserID for this login session.
-        Intent intent = getIntent();
-        UserID = intent.getStringExtra("UserID");
+        UserID = Global.UserID;
 
         s1 = (Spinner) findViewById(R.id.spinner1);
         s2 = (Spinner) findViewById(R.id.spinner2);
@@ -66,7 +65,6 @@ public class RegisterSecondPage extends AppCompatActivity
                     public void onClick(DialogInterface dialog,int id)
                     {
                         Intent intent = new Intent(RegisterSecondPage.this, Register.class);
-                        intent.putExtra("UserID", UserID);
                         startActivity(intent);
                     }
                 })
@@ -86,7 +84,6 @@ public class RegisterSecondPage extends AppCompatActivity
         if (UpdateSecondPage())
         {
             Intent intent = new Intent(RegisterSecondPage.this, OtherPlatforms.class);
-            intent.putExtra("UserID", UserID);
             startActivity(intent);
         }
         else
@@ -107,33 +104,6 @@ public class RegisterSecondPage extends AppCompatActivity
             alertDialog.show();
         }
     }
-
-//    public void button_Skip(View view)
-//    {
-//        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
-//        alertDialogBuilder.setTitle("Confirm skip");
-//        alertDialogBuilder
-//                .setMessage("Are you sure you wish to skip these questions and register your account?")
-//                .setCancelable(false)
-//                .setPositiveButton("Yes",new DialogInterface.OnClickListener()
-//                {
-//                    public void onClick(DialogInterface dialog,int id)
-//                    {
-//                        Intent intent = new Intent(RegisterSecondPage.this, CurrentMusic.class);
-//                        intent.putExtra("UserID", UserID);
-//                        startActivity(intent);
-//                    }
-//                })
-//                .setNegativeButton("No",new DialogInterface.OnClickListener()
-//                {
-//                    public void onClick(DialogInterface dialog,int id)
-//                    {
-//                        dialog.cancel();
-//                    }
-//                });
-//        AlertDialog alertDialog = alertDialogBuilder.create();
-//        alertDialog.show();
-//    }
 
     private boolean UpdateSecondPage()
     {

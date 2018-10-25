@@ -20,7 +20,6 @@ import java.util.ArrayList;
 public class AccountSettings extends Fragment {
 
     String UserID = "";
-//    private SettingsFragment set;
     Spinner alertsSpinner;
     private DatabaseFunctions SettingFunctions;
     RadioButton yes, no;
@@ -32,21 +31,25 @@ public class AccountSettings extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_account_settingstab, container, false);
-//        TextView txt = (TextView)view.findViewById(R.id.textView3);
-
 
         SettingFunctions = new DatabaseFunctions(getActivity());
 
+        //Passing the user ID
+        UserID = Global.UserID;
+
+        // Adding content to the spinner to collect alert frequency
         alertsSpinner = (Spinner)view.findViewById(R.id.Spinner_AlertFrequency);
         ArrayAdapter<CharSequence> adapter1 = ArrayAdapter.createFromResource(getActivity(), R.array.trackalertoptions,
                 R.layout.spinner_item);
 
+        //Adding custom style to the spinner
         adapter1.setDropDownViewResource(R.layout.spinner_item);
         alertsSpinner.setAdapter(adapter1);
 
         yes = (RadioButton) view.findViewById(R.id.RadioButton_SettingsYes);
         no = (RadioButton) view.findViewById(R.id.RadioButton_SettingsNo);
 
+        //Changing the radio button look when selected
         yes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -54,7 +57,6 @@ public class AccountSettings extends Fragment {
                 no.setBackgroundResource(R.drawable.settingnonormal);
             }
         });
-
 
         no.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,26 +71,20 @@ public class AccountSettings extends Fragment {
             @Override
             public void onClick(View view) {
                 if (UpdateSettings()) {
-                    Toast.makeText(getActivity(), "Updated", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Settings Updated", Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
-//        if (savedInstanceState != null) {
-//            UserID = getArguments().getString("UserID");
-//
-//        }
-//        UserID = set.userID.getText().toString();
-//        txt.setText(UserID);
+        //Showing the user's current account settings
+        ShowUserSettings(view);
 
-
-//        ShowUserSettings(view);
         return view;
     }
 
     private boolean UpdateSettings()
     {
-        //Convert the contents of the Toggle Button and Spinner to strings
+        //Convert the contents of the Radio buttons and Spinner to strings
         String InvalidMessage = "";
         String MakeRecommendation = "";
         String MoodFrequencyText = alertsSpinner.getSelectedItem().toString();
@@ -109,40 +105,32 @@ public class AccountSettings extends Fragment {
         return SettingFunctions.UpdateSettings(MakeRecommendation, MoodFrequencyText, UserID);
     }
 
-//    private void ShowUserSettings(View view)
-//    {
-//        SettingFunctions.openReadable();
-//
-//        ArrayList<String> tableContent = SettingFunctions.GetUserSettings(UserID);
-//        String MakeRecommendations = tableContent.get(0);
-//        String MoodFrequency = tableContent.get(1);
-//
-//        ToggleButton BtnMakeRecommendations = (ToggleButton) view.findViewById(R.id.ToggleButton_AutoMakeRecommendations);
-//        Spinner SpinnerMoodFrequency = (Spinner) view.findViewById(R.id.Spinner_AlertFrequency);
-//
-//        if (MakeRecommendations.equals("Yes"))
-//        {
-//            BtnMakeRecommendations.setChecked(true);
-//        }
-//        else if (MakeRecommendations.equals("No"))
-//        {
-//            BtnMakeRecommendations.setChecked(false);
-//        }
-//
-//        //Set the Spinner position to match the string retrieved from the database.
-//        ArrayAdapter SpinnerAdapter = (ArrayAdapter) SpinnerMoodFrequency.getAdapter();
-//        SpinnerMoodFrequency.setSelection(SpinnerAdapter.getPosition(MoodFrequency));
-//    }
+    private void ShowUserSettings(View view)
+    {
+        SettingFunctions.openReadable();
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+        //Getting the results of user settings from database using the UerID
+        ArrayList<String> tableContent = SettingFunctions.GetUserSettings(UserID);
+        String MakeRecommendations = tableContent.get(0);
+        String MoodFrequency = tableContent.get(1);
 
-//        ProfileSettings fragment = new ProfileSettings();
-//        Bundle bundle = new Bundle();
-//        bundle.putString("UserID", UserID);
-//        fragment.setArguments(bundle);
-//        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.account_frag,fragment).commit();
 
+        if (MakeRecommendations.equals("Yes"))
+        {
+            yes.setChecked(true);
+            yes.setBackgroundResource(R.drawable.settingsyesselected);
+            no.setBackgroundResource(R.drawable.settingnonormal);
+        }
+        else if (MakeRecommendations.equals("No"))
+        {
+            no.setChecked(true);
+            yes.setBackgroundResource(R.drawable.settingsyesnormal);
+            no.setBackgroundResource(R.drawable.settingnoselected);
+        }
+
+        //Set the Spinner position to match the string retrieved from the database.
+        ArrayAdapter SpinnerAdapter = (ArrayAdapter) alertsSpinner.getAdapter();
+        alertsSpinner.setSelection(SpinnerAdapter.getPosition(MoodFrequency));
     }
+
 }

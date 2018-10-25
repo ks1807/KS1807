@@ -3,11 +3,14 @@ package com.example.kirmi.ks1807;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.content.Context;
+import android.text.method.BaseKeyListener;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.RadioButton;
 import android.widget.Toast;
@@ -34,8 +37,7 @@ public class Register extends AppCompatActivity
         RegisterFunctions = new DatabaseFunctions(this);
 
         //Get the UserID for this login session if user went back from second page.
-        Intent intent = getIntent();
-        BackUserID = intent.getStringExtra("UserID");
+        BackUserID = Global.UserID;
 
         if (BackUserID != null && !BackUserID.equals(""))
         {
@@ -57,6 +59,7 @@ public class Register extends AppCompatActivity
                     public void onClick(DialogInterface dialog,int id)
                     {
                         Intent intent = new Intent(Register.this, MainActivity.class);
+                        Global.UserID = "";
                         startActivity(intent);
                     }
                 })
@@ -73,6 +76,7 @@ public class Register extends AppCompatActivity
 
     public void button_Next(View view)
     {
+
         if (ValidateForm())
         {
             Intent intent = new Intent(Register.this, RegisterSecondPage.class);
@@ -81,11 +85,12 @@ public class Register extends AppCompatActivity
             otherwise just use the ID that was passed back.*/
             if (BackUserID == null)
             {
-                intent.putExtra("UserID", String.valueOf(UserID));
+                Global.UserID = String.valueOf(UserID);
+                BackUserID = Global.UserID;
             }
             else
             {
-                intent.putExtra("UserID", BackUserID);
+                BackUserID = Global.UserID;
             }
             startActivity(intent);
         }
@@ -102,11 +107,12 @@ public class Register extends AppCompatActivity
             otherwise just use the ID that was passed back.*/
             if (BackUserID == null)
             {
-                intent.putExtra("UserID", String.valueOf(UserID));
+                Global.UserID = String.valueOf(UserID);
+                BackUserID = Global.UserID;
             }
             else
             {
-                intent.putExtra("UserID", BackUserID);
+                BackUserID = Global.UserID;
             }
             startActivity(intent);
         }
@@ -132,7 +138,35 @@ public class Register extends AppCompatActivity
         yes1.setBackgroundResource(R.drawable.yesselected);
         no1.setBackgroundResource(R.drawable.nounselected);
 
-        Toast.makeText(this, "Ethics Statement", Toast.LENGTH_SHORT).show();
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+        alertDialogBuilder.setTitle("Ethics Statement");
+        alertDialogBuilder
+                .setMessage("...\n\nDo you agree to comply with the above ethical statement?")
+                .setCancelable(false)
+                .setPositiveButton("Yes",new DialogInterface.OnClickListener()
+                {
+                    public void onClick(DialogInterface dialog,int id) {
+                        Toast.makeText(context, "You have agreed.", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .setNegativeButton("No",new DialogInterface.OnClickListener()
+                {
+                    public void onClick(DialogInterface dialog,int id)
+                    {
+
+                        dialog.cancel();
+
+                        RadioButton yes1 = (RadioButton) findViewById(R.id.RadioButton_Yes1);
+                        RadioButton no1 = (RadioButton) findViewById(R.id.RadioButton_No1);
+
+                        yes1.setBackgroundResource(R.drawable.yesunselected);
+                        no1.setBackgroundResource(R.drawable.noselected);
+
+                    }
+                });
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+
     }
 
     public void RadioButtonNoResearch(View view)
@@ -384,6 +418,27 @@ public class Register extends AppCompatActivity
             }
         }
 
+        RadioGroup researchques = (RadioGroup) findViewById(R.id.RadioGroup_MoreResearch);
+        RadioGroup moremood = (RadioGroup) findViewById(R.id.RadioGroup_MoreMood);
+
+        //Checking if the questions regarding the research and the extra mood questions in checked for it to continue on
+        if (ValidationSuccessful && (researchques.getCheckedRadioButtonId() == -1)) {
+            ValidationSuccessful = false;
+            InvalidMessage = "All fields must be filled and/or selected";
+            alertDialogBuilder.setMessage(InvalidMessage);
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            alertDialog.show();
+        }
+
+        if (ValidationSuccessful && (moremood.getCheckedRadioButtonId() == -1)) {
+            ValidationSuccessful = false;
+            InvalidMessage = "All fields must be filled and/or selected";
+            alertDialogBuilder.setMessage(InvalidMessage);
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            alertDialog.show();
+        }
+
+
         String TheGender = "";
         if (GenderMale.isChecked())
         {
@@ -408,11 +463,15 @@ public class Register extends AppCompatActivity
 
         /*Insert if this is the first time the user is on this page, otherwise just update what is
         already there*/
-        if (ValidationSuccessful && (BackUserID == null))
+        if (ValidationSuccessful && (BackUserID == "" || BackUserID == null))
         {
             //Insert the record. If it fails then fail the validation as well.
             UserID = RegisterFunctions.InsertNewUser(FName, LName, TheEmail, TheDateOfBirth,
                     TheGender, NewPass);
+
+            //Storing the new created user ID as global so that it can be used throughout the project
+            Global.UserID = String.valueOf(UserID);
+            BackUserID = Global.UserID;
 
             if (UserID == -1)
             {

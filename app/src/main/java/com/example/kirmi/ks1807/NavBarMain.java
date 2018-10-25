@@ -25,29 +25,22 @@ public class NavBarMain extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navbarmain);
 
-        Intent intent = getIntent();
-        UserID = intent.getStringExtra("UserID");
+        UserID = Global.UserID;
 
         BottomNavigationView nav = findViewById(R.id.bottom_nav);
         nav.setOnNavigationItemSelectedListener(this);
 
+        //Creating fragments
         loadFragment(new HomeFragment());
     }
 
     private boolean loadFragment(Fragment fragment) {
         if(fragment != null) {
 
-            FragmentManager fm = getSupportFragmentManager();
-            FragmentTransaction ft = fm.beginTransaction();
-            Bundle args = new Bundle();
-            args.putString("UserID", UserID);
-            fragment.setArguments(args);
-            ft.replace(R.id.main_container, fragment);
-            ft.commit();
-
-//            getSupportFragmentManager()
-//                    .beginTransaction()
-//                    .replace(R.id.main_container, fragment).commit();
+            // Getting the content of the fragment onto the main container
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.main_container, fragment).commit();
             return true;
         }
         return false;
@@ -55,8 +48,10 @@ public class NavBarMain extends AppCompatActivity
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
         Fragment fragment = null;
 
+        // On selection of the navigation menu, the fragment content is displayed with its connected java fragment class
         switch(item.getItemId()) {
             case R.id.nav_home:
                 fragment = new HomeFragment();
@@ -74,6 +69,7 @@ public class NavBarMain extends AppCompatActivity
                 fragment = new SettingsFragment();
                 break;
         }
+        // creating each fragment
         return loadFragment(fragment);
     }
 }

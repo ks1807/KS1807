@@ -27,13 +27,12 @@ public class ProgressFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_progressfrag, null);
 
-        UserID = getArguments().getString("UserID");
-
-//        Double y, x;
-//        x = -0.5;
+        // Passing the userID for future need
+        UserID = Global.UserID;
 
         GraphView graph = (GraphView)view.findViewById(R.id.graph);
-//        series = new LineGraphSeries<DataPoint>();
+
+        //Placing the points on the graph at the position with two different lines
         series = new LineGraphSeries<>(new DataPoint[]{
                 new DataPoint(0,0),
                 new DataPoint(2,5),
@@ -49,13 +48,12 @@ public class ProgressFragment extends Fragment {
                 new DataPoint(6,7),
                 new DataPoint(8,4)
         });
-//        for (int i =0; i < 100; i++) {
-//            x = x + 0.1;
-//            y =  Math.sin(x);
-//            series.appendData(new DataPoint(x, y), true, 100);
-//        }
+
+        // Adding the both lines on the graph
         graph.addSeries(series);
         graph.addSeries(series2);
+
+        //Styling the line graph to differentiate between the two
         series.setColor(Color.WHITE);
         series.setThickness(2);
         series.setDrawBackground(true);
@@ -68,8 +66,9 @@ public class ProgressFragment extends Fragment {
         series2.setDrawBackground(true);
         series2.setBackgroundColor(Color.argb(90, 73, 130, 203));
         series2.setDrawDataPoints(true);
-        series2.setTitle("Genre");
+        series2.setTitle("No of Tracks");
 
+        //Displaying a legend for the graph
         graph.getLegendRenderer().setVisible(true);
         graph.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
         return view;

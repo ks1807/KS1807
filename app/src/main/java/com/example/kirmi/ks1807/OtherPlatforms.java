@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Toast;
 
 import com.spotify.sdk.android.authentication.AuthenticationClient;
 import com.spotify.sdk.android.authentication.AuthenticationRequest;
@@ -22,20 +23,19 @@ public class OtherPlatforms extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_platforms);
 
-        Intent intent = getIntent();
-        UserID = intent.getStringExtra("UserID");
+        UserID = Global.UserID;
+
+        Toast.makeText(this, UserID, Toast.LENGTH_SHORT).show();
 
     }
 
     public void button_back(View view) {
         Intent intent = new Intent(OtherPlatforms.this, RegisterSecondPage.class);
-        intent.putExtra("UserID", UserID);
         startActivity(intent);
     }
 
     public void button_connect(View view) {
         Intent intent = new Intent(OtherPlatforms.this, NavBarMain.class);
-        intent.putExtra("UserID", UserID);
         startActivity(intent);
     }
 

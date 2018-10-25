@@ -17,20 +17,21 @@ import org.w3c.dom.Text;
 
 public class ResourcesFragment extends Fragment {
 
-    private TextView res1, res2, res3, res4, res5, res6, res61, res7, res8, resL1, resL2, resL3, resL4;
+    private TextView res1, res2, res3, res4, res5, res6, res70, res71, res8, resL1, resL2, resL3, resL4;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_resourcesfrag, null);
 
+        //Linking each text view to its respective link to show in a browser
         res1 = (TextView) view.findViewById(R.id.text_resq1);
         res1.setMovementMethod(LinkMovementMethod.getInstance());
         res1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent browserIntent = new Intent(Intent.ACTION_VIEW);
-                browserIntent.setData(Uri.parse("https://www.beyondblue.org.au/personal-best/pillar/in-focus/depression-vs-sadness"));
+                browserIntent.setData(Uri.parse("https://www.lifeline.org.au/get-help/online-services/crisis-chat"));
                 startActivity(browserIntent);
             }
         });
@@ -41,7 +42,7 @@ public class ResourcesFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent browserIntent = new Intent(Intent.ACTION_VIEW);
-                browserIntent.setData(Uri.parse("https://www.beyondblue.org.au/personal-best/pillar/wellbeing/why-listening-to-music-makes-you-feel-good"));
+                browserIntent.setData(Uri.parse("https://www.beyondblue.org.au/personal-best/pillar/in-focus/depression-vs-sadness"));
                 startActivity(browserIntent);
             }
         });
@@ -52,7 +53,7 @@ public class ResourcesFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent browserIntent = new Intent(Intent.ACTION_VIEW);
-                browserIntent.setData(Uri.parse("https://theconversation.com/sad-music-and-depression-does-it-help-66123"));
+                browserIntent.setData(Uri.parse("https://www.beyondblue.org.au/personal-best/pillar/wellbeing/why-listening-to-music-makes-you-feel-good"));
                 startActivity(browserIntent);
             }
         });
@@ -63,7 +64,7 @@ public class ResourcesFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent browserIntent = new Intent(Intent.ACTION_VIEW);
-                browserIntent.setData(Uri.parse("https://www.beyondblue.org.au/personal-best/pillar/supporting-yourself/exercise-your-way-to-good-mental-health"));
+                browserIntent.setData(Uri.parse("https://theconversation.com/sad-music-and-depression-does-it-help-66123"));
                 startActivity(browserIntent);
             }
         });
@@ -74,7 +75,7 @@ public class ResourcesFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent browserIntent = new Intent(Intent.ACTION_VIEW);
-                browserIntent.setData(Uri.parse("https://greatergood.berkeley.edu/article/item/three_ways_mindfulness_reduces_depression)"));
+                browserIntent.setData(Uri.parse("https://www.beyondblue.org.au/personal-best/pillar/supporting-yourself/exercise-your-way-to-good-mental-health"));
                 startActivity(browserIntent);
             }
         });
@@ -85,29 +86,29 @@ public class ResourcesFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent browserIntent = new Intent(Intent.ACTION_VIEW);
+                browserIntent.setData(Uri.parse("https://greatergood.berkeley.edu/article/item/three_ways_mindfulness_reduces_depression"));
+                startActivity(browserIntent);
+            }
+        });
+
+        res70 = (TextView) view.findViewById(R.id.text_resq70);
+        res70.setMovementMethod(LinkMovementMethod.getInstance());
+        res70.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW);
                 browserIntent.setData(Uri.parse("https://www.glamourmagazine.co.uk/gallery/celebrities-talking-about-depression-anxiety-and-mental-health"));
                 startActivity(browserIntent);
             }
         });
 
-        res61 = (TextView) view.findViewById(R.id.text_resq6_1);
-        res61.setMovementMethod(LinkMovementMethod.getInstance());
-        res61.setOnClickListener(new View.OnClickListener() {
+        res71 = (TextView) view.findViewById(R.id.text_resq71);
+        res71.setMovementMethod(LinkMovementMethod.getInstance());
+        res71.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent browserIntent = new Intent(Intent.ACTION_VIEW);
                 browserIntent.setData(Uri.parse(""));
-                startActivity(browserIntent);
-            }
-        });
-
-        res7 = (TextView) view.findViewById(R.id.text_resq7);
-        res7.setMovementMethod(LinkMovementMethod.getInstance());
-        res7.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW);
-                browserIntent.setData(Uri.parse("https://www.lifeline.org.au/get-help/online-services/crisis-chat"));
                 startActivity(browserIntent);
             }
         });
