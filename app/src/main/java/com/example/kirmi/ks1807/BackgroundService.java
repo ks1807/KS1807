@@ -1,5 +1,6 @@
 package com.example.kirmi.ks1807;
 
+import java.io.UnsupportedEncodingException;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -18,7 +19,9 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.spotify.android.appremote.api.ConnectionParams;
@@ -50,6 +53,7 @@ public class BackgroundService extends Service
     public SpotifyAppRemote spotifyAppRemote;
     public static boolean isRunning = false; //used by activity to check if it should start the service
     public static String lastSong = "First";
+    Spinner alertsSpinner;
 
     //Binder method - gives the main application a spotifyAppRemote instance - temporary, should use Web API if possible.
     @Override
@@ -151,22 +155,86 @@ public class BackgroundService extends Service
         });
     }
 
+    String[] GetMoods()
+    {
+        /*String TheMood = "GetMoodList: U+1F606,4,Amused\n" +
+                "U+1F620,-4,Angry\n" +
+                "U+2639,-3,Annoyed\n" +
+                "U+1F610,1,Calm\n" +
+                "U+1F603,2,Cheerful\n" +
+                "U+1F627,-4,Depressed\n" +
+                "U+1F600,3,Excited\n" +
+                "U+1F623,-3,Frustrated\n" +
+                "U+1F603,2,Good\n" +
+                "U+1F626,-2,Grumpy\n" +
+                "U+1F642,2,Happy\n" +
+                "U+1F61F,-1,Irritated\n" +
+                "U+1F601,3,Joyful\n" +
+                "U+1F641,-2,Melancholy\n" +
+                "U+1F622,-3,Sad\n" +
+                "U+1F60A,1,Satisfied\n" +
+                "U+1F616,-2,Stressed";*/
+
+        String TheMood = "GetMoodList: 0x1F606,4,Amused\n" +
+                "0x1F620,-4,Angry\n";
+
+        TheMood = TheMood.replace("GetMoodList: ","");
+        TheMood = TheMood.replace("-","");
+        TheMood = TheMood.replaceAll(",[0-9],"," ");
+        //TheMood = TheMood.replace("U+","\\u");
+
+        String[] List = TheMood.split("\n");
+        for (int i = 0; i < List.length; i++)
+        {
+            String EmoticonAsString = List[i].split(" ")[0];
+            String MoodName = List[i].split(" ")[1];
+            int Emoticon = EmoticonAsString.codePointAt(0);
+            List[i] = "" + Emoticon + " " + MoodName;
+        }
+        return List;
+    }
+
+    public static final String utf8ToString( byte[] bytes )
+    {
+        if ( bytes == null )
+        {
+            return "";
+        }
+
+        try
+        {
+            return new String( bytes, "UTF-8" );
+        }
+        catch ( UnsupportedEncodingException uee )
+        {
+            return "";
+        }
+    }
+
     void connected()
     {
         //Music change detector
         spotifyAppRemote.getPlayerApi().subscribeToPlayerState().setEventCallback(new Subscription.EventCallback<PlayerState>() {
             public void onEvent(PlayerState playerState) {
-                if(!lastSong.equals(playerState.track.uri)) {
-                    final CharSequence[] items = {
-                            new String(Character.toChars(0x1F603)) + "Happy",
-                            new String(Character.toChars(0x1F61F)) + "Sad",
-                            new String(Character.toChars(0x1F620)) + "Angry"};
+                if(!lastSong.equals(playerState.track.uri))
+                {
+                    //final CharSequence[] items =
+                            //{
+                            //new String(Character.toChars(0x1F603)) + "Happy",
+                            //new String(Character.toChars(0x1F61F)) + "Sad",
+                            //new String(Character.toChars(0x1F620)) + "Angry"
+                            //};
+                    final String[] List;
+
+                    List = GetMoods();
                     android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(getApplicationContext());
                     builder.setTitle("How are you feeling?");
-                    builder.setItems(items, new DialogInterface.OnClickListener() {
+                    builder.setItems(List, new DialogInterface.OnClickListener()
+                    {
                         @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            Toast.makeText(getApplicationContext(), "Selected " + items[i], Toast.LENGTH_SHORT).show();
+                        public void onClick(DialogInterface dialogInterface, int i)
+                        {
+                            Toast.makeText(getApplicationContext(), "Selected " + List[i], Toast.LENGTH_SHORT).show();
                         }
                     });
                     android.app.AlertDialog dialog = builder.create();
@@ -176,7 +244,8 @@ public class BackgroundService extends Service
                     dialog.show();
 
                     final Track track = playerState.track;
-                    if (track != null) {
+                    if (track != null)
+                    {
                         Toast.makeText(t, track.name + " by " + track.artist.name,
                                 Toast.LENGTH_SHORT).show();
                     }
