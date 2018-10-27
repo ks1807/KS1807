@@ -11,25 +11,21 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ToggleButton;
-
 import java.util.ArrayList;
 
-public class AccountSettings extends Fragment {
-
+public class AccountSettings extends Fragment
+{
     String UserID = "";
     Spinner alertsSpinner;
     private DatabaseFunctions SettingFunctions;
     RadioButton yes, no;
     Button submit;
 
-    private static final String TAG = "AccountSettingsTabFrag";
-
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState)
+    {
         View view = inflater.inflate(R.layout.activity_account_settingstab, container, false);
 
         SettingFunctions = new DatabaseFunctions(getActivity());
@@ -90,11 +86,16 @@ public class AccountSettings extends Fragment {
         String MoodFrequencyText = alertsSpinner.getSelectedItem().toString();
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
 
-        if (yes.isChecked()) {
+        if (yes.isChecked())
+        {
             MakeRecommendation = "Yes";
-        } else if (no.isChecked()) {
+        }
+        else if (no.isChecked())
+        {
             MakeRecommendation = "No";
-        } else {
+        }
+        else
+        {
             InvalidMessage = "No recommendation selected. This error should never happen.";
             alertDialogBuilder.setMessage(InvalidMessage);
             AlertDialog alertDialog = alertDialogBuilder.create();
@@ -109,11 +110,10 @@ public class AccountSettings extends Fragment {
     {
         SettingFunctions.openReadable();
 
-        //Getting the results of user settings from database using the UerID
+        //Getting the results of user settings from database using the UerID.
         ArrayList<String> tableContent = SettingFunctions.GetUserSettings(UserID);
         String MakeRecommendations = tableContent.get(0);
         String MoodFrequency = tableContent.get(1);
-
 
         if (MakeRecommendations.equals("Yes"))
         {
@@ -132,5 +132,4 @@ public class AccountSettings extends Fragment {
         ArrayAdapter SpinnerAdapter = (ArrayAdapter) alertsSpinner.getAdapter();
         alertsSpinner.setSelection(SpinnerAdapter.getPosition(MoodFrequency));
     }
-
 }

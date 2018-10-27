@@ -3,18 +3,15 @@ package com.example.kirmi.ks1807;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.content.Context;
-import android.text.method.BaseKeyListener;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.RadioButton;
 import android.widget.Toast;
-
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -75,7 +72,6 @@ public class Register extends AppCompatActivity
 
     public void button_Next(View view)
     {
-
         if (ValidateForm())
         {
             Intent intent = new Intent(Register.this, RegisterSecondPage.class);
@@ -289,7 +285,7 @@ public class Register extends AppCompatActivity
         final CommonFunctions Common = new CommonFunctions();
         String InvalidMessage = "";
 
-        //Convert the contents of the text boxes to strings
+        //Convert the contents of the text boxes to strings.
         TextView FirstName = (TextView)findViewById(R.id.EditText_FirstName);
         TextView LastName = (TextView)findViewById(R.id.EditText_LastName);
         TextView Email = (TextView)findViewById(R.id.EditText_Email);
@@ -304,12 +300,12 @@ public class Register extends AppCompatActivity
         String NewPass = NewPassword.getText().toString();
         String NewPassRepeat = NewPasswordRepeat.getText().toString();
 
-        //Get the gender
+        //Get the gender.
         RadioButton GenderFemale = (RadioButton)findViewById(R.id.RadioButton_Female);
         RadioButton GenderMale = (RadioButton)findViewById(R.id.RadioButton_Male);
         RadioButton GenderOther = (RadioButton)findViewById(R.id.RadioButton_Other);
 
-        //Validation dialogue
+        //Validation dialogue.
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
         alertDialogBuilder.setTitle("Invalid Edits");
         alertDialogBuilder
@@ -350,7 +346,7 @@ public class Register extends AppCompatActivity
         }
 
         /*Check if the email address is used by another user and also don't trigger validation if
-        the user is not changing their email address (if they already set this before)*/
+        the user is not changing their email address (if they already set this before).*/
         if (!RegisterFunctions.IsEmailAddressUnique(TheEmail)
                 && !TheEmail.toLowerCase().equals(CurrentEmailAddress.toLowerCase())
                 && ValidationSuccessful)
@@ -429,8 +425,10 @@ public class Register extends AppCompatActivity
         RadioGroup researchques = (RadioGroup) findViewById(R.id.RadioGroup_MoreResearch);
         RadioGroup moremood = (RadioGroup) findViewById(R.id.RadioGroup_MoreMood);
 
-        //Checking if the questions regarding the research and the extra mood questions in checked for it to continue on
-        if (ValidationSuccessful && (researchques.getCheckedRadioButtonId() == -1)) {
+        /*Checking if the questions regarding the research and the extra mood questions in checked
+        for it to continue on*/
+        if (ValidationSuccessful && (researchques.getCheckedRadioButtonId() == -1))
+        {
             ValidationSuccessful = false;
             InvalidMessage = "All fields must be filled and/or selected";
             alertDialogBuilder.setMessage(InvalidMessage);
@@ -438,14 +436,14 @@ public class Register extends AppCompatActivity
             alertDialog.show();
         }
 
-        if (ValidationSuccessful && (moremood.getCheckedRadioButtonId() == -1)) {
+        if (ValidationSuccessful && (moremood.getCheckedRadioButtonId() == -1))
+        {
             ValidationSuccessful = false;
             InvalidMessage = "All fields must be filled and/or selected";
             alertDialogBuilder.setMessage(InvalidMessage);
             AlertDialog alertDialog = alertDialogBuilder.create();
             alertDialog.show();
         }
-
 
         String TheGender = "";
         if (GenderMale.isChecked())
@@ -470,15 +468,14 @@ public class Register extends AppCompatActivity
         }
 
         /*Insert if this is the first time the user is on this page, otherwise just update what is
-        already there*/
+        already there.*/
         if (ValidationSuccessful && (BackUserID == "" || BackUserID == null))
         {
             NewPass = Common.EncryptPassword(NewPass);
-            //Insert the record. If it fails then fail the validation as well.
             UserID = RegisterFunctions.InsertNewUser(FName, LName, TheEmail, TheDateOfBirth,
                     TheGender, NewPass);
 
-            //Storing the new created user ID as global so that it can be used throughout the project
+            //Storing the new created user ID as global so that it can be used throughout the application.
             Global.UserID = String.valueOf(UserID);
             BackUserID = Global.UserID;
 
@@ -490,8 +487,6 @@ public class Register extends AppCompatActivity
         else if(ValidationSuccessful)
         {
             NewPass = Common.EncryptPassword(NewPass);
-
-            //Update the record. If it fails then fail the validation as well.
             ValidationSuccessful = RegisterFunctions.UpdateNewUser(FName, LName, TheEmail,
                     TheDateOfBirth, TheGender, NewPass, BackUserID);
         }

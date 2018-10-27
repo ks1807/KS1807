@@ -7,7 +7,7 @@ import java.text.ParseException;
 import java.security.NoSuchAlgorithmException;
 import java.security.MessageDigest;
 
-//Functions used by the entire application.
+//Functions used by the entire application that are not class specific.
 public class CommonFunctions
 {
     public Date DateFromStringAustraliaFormat(String DateString) throws ParseException
@@ -23,11 +23,6 @@ public class CommonFunctions
             e.printStackTrace();
             throw new ParseException("Invalid Date Australian Format", -1);
         }
-    }
-
-    public String GetEmojiByUnicode(int unicode)
-    {
-        return new String(Character.toChars(unicode));
     }
 
     /*Code for this algorithm derived from:
@@ -65,7 +60,6 @@ public class CommonFunctions
         return EncryptedPassword;
     }
 
-    //Checks if a string is a number or not.
     public boolean isNumeric(String TheString)
     {
         try
