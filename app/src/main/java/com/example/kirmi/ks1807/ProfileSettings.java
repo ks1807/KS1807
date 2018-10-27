@@ -86,7 +86,8 @@ public class ProfileSettings extends Fragment {
         //Function to show all the details within respective text element
         DisplayUserDetails(UserDetails);
 
-        if (userdetails.getVisibility() != View.VISIBLE) {
+        if (userdetails.getVisibility() != View.VISIBLE)
+        {
             userdetails.setVisibility(View.VISIBLE);
             updatepass.setVisibility(View.GONE);
         }
@@ -246,12 +247,13 @@ public class ProfileSettings extends Fragment {
                         }
                     }
                 });
-                // used to actually show the menu items with the popup
+                //Used to actually show the menu items with the popup.
                 popup.show();
             }
         });
 
-        //If the user chooses to sign out then this takes them to the login page and sets the user id as empty as the user is no longer logged in
+        //If the user chooses to sign out then this takes them to the login page and sets the user
+        //id as empty as the user is no longer logged in
         signout = (Button)view.findViewById(R.id.btn_signout);
         signout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -284,18 +286,14 @@ public class ProfileSettings extends Fragment {
         return view;
     }
 
-    //Assigning the fields in the profile with the information found from the database about the user
+    //Assigning the fields in the profile with the information found from the database about the user.
     public void DisplayUserDetails(ArrayList<String> UserDetails)
     {
         firstN.setText(UserDetails.get(0));
-
         lastN.setText(UserDetails.get(1));
-
         editemail.setText(UserDetails.get(2));
         CurrentEmailAddress = UserDetails.get(2);
-
         editdob.setText(UserDetails.get(3));
-
         String Gender = UserDetails.get(4);
 
         /*Make sure that the buttons have their image and checked status set to what the user
@@ -323,39 +321,44 @@ public class ProfileSettings extends Fragment {
         }
     }
 
-    //Function used to set the profile back to normal after coming back from editing the user details
-    public void setProfileBackFromEdit() {
+    //Function used to set the profile back to normal after coming back from editing the user details.
+    public void setProfileBackFromEdit()
+    {
         options.setVisibility(View.VISIBLE);
         signout.setVisibility(View.VISIBLE);
-
         editback.setVisibility(View.INVISIBLE);
         btnUpdate.setVisibility(View.INVISIBLE);
-
         disableAllFields();
-
     }
 
-    //Function used to set the profile back to normal after coming back from changing password
-    public void setProfileBackFromChangePass() {
+    //Function used to set the profile back to normal after coming back from changing password.
+    public void setProfileBackFromChangePass()
+    {
         options.setVisibility(View.VISIBLE);
         updatepass.setVisibility(View.GONE);
-
         changepassback.setVisibility(View.INVISIBLE);
         userdetails.setVisibility(View.VISIBLE);
-
         disableAllFields();
     }
 
-    //Function that enables all fields and radio buttons for the user to edit
-    public void enableAllFields() {
+    //Function that enables all fields and radio buttons for the user to edit.
+    public void enableAllFields()
+    {
         firstN.setEnabled(true);
         firstN.setTextColor(Color.WHITE);
+        firstN.setHint("First Name");
+
         lastN.setEnabled(true);
         lastN.setTextColor(Color.WHITE);
+        lastN.setHint("Last Name");
+
         editemail.setEnabled(true);
         editemail.setTextColor(Color.WHITE);
+        editemail.setHint("Email");
+
         editdob.setEnabled(true);
         editdob.setTextColor(Color.WHITE);
+        editdob.setHint("DD/MM/YYYY");
 
         gender.setEnabled(true);
         genderFemale.setEnabled(true);
@@ -364,15 +367,24 @@ public class ProfileSettings extends Fragment {
     }
 
     //Function that disables all fields and radio buttons so that the user cannot edit and only view the details
-    public void disableAllFields() {
+    public void disableAllFields()
+    {
         firstN.setEnabled(false);
         firstN.setTextColor(Color.GRAY);
+        firstN.setHint("");
+
         lastN.setEnabled(false);
         lastN.setTextColor(Color.GRAY);
+        lastN.setHint("");
+
         editemail.setEnabled(false);
         editemail.setTextColor(Color.GRAY);
+        editemail.setHint("");
+
         editdob.setEnabled(false);
         editdob.setTextColor(Color.GRAY);
+        editdob.setHint("");
+
         gender.setEnabled(false);
         genderFemale.setEnabled(false);
         genderMale.setEnabled(false);
@@ -607,8 +619,12 @@ public class ProfileSettings extends Fragment {
 
             //Update the password. If it fails then fail the validation as well.
             ValidationSuccessful = UserFunctions.UpdateNewPassword(UserID, NewPass);
-        }
 
+            //Used to clear the password fields after completing the change.
+            oldpass.setText("");
+            newpass.setText("");
+            newpassagain.setText("");
+        }
         return ValidationSuccessful;
     }
 
