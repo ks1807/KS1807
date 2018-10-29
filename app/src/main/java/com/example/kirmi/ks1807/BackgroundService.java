@@ -6,22 +6,13 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.graphics.PixelFormat;
 import android.os.Binder;
 import android.os.Build;
 import android.os.IBinder;
 import android.app.Service;
 import android.content.Intent;
-import android.support.graphics.drawable.VectorDrawableCompat;
-import android.support.v4.app.NotificationCompat;
-import android.support.v7.app.AlertDialog;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.View;
 import android.view.WindowManager;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.spotify.android.appremote.api.ConnectionParams;
@@ -37,10 +28,8 @@ import com.spotify.android.appremote.api.error.SpotifyDisconnectedException;
 import com.spotify.android.appremote.api.error.UnsupportedFeatureVersionException;
 import com.spotify.android.appremote.api.error.UserNotAuthorizedException;
 import com.spotify.protocol.client.Subscription;
-import com.spotify.protocol.types.PlayerContext;
 import com.spotify.protocol.types.PlayerState;
 import com.spotify.protocol.types.Track;
-
 
 public class BackgroundService extends Service
 {
@@ -53,7 +42,7 @@ public class BackgroundService extends Service
     public SpotifyAppRemote spotifyAppRemote;
     public static boolean isRunning = false; //used by activity to check if it should start the service
     public static String lastSong = "First";
-    Spinner alertsSpinner;
+    public static Boolean SongStarted = false;
 
     //Binder method - gives the main application a spotifyAppRemote instance - temporary, should use Web API if possible.
     @Override
@@ -84,7 +73,8 @@ public class BackgroundService extends Service
     }
 
     @Override
-    public void onCreate() {
+    public void onCreate()
+    {
         isRunning = true;
         //save context
         t = this;
@@ -157,7 +147,7 @@ public class BackgroundService extends Service
 
     String[] GetMoods()
     {
-        /*String TheMood = "GetMoodList: U+1F606,4,Amused\n" +
+        /*String TheMood = "U+1F606,4,Amused\n" +
                 "U+1F620,-4,Angry\n" +
                 "U+2639,-3,Annoyed\n" +
                 "U+1F610,1,Calm\n" +
@@ -175,66 +165,91 @@ public class BackgroundService extends Service
                 "U+1F60A,1,Satisfied\n" +
                 "U+1F616,-2,Stressed";*/
 
-        String TheMood = "GetMoodList: 0x1F606,4,Amused\n" +
+        String TheMood = "0x1F606,4,Amused\n" +
                 "0x1F620,-4,Angry\n";
 
-        TheMood = TheMood.replace("GetMoodList: ","");
         TheMood = TheMood.replace("-","");
         TheMood = TheMood.replaceAll(",[0-9],"," ");
-        //TheMood = TheMood.replace("U+","\\u");
+        TheMood = TheMood.replace("0x","");
 
         String[] List = TheMood.split("\n");
         for (int i = 0; i < List.length; i++)
         {
             String EmoticonAsString = List[i].split(" ")[0];
             String MoodName = List[i].split(" ")[1];
-            int Emoticon = EmoticonAsString.codePointAt(0);
-            List[i] = "" + Emoticon + " " + MoodName;
+            int Emoticon = Integer.parseInt(EmoticonAsString,16);
+            List[i] = "" + Character.toChars(Emoticon) + " " + MoodName;
         }
         return List;
-    }
-
-    public static final String utf8ToString( byte[] bytes )
-    {
-        if ( bytes == null )
-        {
-            return "";
-        }
-
-        try
-        {
-            return new String( bytes, "UTF-8" );
-        }
-        catch ( UnsupportedEncodingException uee )
-        {
-            return "";
-        }
     }
 
     void connected()
     {
         //Music change detector
-        spotifyAppRemote.getPlayerApi().subscribeToPlayerState().setEventCallback(new Subscription.EventCallback<PlayerState>() {
-            public void onEvent(PlayerState playerState) {
+        spotifyAppRemote.getPlayerApi().subscribeToPlayerState().setEventCallback(new Subscription.EventCallback<PlayerState>()
+        {
+            String Track;
+            String Artist;
+            String Genre;
+            String Length;
+            String TheMood;
+
+            public void onEvent(final PlayerState playerState)
+            {
                 if(!lastSong.equals(playerState.track.uri))
                 {
-                    //final CharSequence[] items =
-                            //{
-                            //new String(Character.toChars(0x1F603)) + "Happy",
-                            //new String(Character.toChars(0x1F61F)) + "Sad",
-                            //new String(Character.toChars(0x1F620)) + "Angry"
-                            //};
                     final String[] List;
-
                     List = GetMoods();
-                    android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(getApplicationContext());
-                    builder.setTitle("How are you feeling?");
+
+                    android.app.AlertDialog.Builder builder =
+                            new android.app.AlertDialog.Builder(getApplicationContext());
+
+                    String DialogText;
+                    if (!SongStarted)
+                    {
+                        DialogText = "How are you feeling at the moment?";
+                    }
+                    else
+                    {
+                        DialogText = "How are you feeling now after this last song you played?";
+                    }
+
+                    builder.setTitle(DialogText);
                     builder.setItems(List, new DialogInterface.OnClickListener()
                     {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i)
                         {
-                            Toast.makeText(getApplicationContext(), "Selected " + List[i], Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "You selected " +
+                                    List[i], Toast.LENGTH_SHORT).show();
+
+                            //Verify if this is before or after.
+                            if (!SongStarted)
+                            {
+                                SongStarted = true;
+                                Track = playerState.track.name;
+                                Artist = playerState.track.artist.name;
+                                Genre = playerState.track.album.name;
+                                Length = String.valueOf(playerState.track.duration);
+                                TheMood = List[i];
+
+                                //BEFORE MOOD CALL
+                            }
+                            else if (SongStarted)
+                            {
+                                TheMood = List[i];
+                                //AFTER MOOD CALL - Pass Track, Artist, Genre, Length set previously.
+                                //This is for the song that just ended.
+
+                                SongStarted = false;
+                                Track = playerState.track.name;
+                                Artist = playerState.track.artist.name;
+                                Genre = playerState.track.album.name;
+                                Length = String.valueOf(playerState.track.duration);
+
+                                //BEFORE MOOD CALL - Pass Track, Artist, Genre, Length set after the
+                                //AFTER MOOD CALL is made. This is for the NEW song
+                            }
                         }
                     });
                     android.app.AlertDialog dialog = builder.create();
