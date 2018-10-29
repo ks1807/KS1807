@@ -81,21 +81,80 @@ public class DatabaseFunctions
         context.deleteDatabase(DBNAME);
     }
 
-    public String[] GetMusicHistory(String UserID)
+    //For inserting mood data into database
+    public void InsertMoods(String userID, String track, String moodbefore, String mbtime,
+                              String moodafter, String matime, String userliked, String recommended) {
+
+        synchronized (this.db) {
+            ContentValues NewMood = new ContentValues();
+            NewMood.put("UserID", userID);
+            NewMood.put("TrackID", track);
+            NewMood.put("MoodBefore", moodbefore);
+            NewMood.put("MoodBeforeTime", mbtime);
+            NewMood.put("MoodAfter", moodafter);
+            NewMood.put("MoodAfterTime", matime);
+            NewMood.put("UserLiked", userliked);
+            NewMood.put("HasBeenRecommended", recommended);
+
+            try {
+                db.insertOrThrow("UserMood", null, NewMood);
+                Log.d("Records", "user added");
+            } catch (Exception e) {
+                Log.e("Error in inserting row", e.toString());
+                e.printStackTrace();
+            }
+        }
+    }
+
+    //Function used to insert tracks into the database
+    public void InsertTrack(String name, String genre, String artist, String length) {
+        synchronized (this.db) {
+            ContentValues NewTrack = new ContentValues();
+            NewTrack.put("TrackName", name);
+            NewTrack.put("Genre", genre);
+            NewTrack.put("Artist", artist);
+            NewTrack.put("Length", length);
+
+            try {
+                db.insertOrThrow("MusicTrack", null, NewTrack);
+                Log.d("Track", "track added");
+            } catch (Exception e) {
+                Log.e("Error in inserting row", e.toString());
+                e.printStackTrace();
+            }
+        }
+
+    }
+
+
+    // Function used to get the top 10 mostly played tracks for display on the home page.
+    public ArrayList<Track> GetMusicHistory(String UserID)
     {
-        ArrayList<String> UserDetails = new ArrayList<String>();
+        ArrayList<Track> mostPlayed = new ArrayList<Track>();
 
         /*Gets the last ten music tracks that the user has listened to, using the mood after
         time as the time when the user finished the song*/
-        String SQLQuery = "SELECT DISTINCT TOP (10) TrackName, Genre, Artist, Length " +
-                "FROM MusicTrack INNER JOIN UserMood ON MusicTrack.TrackID = UserMood.TrackID " +
-                "WHERE UserMood.UserID = " + UserID + " ORDER BY UserMood.MoodAfterTime DESC";
-        UserDetails.add("The best song in the universe");
-        UserDetails.add("Classical");
-        UserDetails.add("Mr Song Writer");
-        UserDetails.add("3:15");
+        String SQLQuery = "SELECT DISTINCT TrackName, Artist, Genre, Length, MoodBefore, MoodAfter FROM MusicTrack INNER JOIN UserMood ON MusicTrack.TrackID = UserMood.TrackID WHERE UserMood.UserID = " + UserID + " ORDER BY UserMood.MoodAfterTime DESC LIMIT 0, 10" ;
 
-        return UserDetails.toArray(new String[UserDetails.size()]);
+        Cursor cursor = db.rawQuery(SQLQuery, null);
+
+        if (cursor.getCount() > 0) {
+
+            cursor.moveToFirst();
+
+            do {
+
+                Track track = new Track(cursor.getString(cursor.getColumnIndex("TrackName")), cursor.getString(cursor.getColumnIndex("Artist")),
+                        cursor.getString(cursor.getColumnIndex("Genre")), cursor.getString(cursor.getColumnIndex("Length")),
+                                cursor.getString(cursor.getColumnIndex("MoodBefore")), cursor.getString(cursor.getColumnIndex("MoodAfter")));
+                mostPlayed.add(track);
+
+            } while (cursor.moveToNext());
+
+            cursor.close();
+        }
+
+        return mostPlayed;
     }
 
     //Get list of Playlist IDs

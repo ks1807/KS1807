@@ -75,11 +75,11 @@
                     android:layout_gravity="center_horizontal"
                     android:background="@drawable/settingsfirstname"
                     android:ems="10"
+                    android:textColor="@color/darkgrey"
                     android:enabled="false"
                     android:fontFamily="@font/roboto_medium"
                     android:inputType="textPersonName"
                     android:paddingLeft="50dp"
-                    android:textColor="@color/grey"
                     android:textSize="18sp" />
 
                 <Space
@@ -94,10 +94,10 @@
                     android:background="@drawable/settingslastname"
                     android:ems="10"
                     android:enabled="false"
+                    android:textColor="@color/darkgrey"
                     android:fontFamily="@font/roboto_medium"
                     android:inputType="textPersonName"
                     android:paddingLeft="50dp"
-                    android:textColor="@color/grey"
                     android:textSize="18sp" />
 
                 <Space
@@ -112,10 +112,10 @@
                     android:background="@drawable/settingsemail"
                     android:ems="10"
                     android:enabled="false"
+                    android:textColor="@color/darkgrey"
                     android:fontFamily="@font/roboto_medium"
                     android:inputType="textEmailAddress"
                     android:paddingLeft="50dp"
-                    android:textColor="@color/grey"
                     android:textSize="18sp" />
 
                 <Space
@@ -130,10 +130,10 @@
                     android:background="@drawable/settingsage"
                     android:ems="10"
                     android:enabled="false"
+                    android:textColor="@color/darkgrey"
                     android:fontFamily="@font/roboto_medium"
                     android:inputType="date"
                     android:paddingLeft="50dp"
-                    android:textColor="@color/grey"
                     android:textSize="18sp" />
 
                 <Space

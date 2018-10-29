@@ -117,29 +117,49 @@ public class ProfileSettings extends Fragment {
                                 //Since the text fields have been disabled at the start of the page, fields should be enables for user to edit
                                 enableAllFields();
 
+                                //Changing the image according the screen design once user is on edit page
+                                if (genderMale.isChecked()) {
+                                    genderMale.setBackgroundResource(R.drawable.settingseditmaleselected);
+                                    genderFemale.setBackgroundResource(R.drawable.settingseditfemalenormal);
+                                    genderOther.setBackgroundResource(R.drawable.settingseditothernormal);
+                                }
+
+                                if (genderFemale.isChecked()) {
+                                    genderMale.setBackgroundResource(R.drawable.settingseditmalenormal);
+                                    genderFemale.setBackgroundResource(R.drawable.settingseditfemaleselected);
+                                    genderOther.setBackgroundResource(R.drawable.settingseditothernormal);
+                                }
+
+                                if (genderOther.isChecked()) {
+                                    genderMale.setBackgroundResource(R.drawable.settingseditmalenormal);
+                                    genderFemale.setBackgroundResource(R.drawable.settingseditfemalenormal);
+                                    genderOther.setBackgroundResource(R.drawable.settingseditotherselected);
+                                }
+
+
                                 //Setting the correct images when a button is selected
                                 genderMale.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
-                                        genderMale.setBackgroundResource(R.drawable.settingsmaleselected);
-                                        genderFemale.setBackgroundResource(R.drawable.settingsfemaleunselected);
-                                        genderOther.setBackgroundResource(R.drawable.settingsotherunselected);
+                                        genderMale.setBackgroundResource(R.drawable.settingseditmaleselected);
+                                        genderFemale.setBackgroundResource(R.drawable.settingseditfemalenormal);
+                                        genderOther.setBackgroundResource(R.drawable.settingseditothernormal);
                                     }
                                 });
                                 genderFemale.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
-                                        genderMale.setBackgroundResource(R.drawable.settingsmaleunselected);
-                                        genderFemale.setBackgroundResource(R.drawable.settingsfemaleselected);
-                                        genderOther.setBackgroundResource(R.drawable.settingsotherunselected);
+                                        genderMale.setBackgroundResource(R.drawable.settingseditmalenormal);
+                                        genderFemale.setBackgroundResource(R.drawable.settingseditfemaleselected);
+                                        genderOther.setBackgroundResource(R.drawable.settingseditothernormal);
                                     }
                                 });
                                 genderOther.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
-                                        genderMale.setBackgroundResource(R.drawable.settingsmaleunselected);
-                                        genderFemale.setBackgroundResource(R.drawable.settingsfemaleunselected);
-                                        genderOther.setBackgroundResource(R.drawable.settingsotherselected);
+                                        genderMale.setBackgroundResource(R.drawable.settingseditmalenormal);
+                                        genderFemale.setBackgroundResource(R.drawable.settingseditfemalenormal);
+                                        genderOther.setBackgroundResource(R.drawable.settingseditotherselected);
                                     }
                                 });
 
