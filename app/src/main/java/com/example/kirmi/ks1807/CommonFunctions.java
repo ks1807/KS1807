@@ -60,6 +60,20 @@ public class CommonFunctions
         return EncryptedPassword;
     }
 
+    public int GetArrayIndexFromString(String[] Array, String SearchString)
+    {
+        int Index = 0;
+        for(int i = 0; i < Array.length; i++)
+        {
+            if(Array[i].equals(SearchString))
+            {
+                Index = i;
+                break;
+            }
+        }
+        return Index;
+    }
+
     public boolean isNumeric(String TheString)
     {
         try

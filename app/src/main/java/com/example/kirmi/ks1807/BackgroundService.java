@@ -1,6 +1,5 @@
 package com.example.kirmi.ks1807;
 
-import java.io.UnsupportedEncodingException;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -14,6 +13,7 @@ import android.content.Intent;
 import android.util.Log;
 import android.view.WindowManager;
 import android.widget.Toast;
+import android.text.format.DateUtils;
 
 import com.spotify.android.appremote.api.ConnectionParams;
 import com.spotify.android.appremote.api.Connector;
@@ -105,14 +105,16 @@ public class BackgroundService extends Service
         {
             //Connected to Spotify, get appremote instance.
             @Override
-            public void onConnected(SpotifyAppRemote spotifyAppRemote) {
+            public void onConnected(SpotifyAppRemote spotifyAppRemote)
+            {
                 BackgroundService.this.spotifyAppRemote = spotifyAppRemote;
                 connected();
                 Log.d("BackgroundService", "Established connection with spotify");
             }
             //Connection failed, show error.
             @Override
-            public void onFailure(Throwable error) {
+            public void onFailure(Throwable error)
+            {
                 if(error instanceof AuthenticationFailedException)
                 {
                     Toast.makeText(t, "Authentication Failed, please try again", Toast.LENGTH_SHORT).show();
@@ -145,62 +147,117 @@ public class BackgroundService extends Service
         });
     }
 
-    String[] GetMoods()
+    String[][] GetMoods(String MoodList)
     {
-        /*String TheMood = "U+1F606,4,Amused\n" +
-                "U+1F620,-4,Angry\n" +
-                "U+2639,-3,Annoyed\n" +
-                "U+1F610,1,Calm\n" +
-                "U+1F603,2,Cheerful\n" +
-                "U+1F627,-4,Depressed\n" +
-                "U+1F600,3,Excited\n" +
-                "U+1F623,-3,Frustrated\n" +
-                "U+1F603,2,Good\n" +
-                "U+1F626,-2,Grumpy\n" +
-                "U+1F642,2,Happy\n" +
-                "U+1F61F,-1,Irritated\n" +
-                "U+1F601,3,Joyful\n" +
-                "U+1F641,-2,Melancholy\n" +
-                "U+1F622,-3,Sad\n" +
-                "U+1F60A,1,Satisfied\n" +
-                "U+1F616,-2,Stressed";*/
+        //Begin code to get the scores from the Mood List.
 
-        String TheMood = "0x1F606,4,Amused\n" +
-                "0x1F620,-4,Angry\n";
+        //Split the incoming string by comma then get its size.
+        String[] AllScoresByComma = MoodList.split(",");
+        int AllScoresByCommaSize = AllScoresByComma.length;
 
-        TheMood = TheMood.replace("-","");
-        TheMood = TheMood.replaceAll(",[0-9],"," ");
-        TheMood = TheMood.replace("0x","");
+        /*The scores will only require half as many elements to store as anything that isn't a score
+        will be discarded.*/
+        int AllScoresSize = AllScoresByCommaSize/2;
 
-        String[] List = TheMood.split("\n");
-        for (int i = 0; i < List.length; i++)
+        String[] AllScores = new String[AllScoresSize];
+
+        int j = 0;
+        for (int i = 0; i < AllScoresByCommaSize; i++)
         {
-            String EmoticonAsString = List[i].split(" ")[0];
-            String MoodName = List[i].split(" ")[1];
-            int Emoticon = Integer.parseInt(EmoticonAsString,16);
-            List[i] = "" + Character.toChars(Emoticon) + " " + MoodName;
+            //The score will appear in the comma delimited strings in the pattern of 1,3,5, etc
+            if ((i % 2) - 1 == 0)
+            {
+                AllScores[j] = AllScoresByComma[i];
+                j++;
+            }
         }
-        return List;
+
+        //End code to get the scores from the Mood List.
+
+        //Begin code to get the moods and emoticons from the Mood List.
+
+        /*First start by getting rid of the minus symbol, all numbers after the comma and then the
+        unicode bit at the start (note this unicode decoding doesn't work correctly)*/
+        MoodList = MoodList.replace("-","");
+        MoodList = MoodList.replaceAll(",[0-9],"," ");
+        MoodList = MoodList.replace("U+","");
+
+        //Then get each mood and emoticon line by line.
+        String[] AllMoods = MoodList.split("\n");
+        String[] AllEmoticons = new String[AllMoods.length];
+
+        for (int i = 0; i < AllMoods.length; i++)
+        {
+            //Emoticons are not being decoded properly. Leaving the code here.
+            String EmoticonAsString = AllMoods[i].split(" ")[0];
+            String MoodName = AllMoods[i].split(" ")[1];
+            int Emoticon = Integer.parseInt(EmoticonAsString,16);
+
+            AllMoods[i] = MoodName;
+            AllEmoticons[i] = "" + Character.toChars(Emoticon);
+        }
+        //End code to get the moods and emoticons from the Mood List.
+
+        String MoodListAndScore[][] = {AllMoods, AllScores, AllEmoticons};
+        return MoodListAndScore;
     }
 
     void connected()
     {
         //Music change detector
-        spotifyAppRemote.getPlayerApi().subscribeToPlayerState().setEventCallback(new Subscription.EventCallback<PlayerState>()
+        spotifyAppRemote.getPlayerApi().subscribeToPlayerState().setEventCallback(
+                new Subscription.EventCallback<PlayerState>()
         {
+            //Call to GetMoodList here
+
+            String MoodList = "U+1F606,4,Amused\n" +
+                    "U+1F620,-4,Angry\n" +
+                    "U+2639,-3,Annoyed\n" +
+                    "U+1F610,1,Calm\n" +
+                    "U+1F603,2,Cheerful\n" +
+                    "U+1F627,-4,Depressed\n" +
+                    "U+1F600,3,Excited\n" +
+                    "U+1F623,-3,Frustrated\n" +
+                    "U+1F603,2,Good\n" +
+                    "U+1F626,-2,Grumpy\n" +
+                    "U+1F642,2,Happy\n" +
+                    "U+1F61F,-1,Irritated\n" +
+                    "U+1F601,3,Joyful\n" +
+                    "U+1F641,-2,Melancholy\n" +
+                    "U+1F622,-3,Sad\n" +
+                    "U+1F60A,1,Satisfied\n" +
+                    "U+1F616,-2,Stressed";
+
+            final String[][] FullList = GetMoods(MoodList);
+
             String Track;
             String Artist;
             String Genre;
             String Length;
             String TheMood;
+            String BeforeMood;
 
             public void onEvent(final PlayerState playerState)
             {
+                /*Break up the two dimensional array of scores, Emoticons and Mood Names and then
+                convert the scores from String to Integer*/
+                final String[] List = FullList[0];
+                final String[] StringScoreList = FullList[1];
+                final String[] EmoticonList = FullList[2]; //Emoticons not used as they don't work properly.
+
+                int ListSize = FullList[1].length;
+                int[] ScoreList = new int[ListSize];
+
+                for (int i = 0; i < ListSize; i++)
+                {
+                    ScoreList[i] = Integer.parseInt(StringScoreList[i]);
+                }
+
+                //CompleteScoreList needs to be final in order to be accessed in code below.
+                final int[] CompleteScoreList = ScoreList;
+
                 if(!lastSong.equals(playerState.track.uri))
                 {
-                    final String[] List;
-                    List = GetMoods();
-
                     android.app.AlertDialog.Builder builder =
                             new android.app.AlertDialog.Builder(getApplicationContext());
 
@@ -230,8 +287,11 @@ public class BackgroundService extends Service
                                 Track = playerState.track.name;
                                 Artist = playerState.track.artist.name;
                                 Genre = playerState.track.album.name;
-                                Length = String.valueOf(playerState.track.duration);
+                                Length = String.valueOf(DateUtils.formatElapsedTime(
+                                        ((int)playerState.track.duration)/1000));
                                 TheMood = List[i];
+                                //For tracking the difference of the before and after moods.
+                                BeforeMood = List[i];
 
                                 //BEFORE MOOD CALL
                             }
@@ -245,10 +305,28 @@ public class BackgroundService extends Service
                                 Track = playerState.track.name;
                                 Artist = playerState.track.artist.name;
                                 Genre = playerState.track.album.name;
-                                Length = String.valueOf(playerState.track.duration);
+                                Length = String.valueOf(DateUtils.formatElapsedTime(
+                                        ((int)playerState.track.duration)/1000));
 
                                 //BEFORE MOOD CALL - Pass Track, Artist, Genre, Length set after the
-                                //AFTER MOOD CALL is made. This is for the NEW song
+                                //AFTER MOOD CALL is made. This is for the NEW song.
+
+                                CommonFunctions Common = new CommonFunctions();
+                                int ScoreIndex = 0;
+
+                                /*The place in the array for the score should match that of where
+                                the text based mood is*/
+                                ScoreIndex = Common.GetArrayIndexFromString(List, BeforeMood);
+                                int BeforeMoodScore = CompleteScoreList[ScoreIndex];
+
+                                ScoreIndex = Common.GetArrayIndexFromString(List, TheMood);
+                                int AfterMoodScore = CompleteScoreList[ScoreIndex];
+
+                                if (AfterMoodScore - BeforeMoodScore > 3 ||
+                                        AfterMoodScore - BeforeMoodScore < -3)
+                                {
+                                    //Diary prompt - Not yet implemented.
+                                }
                             }
                         }
                     });

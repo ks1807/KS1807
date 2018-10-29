@@ -243,7 +243,6 @@ public class ProfileSettings extends Fragment
                                     {
                                         if (ValidateChangePasswordForm())
                                         {
-
                                             Toast.makeText(getActivity(),
                                                     "Successfully changed password", Toast.LENGTH_SHORT).show();
                                             setProfileBackFromChangePass();
