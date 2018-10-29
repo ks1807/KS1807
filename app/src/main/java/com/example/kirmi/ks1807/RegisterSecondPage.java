@@ -4,23 +4,15 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.RadioButton;
 import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.Toast;
 
 public class RegisterSecondPage extends AppCompatActivity
 {
     private final Context context = this;
-    final CommonFunctions Common = new CommonFunctions();
     private DatabaseFunctions RegisterFunctions;
     String UserID = "";
     Spinner s1, s2, s3, s4;
@@ -48,7 +40,6 @@ public class RegisterSecondPage extends AppCompatActivity
         s2.setAdapter(adapter1);
         s3.setAdapter(adapter1);
         s4.setAdapter(adapter1);
-
     }
 
     //Confirm if the user wants to go back if the button is pressed.
@@ -107,7 +98,6 @@ public class RegisterSecondPage extends AppCompatActivity
 
     private boolean UpdateSecondPage()
     {
-
         String TheMusicQuestionOne = "";
         String TheMusicQuestionTwo = "";
         String TheMusicQuestionThree = "";

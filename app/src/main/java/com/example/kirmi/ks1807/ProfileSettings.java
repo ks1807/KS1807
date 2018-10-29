@@ -1,39 +1,31 @@
 package com.example.kirmi.ks1807;
 
 import android.app.AlertDialog;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.LocalBroadcastManager;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
-
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class ProfileSettings extends Fragment {
-
-    private static final String TAG = "ProfileSettingsTabFrag";
+public class ProfileSettings extends Fragment
+{
 
     String UserID = "", CurrentEmailAddress = "";
     final CommonFunctions Common = new CommonFunctions();
@@ -48,7 +40,8 @@ public class ProfileSettings extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState)
+    {
         View view = inflater.inflate(R.layout.activity_profile_settingstab, container, false);
 
         UserID = Global.UserID;
@@ -80,41 +73,48 @@ public class ProfileSettings extends Fragment {
         changepassback = (Button)view.findViewById(R.id.btn_profilechangepasssettingback);
         changePassword = (Button) view.findViewById(R.id.btnchangepass);
 
-        //Collecting the current user details to be used for display
+        //Collecting the current user details to be used for display.
         UserDetails = UserFunctions.GetUserDetails(UserID);
 
-        //Function to show all the details within respective text element
+        //Function to show all the details within respective text element.
         DisplayUserDetails(UserDetails);
 
-        if (userdetails.getVisibility() != View.VISIBLE) {
+        if (userdetails.getVisibility() != View.VISIBLE)
+        {
             userdetails.setVisibility(View.VISIBLE);
             updatepass.setVisibility(View.GONE);
         }
 
-        //Getting the selection from the options dropdown
+        //Getting the selection from the options dropdown.
         options = (Button)view.findViewById(R.id.btn_Options);
-        options.setOnClickListener(new View.OnClickListener() {
+        options.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View view) {
+            public void onClick(View view)
+            {
                 // Showing the popup menu with the two different options edit and change password
                 Context wrapper = new ContextThemeWrapper(getActivity(), R.style.popUpOptions);
                 PopupMenu popup = new PopupMenu(wrapper, options);
                 popup.getMenuInflater().inflate(R.menu.profileoptions, popup.getMenu());
-                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
+                {
                     @Override
-                    public boolean onMenuItemClick(MenuItem menuItem) {
-                        //Once a menu item is selected, doing relevant tasks to the menu item
-                        switch (menuItem.getItemId()) {
+                    public boolean onMenuItemClick(MenuItem menuItem)
+                    {
+                        //Once a menu item is selected, doing relevant tasks to the menu item.
+                        switch (menuItem.getItemId())
+                        {
                             case R.id.option_edit:
-                                // Setting some elements not relevant to the edit section to be invisible and some relevant section to be visible
+                                /*Setting some elements not relevant to the edit section to be
+                                invisible and some relevant section to be visible*/
                                 options.setVisibility(View.INVISIBLE);
                                 signout.setVisibility(View.INVISIBLE);
                                 updatepass.setVisibility(View.GONE);
-
                                 editback.setVisibility(View.VISIBLE);
                                 btnUpdate.setVisibility(View.VISIBLE);
 
-                                //Since the text fields have been disabled at the start of the page, fields should be enables for user to edit
+                                /*Since the text fields have been disabled at the start of the page,
+                                fields should be enabled for the user to edit.*/
                                 enableAllFields();
 
                                 //Setting the correct images when a button is selected
@@ -143,13 +143,17 @@ public class ProfileSettings extends Fragment {
                                     }
                                 });
 
-                                //On click of the update button, validate the inputs from the user and update details in the database.
-                                btnUpdate.setOnClickListener(new View.OnClickListener() {
+                                /*On click of the update button, validate the inputs from the user
+                                and update details in the database.*/
+                                btnUpdate.setOnClickListener(new View.OnClickListener()
+                                {
                                     @Override
-                                    public void onClick(View view) {
+                                    public void onClick(View view)
+                                    {
                                         if (ValidateForm())
                                         {
-                                            Toast.makeText(getActivity(), "User details updated", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(getActivity(), "User details updated",
+                                                    Toast.LENGTH_SHORT).show();
                                             setProfileBackFromEdit();
                                             UserDetails = UserFunctions.GetUserDetails(UserID);
                                             DisplayUserDetails(UserDetails);
@@ -157,8 +161,9 @@ public class ProfileSettings extends Fragment {
                                     }
                                 });
 
-                                //if the back button is selected then all the field are disabled, the fields are updated to what is in the database since
-                                // the fields are the same ones being used as the normal view of te activity
+                                /*If the back button is selected then all the fields are disabled,
+                                the fields are updated to what is in the database since the fields
+                                are the same ones being used as the normal view of the activity*/
                                 editback.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
@@ -190,17 +195,19 @@ public class ProfileSettings extends Fragment {
                                 });
 
                                 return true;
-                            //The following is run if the change password menu item is selected
-                            case R.id.option_changepass:
+
+                                //The following is run if the change password menu item is selected.
+                                case R.id.option_changepass:
                                 userdetails.setVisibility(View.GONE);
                                 options.setVisibility(View.INVISIBLE);
 
-                                //setting the fields and buttons relevant to change user password
+                                //Setting the fields and buttons relevant to change user password.
                                 changepassback.setVisibility(View.VISIBLE);
                                 updatepass.setVisibility(View.VISIBLE);
 
-                                //if the back button is selected then display the content of the normal profile page
-                                changepassback.setOnClickListener(new View.OnClickListener() {
+                                //If the back button is selected then display the content of the normal profile page.
+                                changepassback.setOnClickListener(new View.OnClickListener()
+                                {
                                     @Override
                                     public void onClick(View view) {
                                         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
@@ -227,35 +234,41 @@ public class ProfileSettings extends Fragment {
                                     }
                                 });
 
-                                //Validating the user input to change password once the button is clicked and taking the user back to the main profile
-                                changePassword.setOnClickListener(new View.OnClickListener() {
+                                /*Validating the user input to change password once the button is
+                                clicked and taking the user back to the main profile*/
+                                changePassword.setOnClickListener(new View.OnClickListener()
+                                {
                                     @Override
-                                    public void onClick(View view) {
-                                        if (ValidateChangePasswordForm()) {
-
-                                            Toast.makeText(getActivity(), "Successfully changed password", Toast.LENGTH_SHORT).show();
+                                    public void onClick(View view)
+                                    {
+                                        if (ValidateChangePasswordForm())
+                                        {
+                                            Toast.makeText(getActivity(),
+                                                    "Successfully changed password", Toast.LENGTH_SHORT).show();
                                             setProfileBackFromChangePass();
                                         }
 
                                     }
                                 });
-
                                 return true;
                             default:
                                 return false;
                         }
                     }
                 });
-                // used to actually show the menu items with the popup
+                //Used to actually show the menu items with the popup.
                 popup.show();
             }
         });
 
-        //If the user chooses to sign out then this takes them to the login page and sets the user id as empty as the user is no longer logged in
+        /*If the user chooses to sign out then this takes them to the login page and sets the user
+        ID as empty as the user is no longer logged in*/
         signout = (Button)view.findViewById(R.id.btn_signout);
-        signout.setOnClickListener(new View.OnClickListener() {
+        signout.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View view) {
+            public void onClick(View view)
+            {
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
                 alertDialogBuilder.setTitle("Confirm logout");
                 alertDialogBuilder
@@ -284,18 +297,14 @@ public class ProfileSettings extends Fragment {
         return view;
     }
 
-    //Assigning the fields in the profile with the information found from the database about the user
+    //Assigning the fields in the profile with the information found from the database about the user.
     public void DisplayUserDetails(ArrayList<String> UserDetails)
     {
         firstN.setText(UserDetails.get(0));
-
         lastN.setText(UserDetails.get(1));
-
         editemail.setText(UserDetails.get(2));
         CurrentEmailAddress = UserDetails.get(2);
-
         editdob.setText(UserDetails.get(3));
-
         String Gender = UserDetails.get(4);
 
         /*Make sure that the buttons have their image and checked status set to what the user
@@ -323,39 +332,44 @@ public class ProfileSettings extends Fragment {
         }
     }
 
-    //Function used to set the profile back to normal after coming back from editing the user details
-    public void setProfileBackFromEdit() {
+    //Function used to set the profile back to normal after coming back from editing the user details.
+    public void setProfileBackFromEdit()
+    {
         options.setVisibility(View.VISIBLE);
         signout.setVisibility(View.VISIBLE);
-
         editback.setVisibility(View.INVISIBLE);
         btnUpdate.setVisibility(View.INVISIBLE);
-
         disableAllFields();
-
     }
 
-    //Function used to set the profile back to normal after coming back from changing password
-    public void setProfileBackFromChangePass() {
+    //Function used to set the profile back to normal after coming back from changing password.
+    public void setProfileBackFromChangePass()
+    {
         options.setVisibility(View.VISIBLE);
         updatepass.setVisibility(View.GONE);
-
         changepassback.setVisibility(View.INVISIBLE);
         userdetails.setVisibility(View.VISIBLE);
-
         disableAllFields();
     }
 
-    //Function that enables all fields and radio buttons for the user to edit
-    public void enableAllFields() {
+    //Function that enables all fields and radio buttons for the user to edit.
+    public void enableAllFields()
+    {
         firstN.setEnabled(true);
         firstN.setTextColor(Color.WHITE);
+        firstN.setHint("First Name");
+
         lastN.setEnabled(true);
         lastN.setTextColor(Color.WHITE);
+        lastN.setHint("Last Name");
+
         editemail.setEnabled(true);
         editemail.setTextColor(Color.WHITE);
+        editemail.setHint("Email");
+
         editdob.setEnabled(true);
         editdob.setTextColor(Color.WHITE);
+        editdob.setHint("DD/MM/YYYY");
 
         gender.setEnabled(true);
         genderFemale.setEnabled(true);
@@ -364,15 +378,24 @@ public class ProfileSettings extends Fragment {
     }
 
     //Function that disables all fields and radio buttons so that the user cannot edit and only view the details
-    public void disableAllFields() {
+    public void disableAllFields()
+    {
         firstN.setEnabled(false);
         firstN.setTextColor(Color.GRAY);
+        firstN.setHint("");
+
         lastN.setEnabled(false);
         lastN.setTextColor(Color.GRAY);
+        lastN.setHint("");
+
         editemail.setEnabled(false);
         editemail.setTextColor(Color.GRAY);
+        editemail.setHint("");
+
         editdob.setEnabled(false);
         editdob.setTextColor(Color.GRAY);
+        editdob.setHint("");
+
         gender.setEnabled(false);
         genderFemale.setEnabled(false);
         genderMale.setEnabled(false);
@@ -500,7 +523,6 @@ public class ProfileSettings extends Fragment {
             ValidationSuccessful = UserFunctions.UpdateCurrentUser(FName, LName, TheEmail,
                     TheDateOfBirth, TheGender, UserID);
         }
-
         return ValidationSuccessful;
     }
 
@@ -512,7 +534,6 @@ public class ProfileSettings extends Fragment {
         String InvalidMessage = "";
 
         //Convert the contents of the text boxes to strings
-
         String OldPass = oldpass.getText().toString();
         String NewPass = newpass.getText().toString();
         String NewPassRepeat = newpassagain.getText().toString();
@@ -568,7 +589,7 @@ public class ProfileSettings extends Fragment {
             alertDialog.show();
         }
 
-        // Checking if the password is strong as it should have specific amount of characters
+        //Checking if the password is strong.
         if (!Common.ValidPassword(NewPass) && ValidationSuccessful)
         {
             ValidationSuccessful = false;
@@ -581,7 +602,7 @@ public class ProfileSettings extends Fragment {
 
         String TestPassword = Common.EncryptPassword(OldPass);
 
-        //Checking id the old password entered here is the same as the one in the database
+        //Checking id the old password entered here is the same as the one in the database.
         if (!UserFunctions.VerifyPassword(UserID, TestPassword) && ValidationSuccessful)
         {
             ValidationSuccessful = false;
@@ -600,17 +621,19 @@ public class ProfileSettings extends Fragment {
             alertDialog.show();
         }
 
-        //If all the validations above are successful, then encrypt the password and update the database
+        //If all the validations above are successful, then encrypt the password and update the database.
         if(ValidationSuccessful)
         {
             NewPass = Common.EncryptPassword(NewPass);
 
             //Update the password. If it fails then fail the validation as well.
             ValidationSuccessful = UserFunctions.UpdateNewPassword(UserID, NewPass);
-        }
 
+            //Used to clear the password fields after completing the change.
+            oldpass.setText("");
+            newpass.setText("");
+            newpassagain.setText("");
+        }
         return ValidationSuccessful;
     }
-
-
 }
