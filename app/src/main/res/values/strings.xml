@@ -19,6 +19,11 @@
         <item>Never</item>
     </string-array>
 
+    <string-array name="diaryq2options">
+        <item>Positive</item>
+        <item>Negative</item>
+    </string-array>
+
     <string name="app_name">KS1807</string>
     <string name="LandingCaption">Music for Mental Health</string>
     <string name="LoginCaption">Login to your account below</string>
@@ -123,4 +128,12 @@
     <string name="blackDogLink"><a href="https://www.blackdoginstitute.org.au/">-> <u>Black Dog Institute</u></a></string>
     <string name="DateOfBirth_Caption">DD/MM/YYYY</string>
     <string name="Password_Caption" >••••••••</string>
+    <string name="DiaryQ1">1. Did the music trigger any particular thoughts or memories? If yes, record them here.</string>
+    <string name="Diaryq1whylink"><u>Why does this matter?</u></string>
+    <string name="whyLinkDialogCap">Our thoughts have a big influence on our feelings. Want to know more?</string>
+    <string name="DiaryQ2">2. Was this a positive or negative thought?</string>
+    <string name="DiaryQ2NegativeThoughtCap">Sometimes we get so used to the beliefs and thoughts in our minds that we forget there are other ways to look at a situation. Want to know more about challenging negative thoughts?</string>
+    <string name="DiaryQ3">3. Where were you when listening to this song?</string>
+    <string name="DiaryQ4">4. Who were you with when listening to this song?</string>
+    <string name="DiaryQ5">5. What were you doing when listening to this song?</string>
 </resources>
