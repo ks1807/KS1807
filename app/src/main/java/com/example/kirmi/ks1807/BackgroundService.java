@@ -336,10 +336,14 @@ public class BackgroundService extends Service
                                                             if(!response.body().equals("Incorrect UserID or Password. Query not executed."))
                                                             {
                                                                 Global.MoodID = response.body();
+                                                                Toast.makeText(getApplicationContext(),
+                                                                "Mood at start of track updated with Mood ID " + Global.MoodID, Toast.LENGTH_SHORT).show();
                                                             }
                                                             else
                                                             {
                                                                 Global.MoodID = "-1";
+                                                                Toast.makeText(getApplicationContext(),
+                                                                "Error, mood at start of track failed to update", Toast.LENGTH_SHORT).show();
                                                             }
                                                         }
                                                         @Override
@@ -378,6 +382,11 @@ public class BackgroundService extends Service
                                                             {
                                                                 Toast.makeText(getApplicationContext(),
                                                                         "Error, mood at end of track failed to update", Toast.LENGTH_SHORT).show();
+                                                            }
+                                                            else
+                                                            {
+                                                                Toast.makeText(getApplicationContext(),
+                                                                        "Mood at end of track updated with Mood ID " + Global.MoodID, Toast.LENGTH_SHORT).show();
                                                             }
                                                         }
                                                         @Override
