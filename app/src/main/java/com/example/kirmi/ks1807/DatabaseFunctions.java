@@ -134,7 +134,10 @@ public class DatabaseFunctions
 
         /*Gets the last ten music tracks that the user has listened to, using the mood after
         time as the time when the user finished the song*/
-        String SQLQuery = "SELECT DISTINCT TrackName, Artist, Genre, Length, MoodBefore, MoodAfter FROM MusicTrack INNER JOIN UserMood ON MusicTrack.TrackID = UserMood.TrackID WHERE UserMood.UserID = " + UserID + " ORDER BY UserMood.MoodAfterTime DESC LIMIT 0, 10" ;
+        String SQLQuery = "SELECT DISTINCT TrackName, Artist, Genre, Length, MoodBefore, MoodAfter " +
+                "FROM MusicTrack INNER JOIN UserMood ON MusicTrack.TrackID = UserMood.TrackID " +
+                "WHERE UserMood.UserID = " + UserID + " " +
+                "ORDER BY UserMood.MoodAfterTime DESC LIMIT 0, 10" ;
 
         Cursor cursor = db.rawQuery(SQLQuery, null);
 

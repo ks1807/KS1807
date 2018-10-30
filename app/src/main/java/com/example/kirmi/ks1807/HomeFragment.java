@@ -16,8 +16,8 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeFragment extends Fragment {
-
+public class HomeFragment extends Fragment
+{
     String UserID = "";
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;

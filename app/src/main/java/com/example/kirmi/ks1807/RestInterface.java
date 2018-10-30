@@ -12,7 +12,8 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 
-public class RestInterface {
+public class RestInterface
+{
     //static final String BASE_URL = "localhost:4567/";
     static final String BASE_URL = "http://pe-ks1807.scem.westernsydney.edu.au/MMH_API/webresources/";
     //static final String BASE_URL = "http://pe-ks1807.scem.uws.edu.au:8080/MMH_API/webresources/";
@@ -20,8 +21,10 @@ public class RestInterface {
     OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
 
     public static Retrofit retrofit = null;
-    public static Retrofit getClient() {
-        if (retrofit==null) {
+    public static Retrofit getClient()
+    {
+        if (retrofit==null)
+        {
             Retrofit.Builder builder = new Retrofit.Builder()
                     .baseUrl(BASE_URL)
                     .addConverterFactory(ScalarsConverterFactory.create());
@@ -63,7 +66,8 @@ public class RestInterface {
         return EncryptedPassword;
     }
 
-    public interface Ks1807Client {
+    public interface Ks1807Client
+    {
         @GET("mmhpackage.useraccount/GetMusicHistory/{id}/{password}")
         Call<String> GetMusicHistory(@Path("id") String id, @Path("password") String password);
 
@@ -109,9 +113,9 @@ public class RestInterface {
         Call<String> UpdatePassword(@Path("newpassword") String newpassword, @Path("id") String id,
                                     @Path("currentpassword") String currpassword);
 
-        @GET("mmhpackage.useraccount/UpdateSettings/{MakeRecommendations}/{frequency}/{id}/{password}")
-        Call<String> UpdateSettings(@Path("MakeRecommendations") String MakeRecommendations, @Path("frequency") String frequency,
-                                    @Path("id") String id, @Path("password") String password);
+        @GET("mmhpackage.useraccount/UpdateSettings/{MakeRecommendations}/{MoodFrequency}/{RememberLogin}/{id}/{password}")
+        Call<String> UpdateSettings(@Path("MakeRecommendations") String MakeRecommendations, @Path("MoodFrequency") String frequency,
+                                    @Path("RememberLogin") String RememberLogin, @Path("id") String id, @Path("password") String password);
 
         @GET("mmhpackage.useraccount/VerifyPassword/{id}/{password}")
         Call<String> VerifyPassword(@Path("id") String id, @Path("password") String password);
@@ -165,8 +169,6 @@ public class RestInterface {
             item.Duration = temp[3];
             list.add(item);
         }
-
         return list;
     }
-
 }
