@@ -10,17 +10,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.EditText;
-import android.widget.Toast;
-
-import com.spotify.sdk.android.authentication.*;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
-
-import static com.example.kirmi.ks1807.RestInterface.EncryptPassword;
-import static com.spotify.sdk.android.authentication.LoginActivity.REQUEST_CODE;
 
 public class MainActivity extends AppCompatActivity
 {
@@ -46,6 +39,7 @@ public class MainActivity extends AppCompatActivity
         Password = (TextView)findViewById(R.id.EditText_Password);
         UserFunctions = new DatabaseFunctions(this);
         client = retrofit.create(RestInterface.Ks1807Client.class);
+
         //Ensures that password hint disappears when user focuses the text box.
         final EditText PasswordTextBox = (EditText) findViewById(R.id.EditText_Password);
         PasswordTextBox.setOnFocusChangeListener(new View.OnFocusChangeListener()
@@ -72,18 +66,30 @@ public class MainActivity extends AppCompatActivity
     {
         if(ValidateLogin())
         {
-            Call<String> response = client.VerifyLogin(TheEmailAddress, PasswordFunctions.EncryptPassword(ThePassword));
-            response.enqueue(new Callback<String>() {
+            String EncryptedPassword = PasswordFunctions.EncryptPassword(ThePassword);
+
+            Global.UserPassword = EncryptedPassword;
+
+            Call<String> response = client.VerifyLogin(TheEmailAddress, EncryptedPassword);
+            response.enqueue(new Callback<String>()
+            {
                 @Override
-                public void onResponse(Call<String> call, Response<String> response) {
+                public void onResponse(Call<String> call, Response<String> response)
+                {
                     Log.d("retrofitclick", "SUCCESS: " + response.raw());
-                    if(response.body().equals("1"))
-                        success_Login();
-                    else
+                    if(response.body().equals("-1"))
+                    {
                         fail_Login();
+                    }
+                    else
+                    {
+                        Global.UserID = response.body();
+                        success_Login();
+                    }
                 }
                 @Override
-                public void onFailure(Call<String> call, Throwable t) {
+                public void onFailure(Call<String> call, Throwable t)
+                {
                     fail_LoginNetwork();
                 }
             });

@@ -149,6 +149,18 @@ public class BackgroundService extends Service
 
     String[][] GetMoods(String MoodList)
     {
+        //NOTE THIS IS USED TO AVOID CLUTTERING THE SCREEN DUE TO THE LACK OF DROPDOWN.
+        //ONCE THE DROPDOWN IS IMPLEMENTED YOU CAN GET RID OF THIS
+        int MaximumDisplay = 6;
+
+        String[] LimitedMoodList = MoodList.split("\n", MaximumDisplay + 1);
+        MoodList = "";
+        for (int i = 1; i < MaximumDisplay; i++)
+        {
+            MoodList = MoodList + LimitedMoodList[i] + "\n";
+        }
+        //END OF CODE LIMITING MOOD LIST SIZE.
+
         //Begin code to get the scores from the Mood List.
 
         //Split the incoming string by comma then get its size.
@@ -165,7 +177,7 @@ public class BackgroundService extends Service
         for (int i = 0; i < AllScoresByCommaSize; i++)
         {
             //The score will appear in the comma delimited strings in the pattern of 1,3,5, etc
-            if ((i % 2) - 1 == 0)
+            if (((i % 2) - 1 == 0))
             {
                 AllScores[j] = AllScoresByComma[i];
                 j++;
@@ -176,11 +188,9 @@ public class BackgroundService extends Service
 
         //Begin code to get the moods and emoticons from the Mood List.
 
-        /*First start by getting rid of the minus symbol, all numbers after the comma and then the
-        unicode bit at the start (note this unicode decoding doesn't work correctly)*/
+        /*First start by getting rid of the minus symbol and then all numbers after the comma.*/
         MoodList = MoodList.replace("-","");
         MoodList = MoodList.replaceAll(",[0-9],"," ");
-        MoodList = MoodList.replace("U+","");
 
         //Then get each mood and emoticon line by line.
         String[] AllMoods = MoodList.split("\n");
@@ -194,7 +204,7 @@ public class BackgroundService extends Service
             int Emoticon = Integer.parseInt(EmoticonAsString,16);
 
             AllMoods[i] = MoodName;
-            AllEmoticons[i] = "" + Character.toChars(Emoticon);
+            AllEmoticons[i] = new String (Character.toChars(Emoticon));
         }
         //End code to get the moods and emoticons from the Mood List.
 
@@ -208,28 +218,6 @@ public class BackgroundService extends Service
         spotifyAppRemote.getPlayerApi().subscribeToPlayerState().setEventCallback(
                 new Subscription.EventCallback<PlayerState>()
         {
-            //Call to GetMoodList here
-
-            String MoodList = "U+1F606,4,Amused\n" +
-                    "U+1F620,-4,Angry\n" +
-                    "U+2639,-3,Annoyed\n" +
-                    "U+1F610,1,Calm\n" +
-                    "U+1F603,2,Cheerful\n" +
-                    "U+1F627,-4,Depressed\n" +
-                    "U+1F600,3,Excited\n" +
-                    "U+1F623,-3,Frustrated\n" +
-                    "U+1F603,2,Good\n" +
-                    "U+1F626,-2,Grumpy\n" +
-                    "U+1F642,2,Happy\n" +
-                    "U+1F61F,-1,Irritated\n" +
-                    "U+1F601,3,Joyful\n" +
-                    "U+1F641,-2,Melancholy\n" +
-                    "U+1F622,-3,Sad\n" +
-                    "U+1F60A,1,Satisfied\n" +
-                    "U+1F616,-2,Stressed";
-
-            final String[][] FullList = GetMoods(MoodList);
-
             String Track;
             String Artist;
             String Genre;
@@ -239,18 +227,46 @@ public class BackgroundService extends Service
 
             public void onEvent(final PlayerState playerState)
             {
+                //Call to GetMoodList here
+
+                String MoodList = "1F606,4,Amused\n" +
+                        "1F620,-4,Angry\n" +
+                        "2639,-3,Annoyed\n" +
+                        "1F610,1,Calm\n" +
+                        "1F603,2,Cheerful\n" +
+                        "1F627,-4,Depressed\n" +
+                        "1F600,3,Excited\n" +
+                        "1F623,-3,Frustrated\n" +
+                        "1F603,2,Good\n" +
+                        "1F626,-2,Grumpy\n" +
+                        "1F642,2,Happy\n" +
+                        "1F61F,-1,Irritated\n" +
+                        "1F601,3,Joyful\n" +
+                        "1F641,-2,Melancholy\n" +
+                        "1F622,-3,Sad\n" +
+                        "1F60A,1,Satisfied\n" +
+                        "1F616,-2,Stressed";
+
+                final String[][] FullList = GetMoods(MoodList);
+
                 /*Break up the two dimensional array of scores, Emoticons and Mood Names and then
                 convert the scores from String to Integer*/
                 final String[] List = FullList[0];
                 final String[] StringScoreList = FullList[1];
-                final String[] EmoticonList = FullList[2]; //Emoticons not used as they don't work properly.
+                final String[] EmoticonList = FullList[2];
+                int MoodListSize = FullList[0].length;
 
-                int ListSize = FullList[1].length;
-                int[] ScoreList = new int[ListSize];
+                /*Combine Emoticons and Mood Names for display purposes. However list of mood names
+                on their own will be maintained as well as this is what will go into the DB.*/
+                final String[] MoodAndEmoticonList = new String[MoodListSize];
 
-                for (int i = 0; i < ListSize; i++)
+                int[] ScoreList = new int[MoodListSize];
+
+                //Loop used to convert the string numbers to ints and to combine the mood name and emoticon.
+                for (int i = 0; i < MoodListSize; i++)
                 {
                     ScoreList[i] = Integer.parseInt(StringScoreList[i]);
+                    MoodAndEmoticonList[i] = EmoticonList[i] + " " + List[i];
                 }
 
                 //CompleteScoreList needs to be final in order to be accessed in code below.
@@ -272,13 +288,13 @@ public class BackgroundService extends Service
                     }
 
                     builder.setTitle(DialogText);
-                    builder.setItems(List, new DialogInterface.OnClickListener()
+                    builder.setItems(MoodAndEmoticonList, new DialogInterface.OnClickListener()
                     {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i)
                         {
                             Toast.makeText(getApplicationContext(), "You selected " +
-                                    List[i], Toast.LENGTH_SHORT).show();
+                                    MoodAndEmoticonList[i], Toast.LENGTH_SHORT).show();
 
                             //Verify if this is before or after.
                             if (!SongStarted)
@@ -312,7 +328,7 @@ public class BackgroundService extends Service
                                 //AFTER MOOD CALL is made. This is for the NEW song.
 
                                 CommonFunctions Common = new CommonFunctions();
-                                int ScoreIndex = 0;
+                                int ScoreIndex;
 
                                 /*The place in the array for the score should match that of where
                                 the text based mood is*/

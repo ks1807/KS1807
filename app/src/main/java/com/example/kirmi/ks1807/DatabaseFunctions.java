@@ -107,7 +107,7 @@ public class DatabaseFunctions
     }
 
     //Function used to insert tracks into the database
-    public void InsertTrack(String name, String genre, String artist, String length, String spotifyID) {
+    public void InsertTrack(String name, String genre, String artist, String length) {
         synchronized (this.db) {
             ContentValues NewTrack = new ContentValues();
             NewTrack.put("TrackName", name);
@@ -135,7 +135,10 @@ public class DatabaseFunctions
 
         /*Gets the last ten music tracks that the user has listened to, using the mood after
         time as the time when the user finished the song*/
-        String SQLQuery = "SELECT DISTINCT TrackName, Artist, Genre, Length, MoodBefore, MoodAfter, SpotifyTrackID FROM MusicTrack INNER JOIN UserMood ON MusicTrack.TrackID = UserMood.TrackID WHERE UserMood.UserID = " + UserID + " ORDER BY UserMood.MoodAfterTime DESC LIMIT 0, 10" ;
+        String SQLQuery = "SELECT DISTINCT TrackName, Artist, Genre, Length, MoodBefore, MoodAfter, SpotifyTrackID " +
+                "FROM MusicTrack INNER JOIN UserMood ON MusicTrack.TrackID = UserMood.TrackID " +
+                "WHERE UserMood.UserID = " + UserID + " " +
+                "ORDER BY UserMood.MoodAfterTime DESC LIMIT 0, 10" ;
 
         Cursor cursor = db.rawQuery(SQLQuery, null);
 
