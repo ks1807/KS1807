@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -21,8 +22,13 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 import java.text.ParseException;
-import java.util.ArrayList;
 import java.util.Date;
+import java.text.SimpleDateFormat;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 public class ProfileSettings extends Fragment
 {
@@ -36,7 +42,9 @@ public class ProfileSettings extends Fragment
     private EditText firstN, lastN, editemail, editdob, oldpass, newpass, newpassagain;
     private Button options, editback, changepassback, btnUpdate, signout, changePassword;
     private LinearLayout userdetails, updatepass;
-    private ArrayList<String> UserDetails;
+    private String[] UserDetails;
+    Retrofit retrofit = RestInterface.getClient();
+    RestInterface.Ks1807Client client;
 
     @Nullable
     @Override
@@ -73,11 +81,39 @@ public class ProfileSettings extends Fragment
         changepassback = (Button)view.findViewById(R.id.btn_profilechangepasssettingback);
         changePassword = (Button) view.findViewById(R.id.btnchangepass);
 
-        //Collecting the current user details to be used for display.
-        UserDetails = UserFunctions.GetUserDetails(UserID);
+        client = retrofit.create(RestInterface.Ks1807Client.class);
 
-        //Function to show all the details within respective text element.
-        DisplayUserDetails(UserDetails);
+        String UserPassword = Global.UserPassword;
+
+        Call<String> response = client.GetUserDetails(UserID, UserPassword);
+        response.enqueue(new Callback<String>()
+        {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response)
+            {
+                Log.d("retrofitclick", "SUCCESS: " + response.raw());
+                if(response.body().equals("Incorrect UserID or Password. Query not executed."))
+                    Toast.makeText(getActivity(), "Failed to get settings from server", Toast.LENGTH_SHORT).show();
+                else
+                {
+                    String UsersInformation = response.body();
+                    UserDetails = UsersInformation.split("\n");
+                    UserDetails[0] = UserDetails[0].replace("FirstName: ", "");
+                    UserDetails[1] = UserDetails[1].replace("LastName: ", "");
+                    UserDetails[2] = UserDetails[2].replace("EmailAddress: ", "");
+                    UserDetails[3] = UserDetails[3].replace("DateOfBirth: ", "");
+                    UserDetails[4] = UserDetails[4].replace("Gender: ", "");
+
+                    //Function to show all the details within respective text element.
+                    DisplayUserDetails(UserDetails);
+                }
+            }
+            @Override
+            public void onFailure(Call<String> call, Throwable t)
+            {
+                fail_LoginNetwork();
+            }
+        });
 
         if (userdetails.getVisibility() != View.VISIBLE)
         {
@@ -172,11 +208,37 @@ public class ProfileSettings extends Fragment
                                     {
                                         if (ValidateForm())
                                         {
-                                            Toast.makeText(getActivity(), "User details updated",
-                                                    Toast.LENGTH_SHORT).show();
-                                            setProfileBackFromEdit();
-                                            UserDetails = UserFunctions.GetUserDetails(UserID);
-                                            DisplayUserDetails(UserDetails);
+                                            String UserPassword = Global.UserPassword;
+
+                                            Call<String> response = client.GetUserDetails(UserID, UserPassword);
+                                            response.enqueue(new Callback<String>()
+                                            {
+                                                @Override
+                                                public void onResponse(Call<String> call, Response<String> response)
+                                                {
+                                                    Log.d("retrofitclick", "SUCCESS: " + response.raw());
+                                                    if(response.body().equals("Incorrect UserID or Password. Query not executed."))
+                                                        Toast.makeText(getActivity(), "Failed to get details from server", Toast.LENGTH_SHORT).show();
+                                                    else
+                                                    {
+                                                        String UsersInformation = response.body();
+                                                        UserDetails = UsersInformation.split("\n");
+                                                        UserDetails[0] = UserDetails[0].replace("FirstName: ", "");
+                                                        UserDetails[1] = UserDetails[1].replace("LastName: ", "");
+                                                        UserDetails[2] = UserDetails[2].replace("EmailAddress: ", "");
+                                                        UserDetails[3] = UserDetails[3].replace("DateOfBirth: ", "");
+                                                        UserDetails[4] = UserDetails[4].replace("Gender: ", "");
+
+                                                        //Function to show all the details within respective text element.
+                                                        DisplayUserDetails(UserDetails);
+                                                    }
+                                                }
+                                                @Override
+                                                public void onFailure(Call<String> call, Throwable t)
+                                                {
+                                                    fail_LoginNetwork();
+                                                }
+                                            });
                                         }
                                     }
                                 });
@@ -184,9 +246,11 @@ public class ProfileSettings extends Fragment
                                 /*If the back button is selected then all the fields are disabled,
                                 the fields are updated to what is in the database since the fields
                                 are the same ones being used as the normal view of the activity*/
-                                editback.setOnClickListener(new View.OnClickListener() {
+                                editback.setOnClickListener(new View.OnClickListener()
+                                {
                                     @Override
-                                    public void onClick(View view) {
+                                    public void onClick(View view)
+                                    {
 
                                         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
                                         alertDialogBuilder.setTitle("Confirm exit");
@@ -198,8 +262,38 @@ public class ProfileSettings extends Fragment
                                                     public void onClick(DialogInterface dialog,int id)
                                                     {
                                                         setProfileBackFromEdit();
-                                                        UserDetails = UserFunctions.GetUserDetails(UserID);
-                                                        DisplayUserDetails(UserDetails);
+                                                        String UserPassword = Global.UserPassword;
+
+                                                        Call<String> response = client.GetUserDetails(UserID, UserPassword);
+                                                        response.enqueue(new Callback<String>()
+                                                        {
+                                                            @Override
+                                                            public void onResponse(Call<String> call, Response<String> response)
+                                                            {
+                                                                Log.d("retrofitclick", "SUCCESS: " + response.raw());
+                                                                if(response.body().equals("Incorrect UserID or Password. Query not executed."))
+                                                                    Toast.makeText(getActivity(), "Failed to get details from server",
+                                                                            Toast.LENGTH_SHORT).show();
+                                                                else
+                                                                {
+                                                                    String UsersInformation = response.body();
+                                                                    UserDetails = UsersInformation.split("\n");
+                                                                    UserDetails[0] = UserDetails[0].replace("FirstName: ", "");
+                                                                    UserDetails[1] = UserDetails[1].replace("LastName: ", "");
+                                                                    UserDetails[2] = UserDetails[2].replace("EmailAddress: ", "");
+                                                                    UserDetails[3] = UserDetails[3].replace("DateOfBirth: ", "");
+                                                                    UserDetails[4] = UserDetails[4].replace("Gender: ", "");
+
+                                                                    //Function to show all the details within respective text element.
+                                                                    DisplayUserDetails(UserDetails);
+                                                                }
+                                                            }
+                                                            @Override
+                                                            public void onFailure(Call<String> call, Throwable t)
+                                                            {
+                                                                fail_LoginNetwork();
+                                                            }
+                                                        });
                                                     }
                                                 })
                                                 .setNegativeButton("No",new DialogInterface.OnClickListener()
@@ -213,7 +307,6 @@ public class ProfileSettings extends Fragment
                                         alertDialog.show();
                                     }
                                 });
-
                                 return true;
 
                                 //The following is run if the change password menu item is selected.
@@ -318,14 +411,14 @@ public class ProfileSettings extends Fragment
     }
 
     //Assigning the fields in the profile with the information found from the database about the user.
-    public void DisplayUserDetails(ArrayList<String> UserDetails)
+    public void DisplayUserDetails(String[] UserDetails)
     {
-        firstN.setText(UserDetails.get(0));
-        lastN.setText(UserDetails.get(1));
-        editemail.setText(UserDetails.get(2));
-        CurrentEmailAddress = UserDetails.get(2);
-        editdob.setText(UserDetails.get(3));
-        String Gender = UserDetails.get(4);
+        firstN.setText(UserDetails[0]);
+        lastN.setText(UserDetails[1]);
+        editemail.setText(UserDetails[2]);
+        CurrentEmailAddress = UserDetails[2];
+        editdob.setText(UserDetails[3]);
+        String Gender = UserDetails[4];
 
         /*Make sure that the buttons have their image and checked status set to what the user
         put in the database*/
@@ -539,9 +632,27 @@ public class ProfileSettings extends Fragment
 
         if(ValidationSuccessful)
         {
-            //Update the record. If it fails then fail the validation as well.
-            ValidationSuccessful = UserFunctions.UpdateCurrentUser(FName, LName, TheEmail,
-                    TheDateOfBirth, TheGender, UserID);
+            String UserPassword = Global.UserPassword;
+
+            Call<String> response = client.UpdateUser(
+                    FName, LName, TheEmail, TheDateOfBirth, TheGender, UserID, UserPassword);
+            response.enqueue(new Callback<String>()
+            {
+                @Override
+                public void onResponse(Call<String> call, Response<String> response)
+                {
+                    Log.d("retrofitclick", "SUCCESS: " + response.raw());
+                    if(response.body().equals("Incorrect UserID or Password. Query not executed."))
+                        Toast.makeText(getActivity(), "Failed to update your details", Toast.LENGTH_SHORT).show();
+                    else
+                        Toast.makeText(getActivity(), "Successfully updated your details", Toast.LENGTH_SHORT).show();
+                }
+                @Override
+                public void onFailure(Call<String> call, Throwable t)
+                {
+                    fail_LoginNetwork();
+                }
+            });
         }
         return ValidationSuccessful;
     }
@@ -622,8 +733,8 @@ public class ProfileSettings extends Fragment
 
         String TestPassword = Common.EncryptPassword(OldPass);
 
-        //Checking id the old password entered here is the same as the one in the database.
-        if (!UserFunctions.VerifyPassword(UserID, TestPassword) && ValidationSuccessful)
+        //Checking ID the old password entered here is the same the user's current password.
+        if (!TestPassword.equals(Global.UserPassword) && ValidationSuccessful)
         {
             ValidationSuccessful = false;
             InvalidMessage = "The old password you have specified does not match your current password.";
@@ -644,16 +755,57 @@ public class ProfileSettings extends Fragment
         //If all the validations above are successful, then encrypt the password and update the database.
         if(ValidationSuccessful)
         {
-            NewPass = Common.EncryptPassword(NewPass);
+            final String EncryptedNewPass = Common.EncryptPassword(NewPass);
+            String UserPassword = Global.UserPassword;
 
-            //Update the password. If it fails then fail the validation as well.
-            ValidationSuccessful = UserFunctions.UpdateNewPassword(UserID, NewPass);
+            Call<String> response = client.UpdatePassword(EncryptedNewPass, UserID, UserPassword);
+            response.enqueue(new Callback<String>()
+            {
+                @Override
+                public void onResponse(Call<String> call, Response<String> response)
+                {
+                    Log.d("retrofitclick", "SUCCESS: " + response.raw());
+                    if(response.body().equals("Incorrect UserID or Password. Query not executed."))
+                        Toast.makeText(getActivity(), "Failed to update the server", Toast.LENGTH_SHORT).show();
+                    else
+                    {
+                        //Update the new global password
+                        Global.UserPassword = EncryptedNewPass;
 
-            //Used to clear the password fields after completing the change.
-            oldpass.setText("");
-            newpass.setText("");
-            newpassagain.setText("");
+                        //Used to clear the password fields after completing the change.
+                        oldpass.setText("");
+                        newpass.setText("");
+                        newpassagain.setText("");
+                    }
+                }
+                @Override
+                public void onFailure(Call<String> call, Throwable t)
+                {
+                    fail_LoginNetwork();
+                }
+            });
         }
         return ValidationSuccessful;
+    }
+
+    void fail_LoginNetwork()
+    {
+        //Blank ID means either the email or password were incorrect.
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
+        alertDialogBuilder.setTitle("Service Error");
+        alertDialogBuilder
+                .setCancelable(false)
+                .setPositiveButton("Ok",new DialogInterface.OnClickListener()
+                {
+                    public void onClick(DialogInterface dialog,int id)
+                    {
+                        //No action to be taken until login issue is resolved.
+                    }
+                });
+        String InvalidMessage = "The service is not available at this time, please try again later" +
+                "or contact support";
+        alertDialogBuilder.setMessage(InvalidMessage);
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
     }
 }

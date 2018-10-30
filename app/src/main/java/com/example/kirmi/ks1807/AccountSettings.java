@@ -14,7 +14,6 @@ import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.Toast;
-import java.util.ArrayList;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -134,36 +133,54 @@ public class AccountSettings extends Fragment
                 fail_LoginNetwork();
             }
         });
-
-        //Update the user with the settings, return false if the update failed.
-        //return SettingFunctions.UpdateSettings(MakeRecommendation, MoodFrequencyText, UserID);
     }
 
     private void ShowUserSettings(View view)
     {
-        SettingFunctions.openReadable();
+        String UserPassword = Global.UserPassword;
 
-        //Getting the results of user settings from database using the UerID.
-        ArrayList<String> tableContent = SettingFunctions.GetUserSettings(UserID);
-        String MakeRecommendations = tableContent.get(0);
-        String MoodFrequency = tableContent.get(1);
-
-        if (MakeRecommendations.equals("Yes"))
+        Call<String> response = client.GetUserSettings(UserID, UserPassword);
+        response.enqueue(new Callback<String>()
         {
-            yes.setChecked(true);
-            yes.setBackgroundResource(R.drawable.settingsyesselected);
-            no.setBackgroundResource(R.drawable.settingnonormal);
-        }
-        else if (MakeRecommendations.equals("No"))
-        {
-            no.setChecked(true);
-            yes.setBackgroundResource(R.drawable.settingsyesnormal);
-            no.setBackgroundResource(R.drawable.settingnoselected);
-        }
+            @Override
+            public void onResponse(Call<String> call, Response<String> response)
+            {
+                Log.d("retrofitclick", "SUCCESS: " + response.raw());
+                if(response.body().equals("Incorrect UserID or Password. Query not executed."))
+                    Toast.makeText(getActivity(), "Failed to get settings from server", Toast.LENGTH_SHORT).show();
+                else
+                {
+                    String Settings = response.body();
+                    String[] TheSettings = Settings.split("\n");
 
-        //Set the Spinner position to match the string retrieved from the database.
-        ArrayAdapter SpinnerAdapter = (ArrayAdapter) alertsSpinner.getAdapter();
-        alertsSpinner.setSelection(SpinnerAdapter.getPosition(MoodFrequency));
+                    String MakeRecommendations = TheSettings[0].replace("MakeRecommendations: ", "");
+                    String MoodFrequency = TheSettings[1].replace("MoodFrequency: ", "");
+                    //Third String called RememberLogin is also retrieved by the API but will be ignored here.
+
+                    if (MakeRecommendations.equals("Yes"))
+                    {
+                        yes.setChecked(true);
+                        yes.setBackgroundResource(R.drawable.settingsyesselected);
+                        no.setBackgroundResource(R.drawable.settingnonormal);
+                    }
+                    else if (MakeRecommendations.equals("No"))
+                    {
+                        no.setChecked(true);
+                        yes.setBackgroundResource(R.drawable.settingsyesnormal);
+                        no.setBackgroundResource(R.drawable.settingnoselected);
+                    }
+
+                    //Set the Spinner position to match the string retrieved from the database.
+                    ArrayAdapter SpinnerAdapter = (ArrayAdapter) alertsSpinner.getAdapter();
+                    alertsSpinner.setSelection(SpinnerAdapter.getPosition(MoodFrequency));
+                }
+            }
+            @Override
+            public void onFailure(Call<String> call, Throwable t)
+            {
+                fail_LoginNetwork();
+            }
+        });
     }
 
     void fail_LoginNetwork()
