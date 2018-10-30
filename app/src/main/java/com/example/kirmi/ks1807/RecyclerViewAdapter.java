@@ -3,6 +3,7 @@ package com.example.kirmi.ks1807;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,15 +12,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.spotify.protocol.client.CallResult;
+import com.spotify.protocol.client.ErrorCallback;
+import com.spotify.protocol.types.PlayerState;
+import com.spotify.protocol.types.Track;
 
 import java.util.List;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
 
-    private List<Track> Tracks;
+    private List<TrackDetails> Tracks;
     private Context context;
+    PlayerState playerState;
 
-    public RecyclerViewAdapter(List<Track> tracks, Context context) {
+    public RecyclerViewAdapter(List<TrackDetails> tracks, Context context) {
         Tracks = tracks;
         this.context = context;
     }
@@ -35,7 +40,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
-        Track track = Tracks.get(position);
+        final TrackDetails track = Tracks.get(position);
         holder.tracktitle.setText(track.getTitle());
         holder.artist.setText("Artist: " + track.getArtist());
         holder.genre.setText("Genre: " + track.getGenre());
@@ -47,12 +52,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             @Override
             public void onClick(View view) {
                 Toast.makeText(context, "Clicked" + position, Toast.LENGTH_SHORT).show();
+                Log.d("track ID", track.spotifyTrackID);
 //                mService.spotifyAppRemote.getPlayerApi().resume();
 //                try{
 //                    Thread.sleep(1000);
 //                } catch (InterruptedException e) {}
 //                updatePlayerState();
-//                updateNames(playerState);
+
 
             }
         });

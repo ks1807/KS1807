@@ -114,6 +114,7 @@ public class DatabaseFunctions
             NewTrack.put("Genre", genre);
             NewTrack.put("Artist", artist);
             NewTrack.put("Length", length);
+            NewTrack.put("SpotifyTrackID", spotifyID);
 
             try {
                 db.insertOrThrow("MusicTrack", null, NewTrack);
@@ -128,13 +129,13 @@ public class DatabaseFunctions
 
 
     // Function used to get the top 10 mostly played tracks for display on the home page.
-    public ArrayList<Track> GetMusicHistory(String UserID)
+    public ArrayList<TrackDetails> GetMusicHistory(String UserID)
     {
-        ArrayList<Track> mostPlayed = new ArrayList<Track>();
+        ArrayList<TrackDetails> mostPlayed = new ArrayList<TrackDetails>();
 
         /*Gets the last ten music tracks that the user has listened to, using the mood after
         time as the time when the user finished the song*/
-        String SQLQuery = "SELECT DISTINCT TrackName, Artist, Genre, Length, MoodBefore, MoodAfter " +
+        String SQLQuery = "SELECT DISTINCT TrackName, Artist, Genre, Length, MoodBefore, MoodAfter, SpotifyTrackID " +
                 "FROM MusicTrack INNER JOIN UserMood ON MusicTrack.TrackID = UserMood.TrackID " +
                 "WHERE UserMood.UserID = " + UserID + " " +
                 "ORDER BY UserMood.MoodAfterTime DESC LIMIT 0, 10" ;
@@ -147,9 +148,9 @@ public class DatabaseFunctions
 
             do {
 
-                Track track = new Track(cursor.getString(cursor.getColumnIndex("TrackName")), cursor.getString(cursor.getColumnIndex("Artist")),
+                TrackDetails track = new TrackDetails(cursor.getString(cursor.getColumnIndex("TrackName")), cursor.getString(cursor.getColumnIndex("Artist")),
                         cursor.getString(cursor.getColumnIndex("Genre")), cursor.getString(cursor.getColumnIndex("Length")),
-                                cursor.getString(cursor.getColumnIndex("MoodBefore")), cursor.getString(cursor.getColumnIndex("MoodAfter")));
+                                cursor.getString(cursor.getColumnIndex("MoodBefore")), cursor.getString(cursor.getColumnIndex("MoodAfter")), cursor.getString(cursor.getColumnIndex("SpotifyTrackID")));
                 mostPlayed.add(track);
 
             } while (cursor.moveToNext());

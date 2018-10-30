@@ -1,15 +1,16 @@
 package com.example.kirmi.ks1807;
 
-public class Track {
-    String title,  artist,  genre, length, beforemood, aftermood;
+public class TrackDetails {
+    String title,  artist,  genre, length, beforemood, aftermood, spotifyTrackID;
 
-    public Track(String title, String artist, String genre, String length, String beforemood, String aftermood) {
+    public TrackDetails(String title, String artist, String genre, String length, String beforemood, String aftermood, String spotifyID) {
         this.title = title;
         this.artist = artist;
         this.genre = genre;
         this.length = length;
         this.beforemood = beforemood;
         this.aftermood = aftermood;
+        this.spotifyTrackID = spotifyID;
     }
 
     public String getTitle() {
@@ -35,5 +36,10 @@ public class Track {
     public String getAftermood() {
         return aftermood;
     }
+
+    public String getSpotifyTrackID() {
+        return spotifyTrackID;
+    }
 }
+
 
