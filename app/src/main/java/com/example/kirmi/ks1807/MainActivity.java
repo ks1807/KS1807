@@ -126,7 +126,6 @@ public class MainActivity extends AppCompatActivity
 
     void fail_LoginNetwork()
     {
-        //Blank ID means either the email or password were incorrect.
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
         alertDialogBuilder.setTitle("Service Error");
         alertDialogBuilder
@@ -135,10 +134,9 @@ public class MainActivity extends AppCompatActivity
                 {
                     public void onClick(DialogInterface dialog,int id)
                     {
-                        //No action to be taken until login issue is resolved.
                     }
                 });
-        String InvalidMessage = "The service is not available at this time, please try again later" +
+        String InvalidMessage = "The service is not available at this time, please try again later " +
                 "or contact support";
         alertDialogBuilder.setMessage(InvalidMessage);
         AlertDialog alertDialog = alertDialogBuilder.create();

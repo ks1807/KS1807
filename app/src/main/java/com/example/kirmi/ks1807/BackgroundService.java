@@ -228,6 +228,7 @@ public class BackgroundService extends Service
         spotifyAppRemote.getPlayerApi().subscribeToPlayerState().setEventCallback(
                 new Subscription.EventCallback<PlayerState>()
                 {
+                    String SpotifyTrackID;
                     String Track;
                     String Artist;
                     String Genre;
@@ -303,6 +304,7 @@ public class BackgroundService extends Service
                                                 if (!SongStarted)
                                                 {
                                                     SongStarted = true;
+                                                    SpotifyTrackID = playerState.track.uri;
                                                     Track = playerState.track.name;
                                                     Artist = playerState.track.artist.name;
                                                     Genre = playerState.track.album.name;
@@ -325,7 +327,7 @@ public class BackgroundService extends Service
                                                     }
 
                                                     Call<String> response = client.TrackStarted(
-                                                            Track, Genre, Artist, Length, TheMood,
+                                                            SpotifyTrackID, Track, Genre, Artist, Length, TheMood,
                                                             UserID, UserPassword);
                                                     response.enqueue(new Callback<String>()
                                                     {
@@ -349,7 +351,8 @@ public class BackgroundService extends Service
                                                         @Override
                                                         public void onFailure(Call<String> call, Throwable t)
                                                         {
-                                                            fail_LoginNetwork();
+                                                            //This crashes on loading.
+                                                            //fail_LoginNetwork();
                                                         }
                                                     });
                                                 }
@@ -368,7 +371,7 @@ public class BackgroundService extends Service
                                                         UserPassword = "Dummy";
                                                     }
 
-                                                    Call<String> response = client.TrackEnded(
+                                                    Call<String> response = client.TrackEnded(SpotifyTrackID,
                                                             Global.MoodID, TheMood, "-",
                                                             "-", "-", "-",
                                                             UserID, UserPassword);
@@ -392,7 +395,8 @@ public class BackgroundService extends Service
                                                         @Override
                                                         public void onFailure(Call<String> call, Throwable t)
                                                         {
-                                                            fail_LoginNetwork();
+                                                            //This crashes on loading.
+                                                            //fail_LoginNetwork();
                                                         }
                                                     });
 
@@ -400,6 +404,7 @@ public class BackgroundService extends Service
 
                                                     //This code crashes the interface - commented out.
                                                     /*
+                                                    SpotifyTrackID = playerState.track.uri;
                                                     Track = playerState.track.name;
                                                     Artist = playerState.track.artist.name;
                                                     Genre = playerState.track.album.name;
@@ -483,7 +488,8 @@ public class BackgroundService extends Service
                             @Override
                             public void onFailure(Call<String> call, Throwable t)
                             {
-                                fail_LoginNetwork();
+                                //This crashes on loading.
+                                //fail_LoginNetwork();
                             }
                         });
 
@@ -503,7 +509,7 @@ public class BackgroundService extends Service
                     {
                     }
                 });
-        String InvalidMessage = "The service is not available at this time, please try again later" +
+        String InvalidMessage = "The service is not available at this time, please try again later " +
                 "or contact support";
         alertDialogBuilder.setMessage(InvalidMessage);
         AlertDialog alertDialog = alertDialogBuilder.create();

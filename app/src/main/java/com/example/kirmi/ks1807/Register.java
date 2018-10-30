@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioGroup;
@@ -16,14 +17,23 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+
 public class Register extends AppCompatActivity
 {
     private final Context context = this;
     private DatabaseFunctions RegisterFunctions;
 
-    long UserID = -1;
+    String UserID = "-1";
     String BackUserID = "";
     String CurrentEmailAddress = "";
+    String EthicsAgreement = "No";
+
+    Retrofit retrofit = RestInterface.getClient();
+    RestInterface.Ks1807Client client;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -31,6 +41,8 @@ public class Register extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         RegisterFunctions = new DatabaseFunctions(this);
+
+        client = retrofit.create(RestInterface.Ks1807Client.class);
 
         //Get the UserID for this login session if user went back from second page.
         BackUserID = Global.UserID;
@@ -75,18 +87,6 @@ public class Register extends AppCompatActivity
         if (ValidateForm())
         {
             Intent intent = new Intent(Register.this, RegisterSecondPage.class);
-
-            /*If the user has not been to this page before, use the value found in the DB,
-            otherwise just use the ID that was passed back.*/
-            if (BackUserID == null)
-            {
-                Global.UserID = String.valueOf(UserID);
-                BackUserID = Global.UserID;
-            }
-            else
-            {
-                BackUserID = Global.UserID;
-            }
             startActivity(intent);
         }
     }
@@ -95,20 +95,7 @@ public class Register extends AppCompatActivity
     {
         if (ValidateForm())
         {
-
             Intent intent = new Intent(Register.this, OtherPlatforms.class);
-
-            /*If the user has not been to this page before, use the value found in the DB,
-            otherwise just use the ID that was passed back.*/
-            if (BackUserID == null)
-            {
-                Global.UserID = String.valueOf(UserID);
-                BackUserID = Global.UserID;
-            }
-            else
-            {
-                BackUserID = Global.UserID;
-            }
             startActivity(intent);
         }
     }
@@ -140,7 +127,9 @@ public class Register extends AppCompatActivity
                 .setCancelable(false)
                 .setPositiveButton("Yes",new DialogInterface.OnClickListener()
                 {
-                    public void onClick(DialogInterface dialog,int id) {
+                    public void onClick(DialogInterface dialog,int id)
+                    {
+                        EthicsAgreement = "Yes";
                         Toast.makeText(context, "You have agreed.", Toast.LENGTH_SHORT).show();
                     }
                 })
@@ -148,7 +137,7 @@ public class Register extends AppCompatActivity
                 {
                     public void onClick(DialogInterface dialog,int id)
                     {
-
+                        EthicsAgreement = "No";
                         dialog.cancel();
 
                         RadioButton yes1 = (RadioButton) findViewById(R.id.RadioButton_Yes1);
@@ -161,7 +150,6 @@ public class Register extends AppCompatActivity
                 });
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
-
     }
 
     public void RadioButtonNoResearch(View view)
@@ -227,56 +215,77 @@ public class Register extends AppCompatActivity
     //Repopulate the fields if user has gone back.
     private void ShowUserDetails()
     {
-        RegisterFunctions.openReadable();
+        String UserPassword = Global.UserPassword;
 
-        ArrayList<String> tableContent = RegisterFunctions.GetUserDetailsRegisterPage(BackUserID);
-        String TheFirstName = tableContent.get(0);
-        String TheLastName = tableContent.get(1);
-        String TheEmail = tableContent.get(2);
-        String TheDateOfBirth = tableContent.get(3);
-        String TheGender = tableContent.get(4);
-
-        //Populate all the fields with the database data.
-        TextView FirstName = (TextView)findViewById(R.id.EditText_FirstName);
-        FirstName.setText(TheFirstName);
-
-        TextView LastName = (TextView)findViewById(R.id.EditText_LastName);
-        LastName.setText(TheLastName);
-
-        TextView Email = (TextView)findViewById(R.id.EditText_Email);
-        Email.setText(TheEmail);
-        CurrentEmailAddress = TheEmail;
-
-        TextView DateOfBirth = (TextView)findViewById(R.id.EditText_DateOfBirth);
-        DateOfBirth.setText(TheDateOfBirth);
-
-        final RadioButton GenderMale = (RadioButton) findViewById(R.id.RadioButton_Male);
-        final RadioButton GenderFemale = (RadioButton) findViewById(R.id.RadioButton_Female);
-        final RadioButton GenderOther = (RadioButton) findViewById(R.id.RadioButton_Other);
-
-        /*Make sure that the buttons have their image and checked status set to what the user
-        put in the database*/
-        if (TheGender.equals("Male"))
+        Call<String> response = client.GetUserDetails(BackUserID, UserPassword);
+        response.enqueue(new Callback<String>()
         {
-            GenderMale.setBackgroundResource(R.drawable.maleselected);
-            GenderFemale.setBackgroundResource(R.drawable.femaleunselected);
-            GenderOther.setBackgroundResource(R.drawable.otherunselected);
-            GenderMale.setChecked(true);
-        }
-        else if (TheGender.equals("Female"))
-        {
-            GenderMale.setBackgroundResource(R.drawable.maleunselected);
-            GenderFemale.setBackgroundResource(R.drawable.femaleselected);
-            GenderOther.setBackgroundResource(R.drawable.otherunselected);
-            GenderFemale.setChecked(true);
-        }
-        else if (TheGender.equals("Other"))
-        {
-            GenderMale.setBackgroundResource(R.drawable.maleunselected);
-            GenderFemale.setBackgroundResource(R.drawable.femaleunselected);
-            GenderOther.setBackgroundResource(R.drawable.otherselected);
-            GenderOther.setChecked(true);
-        }
+            @Override
+            public void onResponse(Call<String> call, Response<String> response)
+            {
+                Log.d("retrofitclick", "SUCCESS: " + response.raw());
+                if(response.body().equals("Incorrect UserID or Password. Query not executed."))
+                    Toast.makeText(context, "Failed to get details from server",
+                            Toast.LENGTH_SHORT).show();
+                else
+                {
+                    String UsersInformation = response.body();
+                    String [] UserDetails = UsersInformation.split("\n");
+                    String TheFirstName = UserDetails[0].replace("FirstName: ", "");
+                    String TheLastName = UserDetails[1].replace("LastName: ", "");
+                    String TheEmail = UserDetails[2].replace("EmailAddress: ", "");
+                    String TheDateOfBirth = UserDetails[3].replace("DateOfBirth: ", "");
+                    String TheGender = UserDetails[4].replace("Gender: ", "");
+
+                    //Populate all the fields with the database data.
+                    TextView FirstName = (TextView)findViewById(R.id.EditText_FirstName);
+                    FirstName.setText(TheFirstName);
+
+                    TextView LastName = (TextView)findViewById(R.id.EditText_LastName);
+                    LastName.setText(TheLastName);
+
+                    TextView Email = (TextView)findViewById(R.id.EditText_Email);
+                    Email.setText(TheEmail);
+                    CurrentEmailAddress = TheEmail;
+
+                    TextView DateOfBirth = (TextView)findViewById(R.id.EditText_DateOfBirth);
+                    DateOfBirth.setText(TheDateOfBirth);
+
+                    final RadioButton GenderMale = (RadioButton) findViewById(R.id.RadioButton_Male);
+                    final RadioButton GenderFemale = (RadioButton) findViewById(R.id.RadioButton_Female);
+                    final RadioButton GenderOther = (RadioButton) findViewById(R.id.RadioButton_Other);
+
+                    /*Make sure that the buttons have their image and checked status set to what
+                    the user put in the database*/
+                    if (TheGender.equals("Male"))
+                    {
+                        GenderMale.setBackgroundResource(R.drawable.maleselected);
+                        GenderFemale.setBackgroundResource(R.drawable.femaleunselected);
+                        GenderOther.setBackgroundResource(R.drawable.otherunselected);
+                        GenderMale.setChecked(true);
+                    }
+                    else if (TheGender.equals("Female"))
+                    {
+                        GenderMale.setBackgroundResource(R.drawable.maleunselected);
+                        GenderFemale.setBackgroundResource(R.drawable.femaleselected);
+                        GenderOther.setBackgroundResource(R.drawable.otherunselected);
+                        GenderFemale.setChecked(true);
+                    }
+                    else if (TheGender.equals("Other"))
+                    {
+                        GenderMale.setBackgroundResource(R.drawable.maleunselected);
+                        GenderFemale.setBackgroundResource(R.drawable.femaleunselected);
+                        GenderOther.setBackgroundResource(R.drawable.otherselected);
+                        GenderOther.setChecked(true);
+                    }
+                }
+            }
+            @Override
+            public void onFailure(Call<String> call, Throwable t)
+            {
+                fail_LoginNetwork();
+            }
+        });
     }
 
     private boolean ValidateForm()
@@ -467,29 +476,98 @@ public class Register extends AppCompatActivity
             alertDialog.show();
         }
 
+        //Change blank strings to - so they can be passed in the URL.
+        if (FName.equals(""))
+        {
+            FName = "-";
+        }
+        if (LName.equals(""))
+        {
+            LName = "-";
+        }
+        if (TheEmail.equals(""))
+        {
+            TheEmail = "-";
+        }
+        if (TheDateOfBirth.equals(""))
+        {
+            TheDateOfBirth = "-";
+        }
+
         /*Insert if this is the first time the user is on this page, otherwise just update what is
         already there.*/
-        if (ValidationSuccessful && (BackUserID == "" || BackUserID == null))
+        if (ValidationSuccessful && (BackUserID.equals("") || BackUserID == null))
         {
-            NewPass = Common.EncryptPassword(NewPass);
-            UserID = RegisterFunctions.InsertNewUser(FName, LName, TheEmail, TheDateOfBirth,
-                    TheGender, NewPass);
-
-            //Storing the new created user ID as global so that it can be used throughout the application.
-            Global.UserID = String.valueOf(UserID);
-            BackUserID = Global.UserID;
-
-            if (UserID == -1)
+            final String FinalNewPass = Common.EncryptPassword(NewPass);
+            Call<String> response = client.InsertNewUser(FName, LName, TheEmail, TheDateOfBirth,
+                    TheGender, EthicsAgreement, FinalNewPass);
+            response.enqueue(new Callback<String>()
             {
-                ValidationSuccessful = false;
-            }
+                @Override
+                public void onResponse(Call<String> call, Response<String> response)
+                {
+                    Log.d("retrofitclick", "SUCCESS: " + response.raw());
+                    if(response.body().equals("-1"))
+                        //Note if the activity fails to insert it will not stop the app from going to the next activity
+                        Toast.makeText(context, "Failed to insert new user", Toast.LENGTH_SHORT).show();
+                    else
+                    {
+                        //Storing the new created user ID as global so that it can be used throughout the application.
+                        UserID = response.body();
+                        Global.UserID = UserID;
+                        BackUserID = UserID;
+                        Global.UserPassword = FinalNewPass;
+                    }
+                }
+                @Override
+                public void onFailure(Call<String> call, Throwable t)
+                {
+                    fail_LoginNetwork();
+                }
+            });
         }
         else if(ValidationSuccessful)
         {
             NewPass = Common.EncryptPassword(NewPass);
-            ValidationSuccessful = RegisterFunctions.UpdateNewUser(FName, LName, TheEmail,
-                    TheDateOfBirth, TheGender, NewPass, BackUserID);
+
+            Call<String> response = client.UpdateNewUser(FName, LName, TheEmail, TheDateOfBirth,
+                    TheGender, EthicsAgreement, BackUserID, NewPass);
+            response.enqueue(new Callback<String>()
+            {
+                @Override
+                public void onResponse(Call<String> call, Response<String> response)
+                {
+                    Log.d("retrofitclick", "SUCCESS: " + response.raw());
+                    if(!response.body().equals("Successful"))
+                        //Note if the activity fails to update it will not stop the app from going to the next activity.
+                        Toast.makeText(context, "Failed to update user", Toast.LENGTH_SHORT).show();
+                }
+                @Override
+                public void onFailure(Call<String> call, Throwable t)
+                {
+                    fail_LoginNetwork();
+                }
+            });
         }
         return ValidationSuccessful;
+    }
+
+    void fail_LoginNetwork()
+    {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getApplicationContext());
+        alertDialogBuilder.setTitle("Service Error");
+        alertDialogBuilder
+                .setCancelable(false)
+                .setPositiveButton("Ok",new DialogInterface.OnClickListener()
+                {
+                    public void onClick(DialogInterface dialog,int id)
+                    {
+                    }
+                });
+        String InvalidMessage = "The service is not available at this time, please try again later " +
+                "or contact support";
+        alertDialogBuilder.setMessage(InvalidMessage);
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
     }
 }

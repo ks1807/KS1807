@@ -84,10 +84,18 @@ public class RestInterface
         Call<String> GetUserSettings(@Path("id") String id, @Path("password") String password);
 
         @GET("mmhpackage.useraccount/InsertNewUser/{firstname}/{lastname}/{email}/{date}/{gender}/{ethicsAgreed}/{password}/")
-        Call<String> InsertNewUse(
+        Call<String> InsertNewUser(
                 @Path("firstname") String firstname, @Path("lastname") String lastname,
                 @Path("email") String email, @Path("date") String date,
                 @Path("gender") String gender, @Path("ethicsAgreed") String ethicsAgreed,
+                @Path("password") String password);
+
+        @GET("mmhpackage.useraccount/UpdateNewUser/{firstname}/{lastname}/{email}/{date}/{gender}/{ethicsAgreed}/{UserID}/{password}/")
+        Call<String> UpdateNewUser(
+                @Path("firstname") String firstname, @Path("lastname") String lastname,
+                @Path("email") String email, @Path("date") String date,
+                @Path("gender") String gender, @Path("ethicsAgreed") String ethicsAgreed,
+                @Path("UserID") String UserID,
                 @Path("password") String password);
 
         @GET("mmhpackage.useraccount/UpdateUser/{firstname}/{lastname}/{email}/{date}/{gender}/{id}/{password}/")
@@ -120,14 +128,17 @@ public class RestInterface
         @GET("mmhpackage.useraccount/VerifyPassword/{id}/{password}")
         Call<String> VerifyPassword(@Path("id") String id, @Path("password") String password);
 
-        @GET("mmhpackage.musictrack/TrackStarted/{track}/{genre}/{artist}/{duration}/{moodBefore}/{id}/{password}")
-        Call<String> TrackStarted(@Path("track") String track,
+        @GET("mmhpackage.musictrack/TrackStarted/{SpotifyTrackID}/{track}/{genre}/{artist}/{duration}/{moodBefore}/{id}/{password}")
+        Call<String> TrackStarted(@Path("SpotifyTrackID") String SpotifyTrackID,
+                                  @Path("track") String track,
                                   @Path("genre") String genre, @Path("artist") String artist,
                                   @Path("duration") String duration, @Path("moodBefore") String moodBefore,
                                   @Path("id") String id, @Path("password") String password);
 
-        @GET("mmhpackage.musictrack/TrackEnded/{moodID}/{moodAfter}/{userLiked}/{entry1}/{entry2}/{entry3}/{id}/{password}")
-        Call<String> TrackEnded(@Path("moodID") String moodID, @Path("moodAfter") String moodAfter, @Path("userLiked") String userLiked,
+        @GET("mmhpackage.musictrack/TrackEnded/{SpotifyTrackID}/{moodID}/{moodAfter}/{userLiked}/{entry1}/{entry2}/{entry3}/{id}/{password}")
+        Call<String> TrackEnded(@Path("SpotifyTrackID") String SpotifyTrackID,
+                                @Path("moodID") String moodID, @Path("moodAfter") String moodAfter,
+                                @Path("userLiked") String userLiked,
                                 @Path("entry1") String entry1, @Path("entry2") String entry2,
                                 @Path("entry3") String entry3, @Path("id") String id,
                                 @Path("password") String password);
