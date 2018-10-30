@@ -70,9 +70,9 @@ public class HomeFragment extends Fragment
                     String MusicDetails[] = musicHistory.split(System.getProperty("line.separator"));
 
 
-                    listItems = new ArrayList<>();
+                    listItems = new ArrayList<TrackDetails>();
 //        Toast.makeText(getContext(), tracks[0] + "/" + tracks[1] + "jlkaj" + tracks.length, Toast.LENGTH_SHORT).show();
-                    for (int i = 0; i < tracks.size(); i++) {
+                    for (int i = 0; i < MusicDetails.length; i++) {
                         String temp[] = MusicDetails[i].split(",");
                         TrackDetails list = new TrackDetails(temp[0], temp[1], temp[2], temp[3], temp[4]);
 //                                list.spotifyTrackID = temp[0];
@@ -90,6 +90,8 @@ public class HomeFragment extends Fragment
 //                                tracks.get(i).getSpotifyTrackID()
                         listItems.add(list);
                     }
+                    adapter = new RecyclerViewAdapter(listItems, getContext());
+                    recyclerView.setAdapter(adapter);
 
 
 //                    MusicDetails = musicHistory.split("\n");
@@ -116,8 +118,7 @@ public class HomeFragment extends Fragment
             }
         });
 
-        adapter = new RecyclerViewAdapter(listItems, getContext());
-        recyclerView.setAdapter(adapter);
+
 
         return view;
 
