@@ -20,11 +20,11 @@ import java.util.List;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
 
-    private List<RestInterface.TrackDetails> Tracks;
+    private List<TrackDetails> Tracks;
     private Context context;
     PlayerState playerState;
 
-    public RecyclerViewAdapter(List<RestInterface.TrackDetails> tracks, Context context) {
+    public RecyclerViewAdapter(List<TrackDetails> tracks, Context context) {
         Tracks = tracks;
         this.context = context;
 
@@ -41,13 +41,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
-        final RestInterface.TrackDetails track = Tracks.get(position);
+        final TrackDetails track = Tracks.get(position);
         holder.tracktitle.setText(track.getTitle());
         holder.artist.setText("Artist: " + track.getArtist());
         holder.genre.setText("Genre: " + track.getGenre());
         holder.length.setText("Length: " + track.getLength());
-        holder.beforemood.setText("Your mood before listening: " + track.getBeforemood());
-        holder.aftermood.setText("Your mood after listening:   " + track.getAftermood());
+        holder.beforemood.setText("Your mood before listening: " );
+        holder.aftermood.setText("Your mood after listening:   " );
 
         holder.play.setOnClickListener(new View.OnClickListener() {
             @Override

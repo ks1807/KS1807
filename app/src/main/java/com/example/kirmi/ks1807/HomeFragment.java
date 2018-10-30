@@ -29,10 +29,9 @@ public class HomeFragment extends Fragment
     String password = "";
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
-    private List<RestInterface.TrackDetails> listItems;
+    private List<TrackDetails> listItems;
     private DatabaseFunctions TracksHistory;
-    private ArrayList<RestInterface.TrackDetails> tracks;
-    private String[] MusicDetails;
+    private ArrayList<TrackDetails> tracks;
 
     Retrofit retrofit = RestInterface.getClient();
     RestInterface.Ks1807Client client;
@@ -68,7 +67,29 @@ public class HomeFragment extends Fragment
                 else
                 {
                     String musicHistory = response.body();
-                    listItems = RestInterface.getTrackFromResult(response.body());
+                    String MusicDetails[] = musicHistory.split(System.getProperty("line.separator"));
+
+
+                    listItems = new ArrayList<>();
+//        Toast.makeText(getContext(), tracks[0] + "/" + tracks[1] + "jlkaj" + tracks.length, Toast.LENGTH_SHORT).show();
+                    for (int i = 0; i < tracks.size(); i++) {
+                        String temp[] = MusicDetails[i].split(",");
+                        TrackDetails list = new TrackDetails(temp[0], temp[1], temp[2], temp[3], temp[4]);
+//                                list.spotifyTrackID = temp[0];
+//                                list.title = temp[1];
+//                                list.genre = temp[2];
+//                                list.artist = temp[3];
+//                                list.length = temp[4];
+
+//                                tracks.get(i).getTitle(),
+//                                tracks.get(i).getArtist(),
+//                                tracks.get(i).getGenre(),
+//                                tracks.get(i).getLength(),
+//                                tracks.get(i).getBeforemood(),
+//                                tracks.get(i).getAftermood(),
+//                                tracks.get(i).getSpotifyTrackID()
+                        listItems.add(list);
+                    }
 
 
 //                    MusicDetails = musicHistory.split("\n");

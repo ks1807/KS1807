@@ -129,9 +129,9 @@ public class DatabaseFunctions
 
 
     // Function used to get the top 10 mostly played tracks for display on the home page.
-    public ArrayList<RestInterface.TrackDetails> GetMusicHistory(String UserID)
+    public ArrayList<TrackDetails> GetMusicHistory(String UserID)
     {
-        ArrayList<RestInterface.TrackDetails> mostPlayed = new ArrayList<RestInterface.TrackDetails>();
+        ArrayList<TrackDetails> mostPlayed = new ArrayList<TrackDetails>();
 
         /*Gets the last ten music tracks that the user has listened to, using the mood after
         time as the time when the user finished the song*/
@@ -148,9 +148,8 @@ public class DatabaseFunctions
 
             do {
 
-                RestInterface.TrackDetails track = new RestInterface.TrackDetails(cursor.getString(cursor.getColumnIndex("TrackName")), cursor.getString(cursor.getColumnIndex("Artist")),
-                        cursor.getString(cursor.getColumnIndex("Genre")), cursor.getString(cursor.getColumnIndex("Length")),
-                                cursor.getString(cursor.getColumnIndex("MoodBefore")), cursor.getString(cursor.getColumnIndex("MoodAfter")), cursor.getString(cursor.getColumnIndex("SpotifyTrackID")));
+                TrackDetails track = new TrackDetails(cursor.getString(cursor.getColumnIndex("SpotifyTrackID")), cursor.getString(cursor.getColumnIndex("TrackName")), cursor.getString(cursor.getColumnIndex("Artist")),
+                        cursor.getString(cursor.getColumnIndex("Genre")), cursor.getString(cursor.getColumnIndex("Length")));
                 mostPlayed.add(track);
 
             } while (cursor.moveToNext());
