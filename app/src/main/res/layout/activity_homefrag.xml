@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fadeScrollbars="false"
     android:orientation="vertical"
+    android:scrollbars="vertical"
     android:scrollbarAlwaysDrawVerticalTrack="true"
     android:scrollbarSize="5dp"
-    android:scrollbarThumbVertical="@color/white"
-    >
+    android:scrollbarThumbVertical="@color/white"  >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -49,10 +49,11 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:overScrollMode="never">
 
 
         </android.support.v7.widget.RecyclerView>
 
     </LinearLayout>
-</ScrollView>
+</android.support.v4.widget.NestedScrollView>

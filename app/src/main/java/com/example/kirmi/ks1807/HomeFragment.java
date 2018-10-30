@@ -47,6 +47,7 @@ public class HomeFragment extends Fragment
         client = retrofit.create(RestInterface.Ks1807Client.class);
 
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
+        recyclerView.setNestedScrollingEnabled(false);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
@@ -69,45 +70,14 @@ public class HomeFragment extends Fragment
                     String musicHistory = response.body();
                     String MusicDetails[] = musicHistory.split(System.getProperty("line.separator"));
 
-
                     listItems = new ArrayList<TrackDetails>();
-//        Toast.makeText(getContext(), tracks[0] + "/" + tracks[1] + "jlkaj" + tracks.length, Toast.LENGTH_SHORT).show();
                     for (int i = 0; i < MusicDetails.length; i++) {
                         String temp[] = MusicDetails[i].split(",");
                         TrackDetails list = new TrackDetails(temp[0], temp[1], temp[2], temp[3], temp[4]);
-//                                list.spotifyTrackID = temp[0];
-//                                list.title = temp[1];
-//                                list.genre = temp[2];
-//                                list.artist = temp[3];
-//                                list.length = temp[4];
-
-//                                tracks.get(i).getTitle(),
-//                                tracks.get(i).getArtist(),
-//                                tracks.get(i).getGenre(),
-//                                tracks.get(i).getLength(),
-//                                tracks.get(i).getBeforemood(),
-//                                tracks.get(i).getAftermood(),
-//                                tracks.get(i).getSpotifyTrackID()
                         listItems.add(list);
                     }
                     adapter = new RecyclerViewAdapter(listItems, getContext());
                     recyclerView.setAdapter(adapter);
-
-
-//                    MusicDetails = musicHistory.split("\n");
-//
-//                    for (int i = 0; i < tracks.size(); i++) {
-//                        TrackDetails list = new TrackDetails(
-//                                tracks.get(i).getTitle(),
-//                                tracks.get(i).getArtist(),
-//                                tracks.get(i).getGenre(),
-//                                tracks.get(i).getLength(),
-//                                tracks.get(i).getBeforemood(),
-//                                tracks.get(i).getAftermood(),
-//                                tracks.get(i).getSpotifyTrackID()
-//                        );
-//                        listItems.add(list);
-//                    }
 
                 }
             }
@@ -121,31 +91,6 @@ public class HomeFragment extends Fragment
 
 
         return view;
-
-//        for (int i=0; i <= 5; i++) {
-//            Log.d("ForLoop", "adding the record" + i);
-//            TracksHistory.InsertMoods(UserID, String.valueOf(i), "angry", "", "happy",
-//                    "", "yes", "no");
-//        }
-//
-//        for (int i=0; i <= 10; i++) {
-//            Log.d("trackforloop", "record" + i);
-//            TracksHistory.InsertTrack("goodbye goodbye", "pop", "someone", "2:80", "12dFghVXANMlKmJXsNCbNl");
-//        }
-//
-//        for (int i=0; i <= 5; i++) {
-//            Log.d("taki", "record" + i);
-//            TracksHistory.InsertTrack("taki taki", "pop", "cardi", "1:80", "11dFghVXANMlKmJXsNCbNl");
-//        }
-
-
-
-//        tracks = TracksHistory.GetMusicHistory(UserID);
-
-//        Toast.makeText(getContext(), Integer.toString(tracks.size()), Toast.LENGTH_SHORT).show();
-
-
-
     }
 
     void fail_LoginNetwork()
