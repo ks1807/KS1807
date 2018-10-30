@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity
     TextView Password;
     String TheEmailAddress;
     String ThePassword;
+    String UserID = "";
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -92,6 +93,7 @@ public class MainActivity extends AppCompatActivity
     void success_Login()
     {
         Intent intent = new Intent(MainActivity.this, NavBarMain.class);
+        
         startActivity(intent);
     }
 

@@ -21,9 +21,9 @@ public class HomeFragment extends Fragment {
     String UserID = "";
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
-    private List<Track> listItems;
+    private List<TrackDetails> listItems;
     private DatabaseFunctions TracksHistory;
-    private ArrayList<Track> tracks;
+    private ArrayList<TrackDetails> tracks;
 
     @Nullable
     @Override
@@ -41,7 +41,7 @@ public class HomeFragment extends Fragment {
 
         for (int i=0; i <= 20; i++) {
             Log.d("trackforloop", "record" + i);
-            TracksHistory.InsertTrack("goodbye goodbye", "pop", "someone", "2:80");
+            TracksHistory.InsertTrack("goodbye goodbye", "pop", "someone", "2:80", "11dFghVXANMlKmJXsNCbNl");
         }
 
 
@@ -49,19 +49,21 @@ public class HomeFragment extends Fragment {
 
 
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
+        recyclerView.setNestedScrollingEnabled(false);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         listItems = new ArrayList<>();
 //        Toast.makeText(getContext(), tracks[0] + "/" + tracks[1] + "jlkaj" + tracks.length, Toast.LENGTH_SHORT).show();
         for (int i = 0; i < tracks.size(); i++) {
-            Track list = new Track(
+            TrackDetails list = new TrackDetails(
                     tracks.get(i).getTitle(),
                     tracks.get(i).getArtist(),
                     tracks.get(i).getGenre(),
                     tracks.get(i).getLength(),
                     tracks.get(i).getBeforemood(),
-                    tracks.get(i).getAftermood()
+                    tracks.get(i).getAftermood(),
+                    tracks.get(i).getSpotifyTrackID()
             );
             listItems.add(list);
         }
