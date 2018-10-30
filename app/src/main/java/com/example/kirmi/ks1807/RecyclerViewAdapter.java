@@ -20,13 +20,14 @@ import java.util.List;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
 
-    private List<TrackDetails> Tracks;
+    private List<RestInterface.TrackDetails> Tracks;
     private Context context;
     PlayerState playerState;
 
-    public RecyclerViewAdapter(List<TrackDetails> tracks, Context context) {
+    public RecyclerViewAdapter(List<RestInterface.TrackDetails> tracks, Context context) {
         Tracks = tracks;
         this.context = context;
+
     }
 
     @NonNull
@@ -40,7 +41,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
-        final TrackDetails track = Tracks.get(position);
+        final RestInterface.TrackDetails track = Tracks.get(position);
         holder.tracktitle.setText(track.getTitle());
         holder.artist.setText("Artist: " + track.getArtist());
         holder.genre.setText("Genre: " + track.getGenre());

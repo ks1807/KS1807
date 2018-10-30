@@ -4,7 +4,6 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
@@ -134,7 +133,7 @@ public class RestInterface
                                 @Path("password") String password);
 
         @GET("mmhpackage.moodscore/GetMoodList")
-        Call<String> listRepos();
+        Call<String> GetMoodList();
 
         @GET("mmhpackage.musictrack/GetRecommendedTracksUser/{id}/{password}")
         Call<String> GetRecommendedTracksUser(@Path("id") String id, @Path("password") String password);
@@ -147,13 +146,49 @@ public class RestInterface
     }
 
     //Data Structures
-    public class Track
-    {
-        String trackID;
-        String trackName;
-        String Genre;
-        String Artist;
-        String Duration;
+    public class TrackDetails {
+        String title, artist, genre, length, beforemood, aftermood, spotifyTrackID;
+
+        public TrackDetails() {
+        }
+
+        public TrackDetails(String title, String artist, String genre, String length, String beforemood, String aftermood, String spotifyID) {
+            this.title = title;
+            this.artist = artist;
+            this.genre = genre;
+            this.length = length;
+            this.beforemood = beforemood;
+            this.aftermood = aftermood;
+            this.spotifyTrackID = spotifyID;
+        }
+
+        public String getTitle() {
+            return title;
+        }
+
+        public String getArtist() {
+            return artist;
+        }
+
+        public String getGenre() {
+            return genre;
+        }
+
+        public String getLength() {
+            return length;
+        }
+
+        public String getBeforemood() {
+            return beforemood;
+        }
+
+        public String getAftermood() {
+            return aftermood;
+        }
+
+        public String getSpotifyTrackID() {
+            return spotifyTrackID;
+        }
     }
 
     public class User
@@ -195,19 +230,20 @@ public class RestInterface
     }
 
     //Use on GetMusicHistory, GetRecommendedTracksUser and GetRecommendedTracksSystem return values
-    public static List<Track> getTrackFromResult(String body)
+    // Separating the results into different columns
+    public static List<TrackDetails> getTrackFromResult(String body)
     {
-        ArrayList<Track> list = new ArrayList<>();
+        ArrayList<TrackDetails> list = new ArrayList<>();
         String result[] = body.split(System.getProperty("line.separator"));
         for(int i = 0; i < result.length; i++)
         {
-            Track item = new RestInterface().new Track();
+            TrackDetails item = new RestInterface().new TrackDetails();
             String temp[] = result[i].split(",");
-            item.trackID = temp[0];
-            item.trackName = temp[1];
-            item.Genre = temp[2];
-            item.Artist = temp[3];
-            item.Duration = temp[4];
+            item.aftermood = temp[0];
+            item.title = temp[1];
+            item.genre = temp[2];
+            item.artist = temp[3];
+            item.length = temp[4];
             list.add(item);
         }
         return list;
