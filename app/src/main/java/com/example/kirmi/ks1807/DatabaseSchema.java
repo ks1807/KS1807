@@ -64,7 +64,7 @@ public class DatabaseSchema
         final String TrackName = "TrackName VARCHAR (100), ";
         final String Genre = "Genre VARCHAR (100), ";
         final String Artist = "Artist VARCHAR (100), ";
-        final String Length = "Length VARCHAR (100)";
+        final String Length = "Length VARCHAR (100), ";
         final String SpotifyTrackID = "SpotifyTrackID VARCHAR (200)";
 
         MusicTrack = "CREATE TABLE " + DBTable_MusicTrack + "(" + TrackID +

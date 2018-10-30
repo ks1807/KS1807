@@ -14,7 +14,7 @@ public class DatabaseFunctions
 {
     //Create the local database for storing user data and settings
     private static final String DBNAME = "MusicMentalHealthDB";
-    private static final int DB_VERSION = 16;
+    private static final int DB_VERSION = 17;
     private final DatabaseSchema DBSchema = new DatabaseSchema();
     private final ArrayList<String> Create_AllTables = DBSchema.CreateAllTables();
     private final ArrayList<String> Drop_AllTables = DBSchema.DropAllTables();
@@ -107,14 +107,14 @@ public class DatabaseFunctions
     }
 
     //Function used to insert tracks into the database
-    public void InsertTrack(String name, String genre, String artist, String length) {
+    public void InsertTrack(String name, String genre, String artist, String length, String SpotifyTrackID) {
         synchronized (this.db) {
             ContentValues NewTrack = new ContentValues();
             NewTrack.put("TrackName", name);
             NewTrack.put("Genre", genre);
             NewTrack.put("Artist", artist);
             NewTrack.put("Length", length);
-            NewTrack.put("SpotifyTrackID", spotifyID);
+            NewTrack.put("SpotifyTrackID", SpotifyTrackID);
 
             try {
                 db.insertOrThrow("MusicTrack", null, NewTrack);
@@ -137,7 +137,7 @@ public class DatabaseFunctions
         time as the time when the user finished the song*/
         String SQLQuery = "SELECT DISTINCT TrackName, Artist, Genre, Length, MoodBefore, MoodAfter, SpotifyTrackID " +
                 "FROM MusicTrack INNER JOIN UserMood ON MusicTrack.TrackID = UserMood.TrackID " +
-                "WHERE UserMood.UserID = " + UserID + " " +
+                "WHERE UserMood.UserID = '" + UserID + "' " +
                 "ORDER BY UserMood.MoodAfterTime DESC LIMIT 0, 10" ;
 
         Cursor cursor = db.rawQuery(SQLQuery, null);

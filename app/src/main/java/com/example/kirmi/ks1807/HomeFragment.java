@@ -55,7 +55,8 @@ public class HomeFragment extends Fragment
 
         listItems = new ArrayList<>();
 //        Toast.makeText(getContext(), tracks[0] + "/" + tracks[1] + "jlkaj" + tracks.length, Toast.LENGTH_SHORT).show();
-        for (int i = 0; i < tracks.size(); i++) {
+        for (int i = 0; i < tracks.size(); i++)
+        {
             TrackDetails list = new TrackDetails(
                     tracks.get(i).getTitle(),
                     tracks.get(i).getArtist(),
