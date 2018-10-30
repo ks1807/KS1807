@@ -133,7 +133,7 @@ public class RestInterface
                                 @Path("password") String password);
 
         @GET("mmhpackage.moodscore/GetMoodList")
-        Call<String> listRepos();
+        Call<String> GetMoodList();
 
         @GET("mmhpackage.musictrack/GetRecommendedTracksUser/{id}/{password}")
         Call<String> GetRecommendedTracksUser(@Path("id") String id, @Path("password") String password);

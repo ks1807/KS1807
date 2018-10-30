@@ -1,5 +1,6 @@
 package com.example.kirmi.ks1807;
 
+import android.app.AlertDialog;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -31,6 +32,11 @@ import com.spotify.protocol.client.Subscription;
 import com.spotify.protocol.types.PlayerState;
 import com.spotify.protocol.types.Track;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+
 public class BackgroundService extends Service
 {
     private static final int NOTIFICATION_FOREGROUND_ID = 1; //ID for mandatory foreground notification
@@ -43,6 +49,8 @@ public class BackgroundService extends Service
     public static boolean isRunning = false; //used by activity to check if it should start the service
     public static String lastSong = "First";
     public static Boolean SongStarted = false;
+    Retrofit retrofit = RestInterface.getClient();
+    RestInterface.Ks1807Client client;
 
     //Binder method - gives the main application a spotifyAppRemote instance - temporary, should use Web API if possible.
     @Override
@@ -60,7 +68,8 @@ public class BackgroundService extends Service
     }
 
     @Override
-    public void onDestroy() {
+    public void onDestroy()
+    {
         isRunning = false;
         Toast.makeText(this, "Service Killed", Toast.LENGTH_SHORT).show();
         if(spotifyAppRemote != null)
@@ -75,6 +84,7 @@ public class BackgroundService extends Service
     @Override
     public void onCreate()
     {
+        client = retrofit.create(RestInterface.Ks1807Client.class);
         isRunning = true;
         //save context
         t = this;
@@ -217,151 +227,277 @@ public class BackgroundService extends Service
         //Music change detector
         spotifyAppRemote.getPlayerApi().subscribeToPlayerState().setEventCallback(
                 new Subscription.EventCallback<PlayerState>()
-        {
-            String Track;
-            String Artist;
-            String Genre;
-            String Length;
-            String TheMood;
-            String BeforeMood;
-
-            public void onEvent(final PlayerState playerState)
-            {
-                //Call to GetMoodList here
-
-                String MoodList = "1F606,4,Amused\n" +
-                        "1F620,-4,Angry\n" +
-                        "2639,-3,Annoyed\n" +
-                        "1F610,1,Calm\n" +
-                        "1F603,2,Cheerful\n" +
-                        "1F627,-4,Depressed\n" +
-                        "1F600,3,Excited\n" +
-                        "1F623,-3,Frustrated\n" +
-                        "1F603,2,Good\n" +
-                        "1F626,-2,Grumpy\n" +
-                        "1F642,2,Happy\n" +
-                        "1F61F,-1,Irritated\n" +
-                        "1F601,3,Joyful\n" +
-                        "1F641,-2,Melancholy\n" +
-                        "1F622,-3,Sad\n" +
-                        "1F60A,1,Satisfied\n" +
-                        "1F616,-2,Stressed";
-
-                final String[][] FullList = GetMoods(MoodList);
-
-                /*Break up the two dimensional array of scores, Emoticons and Mood Names and then
-                convert the scores from String to Integer*/
-                final String[] List = FullList[0];
-                final String[] StringScoreList = FullList[1];
-                final String[] EmoticonList = FullList[2];
-                int MoodListSize = FullList[0].length;
-
-                /*Combine Emoticons and Mood Names for display purposes. However list of mood names
-                on their own will be maintained as well as this is what will go into the DB.*/
-                final String[] MoodAndEmoticonList = new String[MoodListSize];
-
-                int[] ScoreList = new int[MoodListSize];
-
-                //Loop used to convert the string numbers to ints and to combine the mood name and emoticon.
-                for (int i = 0; i < MoodListSize; i++)
                 {
-                    ScoreList[i] = Integer.parseInt(StringScoreList[i]);
-                    MoodAndEmoticonList[i] = EmoticonList[i] + " " + List[i];
-                }
+                    String Track;
+                    String Artist;
+                    String Genre;
+                    String Length;
+                    String TheMood;
+                    String BeforeMood;
 
-                //CompleteScoreList needs to be final in order to be accessed in code below.
-                final int[] CompleteScoreList = ScoreList;
-
-                if(!lastSong.equals(playerState.track.uri))
-                {
-                    android.app.AlertDialog.Builder builder =
-                            new android.app.AlertDialog.Builder(getApplicationContext());
-
-                    String DialogText;
-                    if (!SongStarted)
+                    public void onEvent(final PlayerState playerState)
                     {
-                        DialogText = "How are you feeling at the moment?";
-                    }
-                    else
-                    {
-                        DialogText = "How are you feeling now after this last song you played?";
-                    }
-
-                    builder.setTitle(DialogText);
-                    builder.setItems(MoodAndEmoticonList, new DialogInterface.OnClickListener()
-                    {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i)
+                        Call<String> response = client.GetMoodList();
+                        response.enqueue(new Callback<String>()
                         {
-                            Toast.makeText(getApplicationContext(), "You selected " +
-                                    MoodAndEmoticonList[i], Toast.LENGTH_SHORT).show();
-
-                            //Verify if this is before or after.
-                            if (!SongStarted)
+                            @Override
+                            public void onResponse(Call<String> call, Response<String> response)
                             {
-                                SongStarted = true;
-                                Track = playerState.track.name;
-                                Artist = playerState.track.artist.name;
-                                Genre = playerState.track.album.name;
-                                Length = String.valueOf(DateUtils.formatElapsedTime(
-                                        ((int)playerState.track.duration)/1000));
-                                TheMood = List[i];
-                                //For tracking the difference of the before and after moods.
-                                BeforeMood = List[i];
-
-                                //BEFORE MOOD CALL
-                            }
-                            else if (SongStarted)
-                            {
-                                TheMood = List[i];
-                                //AFTER MOOD CALL - Pass Track, Artist, Genre, Length set previously.
-                                //This is for the song that just ended.
-
-                                SongStarted = false;
-                                Track = playerState.track.name;
-                                Artist = playerState.track.artist.name;
-                                Genre = playerState.track.album.name;
-                                Length = String.valueOf(DateUtils.formatElapsedTime(
-                                        ((int)playerState.track.duration)/1000));
-
-                                //BEFORE MOOD CALL - Pass Track, Artist, Genre, Length set after the
-                                //AFTER MOOD CALL is made. This is for the NEW song.
-
-                                CommonFunctions Common = new CommonFunctions();
-                                int ScoreIndex;
-
-                                /*The place in the array for the score should match that of where
-                                the text based mood is*/
-                                ScoreIndex = Common.GetArrayIndexFromString(List, BeforeMood);
-                                int BeforeMoodScore = CompleteScoreList[ScoreIndex];
-
-                                ScoreIndex = Common.GetArrayIndexFromString(List, TheMood);
-                                int AfterMoodScore = CompleteScoreList[ScoreIndex];
-
-                                if (AfterMoodScore - BeforeMoodScore > 3 ||
-                                        AfterMoodScore - BeforeMoodScore < -3)
+                                Log.d("retrofitclick", "SUCCESS: " + response.raw());
+                                if(!response.body().equals(""))
                                 {
-                                    //Diary prompt - Not yet implemented.
+                                    String MoodList = response.body();
+
+                                    final String[][] FullList = GetMoods(MoodList);
+
+                                    /*Break up the two dimensional array of scores, Emoticons and
+                                    Mood Names and then convert the scores from String to Integer*/
+                                    final String[] List = FullList[0];
+                                    final String[] StringScoreList = FullList[1];
+                                    final String[] EmoticonList = FullList[2];
+                                    int MoodListSize = FullList[0].length;
+
+                                    /*Combine Emoticons and Mood Names for display purposes.
+                                    However list of mood names on their own will be maintained as
+                                    well as this is what will go into the DB.*/
+                                    final String[] MoodAndEmoticonList = new String[MoodListSize];
+
+                                    int[] ScoreList = new int[MoodListSize];
+
+                                    /*Loop used to convert the string numbers to ints and to
+                                    combine the mood name and emoticon.*/
+                                    for (int i = 0; i < MoodListSize; i++)
+                                    {
+                                        ScoreList[i] = Integer.parseInt(StringScoreList[i]);
+                                        MoodAndEmoticonList[i] = EmoticonList[i] + " " + List[i];
+                                    }
+
+                                    //CompleteScoreList needs to be final in order to be accessed in code below.
+                                    final int[] CompleteScoreList = ScoreList;
+
+                                    if(!lastSong.equals(playerState.track.uri))
+                                    {
+                                        android.app.AlertDialog.Builder builder =
+                                                new android.app.AlertDialog.Builder(getApplicationContext());
+
+                                        String DialogText;
+                                        if (!SongStarted)
+                                        {
+                                            DialogText = "How are you feeling at the moment?";
+                                        }
+                                        else
+                                        {
+                                            DialogText = "How are you feeling now after this last song you played?";
+                                        }
+
+                                        builder.setTitle(DialogText);
+                                        builder.setItems(MoodAndEmoticonList, new DialogInterface.OnClickListener()
+                                        {
+                                            @Override
+                                            public void onClick(DialogInterface dialogInterface, int i)
+                                            {
+                                                Toast.makeText(getApplicationContext(), "You selected " +
+                                                        MoodAndEmoticonList[i], Toast.LENGTH_SHORT).show();
+
+                                                //Verify if this is before or after.
+                                                if (!SongStarted)
+                                                {
+                                                    SongStarted = true;
+                                                    Track = playerState.track.name;
+                                                    Artist = playerState.track.artist.name;
+                                                    Genre = playerState.track.album.name;
+                                                    Length = String.valueOf(DateUtils.formatElapsedTime(
+                                                            ((int)playerState.track.duration)/1000));
+                                                    TheMood = List[i];
+                                                    //For tracking the difference of the before and after moods.
+                                                    BeforeMood = List[i];
+
+                                                    String UserID = Global.UserID;
+                                                    String UserPassword = Global.UserPassword;
+
+                                                    /*Bug in code - Service runs even when not
+                                                    logged in. This stops it crashing in that
+                                                    scenario.*/
+                                                    if (UserID.equals("") || UserPassword.equals(""))
+                                                    {
+                                                        UserID = "-1";
+                                                        UserPassword = "Dummy";
+                                                    }
+
+                                                    Call<String> response = client.TrackStarted(
+                                                            Track, Genre, Artist, Length, TheMood,
+                                                            UserID, UserPassword);
+                                                    response.enqueue(new Callback<String>()
+                                                    {
+                                                        @Override
+                                                        public void onResponse(Call<String> call, Response<String> response)
+                                                        {
+                                                            Log.d("retrofitclick", "SUCCESS: " + response.raw());
+                                                            if(!response.body().equals("Incorrect UserID or Password. Query not executed."))
+                                                            {
+                                                                Global.MoodID = response.body();
+                                                            }
+                                                            else
+                                                            {
+                                                                Global.MoodID = "-1";
+                                                            }
+                                                        }
+                                                        @Override
+                                                        public void onFailure(Call<String> call, Throwable t)
+                                                        {
+                                                            fail_LoginNetwork();
+                                                        }
+                                                    });
+                                                }
+                                                else if (SongStarted)
+                                                {
+                                                    TheMood = List[i];
+                                                    String UserID = Global.UserID;
+                                                    String UserPassword = Global.UserPassword;
+
+                                                    /*Bug in code - Service runs even when not
+                                                    logged in. This stops it crashing in that
+                                                    scenario.*/
+                                                    if (UserID.equals("") || UserPassword.equals(""))
+                                                    {
+                                                        UserID = "-1";
+                                                        UserPassword = "Dummy";
+                                                    }
+
+                                                    Call<String> response = client.TrackEnded(
+                                                            Global.MoodID, TheMood, "-",
+                                                            "-", "-", "-",
+                                                            UserID, UserPassword);
+                                                    response.enqueue(new Callback<String>()
+                                                    {
+                                                        @Override
+                                                        public void onResponse(Call<String> call, Response<String> response)
+                                                        {
+                                                            Log.d("retrofitclick", "SUCCESS: " + response.raw());
+                                                            if(response.body().equals("Incorrect UserID or Password. Query not executed."))
+                                                            {
+                                                                Toast.makeText(getApplicationContext(),
+                                                                        "Error, mood at end of track failed to update", Toast.LENGTH_SHORT).show();
+                                                            }
+                                                        }
+                                                        @Override
+                                                        public void onFailure(Call<String> call, Throwable t)
+                                                        {
+                                                            fail_LoginNetwork();
+                                                        }
+                                                    });
+
+                                                    SongStarted = false;
+
+                                                    //This code crashes the interface - commented out.
+                                                    /*
+                                                    Track = playerState.track.name;
+                                                    Artist = playerState.track.artist.name;
+                                                    Genre = playerState.track.album.name;
+                                                    Length = String.valueOf(DateUtils.formatElapsedTime(
+                                                            ((int)playerState.track.duration)/1000));
+
+                                                   //Rechecking the UserID and password.
+                                                    UserID = Global.UserID;
+                                                    UserPassword = Global.UserPassword;
+
+                                                    if (UserID.equals("") || UserPassword.equals(""))
+                                                    {
+                                                        UserID = "-1";
+                                                        UserPassword = "Dummy";
+                                                    }
+
+                                                    response = client.TrackStarted(
+                                                            Track, Genre, Artist, Length, TheMood,
+                                                            UserID, UserPassword);
+                                                    response.enqueue(new Callback<String>()
+                                                    {
+                                                        @Override
+                                                        public void onResponse(Call<String> call, Response<String> response)
+                                                        {
+                                                            Log.d("retrofitclick", "SUCCESS: " + response.raw());
+                                                            if(!response.body().equals("Incorrect UserID or Password. Query not executed."))
+                                                            {
+                                                                Global.MoodID = response.body();
+                                                            }
+                                                            else
+                                                            {
+                                                                Global.MoodID = "-1";
+                                                            }
+                                                        }
+                                                        @Override
+                                                        public void onFailure(Call<String> call, Throwable t)
+                                                        {
+                                                            fail_LoginNetwork();
+                                                        }
+                                                    });*/
+
+                                                    CommonFunctions Common = new CommonFunctions();
+                                                    int ScoreIndex;
+
+                                                    /*The place in the array for the score should
+                                                    match that of where the text based mood is*/
+                                                    ScoreIndex = Common.GetArrayIndexFromString(
+                                                            List, BeforeMood);
+                                                    int BeforeMoodScore = CompleteScoreList[ScoreIndex];
+
+                                                    ScoreIndex = Common.GetArrayIndexFromString(
+                                                            List, TheMood);
+                                                    int AfterMoodScore = CompleteScoreList[ScoreIndex];
+
+                                                    if (AfterMoodScore - BeforeMoodScore > 3 ||
+                                                            AfterMoodScore - BeforeMoodScore < -3)
+                                                    {
+                                                        //Diary prompt - Not yet implemented.
+                                                    }
+                                                }
+                                            }
+                                        });
+                                        android.app.AlertDialog dialog = builder.create();
+                                        dialog.setCanceledOnTouchOutside(false);
+                                        dialog.setCancelable(false);
+                                        dialog.getWindow().setType(
+                                                WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY);
+                                        dialog.show();
+
+                                        final Track track = playerState.track;
+                                        if (track != null)
+                                        {
+                                            Toast.makeText(t, track.name + " by " +
+                                                            track.artist.name, Toast.LENGTH_SHORT).show();
+                                        }
+                                        lastSong = playerState.track.uri;
+                                    }
+                                    Log.d("playerstate", playerState.toString());
                                 }
                             }
-                        }
-                    });
-                    android.app.AlertDialog dialog = builder.create();
-                    dialog.setCanceledOnTouchOutside(false);
-                    dialog.setCancelable(false);
-                    dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY);
-                    dialog.show();
+                            @Override
+                            public void onFailure(Call<String> call, Throwable t)
+                            {
+                                fail_LoginNetwork();
+                            }
+                        });
 
-                    final Track track = playerState.track;
-                    if (track != null)
-                    {
-                        Toast.makeText(t, track.name + " by " + track.artist.name,
-                                Toast.LENGTH_SHORT).show();
                     }
-                    lastSong = playerState.track.uri;
-                }
-                Log.d("playerstate", playerState.toString());
-            }
-        });
+                });
+    }
+
+    void fail_LoginNetwork()
+    {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getApplicationContext());
+        alertDialogBuilder.setTitle("Service Error");
+        alertDialogBuilder
+                .setCancelable(false)
+                .setPositiveButton("Ok",new DialogInterface.OnClickListener()
+                {
+                    public void onClick(DialogInterface dialog,int id)
+                    {
+                    }
+                });
+        String InvalidMessage = "The service is not available at this time, please try again later" +
+                "or contact support";
+        alertDialogBuilder.setMessage(InvalidMessage);
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
     }
 }

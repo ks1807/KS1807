@@ -7,4 +7,7 @@ public class Global
 
     //Used to pass the current user password to the API.
     public static String UserPassword = "";
+
+    //Used to pass the Mood ID.
+    public static String MoodID = "";
 }

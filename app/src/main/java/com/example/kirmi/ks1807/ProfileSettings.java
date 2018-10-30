@@ -23,7 +23,6 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 import java.text.ParseException;
 import java.util.Date;
-import java.text.SimpleDateFormat;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -53,9 +52,6 @@ public class ProfileSettings extends Fragment
         View view = inflater.inflate(R.layout.activity_profile_settingstab, container, false);
 
         UserID = Global.UserID;
-        UserFunctions = new DatabaseFunctions(getContext());
-
-
         userdetails = (LinearLayout)view.findViewById(R.id.user_details);
 
         firstN = (EditText)view.findViewById(R.id.editText_EditFirstName);
@@ -633,6 +629,24 @@ public class ProfileSettings extends Fragment
         if(ValidationSuccessful)
         {
             String UserPassword = Global.UserPassword;
+
+            //Change blank strings to - so they can be passed in the URL.
+            if (FName.equals(""))
+            {
+                FName = "-";
+            }
+            if (LName.equals(""))
+            {
+                LName = "-";
+            }
+            if (TheEmail.equals(""))
+            {
+                TheEmail = "-";
+            }
+            if (TheDateOfBirth.equals(""))
+            {
+                TheDateOfBirth = "-";
+            }
 
             Call<String> response = client.UpdateUser(
                     FName, LName, TheEmail, TheDateOfBirth, TheGender, UserID, UserPassword);
