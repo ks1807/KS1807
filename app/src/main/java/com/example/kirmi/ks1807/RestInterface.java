@@ -157,7 +157,7 @@ public class RestInterface
     }
 
     //Data Structures
-    public static class TrackDetails {
+    public class TrackDetails {
         String title, artist, genre, length, beforemood, aftermood, spotifyTrackID;
 
         public TrackDetails() {
@@ -202,6 +202,44 @@ public class RestInterface
         }
     }
 
+    public class User
+    {
+        String firstName;
+        String lastName;
+        String email;
+        String dob;
+        String gender;
+    }
+
+    public class Settings
+    {
+        String makeRecommendations;
+        String moodFrequency;
+        String rememberLogin;
+    }
+
+    public static User getUserFromResult(String body)
+    {
+        User item = new RestInterface().new User();
+        String temp[] = body.split(",");
+        item.firstName = temp[0];
+        item.lastName = temp[1];
+        item.email = temp[2];
+        item.dob = temp[3];
+        item.gender = temp[4];
+        return item;
+    }
+
+    public static Settings getSettingsFromResult(String body)
+    {
+        Settings item = new RestInterface().new Settings();
+        String temp[] = body.split(",");
+        item.makeRecommendations = temp[0];
+        item.moodFrequency = temp[1];
+        item.rememberLogin = temp[2];
+        return item;
+    }
+
     //Use on GetMusicHistory, GetRecommendedTracksUser and GetRecommendedTracksSystem return values
     // Separating the results into different columns
     public static List<TrackDetails> getTrackFromResult(String body)
@@ -210,12 +248,13 @@ public class RestInterface
         String result[] = body.split(System.getProperty("line.separator"));
         for(int i = 0; i < result.length; i++)
         {
+            TrackDetails item = new RestInterface().new TrackDetails();
             String temp[] = result[i].split(",");
-            TrackDetails item = new RestInterface.TrackDetails();
-            item.title = temp[0];
-            item.genre = temp[1];
-            item.artist = temp[2];
-            item.length = temp[3];
+            item.aftermood = temp[0];
+            item.title = temp[1];
+            item.genre = temp[2];
+            item.artist = temp[3];
+            item.length = temp[4];
             list.add(item);
         }
         return list;
