@@ -4,6 +4,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
@@ -148,14 +149,53 @@ public class RestInterface
     //Data Structures
     public class Track
     {
-        String songName;
+        String trackID;
+        String trackName;
         String Genre;
         String Artist;
         String Duration;
     }
 
+    public class User
+    {
+        String firstName;
+        String lastName;
+        String email;
+        String dob;
+        String gender;
+    }
+
+    public class Settings
+    {
+        String makeRecommendations;
+        String moodFrequency;
+        String rememberLogin;
+    }
+
+    public static User getUserFromResult(String body)
+    {
+        User item = new RestInterface().new User();
+        String temp[] = body.split(",");
+        item.firstName = temp[0];
+        item.lastName = temp[1];
+        item.email = temp[2];
+        item.dob = temp[3];
+        item.gender = temp[4];
+        return item;
+    }
+
+    public static Settings getSettingsFromResult(String body)
+    {
+        Settings item = new RestInterface().new Settings();
+        String temp[] = body.split(",");
+        item.makeRecommendations = temp[0];
+        item.moodFrequency = temp[1];
+        item.rememberLogin = temp[2];
+        return item;
+    }
+
     //Use on GetMusicHistory, GetRecommendedTracksUser and GetRecommendedTracksSystem return values
-    public static List<Track> getMusicHistory(String body)
+    public static List<Track> getTrackFromResult(String body)
     {
         ArrayList<Track> list = new ArrayList<>();
         String result[] = body.split(System.getProperty("line.separator"));
@@ -163,10 +203,11 @@ public class RestInterface
         {
             Track item = new RestInterface().new Track();
             String temp[] = result[i].split(",");
-            item.songName = temp[0];
-            item.Genre = temp[1];
-            item.Artist = temp[2];
-            item.Duration = temp[3];
+            item.trackID = temp[0];
+            item.trackName = temp[1];
+            item.Genre = temp[2];
+            item.Artist = temp[3];
+            item.Duration = temp[4];
             list.add(item);
         }
         return list;
