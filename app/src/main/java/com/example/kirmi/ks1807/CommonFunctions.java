@@ -25,6 +25,21 @@ public class CommonFunctions
         }
     }
 
+    public Date DateFromStringFromSQLToAustraliaFormat(String DateString) throws ParseException
+    {
+        SimpleDateFormat SQLServerDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        SQLServerDateFormat.setLenient(false);
+        try
+        {
+            Date FormattedDate = SQLServerDateFormat.parse(DateString);
+            return FormattedDate;
+        } catch (ParseException e)
+        {
+            e.printStackTrace();
+            throw new ParseException("Invalid Date SQL Format", -1);
+        }
+    }
+
     /*Code for this algorithm derived from:
     https://howtodoinjava.com/security/how-to-generate-secure-password-hash-md5-sha-pbkdf2-bcrypt-examples/
     */

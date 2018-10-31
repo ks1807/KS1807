@@ -15,6 +15,7 @@ import android.widget.RadioButton;
 import android.widget.Toast;
 import java.text.ParseException;
 import java.util.Date;
+import java.text.SimpleDateFormat;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -254,6 +255,23 @@ public class Register extends AppCompatActivity
                     Email.setText(TheEmail);
                     CurrentEmailAddress = TheEmail;
 
+                    if (!TheDateOfBirth.equals(""))
+                    {
+                        try
+                        {
+                            final CommonFunctions Common = new CommonFunctions();
+                            Date DateOfBirthDate = Common.DateFromStringFromSQLToAustraliaFormat(TheDateOfBirth);
+                            SimpleDateFormat DateOfBirthFormat = new SimpleDateFormat("dd-MM-yyyy");
+                            TheDateOfBirth = DateOfBirthFormat.format(DateOfBirthDate);
+                            TheDateOfBirth = TheDateOfBirth.replace("-", "/");
+                        }
+                        catch (ParseException e)
+                        {
+                            e.printStackTrace();
+                            TheDateOfBirth = "";
+                        }
+                    }
+
                     TextView DateOfBirth = (TextView)findViewById(R.id.EditText_DateOfBirth);
                     DateOfBirth.setText(TheDateOfBirth);
 
@@ -464,6 +482,11 @@ public class Register extends AppCompatActivity
                     alertDialogBuilder.setMessage(InvalidMessage);
                     AlertDialog alertDialog = alertDialogBuilder.create();
                     alertDialog.show();
+                }
+                else
+                {
+                    SimpleDateFormat DateOfBirthFormat = new SimpleDateFormat("yyyy-MM-dd");
+                    TheDateOfBirth = DateOfBirthFormat.format(DOBTest);
                 }
             }
             catch (ParseException e)

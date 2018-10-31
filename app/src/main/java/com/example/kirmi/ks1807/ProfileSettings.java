@@ -22,6 +22,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import retrofit2.Call;
@@ -78,6 +79,8 @@ public class ProfileSettings extends Fragment
         changePassword = (Button) view.findViewById(R.id.btnchangepass);
 
         client = retrofit.create(RestInterface.Ks1807Client.class);
+
+        UserFunctions = new DatabaseFunctions(getContext());
 
         String UserPassword = Global.UserPassword;
 
@@ -409,11 +412,29 @@ public class ProfileSettings extends Fragment
     //Assigning the fields in the profile with the information found from the database about the user.
     public void DisplayUserDetails(String[] UserDetails)
     {
+        String TheDateOfBirth = UserDetails[3];
+        if (!TheDateOfBirth.equals(""))
+        {
+            try
+            {
+                final CommonFunctions Common = new CommonFunctions();
+                Date DateOfBirthDate = Common.DateFromStringFromSQLToAustraliaFormat(TheDateOfBirth);
+                SimpleDateFormat DateOfBirthFormat = new SimpleDateFormat("dd-MM-yyyy");
+                TheDateOfBirth = DateOfBirthFormat.format(DateOfBirthDate);
+                TheDateOfBirth = TheDateOfBirth.replace("-", "/");
+            }
+            catch (ParseException e)
+            {
+                e.printStackTrace();
+                TheDateOfBirth = "";
+            }
+        }
+
         firstN.setText(UserDetails[0]);
         lastN.setText(UserDetails[1]);
         editemail.setText(UserDetails[2]);
         CurrentEmailAddress = UserDetails[2];
-        editdob.setText(UserDetails[3]);
+        editdob.setText(TheDateOfBirth);
         String Gender = UserDetails[4];
 
         /*Make sure that the buttons have their image and checked status set to what the user
@@ -591,6 +612,11 @@ public class ProfileSettings extends Fragment
                     AlertDialog alertDialog = alertDialogBuilder.create();
                     alertDialog.show();
                 }
+                else
+                {
+                    SimpleDateFormat DateOfBirthFormat = new SimpleDateFormat("yyyy-MM-dd");
+                    TheDateOfBirth = DateOfBirthFormat.format(DOBTest);
+                }
             }
             catch (ParseException e)
             {
@@ -659,7 +685,11 @@ public class ProfileSettings extends Fragment
                     if(response.body().equals("Incorrect UserID or Password. Query not executed."))
                         Toast.makeText(getActivity(), "Failed to update your details", Toast.LENGTH_SHORT).show();
                     else
+                    {
                         Toast.makeText(getActivity(), "Successfully updated your details", Toast.LENGTH_SHORT).show();
+                        setProfileBackFromEdit();
+                    }
+
                 }
                 @Override
                 public void onFailure(Call<String> call, Throwable t)
