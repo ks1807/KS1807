@@ -14,7 +14,6 @@ import android.widget.TextView;
 import android.widget.RadioButton;
 import android.widget.Toast;
 import java.text.ParseException;
-import java.util.ArrayList;
 import java.util.Date;
 
 import retrofit2.Call;
@@ -173,6 +172,9 @@ public class Register extends AppCompatActivity
 
         next.setVisibility(view.VISIBLE);
         register.setVisibility(view.INVISIBLE);
+
+        //Used in case the user backtracks to this page we want the user's choice preselected.
+        Global.UserExtraMoodQuestions = "Yes";
     }
 
     public void RadioButtonNoMoreQues(View view)
@@ -188,6 +190,9 @@ public class Register extends AppCompatActivity
 
         next.setVisibility(view.INVISIBLE);
         register.setVisibility(view.VISIBLE);
+
+        //Used in case the user backtracks to this page we want the user's choice preselected.
+        Global.UserExtraMoodQuestions = "No";
     }
 
     public void RadioButtonFemale(View view)
@@ -217,7 +222,7 @@ public class Register extends AppCompatActivity
     {
         String UserPassword = Global.UserPassword;
 
-        Call<String> response = client.GetUserDetails(BackUserID, UserPassword);
+        Call<String> response = client.GetUserDetailsRegistration(BackUserID, UserPassword);
         response.enqueue(new Callback<String>()
         {
             @Override
@@ -236,6 +241,7 @@ public class Register extends AppCompatActivity
                     String TheEmail = UserDetails[2].replace("EmailAddress: ", "");
                     String TheDateOfBirth = UserDetails[3].replace("DateOfBirth: ", "");
                     String TheGender = UserDetails[4].replace("Gender: ", "");
+                    String AcceptedEthicsStatement = UserDetails[5].replace("AcceptedEthicsStatement: ", "");
 
                     //Populate all the fields with the database data.
                     TextView FirstName = (TextView)findViewById(R.id.EditText_FirstName);
@@ -277,6 +283,47 @@ public class Register extends AppCompatActivity
                         GenderFemale.setBackgroundResource(R.drawable.femaleunselected);
                         GenderOther.setBackgroundResource(R.drawable.otherselected);
                         GenderOther.setChecked(true);
+                    }
+
+                    //Set the research buttons based on the user's previous choice.
+                    final RadioButton YesResearch = (RadioButton) findViewById(R.id.RadioButton_Yes1);
+                    final RadioButton NoResearch = (RadioButton) findViewById(R.id.RadioButton_No1);
+
+                    if (AcceptedEthicsStatement.equals("Yes"))
+                    {
+                        YesResearch.setBackgroundResource(R.drawable.yesselected);
+                        NoResearch.setBackgroundResource(R.drawable.nounselected);
+                        YesResearch.setChecked(true);
+                    }
+                    else
+                    {
+                        YesResearch.setBackgroundResource(R.drawable.yesunselected);
+                        NoResearch.setBackgroundResource(R.drawable.noselected);
+                        NoResearch.setChecked(true);
+                    }
+
+                    //Set the mood buttons based on the user's previous choice.
+                    final RadioButton YesMoodQuestions = (RadioButton) findViewById(R.id.RadioButton_Yes);
+                    final RadioButton NoMoodQuestions = (RadioButton) findViewById(R.id.RadioButton_No);
+
+                    Button register = (Button) findViewById(R.id.btn_Submit);
+                    Button next = (Button) findViewById(R.id.btn_Next);
+
+                    if (Global.UserExtraMoodQuestions.equals("Yes"))
+                    {
+                        next.setVisibility(View.VISIBLE);
+                        register.setVisibility(View.INVISIBLE);
+                        YesMoodQuestions.setBackgroundResource(R.drawable.yesselected);
+                        NoMoodQuestions.setBackgroundResource(R.drawable.nounselected);
+                        YesMoodQuestions.setChecked(true);
+                    }
+                    else
+                    {
+                        next.setVisibility(View.INVISIBLE);
+                        register.setVisibility(View.VISIBLE);
+                        YesMoodQuestions.setBackgroundResource(R.drawable.yesunselected);
+                        NoMoodQuestions.setBackgroundResource(R.drawable.noselected);
+                        NoMoodQuestions.setChecked(true);
                     }
                 }
             }

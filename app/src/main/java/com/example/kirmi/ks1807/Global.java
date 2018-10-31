@@ -10,4 +10,8 @@ public class Global
 
     //Used to pass the Mood ID.
     public static String MoodID = "";
+
+    /*Used if the user backtracks on the connect page (determines if they go to the first or
+    second registration page.*/
+    public static String UserExtraMoodQuestions = "";
 }

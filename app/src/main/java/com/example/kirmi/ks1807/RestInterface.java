@@ -34,38 +34,6 @@ public class RestInterface
         return retrofit;
     }
 
-    public static String EncryptPassword(String Password)
-    {
-        String EncryptedPassword = "";
-        try
-        {
-            //Using MD5 Message-Digest Algorithm to encrypt the password.
-            MessageDigest Digest = MessageDigest.getInstance("MD5");
-
-            //Add password bytes to digest.
-            Digest.update(Password.getBytes());
-
-            //Get the hash's bytes.
-            byte[] Bytes = Digest.digest();
-
-            //Convert these decimal bytes to hexadecimal format.
-            StringBuilder StringToBuild = new StringBuilder();
-
-            for(int i=0; i< Bytes.length ;i++)
-            {
-                StringToBuild.append(Integer.toString((Bytes[i] & 0xff) +
-                        0x100, 16).substring(1));
-            }
-
-            EncryptedPassword = StringToBuild.toString();
-        }
-        catch (NoSuchAlgorithmException e)
-        {
-            e.printStackTrace();
-        }
-        return EncryptedPassword;
-    }
-
     public interface Ks1807Client
     {
         @GET("mmhpackage.useraccount/GetMusicHistory/{id}/{password}")

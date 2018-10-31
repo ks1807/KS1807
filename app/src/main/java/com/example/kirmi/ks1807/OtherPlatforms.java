@@ -27,8 +27,16 @@ public class OtherPlatforms extends AppCompatActivity
 
     public void button_back(View view)
     {
-        Intent intent = new Intent(OtherPlatforms.this, RegisterSecondPage.class);
-        startActivity(intent);
+        if (Global.UserExtraMoodQuestions.equals("Yes"))
+        {
+            Intent intent = new Intent(OtherPlatforms.this, RegisterSecondPage.class);
+            startActivity(intent);
+        }
+        else
+        {
+            Intent intent = new Intent(OtherPlatforms.this, Register.class);
+            startActivity(intent);
+        }
     }
 
     public void button_connect(View view)
