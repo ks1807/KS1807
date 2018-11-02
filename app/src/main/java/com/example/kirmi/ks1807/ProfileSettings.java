@@ -32,7 +32,6 @@ import retrofit2.Retrofit;
 
 public class ProfileSettings extends Fragment
 {
-
     String UserID = "", CurrentEmailAddress = "";
     final CommonFunctions Common = new CommonFunctions();
     private DatabaseFunctions UserFunctions;
@@ -45,6 +44,8 @@ public class ProfileSettings extends Fragment
     private String[] UserDetails;
     Retrofit retrofit = RestInterface.getClient();
     RestInterface.Ks1807Client client;
+
+    boolean IsEmailUnique = false;
 
     @Nullable
     @Override
@@ -83,6 +84,21 @@ public class ProfileSettings extends Fragment
         UserFunctions = new DatabaseFunctions(getContext());
 
         String UserPassword = Global.UserPassword;
+
+        //Check that the email is unique or not before the main validation is run.
+        final EditText EmailTextBoxValidate = editemail;
+        EmailTextBoxValidate.setOnFocusChangeListener(new View.OnFocusChangeListener()
+        {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus)
+            {
+                String TheEmail = EmailTextBoxValidate.getText().toString();
+                if (!hasFocus && !TheEmail.equals(""))
+                {
+                    CheckEmailAddress(TheEmail);
+                }
+            }
+        });
 
         Call<String> response = client.GetUserDetails(UserID, UserPassword);
         response.enqueue(new Callback<String>()
@@ -153,45 +169,53 @@ public class ProfileSettings extends Fragment
                                 enableAllFields();
 
                                 //Changing the image according the screen design once user is on edit page
-                                if (genderMale.isChecked()) {
+                                if (genderMale.isChecked())
+                                {
                                     genderMale.setBackgroundResource(R.drawable.settingseditmaleselected);
                                     genderFemale.setBackgroundResource(R.drawable.settingseditfemalenormal);
                                     genderOther.setBackgroundResource(R.drawable.settingseditothernormal);
                                 }
 
-                                if (genderFemale.isChecked()) {
+                                if (genderFemale.isChecked())
+                                {
                                     genderMale.setBackgroundResource(R.drawable.settingseditmalenormal);
                                     genderFemale.setBackgroundResource(R.drawable.settingseditfemaleselected);
                                     genderOther.setBackgroundResource(R.drawable.settingseditothernormal);
                                 }
 
-                                if (genderOther.isChecked()) {
+                                if (genderOther.isChecked())
+                                {
                                     genderMale.setBackgroundResource(R.drawable.settingseditmalenormal);
                                     genderFemale.setBackgroundResource(R.drawable.settingseditfemalenormal);
                                     genderOther.setBackgroundResource(R.drawable.settingseditotherselected);
                                 }
 
-
                                 //Setting the correct images when a button is selected
-                                genderMale.setOnClickListener(new View.OnClickListener() {
+                                genderMale.setOnClickListener(new View.OnClickListener()
+                                {
                                     @Override
-                                    public void onClick(View view) {
+                                    public void onClick(View view)
+                                    {
                                         genderMale.setBackgroundResource(R.drawable.settingseditmaleselected);
                                         genderFemale.setBackgroundResource(R.drawable.settingseditfemalenormal);
                                         genderOther.setBackgroundResource(R.drawable.settingseditothernormal);
                                     }
                                 });
-                                genderFemale.setOnClickListener(new View.OnClickListener() {
+                                genderFemale.setOnClickListener(new View.OnClickListener()
+                                {
                                     @Override
-                                    public void onClick(View view) {
+                                    public void onClick(View view)
+                                    {
                                         genderMale.setBackgroundResource(R.drawable.settingseditmalenormal);
                                         genderFemale.setBackgroundResource(R.drawable.settingseditfemaleselected);
                                         genderOther.setBackgroundResource(R.drawable.settingseditothernormal);
                                     }
                                 });
-                                genderOther.setOnClickListener(new View.OnClickListener() {
+                                genderOther.setOnClickListener(new View.OnClickListener()
+                                {
                                     @Override
-                                    public void onClick(View view) {
+                                    public void onClick(View view)
+                                    {
                                         genderMale.setBackgroundResource(R.drawable.settingseditmalenormal);
                                         genderFemale.setBackgroundResource(R.drawable.settingseditfemalenormal);
                                         genderOther.setBackgroundResource(R.drawable.settingseditotherselected);
@@ -585,9 +609,10 @@ public class ProfileSettings extends Fragment
         }
 
         /*Check if the email address is used by another user and also don't trigger validation if
-        the user is not changing their address*/
-        if (!UserFunctions.IsEmailAddressUnique(TheEmail) &&
-                !TheEmail.toLowerCase().equals(CurrentEmailAddress.toLowerCase())
+        the user is not changing their address. Note that the check for email uniqueness is made
+        when the user unfocuses the email text box as otherwise the check is done AFTER the
+        update.*/
+        if (!IsEmailUnique && !TheEmail.toLowerCase().equals(CurrentEmailAddress.toLowerCase())
                 && ValidationSuccessful)
         {
             ValidationSuccessful = false;
@@ -674,6 +699,13 @@ public class ProfileSettings extends Fragment
                 TheDateOfBirth = "-";
             }
 
+            //Used to force the display change to use the user's new details.
+            final String DisplayedFirstName = FName;
+            final String DisplayedLastName = LName;
+            final String DisplayedEmail = TheEmail;
+            final String DisplayedDOB = TheDateOfBirth;
+            final String DisplayedGender = TheGender;
+
             Call<String> response = client.UpdateUser(
                     FName, LName, TheEmail, TheDateOfBirth, TheGender, UserID, UserPassword);
             response.enqueue(new Callback<String>()
@@ -688,8 +720,58 @@ public class ProfileSettings extends Fragment
                     {
                         Toast.makeText(getActivity(), "Successfully updated your details", Toast.LENGTH_SHORT).show();
                         setProfileBackFromEdit();
-                    }
 
+                        /*Code below forces an update of user changes as the retrieval of user
+                        details actually takes place BEFORE the update.*/
+                        firstN.setText(DisplayedFirstName);
+                        lastN.setText(DisplayedLastName);
+                        editemail.setText(DisplayedEmail);
+
+                        //Format the date so it appears correctly after the update.
+                        String DOB = DisplayedDOB;
+                        if (!DOB.equals(""))
+                        {
+                            try
+                            {
+                                final CommonFunctions Common = new CommonFunctions();
+                                Date DateOfBirthDate = Common.DateFromStringFromSQLToAustraliaFormat(DOB);
+                                SimpleDateFormat DateOfBirthFormat = new SimpleDateFormat("dd-MM-yyyy");
+                                DOB = DateOfBirthFormat.format(DateOfBirthDate);
+                                DOB = DOB.replace("-", "/");
+                            }
+                            catch (ParseException e)
+                            {
+                                e.printStackTrace();
+                                DOB = "";
+                            }
+                        }
+
+                        editdob.setText(DOB);
+
+                        /*Make sure that the buttons have their image and checked status set to
+                        what the user chose.*/
+                        if (DisplayedGender.equals("Male"))
+                        {
+                            genderMale.setBackgroundResource(R.drawable.settingsmaleselected);
+                            genderFemale.setBackgroundResource(R.drawable.settingsfemaleunselected);
+                            genderOther.setBackgroundResource(R.drawable.settingsotherunselected);
+                            genderMale.setChecked(true);
+                        }
+                        else if (DisplayedGender.equals("Female"))
+                        {
+                            genderMale.setBackgroundResource(R.drawable.settingsmaleunselected);
+                            genderFemale.setBackgroundResource(R.drawable.settingsfemaleselected);
+                            genderOther.setBackgroundResource(R.drawable.settingsotherunselected);
+                            genderFemale.setChecked(true);
+                        }
+                        else if (DisplayedGender.equals("Other"))
+                        {
+                            genderMale.setBackgroundResource(R.drawable.settingsmaleunselected);
+                            genderFemale.setBackgroundResource(R.drawable.settingsfemaleunselected);
+                            genderOther.setBackgroundResource(R.drawable.settingsotherselected);
+                            genderOther.setChecked(true);
+                        }
+                    }
                 }
                 @Override
                 public void onFailure(Call<String> call, Throwable t)
@@ -849,5 +931,27 @@ public class ProfileSettings extends Fragment
         alertDialogBuilder.setMessage(InvalidMessage);
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
+    }
+
+    void CheckEmailAddress(String EmailAddress)
+    {
+        Call<String> response = client.IsEmailAddressUnique(EmailAddress);
+        response.enqueue(new Callback<String>()
+        {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response)
+            {
+                Log.d("retrofitclick", "SUCCESS: " + response.raw());
+                if(response.body().equals("YES"))
+                    IsEmailUnique = true;
+                else
+                    IsEmailUnique = false;
+            }
+            @Override
+            public void onFailure(Call<String> call, Throwable t)
+            {
+                fail_LoginNetwork();
+            }
+        });
     }
 }
