@@ -1,14 +1,15 @@
 package com.example.kirmi.ks1807;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.content.Context;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.RadioButton;
@@ -31,6 +32,7 @@ public class Register extends AppCompatActivity
     String BackUserID = "";
     String CurrentEmailAddress = "";
     String EthicsAgreement = "No";
+    boolean IsEmailUnique = false;
 
     Retrofit retrofit = RestInterface.getClient();
     RestInterface.Ks1807Client client;
@@ -51,12 +53,26 @@ public class Register extends AppCompatActivity
         {
             ShowUserDetails();
         }
+
+        //Check that the email is unique or not before the main validation is run.
+        final EditText EmailTextBox = (EditText) findViewById(R.id.EditText_Email);
+        EmailTextBox.setOnFocusChangeListener(new View.OnFocusChangeListener()
+        {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus)
+            {
+                String TheEmail = EmailTextBox.getText().toString();
+                if (!hasFocus && !TheEmail.equals(""))
+                {
+                    CheckEmailAddress(TheEmail);
+                }
+            }
+        });
     }
 
     //Confirm if the user wants to go back if the button is pressed.
     public void button_Back(View view)
     {
-
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
         alertDialogBuilder.setTitle("Confirm exit");
         alertDialogBuilder
@@ -84,20 +100,14 @@ public class Register extends AppCompatActivity
 
     public void button_Next(View view)
     {
-        if (ValidateForm())
-        {
-            Intent intent = new Intent(Register.this, RegisterSecondPage.class);
-            startActivity(intent);
-        }
+        String ButtonName = view.getResources().getResourceEntryName(view.getId());
+        ValidateForm(ButtonName);
     }
 
     public void button_RegisterNow(View view)
     {
-        if (ValidateForm())
-        {
-            Intent intent = new Intent(Register.this, OtherPlatforms.class);
-            startActivity(intent);
-        }
+        String ButtonName = view.getResources().getResourceEntryName(view.getId());
+        ValidateForm(ButtonName);
     }
 
     //Buttons that switch the graphics of the gender radio buttons to indicate what is selected.
@@ -353,8 +363,9 @@ public class Register extends AppCompatActivity
         });
     }
 
-    private boolean ValidateForm()
+    private void ValidateForm(String ButtonName)
     {
+        final String TheButton = ButtonName;
         boolean ValidationSuccessful = true;
         final CommonFunctions Common = new CommonFunctions();
         String InvalidMessage = "";
@@ -420,9 +431,11 @@ public class Register extends AppCompatActivity
         }
 
         /*Check if the email address is used by another user and also don't trigger validation if
-        the user is not changing their email address (if they already set this before).*/
-        if (!RegisterFunctions.IsEmailAddressUnique(TheEmail)
-                && !TheEmail.toLowerCase().equals(CurrentEmailAddress.toLowerCase())
+        the user is not changing their email address (if they already set this before).
+        Note actual checking of Email Uniqueness is actually done as soon as the user enters
+        something into the email text box, this is due to the fact that the API call is made
+        AFTER all the other code is run in this validation function.*/
+        if (!IsEmailUnique && !TheEmail.toLowerCase().equals(CurrentEmailAddress.toLowerCase())
                 && ValidationSuccessful)
         {
             ValidationSuccessful = false;
@@ -578,7 +591,6 @@ public class Register extends AppCompatActivity
                 {
                     Log.d("retrofitclick", "SUCCESS: " + response.raw());
                     if(response.body().equals("-1"))
-                        //Note if the activity fails to insert it will not stop the app from going to the next activity
                         Toast.makeText(context, "Failed to insert new user", Toast.LENGTH_SHORT).show();
                     else
                     {
@@ -587,6 +599,21 @@ public class Register extends AppCompatActivity
                         Global.UserID = UserID;
                         BackUserID = UserID;
                         Global.UserPassword = FinalNewPass;
+
+                        if (TheButton.contains("btn_Next"))
+                        {
+                            Intent intent = new Intent(Register.this, RegisterSecondPage.class);
+                            startActivity(intent);
+                        }
+                        else if (TheButton.contains("btn_Submit"))
+                        {
+                            Intent intent = new Intent(Register.this, OtherPlatforms.class);
+                            startActivity(intent);
+                        }
+                        else
+                        {
+                            Toast.makeText(context, "Invalid Button! This error should never occur!", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }
                 @Override
@@ -609,8 +636,24 @@ public class Register extends AppCompatActivity
                 {
                     Log.d("retrofitclick", "SUCCESS: " + response.raw());
                     if(!response.body().equals("Successful"))
-                        //Note if the activity fails to update it will not stop the app from going to the next activity.
                         Toast.makeText(context, "Failed to update user", Toast.LENGTH_SHORT).show();
+                    else
+                    {
+                        if (TheButton.contains("btn_Next"))
+                        {
+                            Intent intent = new Intent(Register.this, RegisterSecondPage.class);
+                            startActivity(intent);
+                        }
+                        else if (TheButton.contains("btn_Submit"))
+                        {
+                            Intent intent = new Intent(Register.this, OtherPlatforms.class);
+                            startActivity(intent);
+                        }
+                        else
+                        {
+                            Toast.makeText(context, "Invalid Button! This error should never occur!", Toast.LENGTH_SHORT).show();
+                        }
+                    }
                 }
                 @Override
                 public void onFailure(Call<String> call, Throwable t)
@@ -619,7 +662,6 @@ public class Register extends AppCompatActivity
                 }
             });
         }
-        return ValidationSuccessful;
     }
 
     void fail_LoginNetwork()
@@ -639,5 +681,27 @@ public class Register extends AppCompatActivity
         alertDialogBuilder.setMessage(InvalidMessage);
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
+    }
+
+    void CheckEmailAddress(String EmailAddress)
+    {
+        Call<String> response = client.IsEmailAddressUnique(EmailAddress);
+        response.enqueue(new Callback<String>()
+        {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response)
+            {
+                Log.d("retrofitclick", "SUCCESS: " + response.raw());
+                if(response.body().equals("YES"))
+                    IsEmailUnique = true;
+                else
+                    IsEmailUnique = false;
+            }
+            @Override
+            public void onFailure(Call<String> call, Throwable t)
+            {
+                fail_LoginNetwork();
+            }
+        });
     }
 }
