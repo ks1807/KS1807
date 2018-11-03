@@ -34,7 +34,6 @@ public class ProfileSettings extends Fragment
 {
     String UserID = "", CurrentEmailAddress = "";
     final CommonFunctions Common = new CommonFunctions();
-    private DatabaseFunctions UserFunctions;
 
     private RadioGroup gender;
     private RadioButton genderMale, genderFemale, genderOther;
@@ -80,8 +79,6 @@ public class ProfileSettings extends Fragment
         changePassword = (Button) view.findViewById(R.id.btnchangepass);
 
         client = retrofit.create(RestInterface.Ks1807Client.class);
-
-        UserFunctions = new DatabaseFunctions(getContext());
 
         String UserPassword = Global.UserPassword;
 

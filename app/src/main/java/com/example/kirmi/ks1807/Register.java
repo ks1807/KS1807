@@ -26,7 +26,6 @@ import retrofit2.Retrofit;
 public class Register extends AppCompatActivity
 {
     private final Context context = this;
-    private DatabaseFunctions RegisterFunctions;
 
     String UserID = "-1";
     String BackUserID = "";
@@ -42,7 +41,6 @@ public class Register extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        RegisterFunctions = new DatabaseFunctions(this);
 
         client = retrofit.create(RestInterface.Ks1807Client.class);
 

@@ -18,7 +18,6 @@ import retrofit2.Retrofit;
 public class MainActivity extends AppCompatActivity
 {
     private final Context context = this;
-    private DatabaseFunctions UserFunctions;
     final CommonFunctions PasswordFunctions = new CommonFunctions();
     Retrofit retrofit = RestInterface.getClient();
     RestInterface.Ks1807Client client;
@@ -37,7 +36,6 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         EmailAddress = (TextView)findViewById(R.id.EditText_UserName);
         Password = (TextView)findViewById(R.id.EditText_Password);
-        UserFunctions = new DatabaseFunctions(this);
         client = retrofit.create(RestInterface.Ks1807Client.class);
 
         //Ensures that password hint disappears when user focuses the text box.

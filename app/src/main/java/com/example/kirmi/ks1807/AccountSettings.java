@@ -23,7 +23,6 @@ public class AccountSettings extends Fragment
 {
     String UserID = "";
     Spinner alertsSpinner;
-    private DatabaseFunctions SettingFunctions;
     RadioButton yes, no;
     Button submit;
     Retrofit retrofit = RestInterface.getClient();
@@ -34,7 +33,6 @@ public class AccountSettings extends Fragment
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState)
     {
         View view = inflater.inflate(R.layout.activity_account_settingstab, container, false);
-        SettingFunctions = new DatabaseFunctions(getActivity());
 
         //Passing the user ID
         UserID = Global.UserID;

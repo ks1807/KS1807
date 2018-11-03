@@ -45,6 +45,9 @@ public class RestInterface
         @GET("mmhpackage.useraccount/GetUserDetails/{id}/{password}")
         Call<String> GetUserDetails(@Path("id") String id, @Path("password") String password);
 
+        @GET("mmhpackage.useraccount/GetUserRegistrationQuestions/{id}/{password}")
+        Call<String> GetUserRegistrationQuestions(@Path("id") String id, @Path("password") String password);
+
         @GET("mmhpackage.useraccount/GetUserID/{email}")
         Call<String> GetUserID(@Path("email") String email);
 

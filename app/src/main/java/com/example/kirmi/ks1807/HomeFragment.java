@@ -30,7 +30,6 @@ public class HomeFragment extends Fragment
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     private List<TrackDetails> listItems;
-    private DatabaseFunctions TracksHistory;
     private ArrayList<TrackDetails> tracks;
 
     Retrofit retrofit = RestInterface.getClient();
@@ -43,7 +42,6 @@ public class HomeFragment extends Fragment
 
         UserID = Global.UserID;
         password = Global.UserPassword;
-        TracksHistory = new DatabaseFunctions(getContext());
         client = retrofit.create(RestInterface.Ks1807Client.class);
 
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
