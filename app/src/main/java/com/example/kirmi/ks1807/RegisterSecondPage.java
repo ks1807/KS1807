@@ -96,41 +96,50 @@ public class RegisterSecondPage extends AppCompatActivity
             public void onResponse(Call<String> call, Response<String> response)
             {
                 Log.d("retrofitclick", "SUCCESS: " + response.raw());
-                if(response.body().equals("Incorrect UserID or Password. Query not executed."))
-                    Toast.makeText(context, "Failed to get registration questions from server", Toast.LENGTH_SHORT).show();
+
+                if(response.code() == 404)
+                {
+                    Toast.makeText(getApplicationContext(),
+                            "404 Error. Server did not return a response.", Toast.LENGTH_SHORT).show();
+                }
                 else
                 {
-                    String Questions = response.body();
-                    String[] TheQuestions = Questions.split("\n");
+                    if(response.body().equals("Incorrect UserID or Password. Query not executed."))
+                        Toast.makeText(context, "Failed to get registration questions from server", Toast.LENGTH_SHORT).show();
+                    else
+                    {
+                        String Questions = response.body();
+                        String[] TheQuestions = Questions.split("\n");
 
-                    String MusicQuestionOne = TheQuestions[0].replace("MusicQuestionOne: ", "");
-                    String MusicQuestionTwo = TheQuestions[1].replace("MusicQuestionTwo: ", "");
-                    String MusicQuestionThree = TheQuestions[2].replace("MusicQuestionThree: ", "");
-                    String MusicQuestionFour = TheQuestions[3].replace("MusicQuestionFour: ", "");
+                        String MusicQuestionOne = TheQuestions[0].replace("MusicQuestionOne: ", "");
+                        String MusicQuestionTwo = TheQuestions[1].replace("MusicQuestionTwo: ", "");
+                        String MusicQuestionThree = TheQuestions[2].replace("MusicQuestionThree: ", "");
+                        String MusicQuestionFour = TheQuestions[3].replace("MusicQuestionFour: ", "");
 
                     /*If any of these questions have not been answered then do not attempt to set
                     the spinner positions for any of them. Leave as default.*/
-                    if (MusicQuestionOne.equals("Not Answered") ||
-                            MusicQuestionTwo.equals("Not Answered") ||
-                            MusicQuestionThree.equals("Not Answered") ||
-                            MusicQuestionFour.equals("Not Answered"))
-                    {
-                        return;
-                    }
-                    else
-                    {
-                        //Set the Spinners positions to match the string retrieved from the database.
-                        ArrayAdapter SpinnerAdapterOne = (ArrayAdapter) s1.getAdapter();
-                        s1.setSelection(SpinnerAdapterOne.getPosition(MusicQuestionOne));
+                        if (MusicQuestionOne.equals("Not Answered") ||
+                                MusicQuestionTwo.equals("Not Answered") ||
+                                MusicQuestionThree.equals("Not Answered") ||
+                                MusicQuestionFour.equals("Not Answered"))
+                        {
+                            return;
+                        }
+                        else
+                        {
+                            //Set the Spinners positions to match the string retrieved from the database.
+                            ArrayAdapter SpinnerAdapterOne = (ArrayAdapter) s1.getAdapter();
+                            s1.setSelection(SpinnerAdapterOne.getPosition(MusicQuestionOne));
 
-                        ArrayAdapter SpinnerAdapterTwo = (ArrayAdapter) s2.getAdapter();
-                        s2.setSelection(SpinnerAdapterTwo.getPosition(MusicQuestionTwo));
+                            ArrayAdapter SpinnerAdapterTwo = (ArrayAdapter) s2.getAdapter();
+                            s2.setSelection(SpinnerAdapterTwo.getPosition(MusicQuestionTwo));
 
-                        ArrayAdapter SpinnerAdapterThree = (ArrayAdapter) s3.getAdapter();
-                        s3.setSelection(SpinnerAdapterThree.getPosition(MusicQuestionThree));
+                            ArrayAdapter SpinnerAdapterThree = (ArrayAdapter) s3.getAdapter();
+                            s3.setSelection(SpinnerAdapterThree.getPosition(MusicQuestionThree));
 
-                        ArrayAdapter SpinnerAdapterFour = (ArrayAdapter) s4.getAdapter();
-                        s4.setSelection(SpinnerAdapterFour.getPosition(MusicQuestionFour));
+                            ArrayAdapter SpinnerAdapterFour = (ArrayAdapter) s4.getAdapter();
+                            s4.setSelection(SpinnerAdapterFour.getPosition(MusicQuestionFour));
+                        }
                     }
                 }
             }
@@ -174,15 +183,25 @@ public class RegisterSecondPage extends AppCompatActivity
         response.enqueue(new Callback<String>()
         {
              @Override
-             public void onResponse(Call<String> call, Response<String> response) {
+             public void onResponse(Call<String> call, Response<String> response)
+             {
                  Log.d("retrofitclick", "SUCCESS: " + response.raw());
-                 if (!response.body().equals("Successful"))
-                     Toast.makeText(context, "Failed to update user with registration questions",
-                             Toast.LENGTH_SHORT).show();
+
+                 if(response.code() == 404)
+                 {
+                     Toast.makeText(getApplicationContext(),
+                             "404 Error. Server did not return a response.", Toast.LENGTH_SHORT).show();
+                 }
                  else
                  {
-                     Intent intent = new Intent(RegisterSecondPage.this, OtherPlatforms.class);
-                     startActivity(intent);
+                     if (!response.body().equals("Successful"))
+                         Toast.makeText(context, "Failed to update user with registration questions",
+                                 Toast.LENGTH_SHORT).show();
+                     else
+                     {
+                         Intent intent = new Intent(RegisterSecondPage.this, OtherPlatforms.class);
+                         startActivity(intent);
+                     }
                  }
              }
              @Override

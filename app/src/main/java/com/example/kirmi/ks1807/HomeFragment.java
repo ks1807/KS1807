@@ -58,25 +58,34 @@ public class HomeFragment extends Fragment
             public void onResponse(Call<String> call, Response<String> response)
             {
                 Log.d("retrofitclick", "SUCCESS: " + response.raw());
-                if(response.body().equals("-1"))
+
+                if(response.code() == 404)
                 {
-                    Toast.makeText(getActivity(), "Failed to get details from server",
-                        Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(),
+                            "404 Error. Server did not return a response.", Toast.LENGTH_SHORT).show();
                 }
                 else
                 {
-                    String musicHistory = response.body();
-                    String MusicDetails[] = musicHistory.split(System.getProperty("line.separator"));
-
-                    listItems = new ArrayList<TrackDetails>();
-                    for (int i = 0; i < MusicDetails.length; i++) {
-                        String temp[] = MusicDetails[i].split(",");
-                        TrackDetails list = new TrackDetails(temp[0], temp[1], temp[2], temp[3], temp[4]);
-                        listItems.add(list);
+                    if(response.body().equals("-1"))
+                    {
+                        Toast.makeText(getActivity(), "Failed to get details from server",
+                                Toast.LENGTH_SHORT).show();
                     }
-                    adapter = new RecyclerViewAdapter(listItems, getContext());
-                    recyclerView.setAdapter(adapter);
+                    else
+                    {
+                        String musicHistory = response.body();
+                        String MusicDetails[] = musicHistory.split(System.getProperty("line.separator"));
 
+                        listItems = new ArrayList<TrackDetails>();
+                        for (int i = 0; i < MusicDetails.length; i++) {
+                            String temp[] = MusicDetails[i].split(",");
+                            TrackDetails list = new TrackDetails(temp[0], temp[1], temp[2], temp[3], temp[4]);
+                            listItems.add(list);
+                        }
+                        adapter = new RecyclerViewAdapter(listItems, getContext());
+                        recyclerView.setAdapter(adapter);
+
+                    }
                 }
             }
             @Override
@@ -85,9 +94,6 @@ public class HomeFragment extends Fragment
                 fail_LoginNetwork();
             }
         });
-
-
-
         return view;
     }
 

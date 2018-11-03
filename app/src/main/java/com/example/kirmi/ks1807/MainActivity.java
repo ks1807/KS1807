@@ -10,6 +10,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.EditText;
+import android.widget.Toast;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -75,14 +77,23 @@ public class MainActivity extends AppCompatActivity
                 public void onResponse(Call<String> call, Response<String> response)
                 {
                     Log.d("retrofitclick", "SUCCESS: " + response.raw());
-                    if(response.body().equals("-1"))
+
+                    if(response.code() == 404)
                     {
-                        fail_Login();
+                        Toast.makeText(getApplicationContext(),
+                                "404 Error. Server did not return a response.", Toast.LENGTH_SHORT).show();
                     }
                     else
                     {
-                        Global.UserID = response.body();
-                        success_Login();
+                        if(response.body().equals("-1"))
+                        {
+                            fail_Login();
+                        }
+                        else
+                        {
+                            Global.UserID = response.body();
+                            success_Login();
+                        }
                     }
                 }
                 @Override

@@ -1,11 +1,12 @@
 package com.example.kirmi.ks1807;
 
-public class TrackDetails {
+public class TrackDetails
+{
     String title, artist, genre, length, spotifyTrackID;
+    public TrackDetails()
+    {
 
-    public TrackDetails() {
     }
-
     public TrackDetails(String spotifyID, String title, String artist, String genre, String length) {
         this.spotifyTrackID = spotifyID;
         this.title = title;
@@ -13,24 +14,24 @@ public class TrackDetails {
         this.genre = genre;
         this.length = length;
     }
-
-    public String getTitle() {
+    public String getTitle()
+    {
         return title;
     }
-
-    public String getArtist() {
+    public String getArtist()
+    {
         return artist;
     }
-
-    public String getGenre() {
+    public String getGenre()
+    {
         return genre;
     }
-
-    public String getLength() {
+    public String getLength()
+    {
         return length;
     }
-
-    public String getSpotifyTrackID() {
+    public String getSpotifyTrackID()
+    {
         return spotifyTrackID;
     }
 }

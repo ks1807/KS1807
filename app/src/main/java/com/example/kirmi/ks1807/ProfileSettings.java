@@ -104,20 +104,29 @@ public class ProfileSettings extends Fragment
             public void onResponse(Call<String> call, Response<String> response)
             {
                 Log.d("retrofitclick", "SUCCESS: " + response.raw());
-                if(response.body().equals("Incorrect UserID or Password. Query not executed."))
-                    Toast.makeText(getActivity(), "Failed to get settings from server", Toast.LENGTH_SHORT).show();
+
+                if(response.code() == 404)
+                {
+                    Toast.makeText(getContext(),
+                            "404 Error. Server did not return a response.", Toast.LENGTH_SHORT).show();
+                }
                 else
                 {
-                    String UsersInformation = response.body();
-                    UserDetails = UsersInformation.split("\n");
-                    UserDetails[0] = UserDetails[0].replace("FirstName: ", "");
-                    UserDetails[1] = UserDetails[1].replace("LastName: ", "");
-                    UserDetails[2] = UserDetails[2].replace("EmailAddress: ", "");
-                    UserDetails[3] = UserDetails[3].replace("DateOfBirth: ", "");
-                    UserDetails[4] = UserDetails[4].replace("Gender: ", "");
+                    if(response.body().equals("Incorrect UserID or Password. Query not executed."))
+                        Toast.makeText(getActivity(), "Failed to get settings from server", Toast.LENGTH_SHORT).show();
+                    else
+                    {
+                        String UsersInformation = response.body();
+                        UserDetails = UsersInformation.split("\n");
+                        UserDetails[0] = UserDetails[0].replace("FirstName: ", "");
+                        UserDetails[1] = UserDetails[1].replace("LastName: ", "");
+                        UserDetails[2] = UserDetails[2].replace("EmailAddress: ", "");
+                        UserDetails[3] = UserDetails[3].replace("DateOfBirth: ", "");
+                        UserDetails[4] = UserDetails[4].replace("Gender: ", "");
 
-                    //Function to show all the details within respective text element.
-                    DisplayUserDetails(UserDetails);
+                        //Function to show all the details within respective text element.
+                        DisplayUserDetails(UserDetails);
+                    }
                 }
             }
             @Override
@@ -237,20 +246,29 @@ public class ProfileSettings extends Fragment
                                                 public void onResponse(Call<String> call, Response<String> response)
                                                 {
                                                     Log.d("retrofitclick", "SUCCESS: " + response.raw());
-                                                    if(response.body().equals("Incorrect UserID or Password. Query not executed."))
-                                                        Toast.makeText(getActivity(), "Failed to get details from server", Toast.LENGTH_SHORT).show();
+
+                                                    if(response.code() == 404)
+                                                    {
+                                                        Toast.makeText(getContext(),
+                                                                "404 Error. Server did not return a response.", Toast.LENGTH_SHORT).show();
+                                                    }
                                                     else
                                                     {
-                                                        String UsersInformation = response.body();
-                                                        UserDetails = UsersInformation.split("\n");
-                                                        UserDetails[0] = UserDetails[0].replace("FirstName: ", "");
-                                                        UserDetails[1] = UserDetails[1].replace("LastName: ", "");
-                                                        UserDetails[2] = UserDetails[2].replace("EmailAddress: ", "");
-                                                        UserDetails[3] = UserDetails[3].replace("DateOfBirth: ", "");
-                                                        UserDetails[4] = UserDetails[4].replace("Gender: ", "");
+                                                        if(response.body().equals("Incorrect UserID or Password. Query not executed."))
+                                                            Toast.makeText(getActivity(), "Failed to get details from server", Toast.LENGTH_SHORT).show();
+                                                        else
+                                                        {
+                                                            String UsersInformation = response.body();
+                                                            UserDetails = UsersInformation.split("\n");
+                                                            UserDetails[0] = UserDetails[0].replace("FirstName: ", "");
+                                                            UserDetails[1] = UserDetails[1].replace("LastName: ", "");
+                                                            UserDetails[2] = UserDetails[2].replace("EmailAddress: ", "");
+                                                            UserDetails[3] = UserDetails[3].replace("DateOfBirth: ", "");
+                                                            UserDetails[4] = UserDetails[4].replace("Gender: ", "");
 
-                                                        //Function to show all the details within respective text element.
-                                                        DisplayUserDetails(UserDetails);
+                                                            //Function to show all the details within respective text element.
+                                                            DisplayUserDetails(UserDetails);
+                                                        }
                                                     }
                                                 }
                                                 @Override
@@ -291,21 +309,30 @@ public class ProfileSettings extends Fragment
                                                             public void onResponse(Call<String> call, Response<String> response)
                                                             {
                                                                 Log.d("retrofitclick", "SUCCESS: " + response.raw());
-                                                                if(response.body().equals("Incorrect UserID or Password. Query not executed."))
-                                                                    Toast.makeText(getActivity(), "Failed to get details from server",
-                                                                            Toast.LENGTH_SHORT).show();
+
+                                                                if(response.code() == 404)
+                                                                {
+                                                                    Toast.makeText(getContext(),
+                                                                            "404 Error. Server did not return a response.", Toast.LENGTH_SHORT).show();
+                                                                }
                                                                 else
                                                                 {
-                                                                    String UsersInformation = response.body();
-                                                                    UserDetails = UsersInformation.split("\n");
-                                                                    UserDetails[0] = UserDetails[0].replace("FirstName: ", "");
-                                                                    UserDetails[1] = UserDetails[1].replace("LastName: ", "");
-                                                                    UserDetails[2] = UserDetails[2].replace("EmailAddress: ", "");
-                                                                    UserDetails[3] = UserDetails[3].replace("DateOfBirth: ", "");
-                                                                    UserDetails[4] = UserDetails[4].replace("Gender: ", "");
+                                                                    if(response.body().equals("Incorrect UserID or Password. Query not executed."))
+                                                                        Toast.makeText(getActivity(), "Failed to get details from server",
+                                                                                Toast.LENGTH_SHORT).show();
+                                                                    else
+                                                                    {
+                                                                        String UsersInformation = response.body();
+                                                                        UserDetails = UsersInformation.split("\n");
+                                                                        UserDetails[0] = UserDetails[0].replace("FirstName: ", "");
+                                                                        UserDetails[1] = UserDetails[1].replace("LastName: ", "");
+                                                                        UserDetails[2] = UserDetails[2].replace("EmailAddress: ", "");
+                                                                        UserDetails[3] = UserDetails[3].replace("DateOfBirth: ", "");
+                                                                        UserDetails[4] = UserDetails[4].replace("Gender: ", "");
 
-                                                                    //Function to show all the details within respective text element.
-                                                                    DisplayUserDetails(UserDetails);
+                                                                        //Function to show all the details within respective text element.
+                                                                        DisplayUserDetails(UserDetails);
+                                                                    }
                                                                 }
                                                             }
                                                             @Override
@@ -557,7 +584,6 @@ public class ProfileSettings extends Fragment
     private boolean ValidateForm()
     {
         boolean ValidationSuccessful = true;
-
         String InvalidMessage = "";
 
         String FName = firstN.getText().toString();
@@ -711,62 +737,71 @@ public class ProfileSettings extends Fragment
                 public void onResponse(Call<String> call, Response<String> response)
                 {
                     Log.d("retrofitclick", "SUCCESS: " + response.raw());
-                    if(response.body().equals("Incorrect UserID or Password. Query not executed."))
-                        Toast.makeText(getActivity(), "Failed to update your details", Toast.LENGTH_SHORT).show();
+
+                    if(response.code() == 404)
+                    {
+                        Toast.makeText(getContext(),
+                                "404 Error. Server did not return a response.", Toast.LENGTH_SHORT).show();
+                    }
                     else
                     {
-                        Toast.makeText(getActivity(), "Successfully updated your details", Toast.LENGTH_SHORT).show();
-                        setProfileBackFromEdit();
+                        if(response.body().equals("Incorrect UserID or Password. Query not executed."))
+                            Toast.makeText(getActivity(), "Failed to update your details", Toast.LENGTH_SHORT).show();
+                        else
+                        {
+                            Toast.makeText(getActivity(), "Successfully updated your details", Toast.LENGTH_SHORT).show();
+                            setProfileBackFromEdit();
 
                         /*Code below forces an update of user changes as the retrieval of user
                         details actually takes place BEFORE the update.*/
-                        firstN.setText(DisplayedFirstName);
-                        lastN.setText(DisplayedLastName);
-                        editemail.setText(DisplayedEmail);
+                            firstN.setText(DisplayedFirstName);
+                            lastN.setText(DisplayedLastName);
+                            editemail.setText(DisplayedEmail);
 
-                        //Format the date so it appears correctly after the update.
-                        String DOB = DisplayedDOB;
-                        if (!DOB.equals(""))
-                        {
-                            try
+                            //Format the date so it appears correctly after the update.
+                            String DOB = DisplayedDOB;
+                            if (!DOB.equals(""))
                             {
-                                final CommonFunctions Common = new CommonFunctions();
-                                Date DateOfBirthDate = Common.DateFromStringFromSQLToAustraliaFormat(DOB);
-                                SimpleDateFormat DateOfBirthFormat = new SimpleDateFormat("dd-MM-yyyy");
-                                DOB = DateOfBirthFormat.format(DateOfBirthDate);
-                                DOB = DOB.replace("-", "/");
+                                try
+                                {
+                                    final CommonFunctions Common = new CommonFunctions();
+                                    Date DateOfBirthDate = Common.DateFromStringFromSQLToAustraliaFormat(DOB);
+                                    SimpleDateFormat DateOfBirthFormat = new SimpleDateFormat("dd-MM-yyyy");
+                                    DOB = DateOfBirthFormat.format(DateOfBirthDate);
+                                    DOB = DOB.replace("-", "/");
+                                }
+                                catch (ParseException e)
+                                {
+                                    e.printStackTrace();
+                                    DOB = "";
+                                }
                             }
-                            catch (ParseException e)
-                            {
-                                e.printStackTrace();
-                                DOB = "";
-                            }
-                        }
 
-                        editdob.setText(DOB);
+                            editdob.setText(DOB);
 
                         /*Make sure that the buttons have their image and checked status set to
                         what the user chose.*/
-                        if (DisplayedGender.equals("Male"))
-                        {
-                            genderMale.setBackgroundResource(R.drawable.settingsmaleselected);
-                            genderFemale.setBackgroundResource(R.drawable.settingsfemaleunselected);
-                            genderOther.setBackgroundResource(R.drawable.settingsotherunselected);
-                            genderMale.setChecked(true);
-                        }
-                        else if (DisplayedGender.equals("Female"))
-                        {
-                            genderMale.setBackgroundResource(R.drawable.settingsmaleunselected);
-                            genderFemale.setBackgroundResource(R.drawable.settingsfemaleselected);
-                            genderOther.setBackgroundResource(R.drawable.settingsotherunselected);
-                            genderFemale.setChecked(true);
-                        }
-                        else if (DisplayedGender.equals("Other"))
-                        {
-                            genderMale.setBackgroundResource(R.drawable.settingsmaleunselected);
-                            genderFemale.setBackgroundResource(R.drawable.settingsfemaleunselected);
-                            genderOther.setBackgroundResource(R.drawable.settingsotherselected);
-                            genderOther.setChecked(true);
+                            if (DisplayedGender.equals("Male"))
+                            {
+                                genderMale.setBackgroundResource(R.drawable.settingsmaleselected);
+                                genderFemale.setBackgroundResource(R.drawable.settingsfemaleunselected);
+                                genderOther.setBackgroundResource(R.drawable.settingsotherunselected);
+                                genderMale.setChecked(true);
+                            }
+                            else if (DisplayedGender.equals("Female"))
+                            {
+                                genderMale.setBackgroundResource(R.drawable.settingsmaleunselected);
+                                genderFemale.setBackgroundResource(R.drawable.settingsfemaleselected);
+                                genderOther.setBackgroundResource(R.drawable.settingsotherunselected);
+                                genderFemale.setChecked(true);
+                            }
+                            else if (DisplayedGender.equals("Other"))
+                            {
+                                genderMale.setBackgroundResource(R.drawable.settingsmaleunselected);
+                                genderFemale.setBackgroundResource(R.drawable.settingsfemaleunselected);
+                                genderOther.setBackgroundResource(R.drawable.settingsotherselected);
+                                genderOther.setChecked(true);
+                            }
                         }
                     }
                 }
@@ -939,10 +974,19 @@ public class ProfileSettings extends Fragment
             public void onResponse(Call<String> call, Response<String> response)
             {
                 Log.d("retrofitclick", "SUCCESS: " + response.raw());
-                if(response.body().equals("YES"))
-                    IsEmailUnique = true;
+
+                if(response.code() == 404)
+                {
+                    Toast.makeText(getContext(),
+                            "404 Error. Server did not return a response.", Toast.LENGTH_SHORT).show();
+                }
                 else
-                    IsEmailUnique = false;
+                {
+                    if(response.body().equals("YES"))
+                        IsEmailUnique = true;
+                    else
+                        IsEmailUnique = false;
+                }
             }
             @Override
             public void onFailure(Call<String> call, Throwable t)

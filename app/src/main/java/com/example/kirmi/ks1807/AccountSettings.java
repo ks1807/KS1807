@@ -37,7 +37,7 @@ public class AccountSettings extends Fragment
         //Passing the user ID
         UserID = Global.UserID;
 
-        // Adding content to the spinner to collect alert frequency
+        //Adding content to the spinner to collect alert frequency
         alertsSpinner = (Spinner)view.findViewById(R.id.Spinner_AlertFrequency);
         ArrayAdapter<CharSequence> adapter1 = ArrayAdapter.createFromResource(getActivity(), R.array.trackalertoptions,
                 R.layout.spinner_item);
@@ -120,10 +120,19 @@ public class AccountSettings extends Fragment
             public void onResponse(Call<String> call, Response<String> response)
             {
                 Log.d("retrofitclick", "SUCCESS: " + response.raw());
-                if(response.body().equals("Successful"))
-                    Toast.makeText(getActivity(), "Settings Updated", Toast.LENGTH_SHORT).show();
+
+                if(response.code() == 404)
+                {
+                    Toast.makeText(getContext(),
+                            "404 Error. Server did not return a response.", Toast.LENGTH_SHORT).show();
+                }
                 else
-                    Toast.makeText(getActivity(), "Failed to update settings", Toast.LENGTH_SHORT).show();
+                {
+                    if(response.body().equals("Successful"))
+                        Toast.makeText(getActivity(), "Settings Updated", Toast.LENGTH_SHORT).show();
+                    else
+                        Toast.makeText(getActivity(), "Failed to update settings", Toast.LENGTH_SHORT).show();
+                }
             }
             @Override
             public void onFailure(Call<String> call, Throwable t)
@@ -144,33 +153,42 @@ public class AccountSettings extends Fragment
             public void onResponse(Call<String> call, Response<String> response)
             {
                 Log.d("retrofitclick", "SUCCESS: " + response.raw());
-                if(response.body().equals("Incorrect UserID or Password. Query not executed."))
-                    Toast.makeText(getActivity(), "Failed to get settings from server", Toast.LENGTH_SHORT).show();
+
+                if(response.code() == 404)
+                {
+                    Toast.makeText(getContext(),
+                            "404 Error. Server did not return a response.", Toast.LENGTH_SHORT).show();
+                }
                 else
                 {
-                    String Settings = response.body();
-                    String[] TheSettings = Settings.split("\n");
-
-                    String MakeRecommendations = TheSettings[0].replace("MakeRecommendations: ", "");
-                    String MoodFrequency = TheSettings[1].replace("MoodFrequency: ", "");
-                    //Third String called RememberLogin is also retrieved by the API but will be ignored here.
-
-                    if (MakeRecommendations.equals("Yes"))
+                    if(response.body().equals("Incorrect UserID or Password. Query not executed."))
+                        Toast.makeText(getActivity(), "Failed to get settings from server", Toast.LENGTH_SHORT).show();
+                    else
                     {
-                        yes.setChecked(true);
-                        yes.setBackgroundResource(R.drawable.settingsyesselected);
-                        no.setBackgroundResource(R.drawable.settingnonormal);
-                    }
-                    else if (MakeRecommendations.equals("No"))
-                    {
-                        no.setChecked(true);
-                        yes.setBackgroundResource(R.drawable.settingsyesnormal);
-                        no.setBackgroundResource(R.drawable.settingnoselected);
-                    }
+                        String Settings = response.body();
+                        String[] TheSettings = Settings.split("\n");
 
-                    //Set the Spinner position to match the string retrieved from the database.
-                    ArrayAdapter SpinnerAdapter = (ArrayAdapter) alertsSpinner.getAdapter();
-                    alertsSpinner.setSelection(SpinnerAdapter.getPosition(MoodFrequency));
+                        String MakeRecommendations = TheSettings[0].replace("MakeRecommendations: ", "");
+                        String MoodFrequency = TheSettings[1].replace("MoodFrequency: ", "");
+                        //Third String called RememberLogin is also retrieved by the API but will be ignored here.
+
+                        if (MakeRecommendations.equals("Yes"))
+                        {
+                            yes.setChecked(true);
+                            yes.setBackgroundResource(R.drawable.settingsyesselected);
+                            no.setBackgroundResource(R.drawable.settingnonormal);
+                        }
+                        else if (MakeRecommendations.equals("No"))
+                        {
+                            no.setChecked(true);
+                            yes.setBackgroundResource(R.drawable.settingsyesnormal);
+                            no.setBackgroundResource(R.drawable.settingnoselected);
+                        }
+
+                        //Set the Spinner position to match the string retrieved from the database.
+                        ArrayAdapter SpinnerAdapter = (ArrayAdapter) alertsSpinner.getAdapter();
+                        alertsSpinner.setSelection(SpinnerAdapter.getPosition(MoodFrequency));
+                    }
                 }
             }
             @Override

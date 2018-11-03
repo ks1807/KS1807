@@ -588,29 +588,38 @@ public class Register extends AppCompatActivity
                 public void onResponse(Call<String> call, Response<String> response)
                 {
                     Log.d("retrofitclick", "SUCCESS: " + response.raw());
-                    if(response.body().equals("-1"))
-                        Toast.makeText(context, "Failed to insert new user", Toast.LENGTH_SHORT).show();
+
+                    if(response.code() == 404)
+                    {
+                        Toast.makeText(getApplicationContext(),
+                                "404 Error. Server did not return a response.", Toast.LENGTH_SHORT).show();
+                    }
                     else
                     {
-                        //Storing the new created user ID as global so that it can be used throughout the application.
-                        UserID = response.body();
-                        Global.UserID = UserID;
-                        BackUserID = UserID;
-                        Global.UserPassword = FinalNewPass;
-
-                        if (TheButton.contains("btn_Next"))
-                        {
-                            Intent intent = new Intent(Register.this, RegisterSecondPage.class);
-                            startActivity(intent);
-                        }
-                        else if (TheButton.contains("btn_Submit"))
-                        {
-                            Intent intent = new Intent(Register.this, OtherPlatforms.class);
-                            startActivity(intent);
-                        }
+                        if(response.body().equals("-1"))
+                            Toast.makeText(context, "Failed to insert new user", Toast.LENGTH_SHORT).show();
                         else
                         {
-                            Toast.makeText(context, "Invalid Button! This error should never occur!", Toast.LENGTH_SHORT).show();
+                            //Storing the new created user ID as global so that it can be used throughout the application.
+                            UserID = response.body();
+                            Global.UserID = UserID;
+                            BackUserID = UserID;
+                            Global.UserPassword = FinalNewPass;
+
+                            if (TheButton.contains("btn_Next"))
+                            {
+                                Intent intent = new Intent(Register.this, RegisterSecondPage.class);
+                                startActivity(intent);
+                            }
+                            else if (TheButton.contains("btn_Submit"))
+                            {
+                                Intent intent = new Intent(Register.this, OtherPlatforms.class);
+                                startActivity(intent);
+                            }
+                            else
+                            {
+                                Toast.makeText(context, "Invalid Button! This error should never occur!", Toast.LENGTH_SHORT).show();
+                            }
                         }
                     }
                 }
@@ -633,23 +642,32 @@ public class Register extends AppCompatActivity
                 public void onResponse(Call<String> call, Response<String> response)
                 {
                     Log.d("retrofitclick", "SUCCESS: " + response.raw());
-                    if(!response.body().equals("Successful"))
-                        Toast.makeText(context, "Failed to update user", Toast.LENGTH_SHORT).show();
+
+                    if(response.code() == 404)
+                    {
+                        Toast.makeText(getApplicationContext(),
+                                "404 Error. Server did not return a response.", Toast.LENGTH_SHORT).show();
+                    }
                     else
                     {
-                        if (TheButton.contains("btn_Next"))
-                        {
-                            Intent intent = new Intent(Register.this, RegisterSecondPage.class);
-                            startActivity(intent);
-                        }
-                        else if (TheButton.contains("btn_Submit"))
-                        {
-                            Intent intent = new Intent(Register.this, OtherPlatforms.class);
-                            startActivity(intent);
-                        }
+                        if(!response.body().equals("Successful"))
+                            Toast.makeText(context, "Failed to update user", Toast.LENGTH_SHORT).show();
                         else
                         {
-                            Toast.makeText(context, "Invalid Button! This error should never occur!", Toast.LENGTH_SHORT).show();
+                            if (TheButton.contains("btn_Next"))
+                            {
+                                Intent intent = new Intent(Register.this, RegisterSecondPage.class);
+                                startActivity(intent);
+                            }
+                            else if (TheButton.contains("btn_Submit"))
+                            {
+                                Intent intent = new Intent(Register.this, OtherPlatforms.class);
+                                startActivity(intent);
+                            }
+                            else
+                            {
+                                Toast.makeText(context, "Invalid Button! This error should never occur!", Toast.LENGTH_SHORT).show();
+                            }
                         }
                     }
                 }
@@ -690,10 +708,19 @@ public class Register extends AppCompatActivity
             public void onResponse(Call<String> call, Response<String> response)
             {
                 Log.d("retrofitclick", "SUCCESS: " + response.raw());
-                if(response.body().equals("YES"))
-                    IsEmailUnique = true;
+
+                if(response.code() == 404)
+                {
+                    Toast.makeText(getApplicationContext(),
+                            "404 Error. Server did not return a response.", Toast.LENGTH_SHORT).show();
+                }
                 else
-                    IsEmailUnique = false;
+                {
+                    if(response.body().equals("YES"))
+                        IsEmailUnique = true;
+                    else
+                        IsEmailUnique = false;
+                }
             }
             @Override
             public void onFailure(Call<String> call, Throwable t)
