@@ -439,6 +439,10 @@ public class ProfileSettings extends Fragment
                             public void onClick(DialogInterface dialog,int id)
                             {
                                 Global.UserID = "";
+                                if(BackgroundService.isRunning)
+                                {
+                                    new BackgroundServiceStarter().onEnd(getContext(), new Intent());
+                                }
                                 Intent intent = new Intent(getActivity(), MainActivity.class);
                                 startActivity(intent);
                             }

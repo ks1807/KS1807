@@ -16,4 +16,10 @@ public class BackgroundServiceStarter extends BroadcastReceiver
         else
             context.startService(i);
     }
+
+    public void onEnd(Context context, Intent intent)
+    {
+        Intent i = new Intent(context, BackgroundService.class);
+        context.stopService(i);
+    }
 }
