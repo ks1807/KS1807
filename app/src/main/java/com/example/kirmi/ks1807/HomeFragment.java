@@ -2,6 +2,7 @@ package com.example.kirmi.ks1807;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.UserHandle;
@@ -37,8 +38,13 @@ public class HomeFragment extends Fragment
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,@Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,@Nullable Bundle savedInstanceState)
+    {
         View view = inflater.inflate(R.layout.activity_homefrag, null);
+
+        //run service
+        if(!BackgroundService.isRunning)
+            new BackgroundServiceStarter().onReceive(getContext(), new Intent());
 
         UserID = Global.UserID;
         password = Global.UserPassword;

@@ -31,9 +31,6 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
-        //run service
-        if(!BackgroundService.isRunning)
-            new BackgroundServiceStarter().onReceive(context, new Intent());
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         EmailAddress = (TextView)findViewById(R.id.EditText_UserName);

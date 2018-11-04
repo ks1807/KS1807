@@ -324,54 +324,49 @@ public class BackgroundService extends Service
                                                         String UserID = Global.UserID;
                                                         String UserPassword = Global.UserPassword;
 
-                                                    /*Bug in code - Service runs even when not
-                                                    logged in. This stops it crashing in that
-                                                    scenario.*/
-                                                        if (UserID.equals("") || UserPassword.equals(""))
+                                                        /*Prevents the mood from being added if the user is not logged in.*/
+                                                        if (!UserID.equals("") && !UserPassword.equals(""))
                                                         {
-                                                            UserID = "-1";
-                                                            UserPassword = "Dummy";
-                                                        }
-
-                                                        Call<String> response = client.TrackStarted(
-                                                                SpotifyTrackID, Track, Genre, Artist, Length, TheMood,
-                                                                UserID, UserPassword);
-                                                        response.enqueue(new Callback<String>()
-                                                        {
-                                                            @Override
-                                                            public void onResponse(Call<String> call, Response<String> response)
+                                                            Call<String> response = client.TrackStarted(
+                                                                    SpotifyTrackID, Track, Genre, Artist, Length, TheMood,
+                                                                    UserID, UserPassword);
+                                                            response.enqueue(new Callback<String>()
                                                             {
-                                                                Log.d("retrofitclick", "SUCCESS: " + response.raw());
-                                                                if(response.code() == 404)
+                                                                @Override
+                                                                public void onResponse(Call<String> call, Response<String> response)
                                                                 {
-                                                                    Toast.makeText(getApplicationContext(),
-                                                                            "404 Error. Server did not return a response.", Toast.LENGTH_SHORT).show();
-                                                                }
-                                                                else
-                                                                {
-                                                                    if(!response.body().equals("Incorrect UserID or Password. Query not executed."))
+                                                                    Log.d("retrofitclick", "SUCCESS: " + response.raw());
+                                                                    if(response.code() == 404)
                                                                     {
-                                                                        Global.MoodID = response.body();
                                                                         Toast.makeText(getApplicationContext(),
-                                                                                "Mood at start of track updated with Mood ID " + Global.MoodID,
-                                                                                Toast.LENGTH_SHORT).show();
+                                                                                "404 Error. Server did not return a response.", Toast.LENGTH_SHORT).show();
                                                                     }
                                                                     else
                                                                     {
-                                                                        Global.MoodID = "-1";
-                                                                        Toast.makeText(getApplicationContext(),
-                                                                                "Error, mood at start of track failed to update",
-                                                                                Toast.LENGTH_SHORT).show();
+                                                                        if(!response.body().equals("Incorrect UserID or Password. Query not executed."))
+                                                                        {
+                                                                            Global.MoodID = response.body();
+                                                                            Toast.makeText(getApplicationContext(),
+                                                                                    "Mood at start of track updated with Mood ID " + Global.MoodID,
+                                                                                    Toast.LENGTH_SHORT).show();
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            Global.MoodID = "-1";
+                                                                            Toast.makeText(getApplicationContext(),
+                                                                                    "Error, mood at start of track failed to update",
+                                                                                    Toast.LENGTH_SHORT).show();
+                                                                        }
                                                                     }
                                                                 }
-                                                            }
-                                                            @Override
-                                                            public void onFailure(Call<String> call, Throwable t)
-                                                            {
-                                                                //This crashes on loading.
-                                                                //fail_LoginNetwork();
-                                                            }
-                                                        });
+                                                                @Override
+                                                                public void onFailure(Call<String> call, Throwable t)
+                                                                {
+                                                                    //This crashes on loading.
+                                                                    //fail_LoginNetwork();
+                                                                }
+                                                            });
+                                                        }
                                                     }
                                                     else if (SongStarted)
                                                     {
@@ -379,100 +374,50 @@ public class BackgroundService extends Service
                                                         String UserID = Global.UserID;
                                                         String UserPassword = Global.UserPassword;
 
-                                                    /*Bug in code - Service runs even when not
-                                                    logged in. This stops it crashing in that
-                                                    scenario.*/
-                                                        if (UserID.equals("") || UserPassword.equals(""))
+                                                        /*Prevents the mood from being added if the user is not logged in.*/
+                                                        if (!UserID.equals("") && !UserPassword.equals(""))
                                                         {
-                                                            UserID = "-1";
-                                                            UserPassword = "Dummy";
-                                                        }
-
-                                                        Call<String> response = client.TrackEnded(SpotifyTrackID,
-                                                                Global.MoodID, TheMood, "-",
-                                                                "-", "-", "-",
-                                                                UserID, UserPassword);
-                                                        response.enqueue(new Callback<String>()
-                                                        {
-                                                            @Override
-                                                            public void onResponse(Call<String> call, Response<String> response)
+                                                            Call<String> response = client.TrackEnded(SpotifyTrackID,
+                                                                    Global.MoodID, TheMood, "-",
+                                                                    "-", "-", "-",
+                                                                    UserID, UserPassword);
+                                                            response.enqueue(new Callback<String>()
                                                             {
-                                                                Log.d("retrofitclick", "SUCCESS: " + response.raw());
+                                                                @Override
+                                                                public void onResponse(Call<String> call, Response<String> response)
+                                                                {
+                                                                    Log.d("retrofitclick", "SUCCESS: " + response.raw());
 
-                                                                if(response.code() == 404)
-                                                                {
-                                                                    Toast.makeText(getApplicationContext(),
-                                                                            "404 Error. Server did not return a response.", Toast.LENGTH_SHORT).show();
-                                                                }
-                                                                else
-                                                                {
-                                                                    if(response.body().equals("Incorrect UserID or Password. Query not executed."))
+                                                                    if(response.code() == 404)
                                                                     {
                                                                         Toast.makeText(getApplicationContext(),
-                                                                                "Error, mood at end of track failed to update",
-                                                                                Toast.LENGTH_SHORT).show();
+                                                                                "404 Error. Server did not return a response.", Toast.LENGTH_SHORT).show();
                                                                     }
                                                                     else
                                                                     {
-                                                                        Toast.makeText(getApplicationContext(),
-                                                                                "Mood at end of track updated with Mood ID " + Global.MoodID,
-                                                                                Toast.LENGTH_SHORT).show();
+                                                                        if(response.body().equals("Incorrect UserID or Password. Query not executed."))
+                                                                        {
+                                                                            Toast.makeText(getApplicationContext(),
+                                                                                    "Error, mood at end of track failed to update",
+                                                                                    Toast.LENGTH_SHORT).show();
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            Toast.makeText(getApplicationContext(),
+                                                                                    "Mood at end of track updated with Mood ID " + Global.MoodID,
+                                                                                    Toast.LENGTH_SHORT).show();
+                                                                        }
                                                                     }
                                                                 }
-                                                            }
-                                                            @Override
-                                                            public void onFailure(Call<String> call, Throwable t)
-                                                            {
-                                                                //This crashes on loading.
-                                                                //fail_LoginNetwork();
-                                                            }
-                                                        });
-
+                                                                @Override
+                                                                public void onFailure(Call<String> call, Throwable t)
+                                                                {
+                                                                    //This crashes on loading.
+                                                                    //fail_LoginNetwork();
+                                                                }
+                                                            });
+                                                        }
                                                         SongStarted = false;
-
-                                                        //This code crashes the interface - commented out.
-                                                    /*
-                                                    SpotifyTrackID = playerState.track.uri;
-                                                    Track = playerState.track.name;
-                                                    Artist = playerState.track.artist.name;
-                                                    Genre = playerState.track.album.name;
-                                                    Length = String.valueOf(DateUtils.formatElapsedTime(
-                                                            ((int)playerState.track.duration)/1000));
-
-                                                   //Rechecking the UserID and password.
-                                                    UserID = Global.UserID;
-                                                    UserPassword = Global.UserPassword;
-
-                                                    if (UserID.equals("") || UserPassword.equals(""))
-                                                    {
-                                                        UserID = "-1";
-                                                        UserPassword = "Dummy";
-                                                    }
-
-                                                    response = client.TrackStarted(
-                                                            Track, Genre, Artist, Length, TheMood,
-                                                            UserID, UserPassword);
-                                                    response.enqueue(new Callback<String>()
-                                                    {
-                                                        @Override
-                                                        public void onResponse(Call<String> call, Response<String> response)
-                                                        {
-                                                            Log.d("retrofitclick", "SUCCESS: " + response.raw());
-                                                            if(!response.body().equals("Incorrect UserID or Password. Query not executed."))
-                                                            {
-                                                                Global.MoodID = response.body();
-                                                            }
-                                                            else
-                                                            {
-                                                                Global.MoodID = "-1";
-                                                            }
-                                                        }
-                                                        @Override
-                                                        public void onFailure(Call<String> call, Throwable t)
-                                                        {
-                                                            fail_LoginNetwork();
-                                                        }
-                                                    });*/
 
                                                         CommonFunctions Common = new CommonFunctions();
                                                         int ScoreIndex;
