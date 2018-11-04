@@ -9,7 +9,11 @@ import android.widget.Toast;
 import com.spotify.sdk.android.authentication.AuthenticationClient;
 import com.spotify.sdk.android.authentication.AuthenticationRequest;
 import com.spotify.sdk.android.authentication.AuthenticationResponse;
+
+import okhttp3.Response;
+
 import static com.spotify.sdk.android.authentication.LoginActivity.REQUEST_CODE;
+import static com.spotify.sdk.android.authentication.LoginActivity.RESPONSE_KEY;
 
 public class OtherPlatforms extends AppCompatActivity
 {
@@ -53,4 +57,28 @@ public class OtherPlatforms extends AppCompatActivity
         AuthenticationRequest request = builder.build();
         AuthenticationClient.openLoginActivity(this, REQUEST_CODE, request);
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
+        // Check if it's from spotify
+        if (requestCode == REQUEST_CODE) {
+            AuthenticationResponse response = AuthenticationClient.getResponse(resultCode, intent);
+            switch (response.getType()) {
+                // Response was successful and contains auth token
+                case TOKEN:
+                    // Handle successful response
+                    Toast.makeText(this, "Spotify account connected to the application", Toast.LENGTH_SHORT).show();
+                    break;
+                case ERROR:
+                    // Handle error response
+                    Toast.makeText(this, response.getError(), Toast.LENGTH_SHORT).show();
+                    break;
+                // Other cases, not sure what they are.
+                default:
+                    Toast.makeText(this, "Default response, should not happen", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
 }

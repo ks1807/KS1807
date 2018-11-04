@@ -136,4 +136,5 @@
     <string name="DiaryQ3">3. Where were you when listening to this song?</string>
     <string name="DiaryQ4">4. Who were you with when listening to this song?</string>
     <string name="DiaryQ5">5. What were you doing when listening to this song?</string>
+    <string name="nohistory">No music played</string>
 </resources>

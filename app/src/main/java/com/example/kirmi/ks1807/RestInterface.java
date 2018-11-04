@@ -128,51 +128,6 @@ public class RestInterface
     }
 
     //Data Structures
-    public class TrackDetails {
-        String title, artist, genre, length, beforemood, aftermood, spotifyTrackID;
-
-        public TrackDetails() {
-        }
-
-        public TrackDetails(String title, String artist, String genre, String length, String beforemood, String aftermood, String spotifyID) {
-            this.title = title;
-            this.artist = artist;
-            this.genre = genre;
-            this.length = length;
-            this.beforemood = beforemood;
-            this.aftermood = aftermood;
-            this.spotifyTrackID = spotifyID;
-        }
-
-        public String getTitle() {
-            return title;
-        }
-
-        public String getArtist() {
-            return artist;
-        }
-
-        public String getGenre() {
-            return genre;
-        }
-
-        public String getLength() {
-            return length;
-        }
-
-        public String getBeforemood() {
-            return beforemood;
-        }
-
-        public String getAftermood() {
-            return aftermood;
-        }
-
-        public String getSpotifyTrackID() {
-            return spotifyTrackID;
-        }
-    }
-
     public class User
     {
         String firstName;
@@ -213,21 +168,21 @@ public class RestInterface
 
     //Use on GetMusicHistory, GetRecommendedTracksUser and GetRecommendedTracksSystem return values
     // Separating the results into different columns
-    public static List<TrackDetails> getTrackFromResult(String body)
-    {
-        ArrayList<TrackDetails> list = new ArrayList<>();
-        String result[] = body.split(System.getProperty("line.separator"));
-        for(int i = 0; i < result.length; i++)
-        {
-            TrackDetails item = new RestInterface().new TrackDetails();
-            String temp[] = result[i].split(",");
-            item.aftermood = temp[0];
-            item.title = temp[1];
-            item.genre = temp[2];
-            item.artist = temp[3];
-            item.length = temp[4];
-            list.add(item);
-        }
-        return list;
-    }
+//    public static List<TrackDetails> getTrackFromResult(String body)
+//    {
+//        ArrayList<TrackDetails> list = new ArrayList<>();
+//        String result[] = body.split(System.getProperty("line.separator"));
+//        for(int i = 0; i < result.length; i++)
+//        {
+//            TrackDetails item = new RestInterface().new TrackDetails();
+//            String temp[] = result[i].split(",");
+//            item.aftermood = temp[0];
+//            item.title = temp[1];
+//            item.genre = temp[2];
+//            item.artist = temp[3];
+//            item.length = temp[4];
+//            list.add(item);
+//        }
+//        return list;
+//    }
 }

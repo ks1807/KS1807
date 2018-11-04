@@ -46,8 +46,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.artist.setText("Artist: " + track.getArtist());
         holder.genre.setText("Genre: " + track.getGenre());
         holder.length.setText("Length: " + track.getLength());
-        holder.beforemood.setText("Your mood before listening: sad" );
-        holder.aftermood.setText("Your mood after listening: happy" );
+        holder.beforemood.setText("Your mood before listening: " + track.getMoodBefore() );
+        holder.aftermood.setText("Your mood after listening: " + track.getMoodAfter());
 
         holder.play.setOnClickListener(new View.OnClickListener() {
             @Override

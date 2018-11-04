@@ -9,5 +9,6 @@
     <color name="scrollback">#80DBD4D4</color>
     <color name="darkgrey">#80000000</color>
     <color name="scrollthumb">#414141</color>
+    <color name="overlay">#DADADA</color>
 
 </resources>

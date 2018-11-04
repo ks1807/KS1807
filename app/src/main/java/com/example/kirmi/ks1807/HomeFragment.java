@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -50,6 +51,8 @@ public class HomeFragment extends Fragment
         password = Global.UserPassword;
         client = retrofit.create(RestInterface.Ks1807Client.class);
 
+
+        final LinearLayout nomusic = (LinearLayout)view.findViewById(R.id.nohistory);
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         recyclerView.setNestedScrollingEnabled(false);
         recyclerView.setHasFixedSize(true);
@@ -79,18 +82,32 @@ public class HomeFragment extends Fragment
                     }
                     else
                     {
-                        String musicHistory = response.body();
-                        String MusicDetails[] = musicHistory.split(System.getProperty("line.separator"));
+                        if (response.body().equals("-,-,-,-,-,-,-")) {
+                            nomusic.setVisibility(View.VISIBLE);
+                            recyclerView.setAdapter(adapter);
+                            recyclerView.setVisibility(View.GONE);
 
-                        listItems = new ArrayList<TrackDetails>();
-                        for (int i = 0; i < MusicDetails.length; i++) {
-                            String temp[] = MusicDetails[i].split(",");
-                            TrackDetails list = new TrackDetails(temp[0], temp[1], temp[2], temp[3], temp[4]);
-                            listItems.add(list);
+                        } else {
+                            String musicHistory = response.body();
+                            String MusicDetails[] = musicHistory.split(System.getProperty("line.separator"));
+
+                            listItems = new ArrayList<TrackDetails>();
+                            int length = 0;
+                            if (MusicDetails.length > 10) {
+                                length = 10;
+                            } else if (MusicDetails.length <= 10) {
+                                length = MusicDetails.length;
+                            }
+
+                            for (int i = 0; i < length; i++) {
+                                String temp[] = MusicDetails[i].split(",");
+                                TrackDetails list = new TrackDetails(temp[0], temp[1], temp[2], temp[3], temp[4], temp[5], temp[6]);
+                                listItems.add(list);
+                            }
+
+                            adapter = new RecyclerViewAdapter(listItems, getContext());
+                            recyclerView.setAdapter(adapter);
                         }
-                        adapter = new RecyclerViewAdapter(listItems, getContext());
-                        recyclerView.setAdapter(adapter);
-
                     }
                 }
             }

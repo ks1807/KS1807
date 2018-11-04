@@ -12,7 +12,13 @@ import android.os.IBinder;
 import android.app.Service;
 import android.content.Intent;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.view.WindowManager;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.text.format.DateUtils;
 
@@ -31,6 +37,8 @@ import com.spotify.android.appremote.api.error.UserNotAuthorizedException;
 import com.spotify.protocol.client.Subscription;
 import com.spotify.protocol.types.PlayerState;
 import com.spotify.protocol.types.Track;
+
+import org.w3c.dom.Text;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -285,27 +293,51 @@ public class BackgroundService extends Service
 
                                         if(!lastSong.equals(playerState.track.uri))
                                         {
-                                            android.app.AlertDialog.Builder builder =
-                                                    new android.app.AlertDialog.Builder(getApplicationContext());
+                                            final android.app.AlertDialog.Builder builder =
+                                                    new android.app.AlertDialog.Builder(getApplicationContext(), R.style.overlaytheme);
 
                                             String DialogText;
+                                            LayoutInflater inflater = (LayoutInflater) getApplicationContext().getSystemService(LAYOUT_INFLATER_SERVICE);
+                                            View mView = inflater.inflate(R.layout.overlay_spinner, null);
+                                            TextView title = (TextView) mView.findViewById(R.id.text_alerttitle);
                                             if (!SongStarted)
                                             {
                                                 DialogText = "How are you feeling at the moment?";
                                             }
                                             else
                                             {
-                                                DialogText = "How are you feeling now after this last song you played?";
+                                                DialogText = "How are you feeling now after listening to last song you played?";
                                             }
+                                            title.setText(DialogText);
 
-                                            builder.setTitle(DialogText);
-                                            builder.setItems(MoodAndEmoticonList, new DialogInterface.OnClickListener()
-                                            {
+//                                            builder.setTitle(DialogText);
+
+                                            final Spinner spinner = (Spinner) mView.findViewById(R.id.spinner_over);
+                                            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.spinner_item,
+                                                    MoodAndEmoticonList);
+                                            adapter.setDropDownViewResource(R.layout.spinner_item);
+                                            spinner.setAdapter(adapter);
+                                            Button submit = (Button) mView.findViewById(R.id.btn_positiveoverlay);
+                                            builder.setView(mView);
+                                            final android.app.AlertDialog dialog = builder.create();
+
+                                            submit.setOnClickListener(new View.OnClickListener() {
                                                 @Override
-                                                public void onClick(DialogInterface dialogInterface, int i)
+                                                public void onClick(View view)
                                                 {
+
+//                                                }
+//                                            });
+//                                            builder.setPositiveButton(" ", new DialogInterface.OnClickListener() {
+//                                                @Override
+//                                                public void onClick(DialogInterface dialogInterface, int i)
+//                                                {
+                                                    dialog.dismiss();
+                                                    String selectedMood = spinner.getSelectedItem().toString();
                                                     Toast.makeText(getApplicationContext(), "You selected " +
-                                                            MoodAndEmoticonList[i], Toast.LENGTH_SHORT).show();
+                                                            selectedMood, Toast.LENGTH_SHORT).show();
+
+                                                    int i = spinner.getSelectedItemPosition();
 
                                                     //Verify if this is before or after.
                                                     if (!SongStarted)
@@ -440,7 +472,6 @@ public class BackgroundService extends Service
                                                     }
                                                 }
                                             });
-                                            android.app.AlertDialog dialog = builder.create();
                                             dialog.setCanceledOnTouchOutside(false);
                                             dialog.setCancelable(false);
                                             dialog.getWindow().setType(
