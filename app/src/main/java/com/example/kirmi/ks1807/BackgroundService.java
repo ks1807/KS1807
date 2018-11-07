@@ -320,7 +320,7 @@ public class BackgroundService extends Service
                                             //CompleteScoreList needs to be final in order to be accessed in code below.
                                             final int[] CompleteScoreList = ScoreList;
 
-                                            if(!lastSong.equals(playerState.track.uri))
+                                            if(!lastSong.equals(playerState.track.uri) && !playerState.track.name.equals("null"))
                                             {
                                                 final android.app.AlertDialog.Builder builder =
                                                         new android.app.AlertDialog.Builder(getApplicationContext(), R.style.overlaytheme);
