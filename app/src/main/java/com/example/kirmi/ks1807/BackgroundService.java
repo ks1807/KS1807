@@ -434,7 +434,7 @@ public class BackgroundService extends Service
                                                             {
                                                                 Call<String> response = client.TrackEnded(SpotifyTrackID,
                                                                         Global.MoodID, TheMood, "-",
-                                                                        "-", "-", "-",
+                                                                        "-", "-", "-", "-", "-",
                                                                         UserID, UserPassword);
                                                                 response.enqueue(new Callback<String>()
                                                                 {
