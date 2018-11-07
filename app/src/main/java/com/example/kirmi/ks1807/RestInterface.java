@@ -112,8 +112,8 @@ public class RestInterface
                                 @Path("moodID") String moodID, @Path("moodAfter") String moodAfter,
                                 @Path("userLiked") String userLiked,
                                 @Path("entry1") String entry1, @Path("entry2") String entry2,
-                                @Path("entry3") String entry3, @Path("entry3") String entry4,
-                                @Path("entry3") String entry5, @Path("id") String id,
+                                @Path("entry3") String entry3, @Path("entry4") String entry4,
+                                @Path("entry5") String entry5, @Path("id") String id,
                                 @Path("password") String password);
 
         @GET("mmhpackage.moodscore/GetMoodList")
