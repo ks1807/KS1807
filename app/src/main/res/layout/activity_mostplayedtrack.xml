@@ -14,14 +14,14 @@
         app:cardBackgroundColor="@color/darkgrey">
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="10dp">
 
             <TextView
                 android:id="@+id/text_tracktitle"
-                android:layout_width="264dp"
+                android:layout_width="299dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:fontFamily="@font/roboto_medium"
@@ -33,7 +33,7 @@
 
             <TextView
                 android:id="@+id/Text_artist"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto_medium"
                 android:paddingBottom="5dp"
@@ -43,7 +43,7 @@
 
             <TextView
                 android:id="@+id/Text_genre"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto_medium"
                 android:paddingBottom="5dp"
@@ -53,7 +53,7 @@
 
             <TextView
                 android:id="@+id/Text_length"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto_medium"
                 android:paddingBottom="5dp"
@@ -63,7 +63,7 @@
 
             <TextView
                 android:id="@+id/Text_moodbefore"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto_medium"
                 android:paddingBottom="5dp"
@@ -72,8 +72,8 @@
                 android:textSize="14sp" />
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_weight="0"
                 android:orientation="horizontal">
 

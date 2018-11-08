@@ -26,7 +26,6 @@ public class OtherPlatforms extends AppCompatActivity
         setContentView(R.layout.activity_platforms);
 
         UserID = Global.UserID;
-        Toast.makeText(this, UserID, Toast.LENGTH_SHORT).show();
     }
 
     public void button_back(View view)

@@ -3,6 +3,9 @@ package com.example.kirmi.ks1807;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.net.Uri;
+import android.os.Build;
+import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.content.Intent;
@@ -57,6 +60,7 @@ public class MainActivity extends AppCompatActivity
                 }
             }
         });
+
     }
 
     public void button_Login(View view)

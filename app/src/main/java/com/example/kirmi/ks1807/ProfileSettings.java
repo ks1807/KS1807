@@ -563,19 +563,19 @@ public class ProfileSettings extends Fragment
     public void disableAllFields()
     {
         firstN.setEnabled(false);
-        firstN.setTextColor(Color.GRAY);
+        firstN.setTextColor(getResources().getColor(R.color.darkgrey));
         firstN.setHint("");
 
         lastN.setEnabled(false);
-        lastN.setTextColor(Color.GRAY);
+        lastN.setTextColor(getResources().getColor(R.color.darkgrey));
         lastN.setHint("");
 
         editemail.setEnabled(false);
-        editemail.setTextColor(Color.GRAY);
+        editemail.setTextColor(getResources().getColor(R.color.darkgrey));
         editemail.setHint("");
 
         editdob.setEnabled(false);
-        editdob.setTextColor(Color.GRAY);
+        editdob.setTextColor(getResources().getColor(R.color.darkgrey));
         editdob.setHint("");
 
         gender.setEnabled(false);

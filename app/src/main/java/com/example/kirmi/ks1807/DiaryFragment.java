@@ -118,8 +118,12 @@ public class DiaryFragment extends Fragment
         submitInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getContext(), q1Ans.getText().toString() + " " + q2selectedItem + " " + q3Ans.getText().toString() + " " + q4Ans.getText().toString() +
-                        " " + q5Ans.getText().toString(), Toast.LENGTH_LONG).show();
+                if (q1Ans.getText().toString().equals("") || q3Ans.getText().toString().equals("") || q4Ans.getText().toString().equals("") || q5Ans.getText().toString().equals("")) {
+                    Toast.makeText(getContext(), "Answers required", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getContext(), "Answer submitted", Toast.LENGTH_LONG).show();
+                }
+
             }
         });
 

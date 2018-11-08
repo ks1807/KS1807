@@ -94,10 +94,10 @@
                     android:background="@drawable/settingslastname"
                     android:ems="10"
                     android:enabled="false"
-                    android:textColor="@color/darkgrey"
                     android:fontFamily="@font/roboto_medium"
                     android:inputType="textPersonName"
                     android:paddingLeft="50dp"
+                    android:textColor="@color/darkgrey"
                     android:textSize="18sp" />
 
                 <Space
