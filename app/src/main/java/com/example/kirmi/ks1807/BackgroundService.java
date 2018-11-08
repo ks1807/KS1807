@@ -396,6 +396,10 @@ public class BackgroundService extends Service {
                                                                     TheMood = List[i];
                                                                     String UserID = Global.UserID;
                                                                     String UserPassword = Global.UserPassword;
+                                                                    if (Global.MoodID.equals(""))
+                                                                    {
+                                                                        Global.MoodID = "-1";
+                                                                    }
 
                                                                     /*Prevents the mood from being added if the user is not logged in.*/
                                                                     if (!UserID.equals("") && !UserPassword.equals("")) {
