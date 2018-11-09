@@ -11,8 +11,8 @@
 
     <TextView
         android:id="@+id/text_alerttitle"
-        android:layout_width="300dp"
-        android:layout_height="57dp"
+        android:layout_width="328dp"
+        android:layout_height="114dp"
         android:layout_gravity="center_horizontal"
         android:fontFamily="@font/roboto_medium"
         android:text=""

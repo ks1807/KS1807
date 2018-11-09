@@ -316,9 +316,9 @@ public class BackgroundService extends Service {
                                                         View mView = inflater.inflate(R.layout.overlay_spinner, null);
                                                         TextView title = (TextView) mView.findViewById(R.id.text_alerttitle);
                                                         if (!SongStarted) {
-                                                            DialogText = "How are you feeling at the moment?";
+                                                            DialogText = "How are you feeling \nat the moment?";
                                                         } else {
-                                                            DialogText = "How are you feeling now after listening to last song you played?";
+                                                            DialogText = "How are you feeling now after\n listening to last \nsong you played?";
                                                         }
                                                         title.setText(DialogText);
 
@@ -373,9 +373,9 @@ public class BackgroundService extends Service {
                                                                                 } else {
                                                                                     if (!response.body().equals("Incorrect UserID or Password. Query not executed.")) {
                                                                                         Global.MoodID = response.body();
-                                                                                        Toast.makeText(getApplicationContext(),
-                                                                                                "Mood at start of track updated with Mood ID " + Global.MoodID,
-                                                                                                Toast.LENGTH_SHORT).show();
+//                                                                                        Toast.makeText(getApplicationContext(),
+//                                                                                                "Mood at start of track updated with Mood ID " + Global.MoodID,
+//                                                                                                Toast.LENGTH_SHORT).show();
                                                                                     } else {
                                                                                         Global.MoodID = "-1";
                                                                                         Toast.makeText(getApplicationContext(),
@@ -422,9 +422,9 @@ public class BackgroundService extends Service {
                                                                                                 "Error, mood at end of track failed to update",
                                                                                                 Toast.LENGTH_SHORT).show();
                                                                                     } else {
-                                                                                        Toast.makeText(getApplicationContext(),
-                                                                                                "Mood at end of track updated with Mood ID " + Global.MoodID,
-                                                                                                Toast.LENGTH_SHORT).show();
+//                                                                                        Toast.makeText(getApplicationContext(),
+//                                                                                                "Mood at end of track updated with Mood ID " + Global.MoodID,
+//                                                                                                Toast.LENGTH_SHORT).show();
                                                                                     }
                                                                                 }
                                                                             }
@@ -460,8 +460,13 @@ public class BackgroundService extends Service {
                                                         });
                                                         dialog.setCanceledOnTouchOutside(false);
                                                         dialog.setCancelable(false);
-                                                        dialog.getWindow().setType(
-                                                                WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY);
+                                                        if(Build.VERSION.SDK_INT >= 26) {
+                                                            dialog.getWindow().setType(
+                                                                    WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY);
+                                                        }else {
+                                                            dialog.getWindow().setType(
+                                                                    WindowManager.LayoutParams.TYPE_PHONE);
+                                                        }
                                                         dialog.show();
 
                                                         final Track track = playerState.track;
